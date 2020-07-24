@@ -1,6 +1,6 @@
 # Donors Platform
 
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/code4romania/donors-platform/Test?style=for-the-badge)](https://github.com/code4romania/cms/actions?query=workflow%3ATest) [![GitHub contributors](https://img.shields.io/github/contributors/code4romania/standard-repo-template.svg?style=for-the-badge)](https://github.com/code4romania/standard-repo-template/graphs/contributors) [![GitHub last commit](https://img.shields.io/github/last-commit/code4romania/standard-repo-template.svg?style=for-the-badge)](https://github.com/code4romania/standard-repo-template/commits/master) [![License: MPL 2.0](https://img.shields.io/badge/license-MPL%202.0-brightgreen.svg?style=for-the-badge)](https://opensource.org/licenses/MPL-2.0)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/code4romania/donors-platform/Test?style=for-the-badge)](https://github.com/code4romania/cms/actions?query=workflow%3ATest) [![GitHub contributors](https://img.shields.io/github/contributors/code4romania/donors-platform.svg?style=for-the-badge)](https://github.com/code4romania/donors-platform/graphs/contributors) [![GitHub last commit](https://img.shields.io/github/last-commit/code4romania/donors-platform.svg?style=for-the-badge)](https://github.com/code4romania/donors-platform/commits/master) [![License: MPL 2.0](https://img.shields.io/badge/license-MPL%202.0-brightgreen.svg?style=for-the-badge)](https://opensource.org/licenses/MPL-2.0)
 
 Insert bullets description of the project if available.
 
