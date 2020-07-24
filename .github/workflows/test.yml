@@ -1,0 +1,45 @@
+name: Test
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+          extensions: mbstring, sqlite, pdo_sqlite
+          tools: composer
+          coverage: none
+
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.composer/cache/files
+          key: dependencies-composer-${{ hashFiles('composer.lock') }}
+
+      - name: Cache npm dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: dependencies-npm-${{ hashFiles('package-lock.json') }}
+
+      - name: Install composer dependencies
+        run: composer install --ignore-platform-reqs --no-progress --no-suggest --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Install npm dependencies
+        run: npm install --prefer-offline --no-audit --no-fund
+
+      - name: Run tests
+        run: composer test
