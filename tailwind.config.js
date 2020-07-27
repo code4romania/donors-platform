@@ -16,68 +16,6 @@ module.exports = {
                 mono: ['Courier', 'monospace'],
             },
         },
-        colors: {
-            transparent: 'transparent',
-
-            black: '#000',
-            white: '#FFF',
-
-            primary: {
-                100: '#E6E6FF',
-                200: '#BFBFFF',
-                300: '#9999FF',
-                400: '#4D4DFF',
-                500: '#0000FF',
-                600: '#0000E6',
-                700: '#000099',
-                800: '#000073',
-                900: '#00004D',
-            },
-            warning: {
-                100: '#FFFAE6',
-                200: '#FFF2BF',
-                300: '#FFEB99',
-                400: '#FFDB4D',
-                500: '#FFCC00',
-                600: '#E6B800',
-                700: '#997A00',
-                800: '#735C00',
-                900: '#4D3D00',
-            },
-            danger: {
-                100: '#FFE6E6',
-                200: '#FFBFBF',
-                300: '#FF9999',
-                400: '#FF4D4D',
-                500: '#FF0000',
-                600: '#E60000',
-                700: '#990000',
-                800: '#730000',
-                900: '#4D0000',
-            },
-            success: {
-                100: '#E8F5EC',
-                200: '#C7E7CE',
-                300: '#A5D9B1',
-                400: '#61BC77',
-                500: '#1D9F3C',
-                600: '#1A8F36',
-                700: '#115F24',
-                800: '#0D481B',
-                900: '#093012',
-            },
-            gray: {
-                100: '#F6F7F9',
-                200: '#E7EBEF',
-                300: '#D9DFE6',
-                400: '#BDC6D3',
-                500: '#A0AEC0',
-                600: '#909DAD',
-                700: '#606873',
-                800: '#484E56',
-                900: '#30343A',
-            },
-        },
         textStyles: theme => ({
             embed: {
                 position: 'relative',
@@ -121,10 +59,8 @@ module.exports = {
     plugins: [
         //
         require('tailwindcss-aspect-ratio'),
-        require('@tailwindcss/custom-forms'),
-        require('tailwindcss-typography')({
-            componentPrefix: '', // the prefix to use for text style classes
-        }),
+        require('@tailwindcss/ui'),
+        require('@tailwindcss/typography'),
     ],
     purge: {
         content: [

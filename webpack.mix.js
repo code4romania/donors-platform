@@ -18,10 +18,10 @@ const config = [
     }),
 ];
 
-mix.setPublicPath('public/assets/cms')
+mix.setPublicPath('public/assets')
     .setResourceRoot('./')
 
-    .js('resources/assets/js/app.js', 'public/assets/cms')
-    .postCss('resources/assets/css/app.pcss', 'public/assets/cms', config)
-    // .postCss('resources/assets/css/content.pcss', 'public/assets/cms', config)
+    .js('resources/assets/js/app.js', 'public/assets')
+    .postCss('resources/assets/css/app.pcss', 'public/assets', config)
+    // .postCss('resources/assets/css/content.pcss', 'public/assets', config)
     .extract();

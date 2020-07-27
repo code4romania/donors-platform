@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -21,7 +23,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/home';
+    public const HOME = '/dashboard';
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -42,15 +44,12 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
-        $this->mapApiRoutes();
-
+        $this->mapDashboardRoutes();
         $this->mapWebRoutes();
-
-        //
     }
 
     /**
-     * Define the "web" routes for the application.
+     * Define the public "web" routes for the application.
      *
      * These routes all receive session state, CSRF protection, etc.
      *
@@ -64,17 +63,17 @@ class RouteServiceProvider extends ServiceProvider
     }
 
     /**
-     * Define the "api" routes for the application.
+     * Define the "web" routes for the application.
      *
-     * These routes are typically stateless.
+     * These routes all receive session state, CSRF protection, etc.
      *
      * @return void
      */
-    protected function mapApiRoutes()
+    protected function mapDashboardRoutes()
     {
-        Route::prefix('api')
-            ->middleware('api')
+        Route::prefix('dashboard')
+            ->middleware(['web', 'auth'])
             ->namespace($this->namespace)
-            ->group(base_path('routes/api.php'));
+            ->group(base_path('routes/dashboard.php'));
     }
 }
