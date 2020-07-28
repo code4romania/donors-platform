@@ -38,7 +38,7 @@ class ResetPasswordTest extends TestCase
 
     protected function successfulPasswordResetRoute()
     {
-        return route('home');
+        return route('dashboard.index');
     }
 
     /** @test */

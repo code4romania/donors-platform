@@ -16,7 +16,7 @@ class LoginTest extends TestCase
 
     protected function successfulLoginRoute()
     {
-        return route('home');
+        return route('dashboard.index');
     }
 
     protected function loginGetRoute()
@@ -41,7 +41,7 @@ class LoginTest extends TestCase
 
     protected function guestMiddlewareRoute()
     {
-        return route('home');
+        return route('dashboard.index');
     }
 
     protected function getTooManyLoginAttemptsMessage()
@@ -183,11 +183,11 @@ class LoginTest extends TestCase
             $this->getTooManyLoginAttemptsMessage(),
             collect(
                 $response
-                ->baseResponse
-                ->getSession()
-                ->get('errors')
-                ->getBag('default')
-                ->get('email')
+                    ->baseResponse
+                    ->getSession()
+                    ->get('errors')
+                    ->getBag('default')
+                    ->get('email')
             )->first()
         );
         $this->assertTrue(session()->hasOldInput('email'));

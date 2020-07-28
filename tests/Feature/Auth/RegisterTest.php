@@ -17,7 +17,7 @@ class RegisterTest extends TestCase
 
     protected function successfulRegistrationRoute()
     {
-        return route('home');
+        return route('dashboard.index');
     }
 
     protected function registerGetRoute()
@@ -32,7 +32,7 @@ class RegisterTest extends TestCase
 
     protected function guestMiddlewareRoute()
     {
-        return route('home');
+        return route('dashboard.index');
     }
 
     public function testUserCanViewARegistrationForm()
