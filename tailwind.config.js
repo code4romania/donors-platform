@@ -64,8 +64,9 @@ module.exports = {
     ],
     purge: {
         content: [
-            'resources/**/*.blade.php',
-            'vendor/code4romania/cms/src/Presenters/*.php',
+            //
+            'resources/views/**/*.blade.php',
+            'resources/assets/js/**/*.vue',
         ],
         options: {
             whitelist: ['rich-text', 'ck-content'],
