@@ -25,9 +25,11 @@ return [
     'forgot'    => 'Forgot your password?',
     'send_link' => 'Send password reset link',
 
-    'verify.title'   => 'Verify your email address',
-    'verify.content' => 'Before proceeding, please check your email for a verification link. If you did not receive the email',
-    'verify.another' => 'click here to request another',
-    'verify.resent'  => 'A fresh verification link has been sent to your email address.',
+    'verify' => [
+        'title'   => 'Verify your email address',
+        'content' => 'Before proceeding, please check your email for a verification link. If you did not receive the email',
+        'another' => 'Request another',
+        'resent'  => 'A fresh verification link has been sent to your email address.',
+    ],
 
 ];
