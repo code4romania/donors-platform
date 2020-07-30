@@ -15,15 +15,13 @@
                     </div>
                 </div>
             </div>
-            <div class="grid row-gap-8 px-4 pt-2 pb-6 lg:p-6 lg:px-8">
-                <div class="grid gap-8 md:grid-cols-2">
-                    <h1 class="text-2xl font-semibold text-gray-900">
-                        <slot name="title" />
-                    </h1>
+            <div class="grid row-gap-6 px-4 py-8 overflow-y-auto md:p-12">
+                <h1 class="text-2xl font-bold text-gray-900 md:text-3xl">
+                    <slot name="title" />
+                </h1>
 
-                    <div class="flex justify-end space-x-4">
-                        <slot name="actions" />
-                    </div>
+                <div v-if="$slots.actions" class="flex justify-end space-x-4">
+                    <slot name="actions" />
                 </div>
 
                 <slot />

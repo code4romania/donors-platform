@@ -49,21 +49,11 @@
             >
                 <nav class="grid row-gap-1">
                     <menu-item
-                        icon="System/dashboard-fill"
-                        :href="$route('dashboard.index')"
-                        :label="$t('menu.dashboard')"
-                    />
-
-                    <menu-item
-                        icon="Finance/money-euro-circle-line"
-                        :href="$route('donors.index')"
-                        :label="$t('menu.donors')"
-                    />
-
-                    <menu-item
-                        icon="User/user-settings-line"
-                        href="#"
-                        :label="$t('menu.users')"
+                        v-for="(item, index) in items"
+                        :icon="item.icon"
+                        :href="item.href"
+                        :label="item.label"
+                        :key="index"
                     />
 
                     <hr class="border-gray-600" />
@@ -95,6 +85,23 @@
         data() {
             return {
                 open: false,
+                items: [
+                    {
+                        icon: 'System/dashboard-fill',
+                        href: this.$route('dashboard.index'),
+                        label: this.$t('menu.dashboard'),
+                    },
+                    {
+                        icon: 'Finance/money-euro-circle-line',
+                        href: this.$route('donors.index'),
+                        label: this.$t('donor.plural'),
+                    },
+                    {
+                        icon: 'User/user-settings-line',
+                        href: '#',
+                        label: this.$t('menu.users'),
+                    },
+                ],
             };
         },
         methods: {

@@ -1,7 +1,7 @@
 <template>
     <inertia-link
         :href="href"
-        class="flex items-center px-2 py-2 text-sm font-medium leading-tight transition duration-150 ease-in-out rounded-sm group focus:outline-none"
+        class="flex items-center px-2 py-2 font-semibold leading-tight transition duration-150 ease-in-out rounded-sm group focus:outline-none"
         :class="style"
     >
         <svg-vue
