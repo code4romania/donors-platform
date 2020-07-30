@@ -55,6 +55,7 @@ module.exports = {
     },
     variants: {
         aspectRatio: ['responsive'],
+        backgroundColor: ['responsive', 'hover', 'focus', 'focus-within'],
     },
     plugins: [
         //

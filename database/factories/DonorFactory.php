@@ -15,6 +15,6 @@ $factory->define(Donor::class, function (Faker $faker) {
         'contact' => $faker->name,
         'email'   => $faker->unique()->safeEmail,
         'phone'   => $faker->phoneNumber,
-        'areas'   => [],
+        'areas'   => $faker->words,
     ];
 });
