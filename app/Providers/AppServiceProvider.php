@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\UrlWindow;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ServiceProvider;
 use Inertia\Inertia;
@@ -19,7 +23,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->registerInertia();
+        $this->registerLengthAwarePaginator();
     }
 
     /**
@@ -32,8 +37,6 @@ class AppServiceProvider extends ServiceProvider
         Relation::morphMap([
             'user' => \App\Models\User::class,
         ]);
-
-        $this->registerInertia();
     }
 
     private function registerInertia(): void
@@ -69,5 +72,86 @@ class AppServiceProvider extends ServiceProvider
                     : (object) [];
             },
         ]);
+    }
+
+    protected function registerLengthAwarePaginator()
+    {
+        $this->app->bind(LengthAwarePaginator::class, function ($app, $values) {
+            return new class(...array_values($values)) extends LengthAwarePaginator {
+                protected array $columns;
+
+                public function only(...$attributes)
+                {
+                    $this->columns = $attributes;
+
+                    array_unshift($attributes, 'id');
+
+                    return $this->transform(fn ($item) => $item->only($attributes));
+                }
+
+                public function transform($callback)
+                {
+                    $this->items->transform($callback);
+
+                    return $this;
+                }
+
+                public function toArray()
+                {
+                    return [
+                        'columns' => $this->columns,
+                        'data'    => $this->items->toArray(),
+                        'links'   => $this->links(),
+                    ];
+                }
+
+                public function links($view = null, $data = [])
+                {
+                    $this->appends(Request::all());
+
+                    $window = UrlWindow::make($this);
+
+                    $elements = array_filter([
+                        $window['first'],
+                        is_array($window['slider']) ? '...' : null,
+                        $window['slider'],
+                        is_array($window['last']) ? '...' : null,
+                        $window['last'],
+                    ]);
+
+                    return collect([
+                        'prev' => [
+                            'url'    => $this->previousPageUrl(),
+                            'label'  => __('pagination.previous'),
+                            'active' => false,
+                        ],
+                        'next' => [
+                            'url'    => $this->nextPageUrl(),
+                            'label'  => __('pagination.next'),
+                            'active' => false,
+                        ],
+                        'pages' => Collection::make($elements)->flatMap(function ($item) {
+                            if (is_array($item)) {
+                                return Collection::make($item)->map(function ($url, $page) {
+                                    return [
+                                        'url'    => $url,
+                                        'label'  => $page,
+                                        'active' => $this->currentPage() === $page,
+                                    ];
+                                });
+                            } else {
+                                return [
+                                    [
+                                        'url'    => null,
+                                        'label'  => '...',
+                                        'active' => false,
+                                    ],
+                                ];
+                            }
+                        }),
+                    ]);
+                }
+            };
+        });
     }
 }

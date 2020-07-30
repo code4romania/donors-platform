@@ -18,12 +18,13 @@ class DonorController extends Controller
      */
     public function index()
     {
+        $columns = ['name', 'type', 'hq'];
+
         return Inertia::render('Donors/Index', [
-            'table' => [
-                'head' => ['Name', 'Type', 'HQ', ''],
-                'data' => Donor::query()
-                    ->paginate(),
-            ],
+            'columns' => $columns,
+            'donors' => Donor::query()
+                ->paginate()
+                ->only(...$columns),
         ]);
     }
 
@@ -58,7 +59,7 @@ class DonorController extends Controller
      */
     public function show(Donor $donor)
     {
-        return view('app.donors.show', [
+        return Inertia::render('Donors/Show', [
             'donor' => $donor,
         ]);
     }
@@ -71,7 +72,9 @@ class DonorController extends Controller
      */
     public function edit(Donor $donor)
     {
-        //
+        return Inertia::render('Donors/Edit', [
+            'donor' => $donor,
+        ]);
     }
 
     /**
