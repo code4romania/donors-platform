@@ -3,9 +3,10 @@
         <input
             type="checkbox"
             :id="id"
+            :checked="isChecked"
             class="w-4 h-4 text-blue-600 transition duration-150 ease-in-out form-checkbox"
             :value="value"
-            @change="$emit('change', $event.target.checked)"
+            @change="onChange"
         />
         <label
             :for="id"
@@ -41,6 +42,74 @@
             errors: {
                 type: Array,
                 default: () => [],
+            },
+        },
+        computed: {
+            isGroup() {
+                return this.$parent.$options.name === 'CheckboxGroup';
+            },
+            isChecked() {
+                if (!this.isGroup) {
+                    return this.checked;
+                }
+
+                if (this.$parent.modelValue) {
+                    if (typeof this.value === 'object') {
+                        return !!this.$parent.modelValue.find(
+                            (item) => item.id === this.value.id
+                        );
+                    }
+
+                    if (
+                        typeof this.value === 'string' ||
+                        typeof this.value === 'number'
+                    ) {
+                        return !!this.$parent.modelValue.find(
+                            (item) => item === this.value
+                        );
+                    }
+                }
+
+                return false;
+            },
+        },
+        methods: {
+            onChange() {
+                if (this.disabled) {
+                    return;
+                }
+
+                if (!this.isGroup) {
+                    return this.$emit('change', !this.checked);
+                }
+
+                if (!this.isChecked) {
+                    this.$parent.value.push(this.value);
+                } else {
+                    this.$parent.value.find((item) => {
+                        if (typeof this.value === 'object') {
+                            this.$nextTick(() => {
+                                if (item.id === this.value.id)
+                                    this.$parent.value.splice(
+                                        this.$parent.value.indexOf(item),
+                                        1
+                                    );
+                            });
+                        }
+                        if (
+                            typeof this.value === 'string' ||
+                            typeof this.value === 'number'
+                        ) {
+                            this.$nextTick(() => {
+                                if (item === this.value)
+                                    this.$parent.value.splice(
+                                        this.$parent.value.indexOf(item),
+                                        1
+                                    );
+                            });
+                        }
+                    });
+                }
             },
         },
     };

@@ -1,7 +1,7 @@
 <template>
     <component
         :is="buttonComponent"
-        class="relative px-6 py-2 font-semibold leading-snug tracking-wide text-center shadow-md sm:w-auto hover:shadow-lg focus:outline-none focus:shadow-md"
+        class="relative px-6 py-2 font-semibold leading-snug tracking-wide text-center rounded shadow-md sm:w-auto hover:shadow-lg focus:outline-none focus:shadow-md"
         :class="[buttonColor, buttonWidth]"
         :href="href"
         v-bind="$attrs"

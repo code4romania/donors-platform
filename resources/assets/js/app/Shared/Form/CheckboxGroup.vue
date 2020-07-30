@@ -17,7 +17,7 @@
                     :id="id"
                     class="w-4 h-4 text-blue-600 transition duration-150 ease-in-out form-checkbox"
                     :value="option"
-                    v-model="value"
+                    v-model="checked"
                 />
                 <label
                     :for="id"
@@ -26,6 +26,17 @@
                 />
             </div>
 
+            <form-input
+                v-if="otherLabel"
+                type="text"
+                id="other"
+                :label="otherLabel"
+                v-model="other"
+                :errors="$page.errors.other"
+                required
+                autofocus
+            />
+
             <input-error v-if="errors.length" :message="errors" />
         </div>
     </div>
@@ -33,16 +44,23 @@
 
 <script>
     import FormCheckbox from '@/Shared/Form/Checkbox';
+    import FormInput from '@/Shared/Form/Input';
     import InputError from '@/Shared/Form/InputError';
 
     export default {
+        name: 'CheckboxGroup',
         inheritAttrs: false,
         components: {
             FormCheckbox,
+            FormInput,
             InputError,
         },
         props: {
             label: {
+                type: [String, null],
+                default: null,
+            },
+            otherLabel: {
                 type: [String, null],
                 default: null,
             },
@@ -58,19 +76,17 @@
                 type: Array,
                 default: () => [],
             },
-            modelValue: {
-                type: Array,
-                default: () => [],
-            },
         },
         data() {
             return {
-                value: [],
+                checked: [],
+
+                other: null,
             };
         },
-        watch: {
-            value(v) {
-                this.$emit('input', v);
+        computed: {
+            computedValue() {
+                return [...this.checked, this.other].filter(null);
             },
         },
     };
