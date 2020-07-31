@@ -79,7 +79,7 @@
                     class="sm:col-span-3 md:col-span-2"
                     v-if="$page.donor.areas.length"
                 >
-                    <strong class="text-lg" v-text="$t('donor.field.areas')" />
+                    <strong class="text-lg" v-text="$t('model.field.areas')" />
                     <div class="flex items-center mt-1">
                         <svg-vue
                             icon="Design/focus-3-line"
@@ -92,7 +92,12 @@
             </div>
         </panel>
 
-        <panel class="max-w-3xl">a</panel>
+        <div class="grid gap-8 md:grid-cols-3">
+            <panel class="md:col-span-2">a</panel>
+            <panel title="Total Funding" icon="Weather/sun-fill">
+                Total funding
+            </panel>
+        </div>
     </layout>
 </template>
 <script>

@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDonorRequest;
 use App\Models\Donor;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class DonorController extends Controller
@@ -48,7 +48,7 @@ class DonorController extends Controller
     {
         $donor = Donor::create($request->all());
 
-        return redirect()->route('donors.show', $donor);
+        return Redirect::route('donors.show', $donor);
     }
 
     /**
@@ -84,9 +84,12 @@ class DonorController extends Controller
      * @param  \App\Donor                $donor
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Donor $donor)
+    public function update(StoreDonorRequest $request, Donor $donor)
     {
-        //
+        $donor->update($request->all());
+
+        return Redirect::back()
+            ->with('success', __('model.updated', ['model' => __('donor.singular')]));
     }
 
     /**
@@ -97,6 +100,9 @@ class DonorController extends Controller
      */
     public function destroy(Donor $donor)
     {
-        //
+        $donor->delete();
+
+        return Redirect::back()
+            ->with('success', __('model.deleted', ['model' => __('donor.singular')]));
     }
 }

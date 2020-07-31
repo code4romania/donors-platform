@@ -34,6 +34,7 @@ class StoreDonorRequest extends FormRequest
             'phone'   => ['required', 'string'],
             'areas.*' => ['nullable', 'string'],
             'logo'    => [
+                'required',
                 'file',
                 'mimes:jpeg,png,gif',
                 'dimensions:min_width=300,min_height=300',
@@ -50,7 +51,7 @@ class StoreDonorRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'areas' => array_filter($this->areas),
+            'areas' => array_filter(json_decode($this->areas)),
         ]);
     }
 }
