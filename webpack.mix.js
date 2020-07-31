@@ -38,7 +38,7 @@ if (mix.config.production) {
 }
 
 mix.setPublicPath('public/assets')
-    .setResourceRoot('./')
+    .setResourceRoot('/')
 
     .js('resources/assets/js/app.js', 'public/assets')
     .postCss('resources/assets/css/app.pcss', 'public/assets', [
