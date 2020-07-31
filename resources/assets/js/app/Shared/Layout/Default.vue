@@ -4,7 +4,7 @@
 
         <main-menu :url="url" />
 
-        <main class="relative z-0 flex-1 overflow-y-auto focus:outline-none">
+        <div class="relative z-0 flex flex-col flex-1 focus:outline-none">
             <div class="relative z-10 flex flex-shrink-0 h-16 bg-white shadow">
                 <portal-target name="menu-mobile-button" slim />
                 <div class="flex items-center justify-end flex-1 px-4">
@@ -15,29 +15,36 @@
                     </div>
                 </div>
             </div>
-            <div class="grid row-gap-6 px-4 py-8 overflow-y-auto md:p-12">
-                <h1 class="text-2xl font-bold text-gray-900 md:text-3xl">
-                    <slot name="title" />
-                </h1>
+            <main class="flex-1 overflow-y-auto scrolling-touch" scroll-region>
+                <div class="grid row-gap-6 px-4 py-8 md:p-12">
+                    <h1 class="text-2xl font-bold text-gray-900 md:text-3xl">
+                        <slot name="title" />
+                    </h1>
 
-                <div v-if="$slots.actions" class="flex justify-end space-x-4">
-                    <slot name="actions" />
+                    <div
+                        v-if="$slots.actions"
+                        class="flex justify-end space-x-4"
+                    >
+                        <slot name="actions" />
+                    </div>
+
+                    <slot />
                 </div>
-
-                <slot />
-            </div>
-        </main>
+            </main>
+        </div>
     </div>
 </template>
 
 <script>
     import MainMenu from '@/Shared/Menu/Main';
+    import FlashMessages from '@/Shared/FlashMessages';
     import Notifications from '@/Shared/Notifications';
     import Profile from '@/Shared/Profile';
 
     export default {
         components: {
             MainMenu,
+            FlashMessages,
             Notifications,
             Profile,
         },

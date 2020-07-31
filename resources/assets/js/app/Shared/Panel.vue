@@ -1,9 +1,40 @@
 <template>
-    <div class="px-4 py-8 bg-white rounded-sm shadow sm:rounded-lg sm:px-10">
-        <slot />
+    <div
+        class="overflow-hidden bg-white rounded-sm shadow sm:rounded-lg md:shadow-md"
+    >
+        <div
+            v-if="title || icon"
+            class="flex items-center p-4"
+            :class="headerClass"
+        >
+            <svg-vue
+                v-if="icon"
+                :icon="icon"
+                class="w-5 h-5 mr-2 fill-current"
+            />
+            <h2 class="text-lg font-semibold tracking-wide" v-text="title" />
+        </div>
+        <div class="px-4 py-5 sm:p-6">
+            <slot />
+        </div>
     </div>
 </template>
 
 <script>
-    export default {};
+    export default {
+        props: {
+            headerClass: {
+                type: String,
+                default: 'text-white bg-blue-500',
+            },
+            icon: {
+                type: [String, null],
+                default: null,
+            },
+            title: {
+                type: [String, null],
+                default: null,
+            },
+        },
+    };
 </script>

@@ -56,13 +56,13 @@
                         :key="index"
                     />
 
-                    <hr class="border-gray-600" />
+                    <hr class="my-4 border-gray-700" />
 
                     <menu-item
                         icon="System/logout-box-line"
                         :href="$route('home')"
                         :label="$t('menu.back_to_site')"
-                        :has-state="false"
+                        :external="true"
                     />
                 </nav>
             </div>
