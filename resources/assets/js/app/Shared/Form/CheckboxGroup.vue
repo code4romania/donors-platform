@@ -1,58 +1,62 @@
 <template>
     <div>
-        <label
-            :for="id"
-            class="block mb-1 font-semibold leading-tight text-gray-700"
-            v-text="label"
-        />
+        <form-label :id="id" :label="label" />
 
-        <div class="flex space-x-4">
-            <div
-                class="flex items-center"
+        <div class="flex flex-wrap leading-tight text-gray-900">
+            <label
+                class="flex items-center w-full py-2 pr-3 sm:w-1/2 md:w-1/3 lg:w-1/4"
                 v-for="(option, index) in options"
                 :key="index"
             >
                 <input
                     type="checkbox"
-                    :id="id"
-                    class="w-4 h-4 text-blue-600 transition duration-150 ease-in-out form-checkbox"
+                    class="w-4 h-4 mr-2 text-blue-500 duration-150 ease-in-out transition-color form-checkbox"
                     :value="option"
                     v-model="checked"
                 />
-                <label
-                    :for="id"
-                    class="block ml-2 leading-tight text-gray-900"
-                    v-text="option"
-                />
-            </div>
+                {{ option }}
+            </label>
 
-            <form-input
+            <label
+                class="flex items-center w-full py-2 pr-3 sm:w-1/2 md:w-1/3 lg:w-1/4"
                 v-if="otherLabel"
-                type="text"
-                id="other"
-                :label="otherLabel"
-                v-model="other"
-                :errors="$page.errors.other"
-                required
-                autofocus
-            />
-
-            <input-error v-if="errors.length" :message="errors" />
+            >
+                <input
+                    type="checkbox"
+                    class="w-4 h-4 mr-2 transition duration-150 ease-in-out form-checkbox"
+                    :class="disableOther ? 'text-gray-200' : 'text-blue-500'"
+                    v-model="showOther"
+                    :disabled="disableOther"
+                />
+                {{ otherLabel }}
+            </label>
         </div>
+
+        <form-input
+            v-if="showOther"
+            type="text"
+            id="other"
+            :label="otherLabel"
+            v-model="other"
+            :errors="$page.errors.other"
+        />
+
+        <input-error v-if="errors.length" :message="errors" />
     </div>
 </template>
 
 <script>
     import FormCheckbox from '@/Shared/Form/Checkbox';
     import FormInput from '@/Shared/Form/Input';
+    import FormLabel from '@/Shared/Form/Label';
     import InputError from '@/Shared/Form/InputError';
 
     export default {
-        name: 'CheckboxGroup',
         inheritAttrs: false,
         components: {
             FormCheckbox,
             FormInput,
+            FormLabel,
             InputError,
         },
         props: {
@@ -80,13 +84,21 @@
         data() {
             return {
                 checked: [],
-
+                showOther: false,
                 other: null,
             };
         },
         computed: {
-            computedValue() {
-                return [...this.checked, this.other].filter(null);
+            disableOther() {
+                return this.other && this.other.length;
+            },
+            checkedOptions() {
+                return [...this.checked, this.other].filter((el) => el !== null);
+            },
+        },
+        watch: {
+            checkedOptions(cv) {
+                this.$emit('input', cv);
             },
         },
     };

@@ -8,17 +8,14 @@
             :value="value"
             @change="onChange"
         />
-        <label
-            :for="id"
-            class="block ml-2 leading-tight text-gray-900"
-            v-text="label || value"
-        />
+        <form-label :id="id" :label="label || value" />
 
         <input-error v-if="errors.length" :message="errors" />
     </div>
 </template>
 
 <script>
+    import FormLabel from '@/Shared/Form/Label';
     import InputError from '@/Shared/Form/InputError';
 
     export default {

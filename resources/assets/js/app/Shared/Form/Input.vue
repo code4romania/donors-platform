@@ -1,10 +1,10 @@
 <template>
     <div>
-        <label
+        <form-label
             v-if="label"
-            :for="id"
-            class="block mb-1 font-semibold leading-tight text-gray-700"
-            v-text="label"
+            :label="label"
+            :id="id"
+            :required="$attrs.required"
         />
 
         <input
@@ -20,11 +20,13 @@
 </template>
 
 <script>
+    import FormLabel from '@/Shared/Form/Label';
     import InputError from '@/Shared/Form/InputError';
 
     export default {
         inheritAttrs: false,
         components: {
+            FormLabel,
             InputError,
         },
         props: {
