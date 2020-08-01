@@ -39,7 +39,11 @@ class Donor extends Model implements HasMedia
         'logo_url',
     ];
 
+    public function areas()
     {
+        return $this->hasMany(FocusArea::class);
+    }
+
     public function getLogoUrlAttribute(): ?string
     {
         return $this->getFirstMediaUrl('logo') ?: null;
