@@ -8,7 +8,7 @@
             <form-input
                 type="text"
                 id="name"
-                :label="$t('account.name')"
+                :label="$t('dashboard.field.name')"
                 v-model="form.name"
                 :errors="$page.errors.name"
                 required
@@ -19,7 +19,7 @@
             <form-input
                 type="email"
                 id="email"
-                :label="$t('account.email')"
+                :label="$t('dashboard.field.email')"
                 v-model="form.email"
                 :errors="$page.errors.email"
                 required
@@ -29,7 +29,7 @@
             <form-input
                 type="password"
                 id="password"
-                :label="$t('account.password')"
+                :label="$t('dashboard.field.password')"
                 v-model="form.password"
                 :errors="$page.errors.password"
                 required
@@ -39,7 +39,7 @@
             <form-input
                 type="password"
                 id="password_confirmation"
-                :label="$t('account.password_confirmation')"
+                :label="$t('dashboard.field.password_confirmation')"
                 v-model="form.password_confirmation"
                 :errors="$page.errors.password_confirmation"
                 required

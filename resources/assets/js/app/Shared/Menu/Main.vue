@@ -53,6 +53,7 @@
                         :icon="item.icon"
                         :href="item.href"
                         :label="item.label"
+                        :children="item.children || []"
                         :key="index"
                     />
 
@@ -61,7 +62,7 @@
                     <menu-item
                         icon="System/logout-box-line"
                         :href="$route('home')"
-                        :label="$t('menu.back_to_site')"
+                        :label="$t('dashboard.menu.back_to_site')"
                         :external="true"
                     />
                 </nav>
@@ -89,17 +90,23 @@
                     {
                         icon: 'System/dashboard-fill',
                         href: this.$route('dashboard.index'),
-                        label: this.$t('menu.dashboard'),
+                        label: this.$t('dashboard.menu.dashboard'),
                     },
                     {
                         icon: 'Finance/money-euro-circle-line',
                         href: this.$route('donors.index'),
-                        label: this.$t('donor.plural'),
+                        label: this.$t('dashboard.model.donor.plural'),
+                        children: [
+                            {
+                                href: this.$route('focus-areas.index'),
+                                label: this.$t('dashboard.model.focusArea.plural'),
+                            },
+                        ],
                     },
                     {
                         icon: 'User/user-settings-line',
                         href: '#',
-                        label: this.$t('menu.users'),
+                        label: this.$t('dashboard.menu.users'),
                     },
                 ],
             };

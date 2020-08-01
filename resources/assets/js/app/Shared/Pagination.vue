@@ -1,5 +1,8 @@
 <template>
-    <div class="flex items-center justify-between py-4 leading-tight">
+    <div
+        v-if="hasPages"
+        class="flex items-center justify-between py-4 leading-tight"
+    >
         <div
             v-for="key in ['prev', 'next']"
             :key="key"
@@ -41,6 +44,9 @@
         computed: {
             style() {
                 return 'px-4 py-3 border text-sm border-gray-200 rounded hover:bg-white focus:border-blue-500 focus:text-blue-500 focus:outline-none';
+            },
+            hasPages() {
+                return this.links.pages.length > 1;
             },
         },
     };

@@ -5,10 +5,21 @@
                 :href="$route('donors.index')"
                 class="text-blue-500 hover:text-blue-600"
             >
-                {{ $t('donor.plural') }}
+                {{ $t('dashboard.model.donor.plural') }}
             </inertia-link>
             <span class="font-normal text-gray-300" aria-hidden="true">//</span>
-            {{ $page.donor.name }}
+            {{ donor.name }}
+        </template>
+
+        <template v-slot:actions>
+            <div>
+                <form-button
+                    color="blue"
+                    :href="$route('donors.edit', { donor: donor.id })"
+                >
+                    {{ $t('donor.edit') }}
+                </form-button>
+            </div>
         </template>
 
         <panel>
@@ -16,77 +27,76 @@
                 class="grid gap-4 sm:grid-cols-3 md:col-gap-6 md:row-gap-8 md:grid-cols-5"
             >
                 <div class="md:row-span-2">
-                    <img
-                        class="w-full"
-                        src="https://images.unsplash.com/photo-1584441405886-bc91be61e56a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&h=300&q=80"
-                        alt=""
-                    />
+                    <div class="relative border aspect-ratio-1/1">
+                        <div
+                            class="absolute inset-0 flex items-center justify-center"
+                        >
+                            <img class="w-full" :src="donor.logo_url" alt="" />
+                        </div>
+                    </div>
                 </div>
 
                 <div class="sm:col-span-2 md:col-span-4">
                     <h2
                         class="text-2xl font-bold leading-tight md:text-3xl"
-                        v-text="$page.donor.name"
+                        v-text="donor.name"
                     />
 
-                    <div v-if="$page.donor.hq" class="flex items-center">
+                    <div v-if="donor.hq" class="flex items-center">
                         <svg-vue
                             icon="Map/map-pin-line"
                             class="w-4 h-4 mr-1 text-gray-500 fill-current"
                         />
 
-                        <span v-text="$page.donor.hq" />
+                        <span v-text="donor.hq" />
                     </div>
                 </div>
 
                 <div class="sm:col-span-3 md:col-span-2">
-                    <strong class="text-lg" v-text="$page.donor.contact" />
+                    <strong class="text-lg" v-text="donor.contact" />
 
-                    <div
-                        v-if="$page.donor.email"
-                        class="flex items-center mt-1"
-                    >
+                    <div v-if="donor.email" class="flex items-center mt-1">
                         <svg-vue
                             icon="Business/at-line"
                             class="w-4 h-4 mr-1 text-gray-500 fill-current"
                         />
 
                         <a
-                            :href="`mailto:${$page.donor.email}`"
+                            :href="`mailto:${donor.email}`"
                             class="hover:underline"
-                            v-text="$page.donor.email"
+                            v-text="donor.email"
                         />
                     </div>
 
-                    <div
-                        v-if="$page.donor.phone"
-                        class="flex items-center mt-1"
-                    >
+                    <div v-if="donor.phone" class="flex items-center mt-1">
                         <svg-vue
                             icon="Device/phone-line"
                             class="w-4 h-4 mr-1 text-gray-500 fill-current"
                         />
 
                         <a
-                            :href="`tel:${$page.donor.phone}`"
+                            :href="`tel:${donor.phone}`"
                             class="hover:underline"
-                            v-text="$page.donor.phone"
+                            v-text="donor.phone"
                         />
                     </div>
                 </div>
 
                 <div
                     class="sm:col-span-3 md:col-span-2"
-                    v-if="$page.donor.areas.length"
+                    v-if="donor.areas.length"
                 >
-                    <strong class="text-lg" v-text="$t('model.field.areas')" />
+                    <strong
+                        class="text-lg"
+                        v-text="$t('dashboard.field.areas')"
+                    />
                     <div class="flex items-center mt-1">
                         <svg-vue
                             icon="Design/focus-3-line"
                             class="w-4 h-4 mr-1 text-gray-500 fill-current"
                         />
 
-                        {{ $page.donor.areas.join(', ') }}
+                        {{ donor.areas.join(', ') }}
                     </div>
                 </div>
             </div>
@@ -119,9 +129,12 @@
             FormButton,
             Panel,
         },
+        props: {
+            donor: Object,
+        },
         metaInfo() {
             return {
-                title: this.$page.donor.name,
+                title: this.donor.name,
             };
         },
         data() {

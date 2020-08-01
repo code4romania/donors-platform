@@ -14,7 +14,7 @@
             <form-input
                 type="email"
                 id="email"
-                :label="$t('account.email')"
+                :label="$t('dashboard.field.email')"
                 v-model="form.email"
                 :errors="$page.errors.email"
                 required

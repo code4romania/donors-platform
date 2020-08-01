@@ -17,6 +17,7 @@
         "@tailwindcss/ui": "^0.4.0",
         "axios": "^0.19.2",
         "cross-env": "^7.0",
+        "inertia-table": "^1.0.8",
         "laravel-mix": "^5.0.1",
         "laravel-mix-svg-vue": "^0.2.6",
         "portal-vue": "^2.1.7",

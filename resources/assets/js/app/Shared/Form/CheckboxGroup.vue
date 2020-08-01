@@ -90,7 +90,7 @@
         },
         computed: {
             disableOther() {
-                return this.other && this.other.length;
+                return !!(this.other && this.other.length);
             },
             checkedOptions() {
                 return [...this.checked, this.other].filter((el) => el !== null);

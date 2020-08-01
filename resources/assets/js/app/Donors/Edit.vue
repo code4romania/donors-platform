@@ -8,7 +8,11 @@
                 {{ $t('dashboard.model.donor.plural') }}
             </inertia-link>
             <span class="font-normal text-gray-300" aria-hidden="true">//</span>
-            {{ pageTitle }}
+            {{
+                $t('dashboard.action.edit', {
+                    model: $t('dashboard.model.donor.singular').toLowerCase(),
+                })
+            }}
         </template>
 
         <form @submit.prevent="submit" method="post" class="grid row-gap-8">
@@ -51,7 +55,6 @@
                     :label="$t('dashboard.field.logo')"
                     @fileChange="form.logo = $event"
                     :errors="$page.errors.logo"
-                    required
                 />
 
                 <form-checkbox-group
@@ -100,8 +103,14 @@
             </form-panel>
 
             <div class="flex justify-end space-x-3">
+                <form-button
+                    color="red"
+                    :href="$route('donors.show', { donor: donor.id })"
+                >
+                    {{ $t('dashboard.cancel') }}
+                </form-button>
                 <form-button color="blue">
-                    {{ submitLabel }}
+                    {{ $t('dashboard.save') }}
                 </form-button>
             </div>
         </form>
@@ -138,25 +147,27 @@
         data() {
             return {
                 form: {
-                    name: null,
-                    type: null,
-                    hq: null,
-                    contact: null,
-                    email: null,
-                    phone: null,
-                    areas: [],
-                    logo: null,
+                    name: this.donor.name,
+                    type: this.donor.type,
+                    hq: this.donor.hq,
+                    contact: this.donor.contact,
+                    email: this.donor.email,
+                    phone: this.donor.phone,
+                    areas: this.donor.areas,
                 },
             };
         },
+        props: {
+            donor: Object,
+        },
         computed: {
             pageTitle() {
-                return this.$t('dashboard.action.create', {
+                return this.$t('dashboard.action.edit', {
                     model: this.$t('dashboard.model.donor.singular').toLowerCase(),
                 });
             },
             submitLabel() {
-                return this.$t('dashboard.action.create', {
+                return this.$t('dashboard.action.edit', {
                     model: this.$t('dashboard.model.donor.singular').toLowerCase(),
                 });
             },
@@ -175,7 +186,7 @@
                     console.log(field, value);
                 }
 
-                this.$inertia.post(this.$route('donors.store'), formData);
+                this.$inertia.post(this.$route('donors.update'), formData);
             },
         },
     };

@@ -48,7 +48,11 @@ class DonorController extends Controller
     {
         $donor = Donor::create($request->all());
 
-        return Redirect::route('donors.show', $donor);
+        $donor->addMedia($request->file('logo'))
+            ->toMediaCollection('logo');
+
+        return Redirect::route('donors.show', $donor)
+            ->with('success', __('dashboard.event.created', ['model' => __('dashboard.model.donor.singular')]));
     }
 
     /**
@@ -89,7 +93,7 @@ class DonorController extends Controller
         $donor->update($request->all());
 
         return Redirect::back()
-            ->with('success', __('model.updated', ['model' => __('donor.singular')]));
+            ->with('success', __('dashboard.event.updated', ['model' => __('dashboard.model.donor.singular')]));
     }
 
     /**
@@ -103,6 +107,6 @@ class DonorController extends Controller
         $donor->delete();
 
         return Redirect::back()
-            ->with('success', __('model.deleted', ['model' => __('donor.singular')]));
+            ->with('success', __('dashboard.event.deleted', ['model' => __('dashboard.model.donor.singular')]));
     }
 }

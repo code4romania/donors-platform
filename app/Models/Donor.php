@@ -30,7 +30,18 @@ class Donor extends Model implements HasMedia
         'areas' => 'collection',
     ];
 
-    public function getLogoAttribute()
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'logo_url',
+    ];
+
     {
+    public function getLogoUrlAttribute(): ?string
+    {
+        return $this->getFirstMediaUrl('logo') ?: null;
     }
 }

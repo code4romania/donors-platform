@@ -8,7 +8,7 @@
             <form-input
                 type="email"
                 id="email"
-                :label="$t('account.email')"
+                :label="$t('dashboard.field.email')"
                 v-model="form.email"
                 :errors="$page.errors.email"
                 required
@@ -19,7 +19,7 @@
             <form-input
                 type="password"
                 id="password"
-                :label="$t('account.password')"
+                :label="$t('dashboard.field.password')"
                 v-model="form.password"
                 :errors="$page.errors.password"
                 required
@@ -29,7 +29,7 @@
             <div class="flex items-center justify-between">
                 <form-checkbox
                     id="remember"
-                    v-model="form.remember"
+                    :checked.sync="form.remember"
                     :label="$t('auth.remember')"
                 />
 
@@ -65,7 +65,7 @@
                 form: {
                     email: null,
                     password: null,
-                    remember: null,
+                    remember: false,
                 },
             };
         },

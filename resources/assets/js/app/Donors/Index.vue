@@ -1,22 +1,18 @@
 <template>
     <layout>
         <template v-slot:title>
-            Donors
+            {{ $t('dashboard.model.donor.plural') }}
         </template>
 
         <template v-slot:actions>
             <div>
                 <form-button color="blue" :href="$route('donors.create')">
-                    {{ $t('donor.create') }}
+                    {{ createLabel }}
                 </form-button>
             </div>
         </template>
 
-        <data-table
-            :collection="$page.donors"
-            route="donors.show"
-            :paginate="true"
-        />
+        <data-table :collection="donors" route="donors.show" :paginate="true" />
     </layout>
 </template>
 <script>
@@ -30,10 +26,20 @@
             DataTable,
             FormButton,
         },
+        props: {
+            donors: Object,
+        },
         metaInfo() {
             return {
-                title: this.$t('donor.plural'),
+                title: this.$t('dashboard.model.donor.plural'),
             };
+        },
+        computed: {
+            createLabel() {
+                return this.$t('dashboard.action.create', {
+                    model: this.$t('dashboard.model.donor.singular').toLowerCase(),
+                });
+            },
         },
     };
 </script>

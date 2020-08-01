@@ -8,7 +8,7 @@
                             class="px-6 py-4"
                             v-for="(column, index) in collection.columns"
                             :key="index"
-                            v-text="$t('table.' + column)"
+                            v-text="$t('dashboard.field.' + column)"
                         />
                     </tr>
                 </thead>

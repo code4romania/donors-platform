@@ -31,6 +31,8 @@
                     <slot />
                 </div>
             </main>
+
+            <flash-messages />
         </div>
     </div>
 </template>
