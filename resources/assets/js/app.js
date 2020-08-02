@@ -17,6 +17,7 @@ Vue.use(VuePortal);
 Vue.use(VueSvg);
 
 Vue.directive('click-away', VueClickOutside);
+
 Vue.prototype.$route = (...args) => route(...args).url();
 
 const app = document.getElementById('app');
