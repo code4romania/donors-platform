@@ -42,7 +42,7 @@ class Kernel extends HttpKernel
         ],
 
         'dashboard' => [
-            \Reinink\RememberQueryStrings::class,
+            // \Reinink\RememberQueryStrings::class,
         ],
 
         'api' => [
