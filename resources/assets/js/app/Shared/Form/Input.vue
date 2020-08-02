@@ -1,23 +1,33 @@
 <template>
     <div>
-        <form-label
-            v-if="label"
-            :label="label"
-            :id="id"
-            :required="$attrs.required"
-        />
+        <div class="flex">
+            <form-label
+                v-if="label"
+                :label="label"
+                :id="id"
+                :required="$attrs.required"
+                class="flex-1"
+            />
 
-        <template v-if="translated && languages">
-            <template v-for="(name, locale) in languages" v-show="true">
-                <form-text
-                    :key="locale"
-                    :type="type"
-                    :id="id"
-                    v-bind="$attrs"
-                    v-model="dataValue[locale]"
-                    @input="update(locale, ...arguments)"
-                />
-            </template>
+            <button
+                type="button"
+                class="px-1.5 mb-1 ml-2 text-xs text-white uppercase bg-gray-400 rounded-sm hover:bg-gray-500 focus:outline-none"
+                @click="nextLocale"
+                v-text="locale"
+            />
+        </div>
+
+        <template v-if="translated && locales">
+            <form-text
+                v-for="(name, locale) in locales"
+                v-show="isCurrentLocale(locale)"
+                :key="locale"
+                :type="type"
+                :id="id"
+                v-bind="$attrs"
+                v-model="dataValue[locale]"
+                @input="update(locale, ...arguments)"
+            />
         </template>
         <template v-else>
             <form-text
@@ -37,6 +47,8 @@
     import FormText from '@/Shared/Form/Text';
     import InputError from '@/Shared/Form/InputError';
 
+    import LocaleMixin from '@/mixins/locale';
+
     export default {
         inheritAttrs: false,
         components: {
@@ -44,6 +56,7 @@
             FormText,
             InputError,
         },
+        mixins: [LocaleMixin],
         props: {
             label: {
                 type: [String, null],
@@ -72,25 +85,7 @@
                 dataValue: this.value,
             };
         },
-        computed: {
-            languages() {
-                return this.$page.languages;
-            },
-            availableLocales() {
-                return Object.keys(this.$page.languages);
-            },
-        },
         methods: {
-            isValidLocale(locale) {
-                return this.availableLocales.indexOf(locale) !== -1;
-            },
-            changeLanguage(locale) {
-                if (!this.isValidLocale(locale)) {
-                    return;
-                }
-
-                this.$page.locale = locale;
-            },
             update(locale, value) {
                 let payload = {};
 
