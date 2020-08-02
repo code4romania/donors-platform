@@ -1,7 +1,7 @@
 <template>
     <layout>
         <template v-slot:title>
-            {{ $t('focusArea.plural') }}
+            {{ $t('dashboard.model.focusArea.plural') }}
         </template>
 
         <template v-slot:actions>
@@ -14,7 +14,7 @@
 
         <data-table
             :collection="focusAreas"
-            route="focus-areas.show"
+            route="focus-areas.edit"
             :paginate="true"
         />
     </layout>

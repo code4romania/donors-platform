@@ -8,13 +8,7 @@
                 {{ $t('dashboard.model.focusArea.plural') }}
             </inertia-link>
             <span class="font-normal text-gray-300" aria-hidden="true">//</span>
-            {{
-                $t('dashboard.action.edit', {
-                    model: $t(
-                        'dashboard.model.focusArea.singular'
-                    ).toLowerCase(),
-                })
-            }}
+            {{ pageTitle }}
         </template>
 
         <form @submit.prevent="submit" method="post" class="grid row-gap-8">
@@ -38,11 +32,8 @@
             </form-panel>
 
             <div class="flex justify-end space-x-3">
-                <form-button color="red" :href="$route('focus-areas.index')">
-                    {{ $t('dashboard.cancel') }}
-                </form-button>
                 <form-button color="blue">
-                    {{ $t('dashboard.save') }}
+                    {{ submitLabel }}
                 </form-button>
             </div>
         </form>
@@ -50,7 +41,6 @@
 </template>
 <script>
     import Layout from '@/Shared/Layout/Default';
-
     import FormButton from '@/Shared/Form/Button';
     import FormCheckbox from '@/Shared/Form/Checkbox';
     import FormCheckboxGroup from '@/Shared/Form/CheckboxGroup';
@@ -90,14 +80,14 @@
         },
         computed: {
             pageTitle() {
-                return this.$t('dashboard.action.edit', {
+                return this.$t('dashboard.action.create', {
                     model: this.$t(
                         'dashboard.model.focusArea.singular'
                     ).toLowerCase(),
                 });
             },
             submitLabel() {
-                return this.$t('dashboard.action.edit', {
+                return this.$t('dashboard.action.create', {
                     model: this.$t(
                         'dashboard.model.focusArea.singular'
                     ).toLowerCase(),
@@ -106,10 +96,8 @@
         },
         methods: {
             submit() {
-                this.$inertia.put(
-                    this.$route('focus-areas.update', {
-                        focus_area: this.focusArea.id,
-                    }),
+                this.$inertia.post(
+                    this.$route('focus-areas.store'),
                     this.prepareData(this.form)
                 );
             },
