@@ -17,7 +17,6 @@ class FocusArea extends Model implements TranslatableContract
      * @var array
      */
     protected $with = [
-        'translations',
     ];
 
     /**
@@ -35,4 +34,9 @@ class FocusArea extends Model implements TranslatableContract
     public $translatedAttributes = [
         'name',
     ];
+
+    public function donors()
+    {
+        return $this->belongsToMany(Donor::class);
+    }
 }

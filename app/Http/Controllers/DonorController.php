@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDonorRequest;
+use App\Http\Resources\DonorResource;
+use App\Http\Resources\FocusAreaResource;
 use App\Models\Donor;
+use App\Models\FocusArea;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
@@ -35,7 +38,9 @@ class DonorController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Donors/Create');
+        return Inertia::render('Donors/Create', [
+            'focus_areas' => FocusAreaResource::collection(FocusArea::all()),
+        ]);
     }
 
     /**
@@ -46,7 +51,9 @@ class DonorController extends Controller
      */
     public function store(StoreDonorRequest $request)
     {
-        $donor = Donor::create($request->all());
+        $donor = Donor::create($request->except('logo', 'areas'));
+
+        $donor->focusAreas()->sync($request->input('areas'));
 
         $donor->addMedia($request->file('logo'))
             ->toMediaCollection('logo');
@@ -64,7 +71,7 @@ class DonorController extends Controller
     public function show(Donor $donor)
     {
         return Inertia::render('Donors/Show', [
-            'donor' => $donor,
+            'donor' => DonorResource::make($donor),
         ]);
     }
 
@@ -77,7 +84,8 @@ class DonorController extends Controller
     public function edit(Donor $donor)
     {
         return Inertia::render('Donors/Edit', [
-            'donor' => $donor,
+            'donor'       => DonorResource::make($donor),
+            'focus_areas' => FocusAreaResource::collection(FocusArea::all()),
         ]);
     }
 
@@ -91,6 +99,8 @@ class DonorController extends Controller
     public function update(StoreDonorRequest $request, Donor $donor)
     {
         $donor->update($request->all());
+
+        $donor->focusAreas()->sync($request->input('areas'));
 
         return Redirect::back()
             ->with('success', __('dashboard.event.updated', ['model' => __('dashboard.model.donor.singular')]));

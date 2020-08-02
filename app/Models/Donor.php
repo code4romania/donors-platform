@@ -13,6 +13,14 @@ class Donor extends Model implements HasMedia
     use InteractsWithMedia;
 
     /**
+     * The relationships that should always be loaded.
+     *
+     * @var array
+     */
+    protected $with = [
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -39,9 +47,9 @@ class Donor extends Model implements HasMedia
         'logo_url',
     ];
 
-    public function areas()
+    public function focusAreas()
     {
-        return $this->hasMany(FocusArea::class);
+        return $this->belongsToMany(FocusArea::class);
     }
 
     public function getLogoUrlAttribute(): ?string

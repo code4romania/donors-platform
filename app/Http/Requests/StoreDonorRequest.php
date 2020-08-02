@@ -32,10 +32,10 @@ class StoreDonorRequest extends FormRequest
             'contact' => ['required', 'string'],
             'email'   => ['required', 'email'],
             'phone'   => ['required', 'string'],
-            'areas.*' => ['nullable', 'string'],
+            'areas.*' => ['required', 'exists:focus_areas,id'],
             'logo'    => [
-                'required',
-                'file',
+                'sometimes',
+                'image',
                 'mimes:jpeg,png,gif',
                 'dimensions:min_width=300,min_height=300',
                 'max:' . config('media-library.max_file_size'),
@@ -51,7 +51,7 @@ class StoreDonorRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'areas' => array_filter(json_decode($this->areas)),
+            'areas' => array_filter($this->areas),
         ]);
     }
 }
