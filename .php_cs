@@ -7,6 +7,7 @@ use PhpCsFixer\Finder;
 
 $rules = [
     'align_multiline_comment' => true,
+    'array_indentation' => true,
     'array_syntax' => ['syntax' => 'short'],
     'binary_operator_spaces' => [
         'default' => 'single_space',

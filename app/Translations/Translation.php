@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Models\Translations;
+namespace App\Translations;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -20,7 +20,7 @@ class Translation extends Model
         // Use the list of translatable attributes on our base model
         if (
             blank($fillable) &&
-            Str::contains($class = get_class($this), 'Models\Translations') &&
+            Str::contains($class = get_class($this), '\Translations') &&
             property_exists($class, 'baseModel')
         ) {
             $fillable = (new $this->baseModel)->translatedAttributes;

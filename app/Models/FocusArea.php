@@ -4,16 +4,35 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Models\Translations\FocusAreaTranslation;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
-use Illuminate\Database\Eloquent\Model;
 
 class FocusArea extends Model implements TranslatableContract
 {
     use Translatable;
 
-    public $translatedAttributes = ['name'];
+    /**
+     * The relationships that should always be loaded.
+     *
+     * @var array
+     */
+    protected $with = [
+        'translations',
+    ];
 
-    public $translationModel = FocusAreaTranslation::class;
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+    ];
+
+    /**
+     * @var array
+     */
+    public $translatedAttributes = [
+        'name',
+    ];
 }

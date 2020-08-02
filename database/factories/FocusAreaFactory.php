@@ -5,7 +5,7 @@ declare(strict_types=1);
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\Models\FocusArea;
-use App\Models\Translations\FocusAreaTranslation;
+use App\Translations\FocusAreaTranslation;
 use Faker\Generator as Faker;
 
 $factory->define(FocusArea::class, static function (Faker $faker): array {

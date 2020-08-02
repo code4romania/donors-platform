@@ -48,6 +48,7 @@ class AppServiceProvider extends ServiceProvider
 
         Inertia::share([
             'locale' => fn () => app()->getLocale(),
+            'locales' => fn () => config('translatable.locale_names'),
 
             'auth' => function () {
                 return [
