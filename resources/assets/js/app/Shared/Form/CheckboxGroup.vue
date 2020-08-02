@@ -4,42 +4,19 @@
 
         <div class="flex flex-wrap leading-tight text-gray-900">
             <label
-                class="flex items-center w-full py-2 pr-3 sm:w-1/2 md:w-1/3 lg:w-1/4"
+                class="flex w-full py-2 pr-3 sm:w-1/2 md:w-1/3 lg:w-1/4"
                 v-for="(option, index) in options"
                 :key="index"
             >
                 <input
                     type="checkbox"
-                    class="w-4 h-4 mr-2 text-blue-500 duration-150 ease-in-out transition-color form-checkbox"
-                    :value="option"
+                    class="w-4 h-4 mt-1 mr-2 text-blue-500 duration-150 ease-in-out transition-color form-checkbox"
+                    :value="option.value"
                     v-model="checked"
                 />
-                {{ option }}
-            </label>
-
-            <label
-                class="flex items-center w-full py-2 pr-3 sm:w-1/2 md:w-1/3 lg:w-1/4"
-                v-if="otherLabel"
-            >
-                <input
-                    type="checkbox"
-                    class="w-4 h-4 mr-2 transition duration-150 ease-in-out form-checkbox"
-                    :class="disableOther ? 'text-gray-200' : 'text-blue-500'"
-                    v-model="showOther"
-                    :disabled="disableOther"
-                />
-                {{ otherLabel }}
+                {{ option.label }}
             </label>
         </div>
-
-        <form-input
-            v-if="showOther"
-            type="text"
-            id="other"
-            :label="otherLabel"
-            v-model="other"
-            :errors="$page.errors.other"
-        />
 
         <input-error v-if="errors.length" :message="errors" />
     </div>
@@ -64,10 +41,6 @@
                 type: [String, null],
                 default: null,
             },
-            otherLabel: {
-                type: [String, null],
-                default: null,
-            },
             id: {
                 type: String,
                 required: true,
@@ -80,24 +53,25 @@
                 type: Array,
                 default: () => [],
             },
+            value: {
+                type: Array,
+                default: () => [],
+            },
         },
         data() {
             return {
                 checked: [],
-                showOther: false,
-                other: null,
             };
         },
-        computed: {
-            disableOther() {
-                return !!(this.other && this.other.length);
-            },
-            checkedOptions() {
-                return [...this.checked, this.other].filter((el) => el !== null);
-            },
-        },
+
         watch: {
-            checkedOptions(cv) {
+            value: {
+                immediate: true,
+                handler: function (value) {
+                    this.checked = value;
+                },
+            },
+            checked(cv) {
                 this.$emit('input', cv);
             },
         },

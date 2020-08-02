@@ -8,16 +8,16 @@
                 {{ $t('dashboard.model.donor.plural') }}
             </inertia-link>
             <span class="font-normal text-gray-300" aria-hidden="true">//</span>
-            {{ donor.name }}
+            {{ pageTitle }}
         </template>
 
         <template v-slot:actions>
             <div>
                 <form-button
                     color="blue"
-                    :href="$route('donors.edit', { donor: donor.id })"
+                    :href="$route('donors.edit', { donor: donor.data.id })"
                 >
-                    {{ $t('donor.edit') }}
+                    {{ submitLabel }}
                 </form-button>
             </div>
         </template>
@@ -31,7 +31,11 @@
                         <div
                             class="absolute inset-0 flex items-center justify-center"
                         >
-                            <img class="w-full" :src="donor.logo_url" alt="" />
+                            <img
+                                class="w-full"
+                                :src="donor.data.logo_url"
+                                alt=""
+                            />
                         </div>
                     </div>
                 </div>
@@ -39,7 +43,7 @@
                 <div class="sm:col-span-2 md:col-span-4">
                     <h2
                         class="text-2xl font-bold leading-tight md:text-3xl"
-                        v-text="donor.name"
+                        v-text="donor.data.name"
                     />
 
                     <div v-if="donor.hq" class="flex items-center">
@@ -48,55 +52,60 @@
                             class="w-4 h-4 mr-1 text-gray-500 fill-current"
                         />
 
-                        <span v-text="donor.hq" />
+                        <span v-text="donor.data.hq" />
                     </div>
                 </div>
 
                 <div class="sm:col-span-3 md:col-span-2">
-                    <strong class="text-lg" v-text="donor.contact" />
+                    <strong class="text-lg" v-text="donor.data.contact" />
 
-                    <div v-if="donor.email" class="flex items-center mt-1">
+                    <div v-if="donor.data.email" class="flex items-center mt-1">
                         <svg-vue
                             icon="Business/at-line"
                             class="w-4 h-4 mr-1 text-gray-500 fill-current"
                         />
 
                         <a
-                            :href="`mailto:${donor.email}`"
+                            :href="`mailto:${donor.data.email}`"
                             class="hover:underline"
-                            v-text="donor.email"
+                            v-text="donor.data.email"
                         />
                     </div>
 
-                    <div v-if="donor.phone" class="flex items-center mt-1">
+                    <div v-if="donor.data.phone" class="flex items-center mt-1">
                         <svg-vue
                             icon="Device/phone-line"
                             class="w-4 h-4 mr-1 text-gray-500 fill-current"
                         />
 
                         <a
-                            :href="`tel:${donor.phone}`"
+                            :href="`tel:${donor.data.phone}`"
                             class="hover:underline"
-                            v-text="donor.phone"
+                            v-text="donor.data.phone"
                         />
                     </div>
                 </div>
 
                 <div
                     class="sm:col-span-3 md:col-span-2"
-                    v-if="donor.areas.length"
+                    v-if="donor.data.focus_areas.length"
                 >
                     <strong
                         class="text-lg"
                         v-text="$t('dashboard.field.areas')"
                     />
-                    <div class="flex items-center mt-1">
+                    <div class="flex mt-1">
                         <svg-vue
                             icon="Design/focus-3-line"
-                            class="w-4 h-4 mr-1 text-gray-500 fill-current"
+                            class="flex-shrink-0 w-4 h-4 mr-1 text-gray-500 fill-current"
                         />
-
-                        {{ donor.areas.join(', ') }}
+                        <div
+                            v-html="
+                                donor.data.focus_areas
+                                    .map((area) => area.name)
+                                    .join(', ')
+                            "
+                        />
                     </div>
                 </div>
             </div>
@@ -136,6 +145,18 @@
             return {
                 title: this.donor.name,
             };
+        },
+        computed: {
+            pageTitle() {
+                return this.$t('dashboard.action.edit', {
+                    model: this.$t('dashboard.model.donor.singular').toLowerCase(),
+                });
+            },
+            submitLabel() {
+                return this.$t('dashboard.action.edit', {
+                    model: this.$t('dashboard.model.donor.singular').toLowerCase(),
+                });
+            },
         },
         data() {
             return {

@@ -49,6 +49,7 @@
                 <form-file
                     id="logo"
                     :label="$t('dashboard.field.logo')"
+                    accept="image/x-png,image/gif,image/jpeg"
                     @fileChange="form.logo = $event"
                     :errors="$page.errors.logo"
                     required
@@ -60,7 +61,7 @@
                     :other-label="$t('dashboard.field.other')"
                     v-model="form.areas"
                     class="lg:col-span-2"
-                    :options="['a', 'b', 'c', 'd', 'e']"
+                    :options="focus_areas.data"
                     :other="true"
                 />
             </form-panel>
@@ -116,7 +117,8 @@
     import FormInput from '@/Shared/Form/Input';
     import FormPanel from '@/Shared/Form/Panel';
     import FormSelect from '@/Shared/Form/Select';
-    import Panel from '@/Shared/Panel';
+
+    import LocaleMixin from '@/mixins/locale';
 
     export default {
         components: {
@@ -128,8 +130,8 @@
             FormInput,
             FormPanel,
             FormSelect,
-            Panel,
         },
+        mixins: [LocaleMixin],
         metaInfo() {
             return {
                 title: this.pageTitle,
@@ -149,6 +151,9 @@
                 },
             };
         },
+        props: {
+            focus_areas: Object,
+        },
         computed: {
             pageTitle() {
                 return this.$t('dashboard.action.create', {
@@ -163,19 +168,10 @@
         },
         methods: {
             submit() {
-                let formData = new FormData();
-
-                for (const field in this.form) {
-                    let value = Array.isArray(this.form[field])
-                        ? JSON.stringify(this.form[field])
-                        : this.form[field];
-
-                    formData.append(field, value);
-
-                    console.log(field, value);
-                }
-
-                this.$inertia.post(this.$route('donors.store'), formData);
+                this.$inertia.post(
+                    this.$route('donors.store'),
+                    this.prepareFormData(this.form)
+                );
             },
         },
     };

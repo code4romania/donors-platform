@@ -15,6 +15,7 @@
         >
             <option
                 v-for="(option, index) in options"
+                :checked="dataValue === option"
                 :key="index"
                 v-text="option"
             />
@@ -48,6 +49,19 @@
             errors: {
                 type: Array,
                 default: () => [],
+            },
+        },
+        data() {
+            return {
+                dataValue: this.value,
+            };
+        },
+        watch: {
+            value: {
+                immediate: true,
+                handler: function (newValue) {
+                    this.dataValue = newValue;
+                },
             },
         },
     };

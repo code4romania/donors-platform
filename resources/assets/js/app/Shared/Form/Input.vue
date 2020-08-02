@@ -10,6 +10,7 @@
             />
 
             <button
+                v-if="translated && locales"
                 type="button"
                 class="px-1.5 mb-1 ml-2 text-xs text-white uppercase bg-gray-400 rounded-sm hover:bg-gray-500 focus:outline-none"
                 @click="nextLocale"

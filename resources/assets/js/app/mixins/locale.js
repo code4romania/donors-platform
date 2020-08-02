@@ -73,5 +73,19 @@ export default {
 
             return { ...fields, ...locales };
         },
+        prepareFormData(originalFields) {
+            let data = this.prepareData(originalFields),
+                formData = new FormData();
+
+            for (const field in data) {
+                let value = Array.isArray(data[field])
+                    ? JSON.stringify(data[field])
+                    : data[field];
+
+                formData.append(field, value);
+            }
+
+            return formData;
+        },
     },
 };

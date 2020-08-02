@@ -11,7 +11,7 @@
             type="file"
             :id="id"
             class="block w-full transition duration-150 ease-in-out rounded-md shadow-sm form-input"
-            ref="file"
+            :accept="accept"
             v-bind="$attrs"
             @change="onChange"
         />
@@ -35,6 +35,10 @@
                 type: [String, null],
                 default: null,
             },
+            accept: {
+                type: [String, null],
+                default: null,
+            },
             id: {
                 type: String,
                 required: true,
@@ -51,8 +55,8 @@
         },
         methods: {
             onChange(e) {
-                this.$emit('fileChange', e.target.files[0]);
                 this.file = e.target.files[0];
+                this.$emit('fileChange', this.file);
             },
         },
     };

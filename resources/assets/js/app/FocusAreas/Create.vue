@@ -75,9 +75,6 @@
                 },
             };
         },
-        props: {
-            focusArea: Object,
-        },
         computed: {
             pageTitle() {
                 return this.$t('dashboard.action.create', {

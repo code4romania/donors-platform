@@ -63,7 +63,7 @@
                     :other-label="$t('dashboard.field.other')"
                     v-model="form.areas"
                     class="lg:col-span-2"
-                    :options="['a', 'b', 'c', 'd', 'e']"
+                    :options="focus_areas.data"
                     :other="true"
                 />
             </form-panel>
@@ -105,7 +105,7 @@
             <div class="flex justify-end space-x-3">
                 <form-button
                     color="red"
-                    :href="$route('donors.show', { donor: donor.id })"
+                    :href="$route('donors.show', { donor: donor.data.id })"
                 >
                     {{ $t('dashboard.cancel') }}
                 </form-button>
@@ -118,6 +118,7 @@
 </template>
 <script>
     import Layout from '@/Shared/Layout/Default';
+
     import FormButton from '@/Shared/Form/Button';
     import FormCheckbox from '@/Shared/Form/Checkbox';
     import FormCheckboxGroup from '@/Shared/Form/CheckboxGroup';
@@ -125,7 +126,8 @@
     import FormInput from '@/Shared/Form/Input';
     import FormPanel from '@/Shared/Form/Panel';
     import FormSelect from '@/Shared/Form/Select';
-    import Panel from '@/Shared/Panel';
+
+    import LocaleMixin from '@/mixins/locale';
 
     export default {
         components: {
@@ -137,8 +139,8 @@
             FormInput,
             FormPanel,
             FormSelect,
-            Panel,
         },
+        mixins: [LocaleMixin],
         metaInfo() {
             return {
                 title: this.pageTitle,
@@ -147,18 +149,19 @@
         data() {
             return {
                 form: {
-                    name: this.donor.name,
-                    type: this.donor.type,
-                    hq: this.donor.hq,
-                    contact: this.donor.contact,
-                    email: this.donor.email,
-                    phone: this.donor.phone,
-                    areas: this.donor.areas,
+                    name: this.donor.data.name,
+                    type: this.donor.data.type,
+                    hq: this.donor.data.hq,
+                    contact: this.donor.data.contact,
+                    email: this.donor.data.email,
+                    phone: this.donor.data.phone,
+                    areas: this.donor.data.focus_areas.map((area) => area.id),
                 },
             };
         },
         props: {
             donor: Object,
+            focus_areas: Object,
         },
         computed: {
             pageTitle() {
@@ -174,19 +177,10 @@
         },
         methods: {
             submit() {
-                let formData = new FormData();
-
-                for (const field in this.form) {
-                    let value = Array.isArray(this.form[field])
-                        ? JSON.stringify(this.form[field])
-                        : this.form[field];
-
-                    formData.append(field, value);
-
-                    console.log(field, value);
-                }
-
-                this.$inertia.post(this.$route('donors.update'), formData);
+                this.$inertia.put(
+                    this.$route('donors.update', { donor: this.donor.data.id }),
+                    this.prepareData(this.form)
+                );
             },
         },
     };
