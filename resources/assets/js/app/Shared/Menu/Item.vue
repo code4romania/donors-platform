@@ -14,7 +14,7 @@
             {{ label }}
         </component>
 
-        <div v-if="isCurrentSection && children" class="mt-1 mb-3">
+        <div v-if="isCurrentSection && children.length" class="mt-1 mb-3">
             <component
                 v-for="(item, index) in children"
                 :key="index"

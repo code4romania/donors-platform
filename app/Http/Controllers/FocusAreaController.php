@@ -35,7 +35,9 @@ class FocusAreaController extends Controller
      */
     public function create()
     {
-        return Inertia::render('FocusAreas/Create');
+        return Inertia::render('FocusAreas/Create', [
+            'translatable' => app(FocusArea::class)->translatable,
+        ]);
     }
 
     /**
@@ -48,7 +50,7 @@ class FocusAreaController extends Controller
     {
         $focusArea = FocusArea::create($request->all());
 
-        return Redirect::route('focus-areas.show', $focusArea)
+        return Redirect::route('focus-areas.index')
             ->with('success', __('dashboard.event.created', ['model' => __('dashboard.model.focusArea.singular')]));
     }
 
@@ -60,9 +62,7 @@ class FocusAreaController extends Controller
      */
     public function show(FocusArea $focusArea)
     {
-        return Inertia::render('FocusAreas/Show', [
-            'focusArea' => $focusArea,
-        ]);
+        return Redirect::route('focus-areas.index');
     }
 
     /**
@@ -75,6 +75,7 @@ class FocusAreaController extends Controller
     {
         return Inertia::render('FocusAreas/Edit', [
             'focusArea' => $focusArea,
+            'translatable' => app(FocusArea::class)->translatable,
         ]);
     }
 
