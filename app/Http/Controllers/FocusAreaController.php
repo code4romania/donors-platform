@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreFocusAreaRequest;
+use App\Http\Resources\FocusAreaResource;
 use App\Models\FocusArea;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -22,9 +23,9 @@ class FocusAreaController extends Controller
 
         return Inertia::render('FocusAreas/Index', [
             'columns' => $columns,
-            'focusAreas' => FocusArea::query()
-                ->paginate()
-                ->only(...$columns),
+            'focusAreas' => FocusAreaResource::collection(
+                FocusArea::paginate()
+            ),
         ]);
     }
 

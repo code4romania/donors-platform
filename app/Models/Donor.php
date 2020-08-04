@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Traits\Draftable;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Donor extends Model implements HasMedia
 {
-    use InteractsWithMedia;
+    use Draftable, InteractsWithMedia;
 
     /**
      * The relationships that should always be loaded.
@@ -26,7 +27,7 @@ class Donor extends Model implements HasMedia
      * @var array
      */
     protected $fillable = [
-        'name', 'type', 'hq', 'contact', 'email', 'phone', 'areas',
+        'name', 'type', 'hq', 'contact', 'email', 'phone',
     ];
 
     /**
@@ -35,7 +36,7 @@ class Donor extends Model implements HasMedia
      * @var array
      */
     protected $casts = [
-        'areas' => 'collection',
+        'published_at' => 'datetime',
     ];
 
     /**

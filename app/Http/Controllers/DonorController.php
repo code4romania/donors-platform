@@ -21,13 +21,13 @@ class DonorController extends Controller
      */
     public function index()
     {
-        $columns = ['name', 'type', 'hq'];
+        $columns = ['name', 'type', 'hq', 'published_status'];
 
         return Inertia::render('Donors/Index', [
             'columns' => $columns,
-            'donors' => Donor::query()
-                ->paginate()
-                ->only(...$columns),
+            'donors'  => DonorResource::collection(
+                Donor::with('focusAreas')->paginate()
+            ),
         ]);
     }
 
@@ -39,7 +39,9 @@ class DonorController extends Controller
     public function create()
     {
         return Inertia::render('Donors/Create', [
-            'focus_areas' => FocusAreaResource::collection(FocusArea::all()),
+            'focus_areas' => FocusAreaResource::collection(
+                FocusArea::all()
+            ),
         ]);
     }
 
@@ -52,6 +54,8 @@ class DonorController extends Controller
     public function store(StoreDonorRequest $request)
     {
         $donor = Donor::create($request->except('logo', 'areas'));
+
+        $donor->publish($request->input('_publish'));
 
         $donor->focusAreas()->sync($request->input('areas'));
 
@@ -85,7 +89,9 @@ class DonorController extends Controller
     {
         return Inertia::render('Donors/Edit', [
             'donor'       => DonorResource::make($donor),
-            'focus_areas' => FocusAreaResource::collection(FocusArea::all()),
+            'focus_areas' => FocusAreaResource::collection(
+                FocusArea::all()
+            ),
         ]);
     }
 
@@ -98,7 +104,11 @@ class DonorController extends Controller
      */
     public function update(StoreDonorRequest $request, Donor $donor)
     {
-        $donor->update($request->all());
+        $donor->update($request->except('logo', 'areas'));
+
+        if ($request->input('_publish') !== $donor->isPublished()) {
+            $donor->publish($request->input('_publish'));
+        }
 
         $donor->focusAreas()->sync($request->input('areas'));
 

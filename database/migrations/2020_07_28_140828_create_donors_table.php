@@ -18,13 +18,13 @@ class CreateDonorsTable extends Migration
         Schema::create('donors', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('type');
-            $table->string('hq');
-            $table->string('contact');
-            $table->string('email');
-            $table->string('phone');
-            $table->json('areas')->nullable();
+            $table->string('type')->nullable();
+            $table->string('hq')->nullable();
+            $table->string('contact')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
             $table->timestamps();
+            $table->timestamp('published_at')->nullable();
         });
     }
 

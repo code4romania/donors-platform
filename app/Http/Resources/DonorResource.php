@@ -17,14 +17,16 @@ class DonorResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'id'          => $this->id,
-            'name'        => $this->name,
-            'type'          => $this->type,
-            'hq'          => $this->hq,
-            'contact'     => $this->contact,
-            'email'       => $this->email,
-            'phone'       => $this->phone,
-            'focus_areas' => $this->focusAreas->map->only('id', 'name'),
+            'id'               => $this->id,
+            'name'             => $this->name,
+            'type'             => $this->type,
+            'hq'               => $this->hq,
+            'contact'          => $this->contact,
+            'email'            => $this->email,
+            'phone'            => $this->phone,
+            'focus_areas'      => $this->focusAreas->map->only('id', 'name'),
+            'logo_url'         => $this->logo_url,
+            'published_status' => $this->published_status,
         ];
     }
 }
