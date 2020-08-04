@@ -38,11 +38,15 @@
             </form-panel>
 
             <div class="flex justify-end space-x-3">
-                <form-button color="red" :href="$route('focus-areas.index')">
-                    {{ $t('dashboard.cancel') }}
+                <form-button
+                    color="red"
+                    :href="$route('focus-areas.index')"
+                    :disabled="sending"
+                >
+                    {{ $t('dashboard.action.cancel') }}
                 </form-button>
-                <form-button color="blue">
-                    {{ $t('dashboard.save') }}
+                <form-button color="blue" :disabled="sending">
+                    {{ $t('dashboard.action.save') }}
                 </form-button>
             </div>
         </form>
@@ -80,8 +84,10 @@
         },
         data() {
             return {
+                sending: false,
                 form: {
-                    name: this.localizeField('name', this.focusArea),
+                    _method: 'PUT', // html form method spoofing
+                    name: this.localizeField('name', this.focusArea.data),
                 },
             };
         },
@@ -106,12 +112,19 @@
         },
         methods: {
             submit() {
-                this.$inertia.put(
-                    this.$route('focus-areas.update', {
-                        focus_area: this.focusArea.id,
-                    }),
-                    this.prepareData(this.form)
-                );
+                if (this.sending) {
+                    return;
+                }
+
+                this.sending = true;
+                this.$inertia
+                    .post(
+                        this.$route('focus-areas.update', {
+                            focus_area: this.focusArea.data.id,
+                        }),
+                        this.prepareFormData(this.form)
+                    )
+                    .then(() => (this.sending = false));
             },
         },
     };

@@ -6,9 +6,6 @@ export default {
         locales() {
             return this.$page.locales;
         },
-        localesExceptActive() {
-            return this.$page.locales;
-        },
     },
     methods: {
         isValidLocale(locale) {
@@ -78,7 +75,7 @@ export default {
                 formData = new FormData();
 
             for (const field in data) {
-                let value = Array.isArray(data[field])
+                let value = this.isObject(data[field])
                     ? JSON.stringify(data[field])
                     : data[field];
 
@@ -86,6 +83,9 @@ export default {
             }
 
             return formData;
+        },
+        isObject(value) {
+            return value === Object(value);
         },
     },
 };

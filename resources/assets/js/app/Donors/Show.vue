@@ -51,7 +51,7 @@
                     <div v-if="donor.data.hq" class="flex items-center">
                         <svg-vue
                             icon="Map/map-pin-line"
-                            class="w-4 h-4 mr-1 text-gray-500 fill-current"
+                            class="w-4 h-6 mr-1 text-gray-500 fill-current"
                         />
 
                         <span v-text="donor.data.hq" />
@@ -64,7 +64,7 @@
                     <div v-if="donor.data.email" class="flex items-center mt-1">
                         <svg-vue
                             icon="Business/at-line"
-                            class="w-4 h-4 mr-1 text-gray-500 fill-current"
+                            class="w-4 h-6 mr-1 text-gray-500 fill-current"
                         />
 
                         <a
@@ -77,7 +77,7 @@
                     <div v-if="donor.data.phone" class="flex items-center mt-1">
                         <svg-vue
                             icon="Device/phone-line"
-                            class="w-4 h-4 mr-1 text-gray-500 fill-current"
+                            class="w-4 h-6 mr-1 text-gray-500 fill-current"
                         />
 
                         <a
@@ -99,7 +99,7 @@
                     <div class="flex mt-1">
                         <svg-vue
                             icon="Design/focus-3-line"
-                            class="flex-shrink-0 w-4 h-4 mr-1 text-gray-500 fill-current"
+                            class="flex-shrink-0 w-4 h-6 mr-1 text-gray-500 fill-current"
                         />
                         <div
                             v-html="

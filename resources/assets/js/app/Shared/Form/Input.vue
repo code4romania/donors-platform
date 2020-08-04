@@ -39,6 +39,7 @@
                 @input="update(false, ...arguments)"
             />
         </template>
+
         <input-error v-if="errors.length" :message="errors[0]" />
     </div>
 </template>
