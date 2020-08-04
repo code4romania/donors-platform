@@ -10,7 +10,7 @@
         <input
             type="file"
             :id="id"
-            class="block w-full transition duration-150 ease-in-out rounded-md shadow-sm form-input"
+            class="block w-full text-xs transition duration-150 ease-in-out rounded-md shadow-sm form-input"
             :accept="accept"
             v-bind="$attrs"
             @change="onChange"

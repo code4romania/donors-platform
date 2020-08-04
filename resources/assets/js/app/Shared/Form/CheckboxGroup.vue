@@ -11,10 +11,10 @@
                 <input
                     type="checkbox"
                     class="w-4 h-4 mt-1 mr-2 text-blue-500 duration-150 ease-in-out transition-color form-checkbox"
-                    :value="option.value"
+                    :value="option[optionValueKey]"
                     v-model="checked"
                 />
-                {{ option.label }}
+                {{ option[optionLabelKey] }}
             </label>
         </div>
 
@@ -49,6 +49,14 @@
                 type: Array,
                 default: () => [],
             },
+            optionValueKey: {
+                type: String,
+                default: 'value',
+            },
+            optionLabelKey: {
+                type: String,
+                default: 'label',
+            },
             errors: {
                 type: Array,
                 default: () => [],
@@ -63,7 +71,6 @@
                 checked: [],
             };
         },
-
         watch: {
             value: {
                 immediate: true,

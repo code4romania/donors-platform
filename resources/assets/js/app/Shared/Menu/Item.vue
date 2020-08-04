@@ -14,7 +14,7 @@
             {{ label }}
         </component>
 
-        <div v-if="isCurrentSection && children.length" class="mt-1 mb-3">
+        <div v-if="children.length" class="mt-1 mb-3">
             <component
                 v-for="(item, index) in children"
                 :key="index"
@@ -53,19 +53,15 @@
                 default: () => [],
             },
         },
-        computed: {
-            isCurrentSection() {
-                let currentUrl = location.origin + location.pathname;
-
-                return (
-                    this.href === currentUrl ||
-                    this.children.filter((i) => currentUrl === i.href).length > 0
-                );
-            },
-        },
         methods: {
             isCurrentUrl(href) {
-                return href === location.origin + location.pathname;
+                let currentUrl = location.origin + location.pathname;
+
+                if (href !== this.$route('dashboard.index')) {
+                    return currentUrl.startsWith(href);
+                }
+
+                return href === currentUrl;
             },
             style(item) {
                 if (!item.external && this.isCurrentUrl(item.href)) {
