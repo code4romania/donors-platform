@@ -12,21 +12,27 @@
             </div>
         </template>
 
-        <data-table :collection="donors" route="donors.show" :paginate="true" />
+        <table-index
+            :collection="donors"
+            :columns="columns"
+            route="donors.show"
+            :paginate="true"
+        />
     </layout>
 </template>
 <script>
     import Layout from '@/Shared/Layout/Default';
-    import DataTable from '@/Shared/DataTable';
+    import TableIndex from '@/Shared/Table/Index';
     import FormButton from '@/Shared/Form/Button';
 
     export default {
         components: {
             Layout,
-            DataTable,
+            TableIndex,
             FormButton,
         },
         props: {
+            columns: Array,
             donors: Object,
         },
         metaInfo() {

@@ -62,6 +62,8 @@
                     v-model="form.areas"
                     class="lg:col-span-2"
                     :options="focus_areas.data"
+                    option-value-key="id"
+                    option-label-key="name"
                     :other="true"
                 />
             </form-panel>
@@ -101,7 +103,15 @@
             </form-panel>
 
             <div class="flex justify-end space-x-3">
-                <form-button color="blue">
+                <form-button
+                    type="button"
+                    @click.native.prevent="draft"
+                    :disabled="sending"
+                >
+                    {{ draftLabel }}
+                </form-button>
+
+                <form-button color="blue" :disabled="sending">
                     {{ submitLabel }}
                 </form-button>
             </div>
@@ -139,7 +149,9 @@
         },
         data() {
             return {
+                sending: false,
                 form: {
+                    _publish: true,
                     name: null,
                     type: null,
                     hq: null,
@@ -165,13 +177,33 @@
                     model: this.$t('dashboard.model.donor.singular').toLowerCase(),
                 });
             },
+            draftLabel() {
+                return this.$t('dashboard.action.draft', {
+                    model: this.$t('dashboard.model.donor.singular').toLowerCase(),
+                });
+            },
         },
         methods: {
             submit() {
-                this.$inertia.post(
-                    this.$route('donors.store'),
-                    this.prepareFormData(this.form)
-                );
+                if (this.sending) {
+                    return;
+                }
+
+                this.sending = true;
+                this.$inertia
+                    .post(
+                        this.$route('donors.store'),
+                        this.prepareFormData(this.form)
+                    )
+                    .then(() => (this.sending = false));
+            },
+            draft() {
+                if (this.sending) {
+                    return;
+                }
+
+                this.form._publish = false;
+                this.submit();
             },
         },
     };

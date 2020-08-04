@@ -41,12 +41,14 @@
                 </div>
 
                 <div class="sm:col-span-2 md:col-span-4">
+                    <published-badge :status="donor.data.published_status" />
+
                     <h2
-                        class="text-2xl font-bold leading-tight md:text-3xl"
+                        class="mt-2 text-2xl font-bold leading-tight md:text-3xl"
                         v-text="donor.data.name"
                     />
 
-                    <div v-if="donor.hq" class="flex items-center">
+                    <div v-if="donor.data.hq" class="flex items-center">
                         <svg-vue
                             icon="Map/map-pin-line"
                             class="w-4 h-4 mr-1 text-gray-500 fill-current"
@@ -127,6 +129,7 @@
     import FormCheckboxGroup from '@/Shared/Form/CheckboxGroup';
     import FormButton from '@/Shared/Form/Button';
     import Panel from '@/Shared/Panel';
+    import PublishedBadge from '@/Shared/Badge/Published';
 
     export default {
         components: {
@@ -137,13 +140,14 @@
             FormCheckboxGroup,
             FormButton,
             Panel,
+            PublishedBadge,
         },
         props: {
             donor: Object,
         },
         metaInfo() {
             return {
-                title: this.donor.name,
+                title: this.donor.data.name,
             };
         },
         computed: {

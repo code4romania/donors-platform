@@ -64,6 +64,8 @@
                     v-model="form.areas"
                     class="lg:col-span-2"
                     :options="focus_areas.data"
+                    option-value-key="id"
+                    option-label-key="name"
                     :other="true"
                 />
             </form-panel>
@@ -106,11 +108,19 @@
                 <form-button
                     color="red"
                     :href="$route('donors.show', { donor: donor.data.id })"
+                    :disabled="sending"
                 >
-                    {{ $t('dashboard.cancel') }}
+                    {{ $t('dashboard.action.cancel') }}
                 </form-button>
-                <form-button color="blue">
-                    {{ $t('dashboard.save') }}
+                <form-button
+                    type="button"
+                    @click.native.prevent="changeVisibility"
+                    :disabled="sending"
+                >
+                    {{ changeVisibilityLabel }}
+                </form-button>
+                <form-button color="blue" :disabled="sending">
+                    {{ $t('dashboard.action.save') }}
                 </form-button>
             </div>
         </form>
@@ -148,7 +158,10 @@
         },
         data() {
             return {
+                sending: false,
                 form: {
+                    _method: 'PUT', // html form method spoofing
+                    _publish: this.donor.data.published_status === 'published',
                     name: this.donor.data.name,
                     type: this.donor.data.type,
                     hq: this.donor.data.hq,
@@ -174,13 +187,39 @@
                     model: this.$t('dashboard.model.donor.singular').toLowerCase(),
                 });
             },
+            changeVisibilityLabel() {
+                let label =
+                    this.donor.data.published_status === 'published'
+                        ? 'dashboard.action.unpublish'
+                        : 'dashboard.action.publish';
+
+                return this.$t(label, {
+                    model: this.$t('dashboard.model.donor.singular').toLowerCase(),
+                });
+            },
         },
         methods: {
             submit() {
-                this.$inertia.put(
-                    this.$route('donors.update', { donor: this.donor.data.id }),
-                    this.prepareData(this.form)
-                );
+                if (this.sending) {
+                    return;
+                }
+
+                this.sending = true;
+
+                this.$inertia
+                    .post(
+                        this.$route('donors.update', { donor: this.donor.data.id }),
+                        this.prepareFormData(this.form)
+                    )
+                    .then(() => (this.sending = false));
+            },
+            changeVisibility() {
+                if (this.sending) {
+                    return;
+                }
+
+                this.form._publish = !this.form._publish;
+                this.submit();
             },
         },
     };
