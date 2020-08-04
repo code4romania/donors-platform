@@ -51,8 +51,8 @@ class StoreDonorRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            '_publish' => boolval(json_decode($this->_publish ?? false)),
-            'areas' => array_filter(json_decode($this->areas)),
+            '_publish' => boolval(json_decode($this->_publish ?? false, true)),
+            'areas' => array_filter(json_decode($this->areas, true)),
         ]);
     }
 }

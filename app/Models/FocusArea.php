@@ -17,7 +17,7 @@ class FocusArea extends Model implements TranslatableContract
      * @var array
      */
     protected $with = [
-        'translation',
+        'translations',
     ];
 
     /**

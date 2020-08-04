@@ -75,7 +75,7 @@ class FocusAreaController extends Controller
     public function edit(FocusArea $focusArea)
     {
         return Inertia::render('FocusAreas/Edit', [
-            'focusArea' => $focusArea,
+            'focusArea' => FocusAreaResource::make($focusArea),
             'translatable' => app(FocusArea::class)->translatable,
         ]);
     }
