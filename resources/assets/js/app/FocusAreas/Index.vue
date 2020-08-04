@@ -12,8 +12,9 @@
             </div>
         </template>
 
-        <data-table
+        <table-index
             :collection="focusAreas"
+            :columns="columns"
             route="focus-areas.edit"
             :paginate="true"
         />
@@ -21,16 +22,17 @@
 </template>
 <script>
     import Layout from '@/Shared/Layout/Default';
-    import DataTable from '@/Shared/DataTable';
+    import TableIndex from '@/Shared/Table/Index';
     import FormButton from '@/Shared/Form/Button';
 
     export default {
         components: {
             Layout,
-            DataTable,
+            TableIndex,
             FormButton,
         },
         props: {
+            columns: Array,
             focusAreas: Object,
         },
         metaInfo() {
