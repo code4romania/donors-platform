@@ -87,7 +87,7 @@
                 sending: false,
                 form: {
                     _method: 'PUT', // html form method spoofing
-                    name: this.localizeField('name', this.focusArea.data),
+                    ...this.prepareFields(['name'], this.focusArea.data),
                 },
             };
         },

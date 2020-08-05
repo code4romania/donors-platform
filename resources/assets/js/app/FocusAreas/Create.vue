@@ -70,9 +70,7 @@
         },
         data() {
             return {
-                form: {
-                    name: this.localizeField('name', this.focusArea),
-                },
+                form: this.prepareFields(['name']),
             };
         },
         computed: {
@@ -95,7 +93,7 @@
             submit() {
                 this.$inertia.post(
                     this.$route('focus-areas.store'),
-                    this.prepareData(this.form)
+                    this.prepareFormData(this.form)
                 );
             },
         },

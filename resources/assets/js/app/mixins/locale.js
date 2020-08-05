@@ -28,12 +28,14 @@ export default {
 
             this.changeLocale(nextLocale);
         },
-        localizeField(fieldName, model) {
+        maybeLocalizeField(fieldName, model) {
             if (
                 !this.$page.hasOwnProperty('translatable') ||
                 this.$page.translatable.indexOf(fieldName) === -1
             ) {
-                return model[fieldName] || null;
+                return typeof model === 'object'
+                    ? model[fieldName] || null
+                    : null;
             }
 
             let field = {};
@@ -48,7 +50,16 @@ export default {
 
             return field;
         },
-        prepareData(originalFields) {
+        prepareFields(fields, model) {
+            let prepared = {};
+
+            fields.forEach(field => {
+                prepared[field] = this.maybeLocalizeField(field, model);
+            });
+
+            return prepared;
+        },
+        prepareFormData(originalFields) {
             let fields = { ...originalFields },
                 locales = {};
 
@@ -68,10 +79,7 @@ export default {
                 delete fields[field];
             });
 
-            return { ...fields, ...locales };
-        },
-        prepareFormData(originalFields) {
-            let data = this.prepareData(originalFields),
+            let data = { ...fields, ...locales },
                 formData = new FormData();
 
             for (const field in data) {
