@@ -11,7 +11,7 @@
 
         <form-label :id="id" :label="label || value" class="ml-2" />
 
-        <input-error v-if="errors.length" :message="errors" />
+        <input-error :id="id" />
     </div>
 </template>
 

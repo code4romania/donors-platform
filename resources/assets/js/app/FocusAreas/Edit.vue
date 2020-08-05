@@ -29,7 +29,6 @@
                     id="name"
                     :label="$t('dashboard.field.name')"
                     v-model="form.name"
-                    :errors="$page.errors.name"
                     class="lg:col-span-2"
                     translated
                     required

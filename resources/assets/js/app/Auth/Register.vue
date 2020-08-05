@@ -10,7 +10,6 @@
                 id="name"
                 :label="$t('dashboard.field.name')"
                 v-model="form.name"
-                :errors="$page.errors.name"
                 required
                 autocomplete="name"
                 autofocus
@@ -21,7 +20,6 @@
                 id="email"
                 :label="$t('dashboard.field.email')"
                 v-model="form.email"
-                :errors="$page.errors.email"
                 required
                 autocomplete="email"
             />
@@ -31,7 +29,6 @@
                 id="password"
                 :label="$t('dashboard.field.password')"
                 v-model="form.password"
-                :errors="$page.errors.password"
                 required
                 autocomplete="new-password"
             />
@@ -41,7 +38,6 @@
                 id="password_confirmation"
                 :label="$t('dashboard.field.password_confirmation')"
                 v-model="form.password_confirmation"
-                :errors="$page.errors.password_confirmation"
                 required
                 autocomplete="new-password"
             />

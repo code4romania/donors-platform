@@ -16,7 +16,6 @@
                 id="email"
                 :label="$t('dashboard.field.email')"
                 v-model="form.email"
-                :errors="$page.errors.email"
                 required
                 autocomplete="email"
                 autofocus

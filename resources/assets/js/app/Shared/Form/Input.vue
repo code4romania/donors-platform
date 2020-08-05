@@ -40,7 +40,7 @@
             />
         </template>
 
-        <input-error v-if="errors.length" :message="errors[0]" />
+        <input-error :id="id" :translated="translated" />
     </div>
 </template>
 

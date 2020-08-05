@@ -10,7 +10,6 @@
                 id="email"
                 :label="$t('dashboard.field.email')"
                 v-model="form.email"
-                :errors="$page.errors.email"
                 required
                 autocomplete="email"
                 autofocus
@@ -21,7 +20,6 @@
                 id="password"
                 :label="$t('dashboard.field.password')"
                 v-model="form.password"
-                :errors="$page.errors.password"
                 required
                 autocomplete="current-password"
             />

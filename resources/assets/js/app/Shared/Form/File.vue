@@ -16,7 +16,7 @@
             @change="onChange"
         />
 
-        <input-error v-if="errors.length" :message="errors[0]" />
+        <input-error :id="id" />
     </div>
 </template>
 

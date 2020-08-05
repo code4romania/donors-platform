@@ -18,7 +18,7 @@
             </label>
         </div>
 
-        <input-error v-if="errors.length" :message="errors" />
+        <input-error :id="id" />
     </div>
 </template>
 

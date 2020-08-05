@@ -27,7 +27,6 @@
                     id="name"
                     :label="$t('dashboard.field.name')"
                     v-model="form.name"
-                    :errors="$page.errors.name"
                     required
                     autofocus
                 />
@@ -36,7 +35,6 @@
                     id="type"
                     :label="$t('dashboard.field.type')"
                     v-model="form.type"
-                    :errors="$page.errors.type"
                     :options="['a', 'b']"
                     required
                 />
@@ -46,7 +44,6 @@
                     id="hq"
                     :label="$t('dashboard.field.hq')"
                     v-model="form.hq"
-                    :errors="$page.errors.hq"
                     required
                 />
 
@@ -54,7 +51,6 @@
                     id="logo"
                     :label="$t('dashboard.field.logo')"
                     @fileChange="form.logo = $event"
-                    :errors="$page.errors.logo"
                 />
 
                 <form-checkbox-group
@@ -81,7 +77,6 @@
                     id="contact"
                     :label="$t('dashboard.field.name')"
                     v-model="form.contact"
-                    :errors="$page.errors.contact"
                     required
                 />
 
@@ -90,7 +85,6 @@
                     id="email"
                     :label="$t('dashboard.field.email')"
                     v-model="form.email"
-                    :errors="$page.errors.email"
                     required
                 />
 
@@ -99,7 +93,6 @@
                     id="phone"
                     :label="$t('dashboard.field.phone')"
                     v-model="form.phone"
-                    :errors="$page.errors.phone"
                     required
                 />
             </form-panel>
