@@ -55,8 +55,8 @@ class AppServiceProvider extends ServiceProvider
                         'id'          => Auth::user()->id,
                         'name'        => Auth::user()->name,
                         'email'       => Auth::user()->email,
-                        'role'        => Auth::user()->role,
-                        'permissions' => Auth::user()->permissions->pluck('name'),
+                        'roles'       => Auth::user()->role_name,
+                        'permissions' => Auth::user()->getAllPermissions()->pluck('name'),
                     ] : null,
                 ];
             },

@@ -39,4 +39,15 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getRoleNameAttribute(): ?string
+    {
+        $role = $this->roles->first();
+
+        if (is_null($role)) {
+            return null;
+        }
+
+        return $role->name;
+    }
 }

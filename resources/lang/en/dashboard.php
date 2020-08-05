@@ -41,6 +41,8 @@ return [
         'password'              => 'Password',
         'phone'                 => 'Phone',
         'published_status'      => 'Status',
+        'role'                  => 'Role',
+        'roleLabel'             => 'Role',
         'type'                  => 'Type',
     ],
 
@@ -69,10 +71,25 @@ return [
                 'description' => 'Iste et quisquam enim aut error aut. A quidem quas. Ex tenetur id nesciunt eligendi tenetur ut. Porro esse vero adipisci qui est. Ipsam ab non aut. Suscipit nulla est sed et enim illo eos.',
             ],
         ],
+        'user' => [
+            'singular' => 'User',
+            'plural'   => 'Users',
+
+            'section' => [
+                'title' => 'Lorem ipsum',
+                'description' => 'Iste et quisquam enim aut error aut. A quidem quas. Ex tenetur id nesciunt eligendi tenetur ut. Porro esse vero adipisci qui est. Ipsam ab non aut. Suscipit nulla est sed et enim illo eos.',
+            ],
+        ],
     ],
 
     'status' => [
         'draft'     => 'Draft',
         'published' => 'Published',
+    ],
+
+    'role' => [
+        'admin'   => 'Administrator',
+        'donor'   => 'Donor',
+        'manager' => 'Grant manager',
     ],
 ];

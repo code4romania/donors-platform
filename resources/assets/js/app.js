@@ -8,6 +8,7 @@ import VuePortal from 'portal-vue';
 import VueSvg from 'svg-vue';
 import VueClickOutside from 'vue-click-outside';
 
+import PermissionsPlugin from './plugins/permissions';
 import RoutePlugin from './plugins/route';
 
 Vue.config.productionTip = false;
@@ -17,6 +18,7 @@ Vue.use(VueI18n);
 Vue.use(VueMeta);
 Vue.use(VuePortal);
 Vue.use(VueSvg);
+Vue.use(PermissionsPlugin);
 Vue.use(RoutePlugin);
 
 Vue.directive('click-away', VueClickOutside);

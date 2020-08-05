@@ -10,6 +10,19 @@ use Spatie\Permission\PermissionRegistrar;
 
 class PermissionsSeeder extends Seeder
 {
+    protected array $permissions = [
+        'admin' => [
+            'view users',
+            'manage users',
+        ],
+        'donor' => [
+            'manage own grants',
+        ],
+        'manager' => [
+            'manage grants',
+        ],
+    ];
+
     /**
      * Run the database seeds.
      *
@@ -21,28 +34,27 @@ class PermissionsSeeder extends Seeder
         app(PermissionRegistrar::class)->forgetCachedPermissions();
 
         // Create permissions
-        Permission::create(['name' => 'manage users']);
-        Permission::create(['name' => 'manage donors']);
+        collect($this->permissions)
+            ->flatten()
+            ->unique()
+            ->each(fn ($permission) => Permission::create(['name' => $permission]));
 
         // Create roles and assign existing permissions
-        $admin = Role::create(['name' => 'admin']);
+        collect($this->permissions)
+            ->each(function ($permissions, $role) {
+                Role::create(['name' => $role])
+                    ->givePermissionTo($permissions);
+            });
 
-        $donor = Role::create(['name' => 'donor'])
-            ->givePermissionTo([
-                'manage users',
-            ]);
-
-        $manager = Role::create(['name' => 'manager'])
-            ->givePermissionTo([
-                'manage users',
-            ]);
-
-        // create a demo user
-        $user = factory(User::class)->create([
-            'name' => 'Admin',
+        // create demo users
+        factory(User::class)->create([
+            'name'  => 'Administrator',
             'email' => 'admin@example.com',
-        ]);
+        ])->assignRole('admin');
 
-        $user->assignRole($admin);
+        factory(User::class)->create([
+            'name'  => 'Grant manager',
+            'email' => 'manager@example.com',
+        ])->assignRole('manager');
     }
 }

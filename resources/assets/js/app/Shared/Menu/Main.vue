@@ -48,14 +48,16 @@
                 class="flex flex-col flex-1 px-2 py-4 overflow-y-auto bg-gray-800"
             >
                 <nav class="grid row-gap-1">
-                    <menu-item
-                        v-for="(item, index) in items"
-                        :icon="item.icon"
-                        :href="item.href"
-                        :label="item.label"
-                        :children="item.children || []"
-                        :key="index"
-                    />
+                    <template v-for="(item, index) in items">
+                        <menu-item
+                            v-if="showMenuItem(item)"
+                            :icon="item.icon"
+                            :href="item.href"
+                            :label="item.label"
+                            :children="item.children || []"
+                            :key="index"
+                        />
+                    </template>
 
                     <hr class="my-4 border-gray-700" />
 
@@ -105,8 +107,9 @@
                     },
                     {
                         icon: 'User/user-settings-line',
-                        href: '#',
+                        href: this.$route('users.index'),
                         label: this.$t('dashboard.menu.users'),
+                        guard: 'manage users',
                     },
                 ],
             };
@@ -116,6 +119,13 @@
                 return urls[0] === ''
                     ? this.url === ''
                     : urls.filter((url) => this.url.startsWith(url)).length > 0;
+            },
+            showMenuItem(item) {
+                if (!item.hasOwnProperty('guard')) {
+                    return true;
+                }
+
+                return this.$userCan(item.guard);
             },
         },
     };
