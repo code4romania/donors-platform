@@ -12,7 +12,7 @@
             </div>
         </template>
 
-        <table-index
+        <model-table
             :collection="users"
             :columns="columns"
             route="users.edit"
@@ -22,14 +22,14 @@
 </template>
 <script>
     import Layout from '@/Shared/Layout/Default';
-    import TableIndex from '@/Shared/Table/Index';
     import FormButton from '@/Shared/Form/Button';
+    import ModelTable from '@/Shared/ModelTable';
 
     export default {
         components: {
             Layout,
-            TableIndex,
             FormButton,
+            ModelTable,
         },
         props: {
             columns: Array,

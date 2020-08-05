@@ -26,10 +26,10 @@
         </div>
 
         <nav class="order-2 hidden space-x-1 md:flex">
-            <template v-for="(page, key) in pages">
+            <template v-for="page in pages">
                 <inertia-link
                     v-if="page.url !== null"
-                    :key="key"
+                    :key="page.label"
                     :class="[
                         baseStyle,
                         hoverStyle,
@@ -40,7 +40,7 @@
                 />
                 <span
                     v-else
-                    :key="key"
+                    :key="page.label"
                     :class="baseStyle"
                     v-text="page.label"
                 />
@@ -71,7 +71,6 @@
             },
 
             hasPages() {
-                console.log(this.collection.meta);
                 if (this.collection.meta.total === 0) {
                     return false;
                 }

@@ -12,24 +12,30 @@
             </div>
         </template>
 
-        <table-index
+        <model-table
             :collection="donors"
             :columns="columns"
             route="donors.show"
             :paginate="true"
-        />
+        >
+            <template v-slot:published_status="column">
+                <published-badge :status="column.published_status" />
+            </template>
+        </model-table>
     </layout>
 </template>
 <script>
     import Layout from '@/Shared/Layout/Default';
-    import TableIndex from '@/Shared/Table/Index';
     import FormButton from '@/Shared/Form/Button';
+    import ModelTable from '@/Shared/ModelTable';
+    import PublishedBadge from '@/Shared/Badge/Published';
 
     export default {
         components: {
             Layout,
-            TableIndex,
             FormButton,
+            ModelTable,
+            PublishedBadge,
         },
         props: {
             columns: Array,
