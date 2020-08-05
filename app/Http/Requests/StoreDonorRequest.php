@@ -42,17 +42,4 @@ class StoreDonorRequest extends FormRequest
             ],
         ];
     }
-
-    /**
-     * Prepare the data for validation.
-     *
-     * @return void
-     */
-    protected function prepareForValidation()
-    {
-        $this->merge([
-            '_publish' => boolval(json_decode($this->_publish ?? false, true)),
-            'areas' => array_filter(json_decode($this->areas, true)),
-        ]);
-    }
 }

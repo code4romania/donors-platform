@@ -19,10 +19,8 @@ class FocusAreaController extends Controller
      */
     public function index()
     {
-        $columns = ['name'];
-
         return Inertia::render('FocusAreas/Index', [
-            'columns' => $columns,
+            'columns' => ['name'],
             'focusAreas' => FocusAreaResource::collection(
                 FocusArea::paginate()
             ),
@@ -49,7 +47,7 @@ class FocusAreaController extends Controller
      */
     public function store(StoreFocusAreaRequest $request)
     {
-        $focusArea = FocusArea::create($request->all());
+        FocusArea::create($request->all());
 
         return Redirect::route('focus-areas.index')
             ->with('success', __('dashboard.event.created', ['model' => __('dashboard.model.focusArea.singular')]));
@@ -58,7 +56,7 @@ class FocusAreaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\FocusArea            $focusArea
+     * @param  \App\Models\FocusArea     $focusArea
      * @return \Illuminate\Http\Response
      */
     public function show(FocusArea $focusArea)
@@ -69,7 +67,7 @@ class FocusAreaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\FocusArea            $focusArea
+     * @param  \App\Models\FocusArea     $focusArea
      * @return \Illuminate\Http\Response
      */
     public function edit(FocusArea $focusArea)
@@ -84,7 +82,7 @@ class FocusAreaController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\FocusArea            $focusArea
+     * @param  \App\Models\FocusArea     $focusArea
      * @return \Illuminate\Http\Response
      */
     public function update(StoreFocusAreaRequest $request, FocusArea $focusArea)
@@ -92,13 +90,15 @@ class FocusAreaController extends Controller
         $focusArea->update($request->all());
 
         return Redirect::back()
-            ->with('success', __('dashboard.event.updated', ['model' => __('dashboard.model.focusArea.singular')]));
+            ->with('success', __('dashboard.event.updated', [
+                'model' => __('dashboard.model.focusArea.singular'),
+            ]));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\FocusArea            $focusArea
+     * @param  \App\Models\FocusArea     $focusArea
      * @return \Illuminate\Http\Response
      */
     public function destroy(FocusArea $focusArea)
@@ -106,6 +106,8 @@ class FocusAreaController extends Controller
         $focusArea->delete();
 
         return Redirect::back()
-            ->with('success', __('dashboard.event.deleted', ['model' => __('dashboard.model.focusArea.singular')]));
+            ->with('success', __('dashboard.event.deleted', [
+                'model' => __('dashboard.model.focusArea.singular'),
+            ]));
     }
 }

@@ -21,10 +21,8 @@ class DonorController extends Controller
      */
     public function index()
     {
-        $columns = ['name', 'type', 'hq', 'published_status'];
-
         return Inertia::render('Donors/Index', [
-            'columns' => $columns,
+            'columns' => ['name', 'type', 'hq', 'published_status'],
             'donors'  => DonorResource::collection(
                 Donor::with('focusAreas')->paginate()
             ),
@@ -63,13 +61,15 @@ class DonorController extends Controller
             ->toMediaCollection('logo');
 
         return Redirect::route('donors.show', $donor)
-            ->with('success', __('dashboard.event.created', ['model' => __('dashboard.model.donor.singular')]));
+            ->with('success', __('dashboard.event.created', [
+                'model' => __('dashboard.model.donor.singular'),
+            ]));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Donor                $donor
+     * @param  \App\Models\Donor         $donor
      * @return \Illuminate\Http\Response
      */
     public function show(Donor $donor)
@@ -82,7 +82,7 @@ class DonorController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Donor                $donor
+     * @param  \App\Models\Donor         $donor
      * @return \Illuminate\Http\Response
      */
     public function edit(Donor $donor)
@@ -99,7 +99,7 @@ class DonorController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Donor                $donor
+     * @param  \App\Models\Donor         $donor
      * @return \Illuminate\Http\Response
      */
     public function update(StoreDonorRequest $request, Donor $donor)
@@ -113,13 +113,15 @@ class DonorController extends Controller
         $donor->focusAreas()->sync($request->input('areas'));
 
         return Redirect::back()
-            ->with('success', __('dashboard.event.updated', ['model' => __('dashboard.model.donor.singular')]));
+            ->with('success', __('dashboard.event.updated', [
+                'model' => __('dashboard.model.donor.singular'),
+            ]));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Donor                $donor
+     * @param  \App\Models\Donor         $donor
      * @return \Illuminate\Http\Response
      */
     public function destroy(Donor $donor)
@@ -127,6 +129,8 @@ class DonorController extends Controller
         $donor->delete();
 
         return Redirect::back()
-            ->with('success', __('dashboard.event.deleted', ['model' => __('dashboard.model.donor.singular')]));
+            ->with('success', __('dashboard.event.deleted', [
+                'model' => __('dashboard.model.donor.singular'),
+            ]));
     }
 }
