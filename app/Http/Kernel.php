@@ -42,6 +42,7 @@ class Kernel extends HttpKernel
         ],
 
         'dashboard' => [
+            \App\Http\Middleware\LocaleMiddleware::class,
             // \Reinink\RememberQueryStrings::class,
         ],
 

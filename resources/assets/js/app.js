@@ -29,7 +29,7 @@ if (app !== null) {
     let initialPage = JSON.parse(app.dataset.page);
 
     const i18n = new VueI18n({
-        locale: initialPage.locale,
+        locale: initialPage.props.locale,
         messages: languageBundle,
     });
 
