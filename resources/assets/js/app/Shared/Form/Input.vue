@@ -20,7 +20,7 @@
 
         <template v-if="translated && locales">
             <form-text
-                v-for="(name, locale) in locales"
+                v-for="(_, locale) in locales"
                 v-show="isCurrentLocale(locale)"
                 :key="locale"
                 :type="type"

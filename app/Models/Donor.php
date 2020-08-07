@@ -19,6 +19,7 @@ class Donor extends Model implements HasMedia
      * @var array
      */
     protected $with = [
+        'media',
     ];
 
     /**

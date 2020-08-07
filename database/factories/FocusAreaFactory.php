@@ -8,11 +8,11 @@ use App\Models\FocusArea;
 use App\Translations\FocusAreaTranslation;
 use Faker\Generator as Faker;
 
-$factory->define(FocusArea::class, static function (Faker $faker): array {
+$factory->define(FocusArea::class, function (Faker $faker) {
     return [];
 });
 
-$factory->define(FocusAreaTranslation::class, static function (Faker $faker): array {
+$factory->define(FocusAreaTranslation::class, function (Faker $faker) {
     return [
         'focus_area_id' => null,
         'name'          => $faker->sentence,
@@ -20,7 +20,7 @@ $factory->define(FocusAreaTranslation::class, static function (Faker $faker): ar
     ];
 });
 
-$factory->afterCreating(FocusArea::class, static function (FocusArea $focusArea, Faker $faker): void {
+$factory->afterCreating(FocusArea::class, function (FocusArea $focusArea, Faker $faker) {
     $locales = collect(config('translatable.locales'));
 
     $focusArea->translation()->saveMany(

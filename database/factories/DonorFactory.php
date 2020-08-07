@@ -21,7 +21,7 @@ $factory->define(Donor::class, function (Faker $faker) {
     ];
 });
 
-$factory->afterCreating(Donor::class, static function (Donor $donor, Faker $faker): void {
+$factory->afterCreating(Donor::class, function (Donor $donor, Faker $faker) {
     $locales = collect(config('translatable.locales'));
 
     $donor->focusAreas()->sync(
