@@ -24,4 +24,7 @@ $factory->afterCreating(Grant::class, function (Grant $grant, Faker $faker) {
         factory(Donor::class, $faker->numberBetween(0, 5))->create()
     );
 
+    $grant->grantees()->sync(
+        factory(Grantee::class, $faker->numberBetween(0, 2))->create()
+    );
 });
