@@ -17,6 +17,12 @@
         <div class="px-4 py-5 sm:p-6">
             <slot />
         </div>
+        <div
+            v-if="$slots.footer"
+            class="p-4 text-sm leading-tight bg-gray-50 sm:p-6"
+        >
+            <slot name="footer" />
+        </div>
     </div>
 </template>
 

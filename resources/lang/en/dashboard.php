@@ -87,6 +87,12 @@ return [
         'published' => 'Published',
     ],
 
+    'stats' => [
+        'donors' => 'Donors registered on the platform',
+        'funding' => 'Euros invested in :areas strategic areas',
+        'grantees' => 'Grantees supported by all donors',
+    ],
+
     'role' => [
         'admin'   => 'Administrator',
         'donor'   => 'Donor',
