@@ -9,7 +9,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\UrlWindow;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ServiceProvider;
 use Inertia\Inertia;
@@ -48,6 +48,7 @@ class AppServiceProvider extends ServiceProvider
         Inertia::share([
             'locale' => fn () => app()->getLocale(),
             'locales' => fn () => config('translatable.locale_names'),
+            'route' => fn () => Route::currentRouteName(),
 
             'auth' => function () {
                 return [

@@ -27,6 +27,7 @@ class DonorResource extends JsonResource
             'focus_areas'      => $this->focusAreas->map->only('id', 'name'),
             'logo_url'         => $this->logo_url,
             'published_status' => $this->published_status,
+            'grant_count'      => $this->grants->count(),
         ];
     }
 }

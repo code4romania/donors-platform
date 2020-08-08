@@ -20,9 +20,13 @@ class FocusAreaController extends Controller
     public function index()
     {
         return Inertia::render('FocusAreas/Index', [
-            'columns' => ['name'],
+            'columns' => $this->getIndexColumns(FocusArea::class, [
+                'name',
+            ]),
+            'sort' => $this->getSortProps(),
             'focusAreas' => FocusAreaResource::collection(
-                FocusArea::paginate()
+                FocusArea::sort()
+                    ->paginate()
             ),
         ]);
     }

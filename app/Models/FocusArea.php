@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Traits\Sortable;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 
 class FocusArea extends Model implements TranslatableContract
 {
-    use Translatable;
+    use Sortable, Translatable;
 
     /**
      * The relationships that should always be loaded.
@@ -26,6 +27,15 @@ class FocusArea extends Model implements TranslatableContract
      * @var array
      */
     protected $fillable = [
+        'name',
+    ];
+
+    /**
+     * The attributes that are sortable.
+     *
+     * @var array
+     */
+    protected $sortable = [
         'name',
     ];
 

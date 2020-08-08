@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Traits\Draftable;
+use App\Traits\Sortable;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Donor extends Model implements HasMedia
 {
-    use Draftable, InteractsWithMedia;
+    use Draftable, InteractsWithMedia, Sortable;
 
     /**
      * The relationships that should always be loaded.
@@ -19,7 +20,7 @@ class Donor extends Model implements HasMedia
      * @var array
      */
     protected $with = [
-        'media',
+        'media', 'grants',
     ];
 
     /**
@@ -29,6 +30,15 @@ class Donor extends Model implements HasMedia
      */
     protected $fillable = [
         'name', 'type', 'hq', 'contact', 'email', 'phone',
+    ];
+
+    /**
+     * The attributes that are sortable.
+     *
+     * @var array
+     */
+    protected $sortable = [
+        'name', 'type',
     ];
 
     /**
@@ -49,13 +59,18 @@ class Donor extends Model implements HasMedia
         'logo_url',
     ];
 
+    public function getLogoUrlAttribute(): ?string
+    {
+        return $this->getFirstMediaUrl('logo') ?: null;
+    }
+
     public function focusAreas()
     {
         return $this->belongsToMany(FocusArea::class);
     }
 
-    public function getLogoUrlAttribute(): ?string
+    public function grants()
     {
-        return $this->getFirstMediaUrl('logo') ?: null;
+        return $this->belongsToMany(Grant::class);
     }
 }
