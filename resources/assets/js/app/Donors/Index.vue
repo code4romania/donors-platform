@@ -27,7 +27,7 @@
 <script>
     import Layout from '@/Shared/Layout/Default';
     import FormButton from '@/Shared/Form/Button';
-    import ModelTable from '@/Shared/ModelTable';
+    import ModelTable from '@/Shared/Table/Model';
     import PublishedBadge from '@/Shared/Badge/Published';
 
     export default {

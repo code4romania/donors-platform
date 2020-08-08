@@ -4,11 +4,11 @@
             <table class="w-full">
                 <thead>
                     <tr class="font-semibold leading-tight text-left">
-                        <th
+                        <table-head
                             class="px-6 py-4"
                             v-for="(column, index) in columns"
                             :key="index"
-                            v-text="$t('dashboard.field.' + column)"
+                            :column="column"
                         />
                     </tr>
                 </thead>
@@ -27,8 +27,11 @@
                                 :href="$route(route, row.id)"
                                 :tabindex="columnIndex === 0 ? false : -1"
                             >
-                                <slot :name="column" :[column]="row[column]">
-                                    {{ row[column] }}
+                                <slot
+                                    :name="column.name"
+                                    :[column.name]="row[column.name]"
+                                >
+                                    {{ row[column.name] }}
                                 </slot>
                             </inertia-link>
                         </td>
@@ -43,10 +46,12 @@
 
 <script>
     import Pagination from '@/Shared/Pagination';
+    import TableHead from '@/Shared/Table/Th';
 
     export default {
         components: {
             Pagination,
+            TableHead,
         },
         props: {
             collection: {

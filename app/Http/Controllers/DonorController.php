@@ -22,9 +22,14 @@ class DonorController extends Controller
     public function index()
     {
         return Inertia::render('Donors/Index', [
-            'columns' => ['name', 'type', 'hq', 'published_status'],
+            'columns' => $this->getIndexColumns(Donor::class, [
+                'name', 'type', 'hq', 'published_status',
+            ]),
+            'sort' => $this->getSortProps(),
             'donors'  => DonorResource::collection(
-                Donor::with('focusAreas')->paginate()
+                Donor::with('focusAreas')
+                    ->sort()
+                    ->paginate(),
             ),
         ]);
     }
