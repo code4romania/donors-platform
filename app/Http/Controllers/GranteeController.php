@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
-use App\Grantee;
+use App\Models\Grantee;
 use Illuminate\Http\Request;
 
 class GranteeController extends Controller
@@ -41,7 +43,7 @@ class GranteeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Grantee  $grantee
+     * @param  \App\Models\Grantee       $grantee
      * @return \Illuminate\Http\Response
      */
     public function show(Grantee $grantee)
@@ -52,7 +54,7 @@ class GranteeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Grantee  $grantee
+     * @param  \App\Models\Grantee       $grantee
      * @return \Illuminate\Http\Response
      */
     public function edit(Grantee $grantee)
@@ -64,7 +66,7 @@ class GranteeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Grantee  $grantee
+     * @param  \App\Models\Grantee       $grantee
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Grantee $grantee)
@@ -75,7 +77,7 @@ class GranteeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Grantee  $grantee
+     * @param  \App\Models\Grantee       $grantee
      * @return \Illuminate\Http\Response
      */
     public function destroy(Grantee $grantee)

@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Pagination\UrlWindow;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
