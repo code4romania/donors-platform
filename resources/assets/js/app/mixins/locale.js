@@ -40,12 +40,18 @@ export default {
 
             let field = {};
             Object.keys(this.$page.locales).forEach(locale => {
-                field[locale] =
-                    typeof model === 'object'
-                        ? model.translations.filter(
-                              translation => translation.locale === locale
-                          )[0][fieldName] || null
-                        : null;
+                if (typeof model !== 'object') {
+                    field[locale] = null;
+                    return;
+                }
+
+                let translation = model.translations.find(
+                    translation => translation.locale === locale
+                );
+
+                field[locale] = translation
+                    ? translation[fieldName] || null
+                    : null;
             });
 
             return field;

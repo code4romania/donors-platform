@@ -2,7 +2,7 @@
     <layout>
         <template v-slot:title>
             <inertia-link
-                :href="$route('focus-areas.index')"
+                :href="$route('users.index')"
                 class="text-blue-500 hover:text-blue-600"
             >
                 {{ $t('dashboard.model.user.plural') }}
