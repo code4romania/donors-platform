@@ -52,12 +52,12 @@
                 />
 
                 <form-checkbox-group
-                    id="areas"
-                    :label="$t('dashboard.field.areas')"
+                    id="domains"
+                    :label="$t('dashboard.field.domains')"
                     :other-label="$t('dashboard.field.other')"
-                    v-model="form.areas"
+                    v-model="form.domains"
                     class="lg:col-span-2"
-                    :options="focus_areas.data"
+                    :options="domains.data"
                     option-value-key="id"
                     option-label-key="name"
                     :other="true"
@@ -151,13 +151,13 @@
                     contact: null,
                     email: null,
                     phone: null,
-                    areas: [],
+                    domains: [],
                     logo: null,
                 },
             };
         },
         props: {
-            focus_areas: Object,
+            domains: Object,
         },
         computed: {
             pageTitle() {

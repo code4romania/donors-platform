@@ -64,9 +64,9 @@ class Donor extends Model implements HasMedia
         return $this->getFirstMediaUrl('logo') ?: null;
     }
 
-    public function focusAreas()
+    public function domains()
     {
-        return $this->belongsToMany(FocusArea::class);
+        return $this->belongsToMany(Domain::class);
     }
 
     public function grants()

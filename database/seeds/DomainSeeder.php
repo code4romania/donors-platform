@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use App\Models\FocusArea;
+use App\Models\Domain;
 use Illuminate\Database\Seeder;
 
-class FocusAreaSeeder extends Seeder
+class DomainSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,7 +14,7 @@ class FocusAreaSeeder extends Seeder
      */
     public function run()
     {
-        factory(FocusArea::class, 10)
+        factory(Domain::class, 10)
             ->create();
     }
 }

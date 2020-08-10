@@ -7,7 +7,7 @@ namespace App\Http\Requests;
 use Astrotomic\Translatable\Validation\RuleFactory;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreFocusAreaRequest extends FormRequest
+class StoreDomainRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

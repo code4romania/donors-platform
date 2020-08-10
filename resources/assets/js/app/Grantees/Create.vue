@@ -5,7 +5,7 @@
                 :href="$route('grantees.index')"
                 class="text-blue-500 hover:text-blue-600"
             >
-                {{ $t('dashboard.model.focusArea.plural') }}
+                {{ $t('dashboard.model.domain.plural') }}
             </inertia-link>
             <span class="font-normal text-gray-300" aria-hidden="true">//</span>
             {{ pageTitle }}
@@ -13,10 +13,8 @@
 
         <form @submit.prevent="submit" method="post" class="grid row-gap-8">
             <form-panel
-                :title="$t('dashboard.model.focusArea.section.title')"
-                :description="
-                    $t('dashboard.model.focusArea.section.description')
-                "
+                :title="$t('dashboard.model.domain.section.title')"
+                :description="$t('dashboard.model.domain.section.description')"
             >
                 <form-input
                     type="text"
@@ -74,16 +72,12 @@
         computed: {
             pageTitle() {
                 return this.$t('dashboard.action.create', {
-                    model: this.$t(
-                        'dashboard.model.focusArea.singular'
-                    ).toLowerCase(),
+                    model: this.$t('dashboard.model.domain.singular').toLowerCase(),
                 });
             },
             submitLabel() {
                 return this.$t('dashboard.action.create', {
-                    model: this.$t(
-                        'dashboard.model.focusArea.singular'
-                    ).toLowerCase(),
+                    model: this.$t('dashboard.model.domain.singular').toLowerCase(),
                 });
             },
         },

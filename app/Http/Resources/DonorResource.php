@@ -24,7 +24,7 @@ class DonorResource extends JsonResource
             'contact'          => $this->contact,
             'email'            => $this->email,
             'phone'            => $this->phone,
-            'focus_areas'      => $this->focusAreas->map->only('id', 'name'),
+            'domains'          => $this->domains->map->only('id', 'name'),
             'logo_url'         => $this->logo_url,
             'published_status' => $this->published_status,
             'grant_count'      => $this->grants->count(),

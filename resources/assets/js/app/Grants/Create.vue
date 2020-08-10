@@ -41,8 +41,8 @@
 
                 <form-select
                     id="area"
-                    :label="$t('dashboard.model.focusArea.singular')"
-                    :options="focus_areas.data"
+                    :label="$t('dashboard.model.domain.singular')"
+                    :options="domains.data"
                     v-model="form.area"
                     option-value-key="id"
                     option-label-key="name"
@@ -201,7 +201,7 @@
             };
         },
         props: {
-            focus_areas: Object,
+            domains: Object,
             grantees: Object,
             donors: Object,
         },

@@ -26,14 +26,14 @@ class StoreDonorRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'    => ['required', 'string'],
-            'type'    => ['required', 'string'],
-            'hq'      => ['nullable', 'string'],
-            'contact' => ['required', 'string'],
-            'email'   => ['required', 'email'],
-            'phone'   => ['required', 'string'],
-            'areas.*' => ['required', 'exists:focus_areas,id'],
-            'logo'    => [
+            'name'      => ['required', 'string'],
+            'type'      => ['required', 'string'],
+            'hq'        => ['nullable', 'string'],
+            'contact'   => ['required', 'string'],
+            'email'     => ['required', 'email'],
+            'phone'     => ['required', 'string'],
+            'domains.*' => ['required', 'exists:domains,id'],
+            'logo'      => [
                 'sometimes',
                 'image',
                 'mimes:jpeg,png,gif',

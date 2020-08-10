@@ -6,7 +6,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class FocusAreaResource extends JsonResource
+class DomainResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

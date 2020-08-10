@@ -28,7 +28,7 @@ class StoreGrantRequest extends FormRequest
     {
         return [
             'name'       => ['required', 'string'],
-            'area'       => ['required', 'exists:focus_areas,id'],
+            'domain'     => ['required', 'exists:domains,id'],
             'grantees.*' => ['required', 'exists:grantees,id'],
             'start_date' => ['required', 'date_format:Y-m-d'],
             'end_date'   => ['required', 'date_format:Y-m-d'],

@@ -28,8 +28,8 @@ return [
     ],
 
     'field' => [
-        'areas'                 => 'Areas under focus',
         'currency'              => 'Currency',
+        'domains'               => 'Domains',
         'email'                 => 'Email address',
         'first_name'            => 'First name',
         'hq'                    => 'HQ',
@@ -64,9 +64,9 @@ return [
                 ],
             ],
         ],
-        'focusArea' => [
-            'singular' => 'Focus Area',
-            'plural'   => 'Focus Areas',
+        'domain' => [
+            'singular' => 'Domain',
+            'plural'   => 'Domains',
 
             'section' => [
                 'title' => 'Lorem ipsum',
@@ -119,7 +119,7 @@ return [
 
     'stats' => [
         'donors' => 'Donors registered on the platform',
-        'funding' => 'Euros invested in :areas strategic areas',
+        'funding' => 'Euros invested in :count strategic areas',
         'grantees' => 'Grantees supported by all donors',
     ],
 

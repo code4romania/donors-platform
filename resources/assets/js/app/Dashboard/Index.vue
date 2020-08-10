@@ -43,7 +43,7 @@
                     },
                     {
                         title: this.$t('dashboard.stats.funding', {
-                            areas: this.stats.focusAreas,
+                            count: this.stats.domains,
                         }),
                         number: this.stats.funding,
                     },

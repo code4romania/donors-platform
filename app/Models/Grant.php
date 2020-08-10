@@ -56,8 +56,8 @@ class Grant extends Model
         return $this->belongsToMany(Grantee::class);
     }
 
-    public function focusArea()
+    public function domain()
     {
-        return $this->belongsTo(FocusArea::class);
+        return $this->belongsTo(Domain::class);
     }
 }

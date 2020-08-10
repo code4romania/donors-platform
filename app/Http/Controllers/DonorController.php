@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDonorRequest;
+use App\Http\Resources\DomainResource;
 use App\Http\Resources\DonorResource;
-use App\Http\Resources\FocusAreaResource;
+use App\Models\Domain;
 use App\Models\Donor;
-use App\Models\FocusArea;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
@@ -26,8 +26,8 @@ class DonorController extends Controller
                 'name', 'type', 'hq', 'published_status',
             ]),
             'sort' => $this->getSortProps(),
-            'donors'  => DonorResource::collection(
-                Donor::with('focusAreas')
+            'donors' => DonorResource::collection(
+                Donor::with('domains')
                     ->sort()
                     ->paginate(),
             ),
@@ -42,8 +42,8 @@ class DonorController extends Controller
     public function create()
     {
         return Inertia::render('Donors/Create', [
-            'focus_areas' => FocusAreaResource::collection(
-                FocusArea::all()
+            'domains' => DomainResource::collection(
+                Domain::all()
             ),
         ]);
     }
@@ -60,7 +60,7 @@ class DonorController extends Controller
 
         $donor->publish($request->input('_publish'));
 
-        $donor->focusAreas()->sync($request->input('areas'));
+        $donor->domains()->sync($request->input('domains'));
 
         $donor->addMedia($request->file('logo'))
             ->toMediaCollection('logo');
@@ -93,9 +93,9 @@ class DonorController extends Controller
     public function edit(Donor $donor)
     {
         return Inertia::render('Donors/Edit', [
-            'donor'       => DonorResource::make($donor),
-            'focus_areas' => FocusAreaResource::collection(
-                FocusArea::all()
+            'donor'   => DonorResource::make($donor),
+            'domains' => DomainResource::collection(
+                Domain::all()
             ),
         ]);
     }
@@ -115,7 +115,7 @@ class DonorController extends Controller
             $donor->publish($request->input('_publish'));
         }
 
-        $donor->focusAreas()->sync($request->input('areas'));
+        $donor->domains()->sync($request->input('domains'));
 
         return Redirect::back()
             ->with('success', __('dashboard.event.updated', [

@@ -2,21 +2,23 @@
     <layout>
         <template v-slot:title>
             <inertia-link
-                :href="$route('focus-areas.index')"
+                :href="$route('domains.index')"
                 class="text-blue-500 hover:text-blue-600"
             >
-                {{ $t('dashboard.model.focusArea.plural') }}
+                {{ $t('dashboard.model.domain.plural') }}
             </inertia-link>
             <span class="font-normal text-gray-300" aria-hidden="true">//</span>
-            {{ pageTitle }}
+            {{
+                $t('dashboard.action.edit', {
+                    model: $t('dashboard.model.domain.singular').toLowerCase(),
+                })
+            }}
         </template>
 
         <form @submit.prevent="submit" method="post" class="grid row-gap-8">
             <form-panel
-                :title="$t('dashboard.model.focusArea.section.title')"
-                :description="
-                    $t('dashboard.model.focusArea.section.description')
-                "
+                :title="$t('dashboard.model.domain.section.title')"
+                :description="$t('dashboard.model.domain.section.description')"
             >
                 <form-input
                     type="text"
@@ -31,8 +33,15 @@
             </form-panel>
 
             <div class="flex justify-end space-x-3">
-                <form-button color="blue">
-                    {{ submitLabel }}
+                <form-button
+                    color="red"
+                    :href="$route('domains.index')"
+                    :disabled="sending"
+                >
+                    {{ $t('dashboard.action.cancel') }}
+                </form-button>
+                <form-button color="blue" :disabled="sending">
+                    {{ $t('dashboard.action.save') }}
                 </form-button>
             </div>
         </form>
@@ -40,6 +49,7 @@
 </template>
 <script>
     import Layout from '@/Shared/Layout/Default';
+
     import FormButton from '@/Shared/Form/Button';
     import FormCheckbox from '@/Shared/Form/Checkbox';
     import FormCheckboxGroup from '@/Shared/Form/CheckboxGroup';
@@ -69,31 +79,43 @@
         },
         data() {
             return {
-                form: this.prepareFields(['name']),
+                sending: false,
+                form: {
+                    _method: 'PUT', // html form method spoofing
+                    ...this.prepareFields(['name'], this.domain.data),
+                },
             };
+        },
+        props: {
+            domain: Object,
         },
         computed: {
             pageTitle() {
-                return this.$t('dashboard.action.create', {
-                    model: this.$t(
-                        'dashboard.model.focusArea.singular'
-                    ).toLowerCase(),
+                return this.$t('dashboard.action.edit', {
+                    model: this.$t('dashboard.model.domain.singular').toLowerCase(),
                 });
             },
             submitLabel() {
-                return this.$t('dashboard.action.create', {
-                    model: this.$t(
-                        'dashboard.model.focusArea.singular'
-                    ).toLowerCase(),
+                return this.$t('dashboard.action.edit', {
+                    model: this.$t('dashboard.model.domain.singular').toLowerCase(),
                 });
             },
         },
         methods: {
             submit() {
-                this.$inertia.post(
-                    this.$route('focus-areas.store'),
-                    this.prepareFormData(this.form)
-                );
+                if (this.sending) {
+                    return;
+                }
+
+                this.sending = true;
+                this.$inertia
+                    .post(
+                        this.$route('domains.update', {
+                            domain: this.domain.data.id,
+                        }),
+                        this.prepareFormData(this.form)
+                    )
+                    .then(() => (this.sending = false));
             },
         },
     };

@@ -19,7 +19,7 @@ class GrantResource extends JsonResource
         return [
             'id'           => $this->id,
             'name'         => $this->name,
-            'focus_area'   => $this->focusArea,
+            'domain'       => $this->domain,
             'amount'       => $this->amount->format(),
         ];
     }

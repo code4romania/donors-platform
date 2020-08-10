@@ -1,21 +1,21 @@
 <template>
     <layout>
         <template v-slot:title>
-            {{ $t('dashboard.model.focusArea.plural') }}
+            {{ $t('dashboard.model.domain.plural') }}
         </template>
 
         <template v-slot:actions>
             <div>
-                <form-button color="blue" :href="$route('focus-areas.create')">
+                <form-button color="blue" :href="$route('domains.create')">
                     {{ createLabel }}
                 </form-button>
             </div>
         </template>
 
         <model-table
-            :collection="focusAreas"
+            :collection="domains"
             :columns="columns"
-            route="focus-areas.edit"
+            route="domains.edit"
             :paginate="true"
         />
     </layout>
@@ -33,19 +33,17 @@
         },
         props: {
             columns: Array,
-            focusAreas: Object,
+            domains: Object,
         },
         metaInfo() {
             return {
-                title: this.$t('dashboard.model.focusArea.plural'),
+                title: this.$t('dashboard.model.domain.plural'),
             };
         },
         computed: {
             createLabel() {
                 return this.$t('dashboard.action.create', {
-                    model: this.$t(
-                        'dashboard.model.focusArea.singular'
-                    ).toLowerCase(),
+                    model: this.$t('dashboard.model.domain.singular').toLowerCase(),
                 });
             },
         },

@@ -102,8 +102,8 @@
                     },
                     {
                         icon: 'Design/focus-3-line',
-                        href: this.$route('focus-areas.index'),
-                        label: this.$t('dashboard.model.focusArea.plural'),
+                        href: this.$route('domains.index'),
+                        label: this.$t('dashboard.model.domain.plural'),
                     },
                     {
                         icon: 'Finance/funds-line',

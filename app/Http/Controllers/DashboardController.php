@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Models\Domain;
 use App\Models\Donor;
-use App\Models\FocusArea;
 use App\Models\Grant;
 use App\Models\Grantee;
 use Inertia\Inertia;
@@ -23,7 +23,7 @@ class DashboardController extends Controller
             'stats' => [
                 'donors' => Donor::count(),
                 'funding' => 1 * Grant::sum('amount'),
-                'focusAreas' => FocusArea::count(),
+                'domains' => Domain::count(),
                 'grantees' => Grantee::count(),
             ],
         ]);

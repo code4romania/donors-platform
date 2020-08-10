@@ -17,9 +17,9 @@ class DatabaseSeeder extends Seeder
 
         if (App::environment('local')) {
             // $this->call(UserSeeder::class);
-            // $this->call(FocusAreaSeeder::class);
+            // $this->call(DomainSeeder::class);
             // $this->call(DonorSeeder::class);
-            $this->call(GrantSeeder::class);
+            // $this->call(GrantSeeder::class);
         }
     }
 }

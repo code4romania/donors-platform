@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreGrantRequest;
+use App\Http\Resources\DomainResource;
 use App\Http\Resources\DonorResource;
-use App\Http\Resources\FocusAreaResource;
 use App\Http\Resources\GranteeResource;
 use App\Http\Resources\GrantResource;
+use App\Models\Domain;
 use App\Models\Donor;
-use App\Models\FocusArea;
 use App\Models\Grant;
 use App\Models\Grantee;
 use Illuminate\Http\Request;
@@ -32,7 +32,7 @@ class GrantController extends Controller
             ]),
             'sort' => $this->getSortProps(),
             'grants'  => GrantResource::collection(
-                Grant::with('focusArea')
+                Grant::with('domain')
                     ->sort()
                     ->paginate(),
             ),
@@ -50,8 +50,8 @@ class GrantController extends Controller
             'donors' => DonorResource::collection(
                 Donor::orderBy('name', 'asc')->get()
             ),
-            'focus_areas' => FocusAreaResource::collection(
-                FocusArea::orderByTranslation('name', 'asc')->get()
+            'domains' => DomainResource::collection(
+                Domain::orderByTranslation('name', 'asc')->get()
             ),
             'grantees' => GranteeResource::collection(
                 Grantee::orderBy('name', 'asc')->get()
