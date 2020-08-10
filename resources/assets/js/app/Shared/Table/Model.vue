@@ -40,7 +40,7 @@
             </table>
         </div>
 
-        <pagination v-if="paginate" class="mt-4" :collection="collection" />
+        <pagination v-if="paginate" class="mt-4" :meta="collection.meta" />
     </div>
 </template>
 

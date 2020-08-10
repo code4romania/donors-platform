@@ -3,33 +3,20 @@
         v-if="hasPages"
         class="flex items-center justify-between py-4 leading-tight"
     >
-        <div
-            v-for="key in ['prev', 'next']"
-            :key="key"
-            class="flex flex-1 w-0"
-            :class="{
-                'order-1 justify-start': key === 'prev',
-                'order-3 justify-end': key === 'next',
-            }"
-        >
+        <div class="flex justify-start flex-1 w-0">
             <inertia-link
-                v-if="collection.links[key] !== null"
-                :key="key"
-                :class="[
-                    baseStyle,
-                    hoverStyle,
-                    key === 'prev' ? 'order-1' : 'order-3',
-                ]"
-                :href="collection.links[key]"
-                v-text="$t(`pagination.${key}`)"
+                v-if="prevPage !== null"
+                :class="[baseStyle, hoverStyle]"
+                :href="prevPage"
+                v-text="$t('pagination.prev')"
             />
         </div>
 
-        <nav class="order-2 hidden space-x-1 md:flex">
-            <template v-for="page in pages">
+        <nav class="hidden space-x-1 md:flex">
+            <template v-for="(page, index) in pages">
                 <inertia-link
                     v-if="page.url !== null"
-                    :key="page.label"
+                    :key="index"
                     :class="[
                         baseStyle,
                         hoverStyle,
@@ -40,19 +27,28 @@
                 />
                 <span
                     v-else
-                    :key="page.label"
+                    :key="index"
                     :class="baseStyle"
                     v-text="page.label"
                 />
             </template>
         </nav>
+
+        <div class="flex justify-end flex-1 w-0">
+            <inertia-link
+                v-if="nextPage !== null"
+                :class="[baseStyle, hoverStyle]"
+                :href="nextPage"
+                v-text="$t('pagination.next')"
+            />
+        </div>
     </div>
 </template>
 
 <script>
     export default {
         props: {
-            collection: {
+            meta: {
                 type: Object,
                 required: true,
             },
@@ -69,13 +65,12 @@
             hoverStyle() {
                 return 'hover:bg-white focus:border-blue-500 focus:text-blue-500 focus:outline-none';
             },
-
             hasPages() {
-                if (this.collection.meta.total === 0) {
+                if (this.meta.total === 0) {
                     return false;
                 }
 
-                if (this.collection.meta.total <= this.collection.meta.per_page) {
+                if (this.meta.total <= this.meta.per_page) {
                     return false;
                 }
 
@@ -83,8 +78,8 @@
             },
             pages() {
                 return this.pagination(
-                    this.collection.meta.current_page,
-                    this.collection.meta.last_page
+                    this.meta.current_page,
+                    this.meta.last_page
                 ).map((page) => {
                     if (page === '...') {
                         return {
@@ -94,31 +89,58 @@
                         };
                     } else {
                         return {
-                            url: this.collection.meta.path + `?page=${page}`,
+                            url: this.pageUrl(page),
                             label: page,
-                            active: page === this.collection.meta.current_page,
+                            active: page === this.meta.current_page,
                         };
                     }
                 });
             },
+            prevPage() {
+                if (this.meta.current_page - 1 >= 1) {
+                    return this.pageUrl(this.meta.current_page - 1);
+                }
+
+                return null;
+            },
+            nextPage() {
+                if (this.meta.current_page + 1 <= this.meta.last_page) {
+                    return this.pageUrl(this.meta.current_page + 1);
+                }
+
+                return null;
+            },
         },
         methods: {
-            pagination(currentPage, pageCount, delta = 3) {
-                const separate = (a, b) => [
+            pageUrl(page) {
+                let params = new URLSearchParams(location.search);
+
+                params.set('page', page);
+
+                return this.meta.path + '?' + params.toString();
+            },
+            separate(a, b) {
+                return [
                     a,
                     ...({
                         0: [],
                         1: [b],
                     }[b - a] || ['...', b]),
                 ];
-
-                return Array(delta * 2 + 1)
+            },
+            pagination(currentPage, pageCount) {
+                return Array(this.maxVisibleButtons * 2 + 1)
                     .fill()
-                    .map((_, index) => currentPage - delta + index)
+                    .map((_, index) => currentPage - this.maxVisibleButtons + index)
                     .filter((page) => 0 < page && page <= pageCount)
                     .flatMap((page, index, { length }) => {
-                        if (!index) return separate(1, page);
-                        if (index === length - 1) return separate(page, pageCount);
+                        if (!index) {
+                            return this.separate(1, page);
+                        }
+
+                        if (index === length - 1) {
+                            return this.separate(page, pageCount);
+                        }
 
                         return [page];
                     });

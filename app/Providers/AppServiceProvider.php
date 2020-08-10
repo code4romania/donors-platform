@@ -31,8 +31,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Relation::morphMap([
-            'donor' => \App\Models\Donor::class,
-            'user'  => \App\Models\User::class,
+            'donor'      => \App\Models\Donor::class,
+            'focus_area' => \App\Models\FocusArea::class,
+            'grant'      => \App\Models\Grant::class,
+            'grantee'    => \App\Models\Grantee::class,
+            'user'       => \App\Models\User::class,
         ]);
     }
 
