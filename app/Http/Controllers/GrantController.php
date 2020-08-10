@@ -4,8 +4,18 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreGrantRequest;
+use App\Http\Resources\DonorResource;
+use App\Http\Resources\FocusAreaResource;
+use App\Http\Resources\GranteeResource;
+use App\Http\Resources\GrantResource;
+use App\Models\Donor;
+use App\Models\FocusArea;
 use App\Models\Grant;
+use App\Models\Grantee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
 
 class GrantController extends Controller
 {
@@ -16,7 +26,17 @@ class GrantController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Grants/Index', [
+            'columns' => $this->getIndexColumns(Donor::class, [
+                'name', 'area', 'amount',
+            ]),
+            'sort' => $this->getSortProps(),
+            'grants'  => GrantResource::collection(
+                Grant::with('focusArea')
+                    ->sort()
+                    ->paginate(),
+            ),
+        ]);
     }
 
     /**
@@ -26,7 +46,18 @@ class GrantController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Grants/Create', [
+            'donors' => DonorResource::collection(
+                Donor::orderBy('name', 'asc')->get()
+            ),
+            'focus_areas' => FocusAreaResource::collection(
+                FocusArea::orderByTranslation('name', 'asc')->get()
+            ),
+            'grantees' => GranteeResource::collection(
+                Grantee::orderBy('name', 'asc')->get()
+            ),
+
+        ]);
     }
 
     /**
@@ -35,9 +66,16 @@ class GrantController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreGrantRequest $request)
     {
-        //
+        $grant = Grant::create($request->except('grantees'));
+
+        $grant->grantees()->sync($request->input('grantees'));
+
+        return Redirect::route('grants.show', $grant)
+            ->with('success', __('dashboard.event.created', [
+                'model' => __('dashboard.model.grant.singular'),
+            ]));
     }
 
     /**

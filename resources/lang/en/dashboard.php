@@ -29,18 +29,20 @@ return [
 
     'field' => [
         'areas'                 => 'Areas under focus',
+        'currency'              => 'Currency',
         'email'                 => 'Email address',
         'first_name'            => 'First name',
         'hq'                    => 'HQ',
         'last_name'             => 'Last name',
         'logo'                  => 'Logo',
-        'name'                  => 'Name',
+        'managed'               => 'Managed by a grant manager',
         'name'                  => 'Name',
         'other'                 => 'Other',
         'password_confirmation' => 'Password confirmation',
         'password'              => 'Password',
         'phone'                 => 'Phone',
         'published_status'      => 'Status',
+        'regranting_value'      => 'Regranting value',
         'role'                  => 'Role',
         'roleLabel'             => 'Role',
         'type'                  => 'Type',
@@ -69,6 +71,25 @@ return [
             'section' => [
                 'title' => 'Lorem ipsum',
                 'description' => 'Iste et quisquam enim aut error aut. A quidem quas. Ex tenetur id nesciunt eligendi tenetur ut. Porro esse vero adipisci qui est. Ipsam ab non aut. Suscipit nulla est sed et enim illo eos.',
+            ],
+        ],
+        'grant' => [
+            'singular' => 'Grant',
+            'plural'   => 'Grants',
+
+            'section' => [
+                'info' => [
+                    'title' => 'Grant',
+                    'description' => 'Iste et quisquam enim aut error aut. A quidem quas. Ex tenetur id nesciunt eligendi tenetur ut. Porro esse vero adipisci qui est. Ipsam ab non aut. Suscipit nulla est sed et enim illo eos.',
+                ],
+                'donors' => [
+                    'title' => 'Donors',
+                    'description' => 'Iste et quisquam enim aut error aut. A quidem quas. Ex tenetur id nesciunt eligendi tenetur ut. Porro esse vero adipisci qui est. Ipsam ab non aut. Suscipit nulla est sed et enim illo eos.',
+                ],
+                'manager' => [
+                    'title' => 'Grant manager',
+                    'description' => 'Iste et quisquam enim aut error aut. A quidem quas. Ex tenetur id nesciunt eligendi tenetur ut. Porro esse vero adipisci qui est. Ipsam ab non aut. Suscipit nulla est sed et enim illo eos.',
+                ],
             ],
         ],
         'grantee' => [

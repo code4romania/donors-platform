@@ -9,6 +9,7 @@ Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
 
 Route::resource('donors', 'DonorController');
 Route::resource('focus-areas', 'FocusAreaController');
+Route::resource('grants', 'GrantController');
 Route::resource('grantees', 'GranteeController');
 
 Route::resource('users', 'UserController');

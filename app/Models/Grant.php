@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Traits\Draftable;
+use App\Traits\Sortable;
 use Cknow\Money\MoneyCast;
 use Illuminate\Database\Eloquent\Model;
 
 class Grant extends Model
 {
-    use Draftable;
+    use Draftable, Sortable;
 
     /**
      * The attributes that are mass assignable.
@@ -19,6 +20,15 @@ class Grant extends Model
      */
     protected $fillable = [
         'name', 'amount', 'currency', 'start_date', 'end_date',
+    ];
+
+    /**
+     * The attributes that are sortable.
+     *
+     * @var array
+     */
+    protected $sortable = [
+        'name',
     ];
 
     /**
@@ -44,5 +54,10 @@ class Grant extends Model
     public function grantees()
     {
         return $this->belongsToMany(Grantee::class);
+    }
+
+    public function focusArea()
+    {
+        return $this->belongsTo(FocusArea::class);
     }
 }
