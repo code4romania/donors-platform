@@ -2,22 +2,28 @@
     <div>
         <form-label
             v-if="label"
+            :label="label"
             :id="id"
-            class="block mb-1 font-semibold leading-tight text-gray-700"
-            v-text="label"
+            :required="$attrs.required"
         />
 
         <select
             :id="id"
-            class="block w-full border-gray-300 form-select focus:outline-none focus:shadow-outline-blue focus:border-blue-300"
+            class="block w-full border-gray-300 focus:outline-none focus:shadow-outline-blue focus:border-blue-300"
+            :class="{
+                'form-select': !this.multiple,
+                'form-multiselect': this.multiple,
+            }"
+            :multiple="multiple"
             v-bind="$attrs"
-            @change="$emit('input', $event.target.value)"
+            v-model="dataSelected"
         >
             <option
                 v-for="(option, index) in options"
-                :checked="dataValue === option"
                 :key="index"
-                v-text="option"
+                :checked="dataSelected === option"
+                :value="option[optionValueKey] || option"
+                v-text="option[optionLabelKey] || option"
             />
         </select>
 
@@ -48,6 +54,18 @@
                 type: Array,
                 default: () => [],
             },
+            optionValueKey: {
+                type: String,
+                default: 'value',
+            },
+            optionLabelKey: {
+                type: String,
+                default: 'label',
+            },
+            multiple: {
+                type: Boolean,
+                default: false,
+            },
             errors: {
                 type: Array,
                 default: () => [],
@@ -55,15 +73,20 @@
         },
         data() {
             return {
-                dataValue: this.value,
+                dataSelected: [],
             };
         },
         watch: {
             value: {
                 immediate: true,
                 handler: function (newValue) {
-                    this.dataValue = newValue;
+                    if (typeof newValue !== 'undefined') {
+                        this.dataSelected = newValue;
+                    }
                 },
+            },
+            dataSelected(cv) {
+                this.$emit('input', cv);
             },
         },
     };

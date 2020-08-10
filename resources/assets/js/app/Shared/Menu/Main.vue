@@ -98,12 +98,22 @@
                         icon: 'Finance/money-euro-circle-line',
                         href: this.$route('donors.index'),
                         label: this.$t('dashboard.model.donor.plural'),
-                        children: [
-                            {
-                                href: this.$route('focus-areas.index'),
-                                label: this.$t('dashboard.model.focusArea.plural'),
-                            },
-                        ],
+                        children: [],
+                    },
+                    {
+                        icon: 'Design/focus-3-line',
+                        href: this.$route('focus-areas.index'),
+                        label: this.$t('dashboard.model.focusArea.plural'),
+                    },
+                    {
+                        icon: 'Finance/funds-line',
+                        href: this.$route('grants.index'),
+                        label: this.$t('dashboard.model.grant.plural'),
+                    },
+                    {
+                        icon: 'Editor/organization-chart',
+                        href: this.$route('grantees.index'),
+                        label: this.$t('dashboard.model.grantee.plural'),
                     },
                     {
                         icon: 'User/user-settings-line',

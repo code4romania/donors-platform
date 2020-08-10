@@ -1,6 +1,6 @@
 <template>
     <div
-        class="grid gap-6 px-4 py-5 overflow-hidden bg-white rounded-sm shadow md:gap-8 md:grid-cols-3 sm:rounded-lg md:shadow-md sm:p-6"
+        class="grid gap-6 px-4 py-5 bg-white rounded-sm shadow md:gap-8 md:grid-cols-3 sm:rounded-lg md:shadow-md sm:p-6"
     >
         <div class="md:col-span-1">
             <h3

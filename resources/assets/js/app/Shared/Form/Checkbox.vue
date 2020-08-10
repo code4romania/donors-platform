@@ -5,8 +5,7 @@
             :id="id"
             class="w-4 h-4 mb-1 text-blue-600 transition duration-150 ease-in-out form-checkbox"
             :value="value"
-            :checked="checked"
-            @change="$emit('update:checked', $event.target.checked)"
+            v-model="checked"
         />
 
         <form-label :id="id" :label="label || value" class="ml-2" />
@@ -38,13 +37,25 @@
                 type: String,
                 required: true,
             },
-            checked: {
-                type: Boolean,
-                default: false,
-            },
             errors: {
                 type: Array,
                 default: () => [],
+            },
+        },
+        data() {
+            return {
+                checked: false,
+            };
+        },
+        watch: {
+            value: {
+                immediate: true,
+                handler: function (value) {
+                    this.checked = value;
+                },
+            },
+            checked(cv) {
+                this.$emit('input', cv);
             },
         },
     };
