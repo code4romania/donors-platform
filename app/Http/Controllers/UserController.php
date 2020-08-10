@@ -26,7 +26,9 @@ class UserController extends Controller
     public function index()
     {
         return Inertia::render('Users/Index', [
-            'columns' => ['name', 'roleLabel'],
+            'columns' => $this->getIndexColumns(User::class, [
+                'name', 'roleLabel',
+            ]),
             'users' => UserResource::collection(
                 User::paginate()
             ),

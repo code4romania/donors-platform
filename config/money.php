@@ -11,6 +11,6 @@ return [
     'locale' => config('app.locale'),
     'defaultCurrency' => config('app.currency', 'EUR'),
     'currencies' => [
-        'iso' => ['RON', 'EUR', 'USD'],
+        'iso' => ['EUR', 'RON', 'USD'],
     ],
 ];

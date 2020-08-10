@@ -74,6 +74,8 @@ class AppServiceProvider extends ServiceProvider
                     ? Session::get('errors')->getBag('default')->getMessages()
                     : (object) [];
             },
+
+            'currencies' => fn () => config('money.currencies.iso', []),
         ]);
     }
 }
