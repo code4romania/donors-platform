@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreGranteeRequest;
+use App\Http\Resources\GranteeResource;
 use App\Models\Grantee;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
 
 class GranteeController extends Controller
 {
@@ -16,7 +19,16 @@ class GranteeController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Grantees/Index', [
+            'columns' => $this->getIndexColumns(Grantee::class, [
+                'name',
+            ]),
+            'sort' => $this->getSortProps(),
+            'grantees'  => GranteeResource::collection(
+                Grantee::sort()
+                    ->paginate(),
+            ),
+        ]);
     }
 
     /**
@@ -26,7 +38,7 @@ class GranteeController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Grantees/Create');
     }
 
     /**
@@ -35,9 +47,14 @@ class GranteeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreGranteeRequest $request)
     {
-        //
+        Grantee::create($request->all());
+
+        return Redirect::route('grantees.index')
+            ->with('success', __('dashboard.event.created', [
+                'model' => __('dashboard.model.grantee.singular'),
+            ]));
     }
 
     /**
@@ -48,7 +65,7 @@ class GranteeController extends Controller
      */
     public function show(Grantee $grantee)
     {
-        //
+        return Redirect::route('grantees.index');
     }
 
     /**
@@ -59,7 +76,9 @@ class GranteeController extends Controller
      */
     public function edit(Grantee $grantee)
     {
-        //
+        return Inertia::render('Grantees/Edit', [
+            'grantee' => GranteeResource::make($grantee),
+        ]);
     }
 
     /**
@@ -69,9 +88,14 @@ class GranteeController extends Controller
      * @param  \App\Models\Grantee       $grantee
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Grantee $grantee)
+    public function update(StoreGranteeRequest $request, Grantee $grantee)
     {
-        //
+        $grantee->update($request->all());
+
+        return Redirect::back()
+            ->with('success', __('dashboard.event.updated', [
+                'model' => __('dashboard.model.grantee.singular'),
+            ]));
     }
 
     /**
