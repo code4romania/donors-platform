@@ -90,7 +90,7 @@
 
                 <div
                     class="sm:col-span-3 md:col-span-2"
-                    v-if="donor.data.focus_areas.length"
+                    v-if="donor.data.domains.length"
                 >
                     <strong
                         class="text-lg"
@@ -103,7 +103,7 @@
                         />
                         <div
                             v-html="
-                                donor.data.focus_areas
+                                donor.data.domains
                                     .map((area) => area.name)
                                     .join(', ')
                             "
