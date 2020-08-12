@@ -8,7 +8,8 @@ use App\Http\Requests\StoreGrantRequest;
 use App\Http\Resources\DomainResource;
 use App\Http\Resources\DonorResource;
 use App\Http\Resources\GranteeResource;
-use App\Http\Resources\GrantResource;
+use App\Http\Resources\GrantIndexResource;
+use App\Http\Resources\GrantShowResource;
 use App\Models\Domain;
 use App\Models\Donor;
 use App\Models\Grant;
@@ -28,10 +29,10 @@ class GrantController extends Controller
     {
         return Inertia::render('Grants/Index', [
             'columns' => $this->getIndexColumns(Donor::class, [
-                'name', 'area', 'amount',
+                'name', 'area',
             ]),
             'sort' => $this->getSortProps(),
-            'grants'  => GrantResource::collection(
+            'grants'  => GrantIndexResource::collection(
                 Grant::with('domain')
                     ->sort()
                     ->paginate(),
@@ -86,7 +87,9 @@ class GrantController extends Controller
      */
     public function show(Grant $grant)
     {
-        //
+        return Inertia::render('Grants/Show', [
+            'grant' => GrantShowResource::make($grant),
+        ]);
     }
 
     /**
