@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Pivots\Project;
 use App\Traits\Draftable;
 use App\Traits\Sortable;
 use Cknow\Money\MoneyCast;
@@ -19,7 +20,7 @@ class Grant extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'amount', 'currency', 'start_date', 'end_date',
+        'name', 'amount', 'currency',
     ];
 
     /**
@@ -53,11 +54,28 @@ class Grant extends Model
 
     public function grantees()
     {
-        return $this->belongsToMany(Grantee::class);
+        return $this->belongsToMany(Grantee::class)
+            ->using(Project::class)
+            ->withPivot([
+                'amount',
+                'currency',
+                'start_date',
+                'end_date',
+                'domain',
+            ]);
     }
 
     public function domain()
     {
         return $this->belongsTo(Domain::class);
+    }
+
+    public function getFormattedAmountAttribute(): ?string
+    {
+        if (! $this->amount) {
+            return null;
+        }
+
+        return $this->amount->format();
     }
 }

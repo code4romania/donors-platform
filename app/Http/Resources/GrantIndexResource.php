@@ -6,7 +6,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class GrantResource extends JsonResource
+class GrantIndexResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -20,7 +20,6 @@ class GrantResource extends JsonResource
             'id'           => $this->id,
             'name'         => $this->name,
             'domain'       => $this->domain,
-            'amount'       => $this->amount->format(),
         ];
     }
 }
