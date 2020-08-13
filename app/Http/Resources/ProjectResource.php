@@ -6,7 +6,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class GrantGranteeResource extends JsonResource
+class ProjectResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,11 +17,11 @@ class GrantGranteeResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'name'       => $this->name,
-            'start_date' => $this->pivot->start_date,
-            'end_date'   => $this->pivot->end_date,
-            'amount'     => $this->pivot->amount->format(),
-            'domain'     => $this->pivot->domain,
+            'grantee'    => $this->name,
+            'title'      => $this->project->title,
+            'start_date' => $this->project->start_date,
+            'end_date'   => $this->project->end_date,
+            'amount'     => $this->project->amount->format(),
         ];
     }
 }

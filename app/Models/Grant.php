@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Pivots\Project;
 use App\Traits\Draftable;
 use App\Traits\Sortable;
+use Cknow\Money\Money;
 use Cknow\Money\MoneyCast;
 use Illuminate\Database\Eloquent\Model;
 
@@ -54,14 +55,15 @@ class Grant extends Model
 
     public function grantees()
     {
-        return $this->belongsToMany(Grantee::class)
+        return $this->belongsToMany(Grantee::class, 'projects')
             ->using(Project::class)
+            ->as('project')
             ->withPivot([
+                'title',
                 'amount',
                 'currency',
                 'start_date',
                 'end_date',
-                'domain',
             ]);
     }
 
@@ -77,5 +79,15 @@ class Grant extends Model
         }
 
         return $this->amount->format();
+    }
+
+    public function getTotalValueAttribute()
+    {
+        return $this->grantees->pluck('project.amount')
+            ->filter()
+            ->unlessEmpty(
+                fn ($amounts) => Money::sum(...$amounts),
+                fn () => null,
+            );
     }
 }

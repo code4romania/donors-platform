@@ -23,6 +23,8 @@ class CreateGrantsTable extends Migration
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
 
+            $table->foreignId('domain_id')->nullable()->constrained()->onDelete('cascade');
+
             $table->timestamps();
             $table->timestamp('published_at')->nullable();
         });
@@ -43,15 +45,15 @@ class CreateGrantsTable extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
         });
 
-        Schema::create('grant_grantee', function (Blueprint $table) {
+        Schema::create('projects', function (Blueprint $table) {
             $table->foreignId('grant_id')->constrained()->onDelete('cascade');
             $table->foreignId('grantee_id')->constrained()->onDelete('cascade');
 
+            $table->string('title')->nullable();
             $table->decimal('amount', 16, 2)->nullable();
             $table->string('currency');
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->string('domain')->nullable();
         });
     }
 
@@ -62,7 +64,7 @@ class CreateGrantsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('grant_grantee');
+        Schema::dropIfExists('projects');
         Schema::dropIfExists('grant_manager');
         Schema::dropIfExists('donor_grant');
         Schema::dropIfExists('grantees');

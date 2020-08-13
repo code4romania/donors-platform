@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\DomainResource;
+use App\Http\Resources\ProjectResource;
 use Cknow\Money\Money;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -25,15 +27,15 @@ class GrantShowResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'id'       => $this->id,
-            'name'     => $this->name,
-            'domain'   => $this->domain,
-            'amount'   => $this->formatted_amount,
-            'grantees' => GrantGranteeResource::collection($this->grantees),
-            'stats'    => [
-                'total_value' => Money::sum(...$this->grantees->pluck('pivot.amount')),
-                'grantees'    => $this->grantees->count(),
-            ],
+            'id'          => $this->id,
+            'name'        => $this->name,
+            'domain'      => DomainResource::make($this->domain),
+            'amount'      => $this->formatted_amount,
+            'projects'    => ProjectResource::collection($this->grantees),
+
+            'donors'      => $this->donors->pluck('name'),
+            'grantees'    => $this->grantees->unique()->count(),
+            'total_value' => $this->total_value,
         ];
     }
 }
