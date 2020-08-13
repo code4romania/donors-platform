@@ -7,8 +7,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use Inertia\Response;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -18,12 +20,7 @@ class UserController extends Controller
         $this->authorizeResource(User::class);
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(): Response
     {
         return Inertia::render('Users/Index', [
             'columns' => $this->getIndexColumns(User::class, [
@@ -35,25 +32,14 @@ class UserController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function create(): Response
     {
         return Inertia::render('Users/Create', [
             'roles' => Role::all()->pluck('name'),
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\-Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreUserRequest $request)
+    public function store(StoreUserRequest $request): RedirectResponse
     {
         $user = User::create($request->all());
 
@@ -65,26 +51,14 @@ class UserController extends Controller
             ]));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\User          $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
+    public function show(User $user): Response
     {
         return Inertia::render('Users/Show', [
             'user' => UserResource::make($user),
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\User          $user
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
+    public function edit(User $user): Response
     {
         return Inertia::render('Users/Edit', [
             'user' => UserResource::make($user),
@@ -92,14 +66,7 @@ class UserController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User          $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(StoreuserRequest $request, User $user)
+    public function update(StoreuserRequest $request, User $user): RedirectResponse
     {
         $user->update($request->all());
 
@@ -111,13 +78,7 @@ class UserController extends Controller
             ]));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\User          $user
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
+    public function destroy(User $user): RedirectResponse
     {
         $user->delete();
 

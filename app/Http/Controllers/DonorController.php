@@ -9,17 +9,14 @@ use App\Http\Resources\DomainResource;
 use App\Http\Resources\DonorResource;
 use App\Models\Domain;
 use App\Models\Donor;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class DonorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(): Response
     {
         return Inertia::render('Donors/Index', [
             'columns' => $this->getIndexColumns(Donor::class, [
@@ -34,12 +31,7 @@ class DonorController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function create(): Response
     {
         return Inertia::render('Donors/Create', [
             'domains' => DomainResource::collection(
@@ -48,13 +40,7 @@ class DonorController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreDonorRequest $request)
+    public function store(StoreDonorRequest $request): RedirectResponse
     {
         $donor = Donor::create($request->except('logo', 'areas'));
 
@@ -71,26 +57,14 @@ class DonorController extends Controller
             ]));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Donor         $donor
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Donor $donor)
+    public function show(Donor $donor): Response
     {
         return Inertia::render('Donors/Show', [
             'donor' => DonorResource::make($donor),
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Donor         $donor
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Donor $donor)
+    public function edit(Donor $donor): Response
     {
         return Inertia::render('Donors/Edit', [
             'donor'   => DonorResource::make($donor),
@@ -100,14 +74,7 @@ class DonorController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Donor         $donor
-     * @return \Illuminate\Http\Response
-     */
-    public function update(StoreDonorRequest $request, Donor $donor)
+    public function update(StoreDonorRequest $request, Donor $donor): RedirectResponse
     {
         $donor->update($request->except('logo', 'areas'));
 
@@ -123,13 +90,7 @@ class DonorController extends Controller
             ]));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Donor         $donor
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Donor $donor)
+    public function destroy(Donor $donor): RedirectResponse
     {
         $donor->delete();
 

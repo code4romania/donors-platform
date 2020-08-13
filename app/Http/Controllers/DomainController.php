@@ -7,17 +7,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreDomainRequest;
 use App\Http\Resources\DomainResource;
 use App\Models\Domain;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class DomainController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(): Response
     {
         return Inertia::render('Domains/Index', [
             'columns' => $this->getIndexColumns(Domain::class, [
@@ -31,25 +28,14 @@ class DomainController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function create(): Response
     {
         return Inertia::render('Domains/Create', [
             'translatable' => app(Domain::class)->translatable,
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreDomainRequest $request)
+    public function store(StoreDomainRequest $request): RedirectResponse
     {
         Domain::create($request->all());
 
@@ -59,24 +45,12 @@ class DomainController extends Controller
             ]));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Domain        $domain
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Domain $domain)
+    public function show(Domain $domain): RedirectResponse
     {
         return Redirect::route('domains.index');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Domain        $domain
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Domain $domain)
+    public function edit(Domain $domain): Response
     {
         return Inertia::render('Domains/Edit', [
             'domain' => DomainResource::make($domain),
@@ -84,14 +58,7 @@ class DomainController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Domain        $domain
-     * @return \Illuminate\Http\Response
-     */
-    public function update(StoreDomainRequest $request, Domain $domain)
+    public function update(StoreDomainRequest $request, Domain $domain): RedirectResponse
     {
         $domain->update($request->all());
 
@@ -101,13 +68,7 @@ class DomainController extends Controller
             ]));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Domain        $domain
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Domain $domain)
+    public function destroy(Domain $domain): RedirectResponse
     {
         $domain->delete();
 

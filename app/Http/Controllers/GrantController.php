@@ -14,18 +14,15 @@ use App\Models\Domain;
 use App\Models\Donor;
 use App\Models\Grant;
 use App\Models\Grantee;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class GrantController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(): Response
     {
         return Inertia::render('Grants/Index', [
             'columns' => $this->getIndexColumns(Donor::class, [
@@ -40,12 +37,7 @@ class GrantController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function create(): Response
     {
         return Inertia::render('Grants/Create', [
             'donors' => DonorResource::collection(
@@ -57,17 +49,10 @@ class GrantController extends Controller
             'grantees' => GranteeResource::collection(
                 Grantee::orderBy('name', 'asc')->get()
             ),
-
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreGrantRequest $request)
+    public function store(StoreGrantRequest $request): RedirectResponse
     {
         $grant = Grant::create($request->except('grantees'));
 
@@ -79,50 +64,35 @@ class GrantController extends Controller
             ]));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Grant         $grant
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Grant $grant)
+    public function show(Grant $grant): Response
     {
         return Inertia::render('Grants/Show', [
             'grant' => GrantShowResource::make($grant),
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Grant         $grant
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Grant $grant)
+    public function edit(Grant $grant): Response
     {
-        //
+        return Inertia::render('Grants/Edit', [
+            'grant' => GrantShowResource::make($grant),
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Grant         $grant
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Grant $grant)
+    public function update(Request $request, Grant $grant): RedirectResponse
     {
-        //
+        return Redirect::back()
+            ->with('success', __('dashboard.event.updated', [
+                'model' => __('dashboard.model.grant.singular'),
+            ]));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Grant         $grant
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Grant $grant)
+    public function destroy(Grant $grant): RedirectResponse
     {
-        //
+        $grant->delete();
+
+        return Redirect::back()
+            ->with('success', __('dashboard.event.deleted', [
+                'model' => __('dashboard.model.grant.singular'),
+            ]));
     }
 }

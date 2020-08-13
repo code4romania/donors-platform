@@ -9,15 +9,11 @@ use App\Models\Donor;
 use App\Models\Grant;
 use App\Models\Grantee;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class DashboardController extends Controller
 {
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index()
+    public function index(): Response
     {
         return Inertia::render('Dashboard/Index', [
             'stats' => [
