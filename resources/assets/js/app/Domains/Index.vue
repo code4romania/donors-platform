@@ -21,16 +21,7 @@
     </layout>
 </template>
 <script>
-    import Layout from '@/Shared/Layout/Default';
-    import FormButton from '@/Shared/Form/Button';
-    import ModelTable from '@/Shared/Table/Model';
-
     export default {
-        components: {
-            Layout,
-            FormButton,
-            ModelTable,
-        },
         props: {
             columns: Array,
             domains: Object,

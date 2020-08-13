@@ -29,20 +29,27 @@
             />
         </panel>
 
-        <data-table
-            class="md:col-span-2"
-            :data="grant.grantees"
-            :columns="['name', 'domain', 'amount']"
-        />
+        <grid class="md:grid-cols-3">
+            <div>
+                <grid>
+                    <stats-card
+                        v-for="(card, index) in cards"
+                        :key="index"
+                        :title="card.title"
+                        :number="card.number"
+                    />
+                </grid>
+            </div>
+            <data-table
+                class="md:col-span-2"
+                :data="grant.grantees"
+                :columns="['name', 'domain', 'amount']"
+            />
+        </grid>
     </layout>
 </template>
 <script>
-    import Layout from '@/Shared/Layout/Default';
-
     export default {
-        components: {
-            Layout,
-        },
         props: {
             grant: Object,
         },
@@ -77,15 +84,15 @@
                 cards: [
                     {
                         title: 'Total value of grants',
-                        number: this.grant.stats.total_value.formatted,
+                        number: this.grant.total_value.formatted,
                     },
                     {
                         title: 'Total number of grantees',
-                        number: this.grant.stats.grantees,
+                        number: this.grant.grantees.length,
                     },
                     {
                         title: 'Areas covered',
-                        number: this.grant.stats.grantees,
+                        number: this.grant.domain.name || null,
                     },
                 ],
             };

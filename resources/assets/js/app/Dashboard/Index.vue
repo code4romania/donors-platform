@@ -16,16 +16,7 @@
 </template>
 
 <script>
-    import Layout from '@/Shared/Layout/Default';
-    import Grid from '@/Shared/Grid';
-    import StatsCard from '@/Shared/Stats/Card';
-
     export default {
-        components: {
-            Layout,
-            Grid,
-            StatsCard,
-        },
         metaInfo() {
             return {
                 title: this.$t('dashboard.menu.dashboard'),

@@ -1,5 +1,5 @@
 <template>
-    <layout>
+    <layout-auth>
         <template v-slot:title>
             {{ $t('auth.register') }}
         </template>
@@ -46,20 +46,11 @@
                 {{ $t('auth.register') }}
             </form-button>
         </form>
-    </layout>
+    </layout-auth>
 </template>
 
 <script>
-    import Layout from '@/Shared/Layout/Auth';
-    import FormInput from '@/Shared/Form/Input';
-    import FormButton from '@/Shared/Form/Button';
-
     export default {
-        components: {
-            Layout,
-            FormInput,
-            FormButton,
-        },
         data() {
             return {
                 form: {

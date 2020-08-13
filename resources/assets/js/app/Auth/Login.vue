@@ -1,5 +1,5 @@
 <template>
-    <layout>
+    <layout-auth>
         <template v-slot:title>
             {{ $t('auth.login') }}
         </template>
@@ -42,22 +42,11 @@
                 {{ $t('auth.login') }}
             </form-button>
         </form>
-    </layout>
+    </layout-auth>
 </template>
 
 <script>
-    import Layout from '@/Shared/Layout/Auth';
-    import FormInput from '@/Shared/Form/Input';
-    import FormCheckbox from '@/Shared/Form/Checkbox';
-    import FormButton from '@/Shared/Form/Button';
-
     export default {
-        components: {
-            Layout,
-            FormInput,
-            FormCheckbox,
-            FormButton,
-        },
         data() {
             return {
                 form: {

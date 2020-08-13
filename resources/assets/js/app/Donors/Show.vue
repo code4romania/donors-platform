@@ -122,26 +122,7 @@
     </layout>
 </template>
 <script>
-    import Layout from '@/Shared/Layout/Default';
-    import FormInput from '@/Shared/Form/Input';
-    import FormSelect from '@/Shared/Form/Select';
-    import FormCheckbox from '@/Shared/Form/Checkbox';
-    import FormCheckboxGroup from '@/Shared/Form/CheckboxGroup';
-    import FormButton from '@/Shared/Form/Button';
-    import Panel from '@/Shared/Panel';
-    import PublishedBadge from '@/Shared/Badge/Published';
-
     export default {
-        components: {
-            Layout,
-            FormInput,
-            FormSelect,
-            FormCheckbox,
-            FormCheckboxGroup,
-            FormButton,
-            Panel,
-            PublishedBadge,
-        },
         props: {
             donor: Object,
         },

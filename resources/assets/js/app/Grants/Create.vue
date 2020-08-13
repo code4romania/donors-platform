@@ -155,30 +155,9 @@
     </layout>
 </template>
 <script>
-    import Layout from '@/Shared/Layout/Default';
-    import FormButton from '@/Shared/Form/Button';
-    import FormCheckbox from '@/Shared/Form/Checkbox';
-    import FormCheckboxGroup from '@/Shared/Form/CheckboxGroup';
-    import FormDatePicker from '@/Shared/Form/DatePicker';
-    import FormFile from '@/Shared/Form/File';
-    import FormInput from '@/Shared/Form/Input';
-    import FormPanel from '@/Shared/Form/Panel';
-    import FormSelect from '@/Shared/Form/Select';
-
     import LocaleMixin from '@/mixins/locale';
 
     export default {
-        components: {
-            Layout,
-            FormButton,
-            FormCheckbox,
-            FormCheckboxGroup,
-            FormDatePicker,
-            FormFile,
-            FormInput,
-            FormPanel,
-            FormSelect,
-        },
         mixins: [LocaleMixin],
         metaInfo() {
             return {

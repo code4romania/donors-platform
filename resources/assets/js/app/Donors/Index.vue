@@ -25,18 +25,7 @@
     </layout>
 </template>
 <script>
-    import Layout from '@/Shared/Layout/Default';
-    import FormButton from '@/Shared/Form/Button';
-    import ModelTable from '@/Shared/Table/Model';
-    import PublishedBadge from '@/Shared/Badge/Published';
-
     export default {
-        components: {
-            Layout,
-            FormButton,
-            ModelTable,
-            PublishedBadge,
-        },
         props: {
             columns: Array,
             donors: Object,
