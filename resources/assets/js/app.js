@@ -44,7 +44,7 @@ if (app !== null) {
         render: h => h(InertiaApp, {
             props: {
                 initialPage,
-                resolveComponent: name => require(`@/${name}`).default,
+                resolveComponent: name => require(`@/app/${name}`).default,
             },
         }),
         i18n,
