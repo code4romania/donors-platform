@@ -15,6 +15,7 @@ return [
         'delete'    => 'Delete :model',
         'draft'     => 'Create draft',
         'edit'      => 'Edit :model',
+        'view'      => 'View :model',
         'publish'   => 'Publish',
         'unpublish' => 'Unublish',
         'save'      => 'Save',

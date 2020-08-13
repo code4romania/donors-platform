@@ -24,28 +24,25 @@
 
         <panel>
             <h2
-                class="mt-2 text-2xl font-bold leading-tight md:text-3xl"
+                class="max-w-3xl mt-2 text-2xl font-bold leading-tight md:text-3xl"
                 v-text="grant.name"
             />
+
+            <grid class="mt-8 md:grid-cols-4">
+                <stats-card
+                    v-for="(card, index) in cards"
+                    :key="index"
+                    :title="card.title"
+                    :number="card.number"
+                    :with-panel="false"
+                />
+            </grid>
         </panel>
 
-        <grid class="md:grid-cols-3">
-            <div>
-                <grid>
-                    <stats-card
-                        v-for="(card, index) in cards"
-                        :key="index"
-                        :title="card.title"
-                        :number="card.number"
-                    />
-                </grid>
-            </div>
-            <data-table
-                class="md:col-span-2"
-                :data="grant.grantees"
-                :columns="['name', 'domain', 'amount']"
-            />
-        </grid>
+        <data-table
+            :data="grant.projects"
+            :columns="['grantee', 'title', 'amount']"
+        />
     </layout>
 </template>
 <script>
@@ -60,7 +57,7 @@
         },
         computed: {
             pageTitle() {
-                return this.$t('dashboard.action.edit', {
+                return this.$t('dashboard.action.view', {
                     model: this.$t('dashboard.model.grant.singular').toLowerCase(),
                 });
             },
@@ -83,12 +80,16 @@
                 },
                 cards: [
                     {
+                        title: 'Donors',
+                        number: this.grant.donors.join(', ') || null,
+                    },
+                    {
                         title: 'Total value of grants',
-                        number: this.grant.total_value.formatted,
+                        number: this.grant.total_value.formatted || null,
                     },
                     {
                         title: 'Total number of grantees',
-                        number: this.grant.grantees.length,
+                        number: this.grant.grantees || null,
                     },
                     {
                         title: 'Areas covered',

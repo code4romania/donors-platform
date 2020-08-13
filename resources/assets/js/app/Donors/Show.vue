@@ -133,7 +133,7 @@
         },
         computed: {
             pageTitle() {
-                return this.$t('dashboard.action.edit', {
+                return this.$t('dashboard.action.view', {
                     model: this.$t('dashboard.model.donor.singular').toLowerCase(),
                 });
             },

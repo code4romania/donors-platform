@@ -1,6 +1,6 @@
 <template>
-    <panel>
-        <dl class="leading-tight truncate">
+    <component :is="withPanel ? 'panel' : 'div'">
+        <dl class="leading-tight">
             <dt class="mb-1 text-sm text-gray-500" v-text="title" />
 
             <dd
@@ -12,7 +12,7 @@
         <template v-slot:footer v-if="readMoreLink">
             <inertia-link :href="readMoreLink" v-text="readMoreLabel" />
         </template>
-    </panel>
+    </component>
 </template>
 
 <script>
@@ -34,6 +34,10 @@
             readMoreLabel: {
                 type: [String, null],
                 default: null,
+            },
+            withPanel: {
+                type: Boolean,
+                default: true,
             },
         },
         computed: {
