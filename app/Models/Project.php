@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Pivots;
+namespace App\Models;
 
 use App\Models\Grant;
 use App\Models\Grantee;

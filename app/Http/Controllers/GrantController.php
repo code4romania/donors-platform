@@ -26,7 +26,7 @@ class GrantController extends Controller
     {
         return Inertia::render('Grants/Index', [
             'columns' => $this->getIndexColumns(Donor::class, [
-                'name', 'area',
+                'name', 'domain',
             ]),
             'sort' => $this->getSortProps(),
             'grants'  => GrantIndexResource::collection(

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Pivots\Project;
 use App\Traits\Draftable;
 use App\Traits\Sortable;
 use Cknow\Money\Money;
