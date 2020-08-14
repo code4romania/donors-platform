@@ -39,7 +39,7 @@
             </grid>
         </panel>
 
-        <data-table
+        <data-block
             :data="grant.projects"
             :columns="['grantee', 'title', 'amount']"
         />

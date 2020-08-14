@@ -124,6 +124,11 @@ return [
         'grantees' => 'Grantees supported by all donors',
     ],
 
+    'view' => [
+        'graph' => 'Graph view',
+        'table' => 'Table view',
+    ],
+
     'role' => [
         'admin'   => 'Administrator',
         'donor'   => 'Donor',
