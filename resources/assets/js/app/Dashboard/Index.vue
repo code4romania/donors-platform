@@ -12,6 +12,14 @@
                 :number="card.number"
             />
         </grid>
+
+        <data-block :table-data="donors.data" :columns="columns">
+            <template v-slot:total_funding="column">
+                <span>
+                    {{ column.total_funding.formatted }}
+                </span>
+            </template>
+        </data-block>
     </layout>
 </template>
 
@@ -23,6 +31,7 @@
             };
         },
         props: {
+            donors: Object,
             stats: Object,
         },
         data() {
@@ -41,6 +50,31 @@
                     {
                         title: this.$t('dashboard.stats.grantees'),
                         number: this.stats.grantees,
+                    },
+                ],
+                columns: [
+                    {
+                        field: 'name',
+                        label: 'Donor',
+                        sortable: true,
+                    },
+                    {
+                        field: 'type',
+                        label: 'Type',
+                        sortable: true,
+                    },
+                    {
+                        field: 'grant_count',
+                        label: 'Grants',
+                        sortable: true,
+                    },
+                    {
+                        field: 'total_funding',
+                        label: 'Total funding',
+                        sortable: {
+                            prop: 'amount',
+                            numeric: true,
+                        },
                     },
                 ],
             };

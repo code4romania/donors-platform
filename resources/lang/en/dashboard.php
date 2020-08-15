@@ -125,7 +125,7 @@ return [
     ],
 
     'view' => [
-        'graph' => 'Graph view',
+        'chart' => 'Graph view',
         'table' => 'Table view',
     ],
 

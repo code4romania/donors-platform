@@ -39,7 +39,7 @@
             </grid>
         </panel>
 
-        <data-block :data="grant.projects" :columns="columns">
+        <data-block :table-data="grant.projects" :columns="columns">
             <template v-slot:amount="column">
                 <span>
                     {{ column.amount.formatted }}

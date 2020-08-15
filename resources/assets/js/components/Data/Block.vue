@@ -3,28 +3,30 @@
         class="min-w-0 overflow-hidden bg-white rounded-sm shadow sm:rounded-lg md:shadow-md"
     >
         <div class="flex p-4 space-x-5">
-            <button
-                v-for="view in views"
-                :key="view.name"
-                class="inline-flex items-center transition duration-150 focus:outline-none"
-                :class="
-                    currentView !== view.name
-                        ? 'opacity-50 hover:opacity-100'
-                        : ''
-                "
-                @click="changeView(view.name)"
-            >
-                <svg-vue
-                    :icon="view.icon"
-                    class="w-5 h-5 mr-2 text-blue-600 fill-current"
-                />
-                <span v-text="$t(`dashboard.view.${view.name}`)" />
-            </button>
+            <template v-for="view in views">
+                <button
+                    v-if="hasData(view.name)"
+                    :key="view.name"
+                    class="inline-flex items-center transition duration-150 focus:outline-none"
+                    :class="
+                        currentView !== view.name
+                            ? 'opacity-50 hover:opacity-100'
+                            : ''
+                    "
+                    @click="changeView(view.name)"
+                >
+                    <svg-vue
+                        :icon="view.icon"
+                        class="w-5 h-5 mr-2 text-blue-600 fill-current"
+                    />
+                    <span v-text="$t(`dashboard.view.${view.name}`)" />
+                </button>
+            </template>
         </div>
 
         <data-table
-            v-if="isCurrentView('table')"
-            :data="data"
+            v-if="tableData && isCurrentView('table')"
+            :data="tableData"
             :columns="columns"
         >
             <template
@@ -35,8 +37,9 @@
                 <slot :name="name" v-bind="slotData" />
             </template>
         </data-table>
+
         <bar-chart
-            v-if="isCurrentView('graph')"
+            v-if="chartData && isCurrentView('chart')"
             class="relative max-h-screen px-4 py-5 sm:p-6"
             :chart-data="chartData"
         />
@@ -47,29 +50,13 @@
     export default {
         name: 'DataBlock',
         props: {
-            data: {
+            tableData: {
                 type: Array,
                 required: true,
             },
-            columns: {
-                type: Array,
-                required: true,
-            },
-        },
-        data() {
-            return {
-                currentView: 'table',
-                views: [
-                    {
-                        name: 'table',
-                        icon: 'Design/grid-line',
-                    },
-                    {
-                        name: 'graph',
-                        icon: 'Business/line-chart-line',
-                    },
-                ],
-                chartData: {
+            chartData: {
+                type: Object,
+                default: () => ({
                     labels: [
                         'Category 1',
                         'Category 2',
@@ -91,13 +78,35 @@
                             data: [12, 3, 5, 2, 3],
                         },
                     ],
-                },
+                }),
+            },
+            columns: {
+                type: Array,
+                required: true,
+            },
+        },
+        data() {
+            return {
+                currentView: 'table',
+                views: [
+                    {
+                        name: 'table',
+                        icon: 'Design/grid-line',
+                    },
+                    {
+                        name: 'chart',
+                        icon: 'Business/line-chart-line',
+                    },
+                ],
             };
         },
         computed: {},
         methods: {
             isCurrentView(name) {
                 return this.currentView === name;
+            },
+            hasData(name) {
+                return Object.keys(this[`${name}Data`]).length > 0;
             },
             changeView(name) {
                 this.currentView = name;
