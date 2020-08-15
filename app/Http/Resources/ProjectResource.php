@@ -21,7 +21,7 @@ class ProjectResource extends JsonResource
             'title'      => $this->project->title,
             'start_date' => $this->project->start_date,
             'end_date'   => $this->project->end_date,
-            'amount'     => $this->project->amount->format(),
+            'amount'     => $this->project->amount,
         ];
     }
 }

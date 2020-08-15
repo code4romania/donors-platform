@@ -46,6 +46,7 @@ class CreateGrantsTable extends Migration
         });
 
         Schema::create('projects', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('grant_id')->constrained()->onDelete('cascade');
             $table->foreignId('grantee_id')->constrained()->onDelete('cascade');
 

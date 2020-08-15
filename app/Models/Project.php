@@ -12,6 +12,15 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 class Project extends Pivot
 {
     /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = true;
+
+    public $table = 'projects';
+
+    /**
      * The attributes that should be cast to native types.
      *
      * @var array

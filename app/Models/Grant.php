@@ -66,6 +66,11 @@ class Grant extends Model
             ]);
     }
 
+    public function projects()
+    {
+        return $this->grantees->pluck('project');
+    }
+
     public function domain()
     {
         return $this->belongsTo(Domain::class);

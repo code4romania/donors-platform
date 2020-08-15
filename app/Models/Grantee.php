@@ -28,4 +28,18 @@ class Grantee extends Model
     protected $sortable = [
         'name',
     ];
+
+    public function grants()
+    {
+        return $this->belongsToMany(Grant::class, 'projects')
+            ->using(Project::class)
+            ->as('project')
+            ->withPivot([
+                'title',
+                'amount',
+                'currency',
+                'start_date',
+                'end_date',
+            ]);
+    }
 }
