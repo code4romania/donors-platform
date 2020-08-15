@@ -39,10 +39,13 @@
             </grid>
         </panel>
 
-        <data-block
-            :data="grant.projects"
-            :columns="['grantee', 'title', 'amount']"
-        />
+        <data-block :data="grant.projects" :columns="columns">
+            <template v-slot:amount="column">
+                <span>
+                    {{ column.amount.formatted }}
+                </span>
+            </template>
+        </data-block>
     </layout>
 </template>
 <script>
@@ -94,6 +97,26 @@
                     {
                         title: 'Areas covered',
                         number: this.grant.domain.name || null,
+                    },
+                ],
+                columns: [
+                    {
+                        field: 'grantee',
+                        label: 'Grantee',
+                        sortable: true,
+                    },
+                    {
+                        field: 'title',
+                        label: 'Title',
+                        sortable: true,
+                    },
+                    {
+                        field: 'amount',
+                        label: 'Amount',
+                        sortable: {
+                            prop: 'amount',
+                            numeric: true,
+                        },
                     },
                 ],
             };

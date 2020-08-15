@@ -26,7 +26,15 @@
             v-if="isCurrentView('table')"
             :data="data"
             :columns="columns"
-        />
+        >
+            <template
+                v-for="(_, name) in $scopedSlots"
+                :slot="name"
+                slot-scope="slotData"
+            >
+                <slot :name="name" v-bind="slotData" />
+            </template>
+        </data-table>
         <bar-chart
             v-if="isCurrentView('graph')"
             class="relative max-h-screen px-4 py-5 sm:p-6"
