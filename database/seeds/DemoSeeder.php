@@ -7,6 +7,7 @@ use App\Models\Donor;
 use App\Models\Grant;
 use App\Models\Grantee;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
 class DemoSeeder extends Seeder
@@ -38,7 +39,7 @@ class DemoSeeder extends Seeder
                 switch ($key) {
                     case 'start_date':
                     case 'end_date':
-                        $row[$key] = $value ? Carbon\Carbon::parse($value)->format('Y-m-d') : null;
+                        $row[$key] = $value ? Carbon::parse($value)->format('Y-m-d') : null;
                         break;
 
                     case 'amount':
@@ -73,8 +74,9 @@ class DemoSeeder extends Seeder
             ->filter()
             ->each(function ($grantName) use ($donor) {
                 $grant = Grant::firstOrCreate([
-                    'name'     => $grantName,
-                    'currency' => 'USD',
+                    'name'         => $grantName,
+                    'currency'     => 'USD',
+                    'published_at' => Carbon::now(),
                 ]);
 
                 $grant->donors()->sync($donor->id);
