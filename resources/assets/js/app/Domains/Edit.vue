@@ -5,25 +5,25 @@
                 :href="$route('domains.index')"
                 class="text-blue-500 hover:text-blue-600"
             >
-                {{ $t('dashboard.model.domain.plural') }}
+                {{ $t('model.domain.plural') }}
             </inertia-link>
             <span class="font-normal text-gray-300" aria-hidden="true">//</span>
             {{
                 $t('dashboard.action.edit', {
-                    model: $t('dashboard.model.domain.singular').toLowerCase(),
+                    model: $t('model.domain.singular').toLowerCase(),
                 })
             }}
         </template>
 
         <form @submit.prevent="submit" method="post" class="grid row-gap-8">
             <form-panel
-                :title="$t('dashboard.model.domain.section.title')"
-                :description="$t('dashboard.model.domain.section.description')"
+                :title="$t('model.domain.section.title')"
+                :description="$t('model.domain.section.description')"
             >
                 <form-input
                     type="text"
                     id="name"
-                    :label="$t('dashboard.field.name')"
+                    :label="$t('field.name')"
                     v-model="form.name"
                     class="lg:col-span-2"
                     translated
@@ -72,12 +72,12 @@
         computed: {
             pageTitle() {
                 return this.$t('dashboard.action.edit', {
-                    model: this.$t('dashboard.model.domain.singular').toLowerCase(),
+                    model: this.$t('model.domain.singular').toLowerCase(),
                 });
             },
             submitLabel() {
                 return this.$t('dashboard.action.edit', {
-                    model: this.$t('dashboard.model.domain.singular').toLowerCase(),
+                    model: this.$t('model.domain.singular').toLowerCase(),
                 });
             },
         },

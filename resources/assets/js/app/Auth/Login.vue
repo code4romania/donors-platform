@@ -8,7 +8,7 @@
             <form-input
                 type="email"
                 id="email"
-                :label="$t('dashboard.field.email')"
+                :label="$t('field.email')"
                 v-model="form.email"
                 required
                 autocomplete="email"
@@ -18,7 +18,7 @@
             <form-input
                 type="password"
                 id="password"
-                :label="$t('dashboard.field.password')"
+                :label="$t('field.password')"
                 v-model="form.password"
                 required
                 autocomplete="current-password"

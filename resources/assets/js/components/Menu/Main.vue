@@ -91,23 +91,23 @@
                     {
                         icon: 'Finance/money-euro-circle-line',
                         href: this.$route('donors.index'),
-                        label: this.$t('dashboard.model.donor.plural'),
+                        label: this.$t('model.donor.plural'),
                         children: [],
                     },
                     {
                         icon: 'Design/focus-3-line',
                         href: this.$route('domains.index'),
-                        label: this.$t('dashboard.model.domain.plural'),
+                        label: this.$t('model.domain.plural'),
                     },
                     {
                         icon: 'Finance/funds-line',
                         href: this.$route('grants.index'),
-                        label: this.$t('dashboard.model.grant.plural'),
+                        label: this.$t('model.grant.plural'),
                     },
                     {
                         icon: 'Editor/organization-chart',
                         href: this.$route('grantees.index'),
-                        label: this.$t('dashboard.model.grantee.plural'),
+                        label: this.$t('model.grantee.plural'),
                     },
                     {
                         icon: 'User/user-settings-line',

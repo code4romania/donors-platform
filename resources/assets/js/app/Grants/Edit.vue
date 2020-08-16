@@ -150,13 +150,20 @@
 
             <div class="flex justify-end space-x-3">
                 <form-button
+                    color="red"
+                    :href="$route('grants.destroy', { grant: grant.id })"
+                    :disabled="sending"
+                    method="delete"
+                >
+                    {{ deleteLabel }}
+                </form-button>
+                <form-button
                     type="button"
-                    @click.native.prevent="draft"
+                    @click.native.prevent="changeVisibility"
                     :disabled="sending"
                 >
-                    {{ draftLabel }}
+                    {{ changeVisibilityLabel }}
                 </form-button>
-
                 <form-button color="blue">
                     {{ submitLabel }}
                 </form-button>
@@ -176,43 +183,53 @@
         },
         data() {
             return {
+                sending: false,
                 managed: false,
                 form: {
-                    _publish: true,
-                    donors: [],
+                    _method: 'PUT', // html form method spoofing
+                    _publish: this.grant.published_status === 'published',
+                    donors: Object.keys(this.grant.donors),
                     grantee_count: 1,
-                    donor_count: 1,
-                    amount: 0,
+                    donor_count: Object.keys(this.grant.donors).length,
                     regranting: 0,
+                    domain: this.grant.domain.id || null,
                     matching: false,
-                    ...this.prepareFields([
-                        'name',
-                        'domain',
-                        'start_date',
-                        'end_date',
-                    ]),
+                    ...this.prepareFields(
+                        ['name', 'amount', 'currency', 'start_date', 'end_date'],
+                        this.grant
+                    ),
                 },
             };
         },
         props: {
+            grant: Object,
             domains: Object,
-            grantees: Object,
             donors: Object,
             managers: Object,
         },
         computed: {
             pageTitle() {
-                return this.$t('dashboard.action.create', {
+                return this.$t('dashboard.action.edit', {
                     model: this.$t('model.grant.singular').toLowerCase(),
                 });
             },
             submitLabel() {
-                return this.$t('dashboard.action.create', {
+                return this.$t('dashboard.action.edit', {
                     model: this.$t('model.grant.singular').toLowerCase(),
                 });
             },
-            draftLabel() {
-                return this.$t('dashboard.action.draft', {
+            deleteLabel() {
+                return this.$t('dashboard.action.delete', {
+                    model: this.$t('model.grant.singular').toLowerCase(),
+                });
+            },
+            changeVisibilityLabel() {
+                let label =
+                    this.grant.published_status === 'published'
+                        ? 'dashboard.action.unpublish'
+                        : 'dashboard.action.publish';
+
+                return this.$t(label, {
                     model: this.$t('model.grant.singular').toLowerCase(),
                 });
             },
@@ -227,17 +244,17 @@
 
                 this.$inertia
                     .post(
-                        this.$route('grants.store'),
+                        this.$route('grants.update', { grant: this.grant.id }),
                         this.prepareFormData(this.form)
                     )
                     .then(() => (this.sending = false));
             },
-            draft() {
+            changeVisibility() {
                 if (this.sending) {
                     return;
                 }
 
-                this.form._publish = false;
+                this.form._publish = !this.form._publish;
                 this.submit();
             },
         },

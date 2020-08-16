@@ -1,7 +1,7 @@
 <template>
     <layout>
         <template v-slot:title>
-            {{ $t('dashboard.model.user.plural') }}
+            {{ $t('model.user.plural') }}
         </template>
 
         <template v-slot:actions>
@@ -28,13 +28,13 @@
         },
         metaInfo() {
             return {
-                title: this.$t('dashboard.model.user.plural'),
+                title: this.$t('model.user.plural'),
             };
         },
         computed: {
             createLabel() {
                 return this.$t('dashboard.action.create', {
-                    model: this.$t('dashboard.model.user.singular').toLowerCase(),
+                    model: this.$t('model.user.singular').toLowerCase(),
                 });
             },
         },

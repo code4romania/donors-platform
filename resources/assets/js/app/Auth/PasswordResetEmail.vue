@@ -14,7 +14,7 @@
             <form-input
                 type="email"
                 id="email"
-                :label="$t('dashboard.field.email')"
+                :label="$t('field.email')"
                 v-model="form.email"
                 required
                 autocomplete="email"

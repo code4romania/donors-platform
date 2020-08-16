@@ -5,25 +5,25 @@
                 :href="$route('users.index')"
                 class="text-blue-500 hover:text-blue-600"
             >
-                {{ $t('dashboard.model.user.plural') }}
+                {{ $t('model.user.plural') }}
             </inertia-link>
             <span class="font-normal text-gray-300" aria-hidden="true">//</span>
             {{
                 $t('dashboard.action.edit', {
-                    model: $t('dashboard.model.user.singular').toLowerCase(),
+                    model: $t('model.user.singular').toLowerCase(),
                 })
             }}
         </template>
 
         <form @submit.prevent="submit" method="post" class="grid row-gap-8">
             <form-panel
-                :title="$t('dashboard.model.user.section.title')"
-                :description="$t('dashboard.model.user.section.description')"
+                :title="$t('model.user.section.title')"
+                :description="$t('model.user.section.description')"
             >
                 <form-input
                     type="text"
                     id="name"
-                    :label="$t('dashboard.field.name')"
+                    :label="$t('field.name')"
                     v-model="form.name"
                     class="lg:col-span-2"
                     required
@@ -33,7 +33,7 @@
                 <form-input
                     type="email"
                     id="email"
-                    :label="$t('dashboard.field.email')"
+                    :label="$t('field.email')"
                     v-model="form.email"
                     class="lg:col-span-2"
                     required
@@ -41,7 +41,7 @@
 
                 <form-select
                     id="role"
-                    :label="$t('dashboard.field.role')"
+                    :label="$t('field.role')"
                     :options="roles"
                     v-model="form.role"
                     class="lg:col-span-2"
@@ -92,12 +92,12 @@
         computed: {
             pageTitle() {
                 return this.$t('dashboard.action.edit', {
-                    model: this.$t('dashboard.model.user.singular').toLowerCase(),
+                    model: this.$t('model.user.singular').toLowerCase(),
                 });
             },
             submitLabel() {
                 return this.$t('dashboard.action.edit', {
-                    model: this.$t('dashboard.model.user.singular').toLowerCase(),
+                    model: this.$t('model.user.singular').toLowerCase(),
                 });
             },
         },

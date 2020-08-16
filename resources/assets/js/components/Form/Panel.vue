@@ -13,7 +13,7 @@
                 v-text="description"
             />
         </div>
-        <div class="grid gap-6 md:col-span-2 lg:grid-cols-2">
+        <div class="grid gap-6 md:col-span-2 md:gap-8 lg:grid-cols-2">
             <slot />
         </div>
     </div>

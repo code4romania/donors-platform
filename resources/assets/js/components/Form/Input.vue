@@ -18,27 +18,37 @@
             />
         </div>
 
-        <template v-if="translated && locales">
-            <form-text
-                v-for="(_, locale) in locales"
-                v-show="isCurrentLocale(locale)"
-                :key="locale"
-                :type="type"
-                :id="id"
-                v-bind="$attrs"
-                v-model="dataValue[locale]"
-                @input="update(locale, ...arguments)"
+        <div class="relative">
+            <template v-if="translated && locales">
+                <form-text
+                    v-for="(_, locale) in locales"
+                    v-show="isCurrentLocale(locale)"
+                    :key="locale"
+                    :type="type"
+                    :id="id"
+                    v-bind="$attrs"
+                    v-model="dataValue[locale]"
+                    @input="update(locale, ...arguments)"
+                    :class="{ 'pr-13': suffix }"
+                />
+            </template>
+            <template v-else>
+                <form-text
+                    :type="type"
+                    :id="id"
+                    v-bind="$attrs"
+                    v-model="dataValue"
+                    @input="update(false, ...arguments)"
+                    :class="{ 'pr-13': suffix }"
+                />
+            </template>
+
+            <div
+                class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 pointer-events-none sm:text-sm sm:leading-5"
+                v-if="suffix"
+                v-text="suffix"
             />
-        </template>
-        <template v-else>
-            <form-text
-                :type="type"
-                :id="id"
-                v-bind="$attrs"
-                v-model="dataValue"
-                @input="update(false, ...arguments)"
-            />
-        </template>
+        </div>
 
         <form-input-error :id="id" :translated="translated" />
     </div>
@@ -73,6 +83,10 @@
                 default: () => [],
             },
             value: {},
+            suffix: {
+                type: [String, null],
+                default: null,
+            },
         },
         data() {
             return {

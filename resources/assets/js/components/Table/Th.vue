@@ -45,7 +45,7 @@
                 };
             },
             label() {
-                return this.$t('dashboard.field.' + this.column.name);
+                return this.$t('field.' + this.column.name);
             },
             isActive() {
                 return this.$page.sort.order === this.column.name;

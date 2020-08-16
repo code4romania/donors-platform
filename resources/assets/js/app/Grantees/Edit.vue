@@ -5,20 +5,20 @@
                 :href="$route('grantees.index')"
                 class="text-blue-500 hover:text-blue-600"
             >
-                {{ $t('dashboard.model.grantee.plural') }}
+                {{ $t('model.grantee.plural') }}
             </inertia-link>
             <span class="font-normal text-gray-300" aria-hidden="true">//</span>
             {{
                 $t('dashboard.action.edit', {
-                    model: $t('dashboard.model.grantee.singular').toLowerCase(),
+                    model: $t('model.grantee.singular').toLowerCase(),
                 })
             }}
         </template>
 
         <form @submit.prevent="submit" method="post" class="grid row-gap-8">
             <form-panel
-                :title="$t('dashboard.model.grantee.section.title')"
-                :description="$t('dashboard.model.grantee.section.description')"
+                :title="$t('model.grantee.section.title')"
+                :description="$t('model.grantee.section.description')"
             >
                 <form-input
                     type="text"
@@ -71,16 +71,12 @@
         computed: {
             pageTitle() {
                 return this.$t('dashboard.action.edit', {
-                    model: this.$t(
-                        'dashboard.model.grantee.singular'
-                    ).toLowerCase(),
+                    model: this.$t('model.grantee.singular').toLowerCase(),
                 });
             },
             submitLabel() {
                 return this.$t('dashboard.action.edit', {
-                    model: this.$t(
-                        'dashboard.model.grantee.singular'
-                    ).toLowerCase(),
+                    model: this.$t('model.grantee.singular').toLowerCase(),
                 });
             },
         },

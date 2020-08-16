@@ -27,10 +27,11 @@
                     : this.id;
             },
             hasErrors() {
-                if (
-                    !Object.keys(this.$page.errors).length ||
-                    Array.isArray(this.$page.errors[this.errorKey])
-                ) {
+                if (!this.$page.errors.hasOwnProperty(this.errorKey)) {
+                    return false;
+                }
+
+                if (!Array.isArray(this.$page.errors[this.errorKey])) {
                     return false;
                 }
 

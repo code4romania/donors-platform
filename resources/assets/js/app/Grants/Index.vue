@@ -1,7 +1,7 @@
 <template>
     <layout>
         <template v-slot:title>
-            {{ $t('dashboard.model.grant.plural') }}
+            {{ $t('model.grant.plural') }}
         </template>
 
         <template v-slot:actions>
@@ -32,13 +32,13 @@
         },
         metaInfo() {
             return {
-                title: this.$t('dashboard.model.grant.plural'),
+                title: this.$t('model.grant.plural'),
             };
         },
         computed: {
             createLabel() {
                 return this.$t('dashboard.action.create', {
-                    model: this.$t('dashboard.model.grant.singular').toLowerCase(),
+                    model: this.$t('model.grant.singular').toLowerCase(),
                 });
             },
         },

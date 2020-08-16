@@ -36,6 +36,9 @@
     export default {
         name: 'FormDatePicker',
         inheritAttrs: false,
+        components: {
+            FlatPickr,
+        },
         props: {
             label: {
                 type: [String, null],
@@ -53,6 +56,7 @@
                 type: Array,
                 default: () => [],
             },
+            value: {},
         },
         computed: {
             localizedMonths() {

@@ -5,7 +5,7 @@
                 :href="$route('donors.index')"
                 class="text-blue-500 hover:text-blue-600"
             >
-                {{ $t('dashboard.model.donor.plural') }}
+                {{ $t('model.donor.plural') }}
             </inertia-link>
             <span class="font-normal text-gray-300" aria-hidden="true">//</span>
             {{ pageTitle }}
@@ -13,15 +13,15 @@
 
         <form @submit.prevent="submit" method="post" class="grid row-gap-8">
             <form-panel
-                :title="$t('dashboard.model.donor.section.organization.title')"
+                :title="$t('model.donor.section.organization.title')"
                 :description="
-                    $t('dashboard.model.donor.section.organization.description')
+                    $t('model.donor.section.organization.description')
                 "
             >
                 <form-input
                     type="text"
                     id="name"
-                    :label="$t('dashboard.field.name')"
+                    :label="$t('field.name')"
                     v-model="form.name"
                     required
                     autofocus
@@ -29,7 +29,7 @@
 
                 <form-select
                     id="type"
-                    :label="$t('dashboard.field.type')"
+                    :label="$t('field.type')"
                     v-model="form.type"
                     :options="['a', 'b']"
                     required
@@ -38,14 +38,14 @@
                 <form-input
                     type="text"
                     id="hq"
-                    :label="$t('dashboard.field.hq')"
+                    :label="$t('field.hq')"
                     v-model="form.hq"
                     required
                 />
 
                 <form-file
                     id="logo"
-                    :label="$t('dashboard.field.logo')"
+                    :label="$t('field.logo')"
                     accept="image/x-png,image/gif,image/jpeg"
                     @fileChange="form.logo = $event"
                     required
@@ -53,8 +53,8 @@
 
                 <form-checkbox-group
                     id="domains"
-                    :label="$t('dashboard.field.domains')"
-                    :other-label="$t('dashboard.field.other')"
+                    :label="$t('field.domains')"
+                    :other-label="$t('field.other')"
                     v-model="form.domains"
                     class="lg:col-span-2"
                     :options="domains.data"
@@ -65,15 +65,13 @@
             </form-panel>
 
             <form-panel
-                :title="$t('dashboard.model.donor.section.contact.title')"
-                :description="
-                    $t('dashboard.model.donor.section.contact.description')
-                "
+                :title="$t('model.donor.section.contact.title')"
+                :description="$t('model.donor.section.contact.description')"
             >
                 <form-input
                     type="text"
                     id="contact"
-                    :label="$t('dashboard.field.name')"
+                    :label="$t('field.name')"
                     v-model="form.contact"
                     required
                 />
@@ -81,7 +79,7 @@
                 <form-input
                     type="email"
                     id="email"
-                    :label="$t('dashboard.field.email')"
+                    :label="$t('field.email')"
                     v-model="form.email"
                     required
                 />
@@ -89,7 +87,7 @@
                 <form-input
                     type="text"
                     id="phone"
-                    :label="$t('dashboard.field.phone')"
+                    :label="$t('field.phone')"
                     v-model="form.phone"
                     required
                 />
@@ -143,17 +141,17 @@
         computed: {
             pageTitle() {
                 return this.$t('dashboard.action.create', {
-                    model: this.$t('dashboard.model.donor.singular').toLowerCase(),
+                    model: this.$t('model.donor.singular').toLowerCase(),
                 });
             },
             submitLabel() {
                 return this.$t('dashboard.action.create', {
-                    model: this.$t('dashboard.model.donor.singular').toLowerCase(),
+                    model: this.$t('model.donor.singular').toLowerCase(),
                 });
             },
             draftLabel() {
                 return this.$t('dashboard.action.draft', {
-                    model: this.$t('dashboard.model.donor.singular').toLowerCase(),
+                    model: this.$t('model.donor.singular').toLowerCase(),
                 });
             },
         },

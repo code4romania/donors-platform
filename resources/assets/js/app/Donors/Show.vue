@@ -5,7 +5,7 @@
                 :href="$route('donors.index')"
                 class="text-blue-500 hover:text-blue-600"
             >
-                {{ $t('dashboard.model.donor.plural') }}
+                {{ $t('model.donor.plural') }}
             </inertia-link>
             <span class="font-normal text-gray-300" aria-hidden="true">//</span>
             {{ pageTitle }}
@@ -92,10 +92,7 @@
                     class="sm:col-span-3 md:col-span-2"
                     v-if="donor.data.domains.length"
                 >
-                    <strong
-                        class="text-lg"
-                        v-text="$t('dashboard.field.areas')"
-                    />
+                    <strong class="text-lg" v-text="$t('field.areas')" />
                     <div class="flex mt-1">
                         <svg-vue
                             icon="Design/focus-3-line"
@@ -134,12 +131,12 @@
         computed: {
             pageTitle() {
                 return this.$t('dashboard.action.view', {
-                    model: this.$t('dashboard.model.donor.singular').toLowerCase(),
+                    model: this.$t('model.donor.singular').toLowerCase(),
                 });
             },
             submitLabel() {
                 return this.$t('dashboard.action.edit', {
-                    model: this.$t('dashboard.model.donor.singular').toLowerCase(),
+                    model: this.$t('model.donor.singular').toLowerCase(),
                 });
             },
         },

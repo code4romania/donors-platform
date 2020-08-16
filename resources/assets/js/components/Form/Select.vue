@@ -64,6 +64,7 @@
                 type: Array,
                 default: () => [],
             },
+            value: {},
         },
         data() {
             return {

@@ -5,7 +5,7 @@
                 :href="$route('grants.index')"
                 class="text-blue-500 hover:text-blue-600"
             >
-                {{ $t('dashboard.model.grant.plural') }}
+                {{ $t('model.grant.plural') }}
             </inertia-link>
             <span class="font-normal text-gray-300" aria-hidden="true">//</span>
             {{ pageTitle }}
@@ -13,6 +13,13 @@
 
         <template v-slot:actions>
             <div>
+                <form-button
+                    color="teal"
+                    :href="$route('projects.create', { grant: grant.id })"
+                >
+                    {{ newProjectLabel }}
+                </form-button>
+
                 <form-button
                     color="blue"
                     :href="$route('grants.edit', { grant: grant.id })"
@@ -61,12 +68,17 @@
         computed: {
             pageTitle() {
                 return this.$t('dashboard.action.view', {
-                    model: this.$t('dashboard.model.grant.singular').toLowerCase(),
+                    model: this.$t('model.grant.singular').toLowerCase(),
                 });
             },
             submitLabel() {
                 return this.$t('dashboard.action.edit', {
-                    model: this.$t('dashboard.model.grant.singular').toLowerCase(),
+                    model: this.$t('model.grant.singular').toLowerCase(),
+                });
+            },
+            newProjectLabel() {
+                return this.$t('dashboard.action.create', {
+                    model: this.$t('model.project.singular').toLowerCase(),
                 });
             },
         },
@@ -84,7 +96,7 @@
                 cards: [
                     {
                         title: 'Donors',
-                        number: this.grant.donors.join(', ') || null,
+                        number: Object.values(this.grant.donors).join(', ') || null,
                     },
                     {
                         title: 'Total value of grants',
@@ -117,6 +129,16 @@
                             prop: 'amount',
                             numeric: true,
                         },
+                    },
+                    {
+                        field: 'start_date',
+                        label: 'Start date',
+                        sortable: true,
+                    },
+                    {
+                        field: 'end_date',
+                        label: 'End date',
+                        sortable: true,
                     },
                 ],
             };
