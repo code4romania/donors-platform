@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class StoreGrantRequest extends FormRequest
+class StoreProjectRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -16,7 +15,7 @@ class StoreGrantRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->user()->can('manage grants');
+        return $this->user()->can('manage projects');
     }
 
     /**
@@ -27,13 +26,11 @@ class StoreGrantRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'       => ['required', 'string'],
-            'domain'     => ['required', 'exists:domains,id'],
-            'grantees.*' => [],
+            'title'      => ['required', 'string'],
+            'grantee'    => ['required', 'exists:grantees,id'],
+            'amount'     => ['required', 'numeric'],
             'start_date' => ['required', 'date_format:Y-m-d', 'before:end_date'],
             'end_date'   => ['required', 'date_format:Y-m-d', 'after:start_date'],
-            'amount'     => ['required', 'numeric'],
-            'currency'   => ['required', Rule::in(config('money.currencies.iso'))],
         ];
     }
 

@@ -27,15 +27,18 @@ class GrantShowResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'id'          => $this->id,
-            'name'        => $this->name,
-            'domain'      => DomainResource::make($this->domain),
-            'amount'      => $this->formatted_amount,
-            'projects'    => ProjectResource::collection($this->grantees),
+            'id'               => $this->id,
+            'name'             => $this->name,
+            'domain'           => DomainResource::make($this->domain),
+            'amount'           => $this->formatted_amount,
+            'currency'         => $this->currency,
+            'projects'         => ProjectResource::collection($this->grantees),
 
-            'donors'      => $this->donors->pluck('name'),
-            'grantees'    => $this->grantees->unique()->count(),
-            'total_value' => $this->total_value,
+            'donors'           => $this->donors->pluck('name', 'id'),
+            'grantees'         => $this->grantees->unique()->count(),
+            'total_value'      => $this->total_value,
+
+            'published_status' => $this->published_status,
         ];
     }
 }

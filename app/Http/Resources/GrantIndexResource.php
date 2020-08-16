@@ -17,10 +17,11 @@ class GrantIndexResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'          => $this->id,
-            'name'        => $this->name,
-            'domain'      => $this->domain->name ?? null,
-            'total_value' => $this->total_value,
+            'id'               => $this->id,
+            'name'             => $this->name,
+            'domain'           => $this->domain->name ?? null,
+            'total_value'      => $this->total_value,
+            'published_status' => $this->published_status,
         ];
     }
 }

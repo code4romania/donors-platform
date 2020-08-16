@@ -35,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
             'donor'      => \App\Models\Donor::class,
             'grant'      => \App\Models\Grant::class,
             'grantee'    => \App\Models\Grantee::class,
+            'project'    => \App\Models\Project::class,
             'user'       => \App\Models\User::class,
         ]);
     }

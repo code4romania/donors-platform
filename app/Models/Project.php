@@ -18,7 +18,28 @@ class Project extends Pivot
      */
     public $incrementing = true;
 
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
     public $table = 'projects';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'title', 'amount', 'currency', 'start_date', 'end_date',
+    ];
 
     /**
      * The attributes that should be cast to native types.
@@ -39,5 +60,15 @@ class Project extends Pivot
     public function grantee()
     {
         return $this->belongsTo(Grantee::class);
+    }
+
+    public function getFormattedStartDateAttribute(): string
+    {
+        return $this->start_date->format('Y-m-d');
+    }
+
+    public function getFormattedEndDateAttribute(): string
+    {
+        return $this->end_date->format('Y-m-d');
     }
 }

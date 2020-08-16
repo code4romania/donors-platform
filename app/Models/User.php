@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
@@ -49,5 +50,10 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         return $role->name;
+    }
+
+    public function scopeWithRole(Builder $query, string $role): Builder
+    {
+        return $query->whereHas('roles', fn ($q) => $q->where('name', $role));
     }
 }

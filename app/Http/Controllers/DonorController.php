@@ -53,7 +53,7 @@ class DonorController extends Controller
 
         return Redirect::route('donors.show', $donor)
             ->with('success', __('dashboard.event.created', [
-                'model' => __('dashboard.model.donor.singular'),
+                'model' => __('model.donor.singular'),
             ]));
     }
 
@@ -86,7 +86,7 @@ class DonorController extends Controller
 
         return Redirect::back()
             ->with('success', __('dashboard.event.updated', [
-                'model' => __('dashboard.model.donor.singular'),
+                'model' => __('model.donor.singular'),
             ]));
     }
 
@@ -96,7 +96,7 @@ class DonorController extends Controller
 
         return Redirect::back()
             ->with('success', __('dashboard.event.deleted', [
-                'model' => __('dashboard.model.donor.singular'),
+                'model' => __('model.donor.singular'),
             ]));
     }
 }

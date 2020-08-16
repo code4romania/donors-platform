@@ -39,7 +39,7 @@ class GranteeController extends Controller
 
         return Redirect::route('grantees.index')
             ->with('success', __('dashboard.event.created', [
-                'model' => __('dashboard.model.grantee.singular'),
+                'model' => __('model.grantee.singular'),
             ]));
     }
 
@@ -61,7 +61,7 @@ class GranteeController extends Controller
 
         return Redirect::back()
             ->with('success', __('dashboard.event.updated', [
-                'model' => __('dashboard.model.grantee.singular'),
+                'model' => __('model.grantee.singular'),
             ]));
     }
 
@@ -71,7 +71,7 @@ class GranteeController extends Controller
 
         return Redirect::back()
             ->with('success', __('dashboard.event.deleted', [
-                'model' => __('dashboard.model.grantee.singular'),
+                'model' => __('model.grantee.singular'),
             ]));
     }
 }

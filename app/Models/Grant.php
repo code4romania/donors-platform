@@ -20,7 +20,7 @@ class Grant extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'amount', 'currency',
+        'name', 'amount', 'currency', 'start_date', 'end_date',
     ];
 
     /**
@@ -58,6 +58,7 @@ class Grant extends Model
             ->using(Project::class)
             ->as('project')
             ->withPivot([
+                'id',
                 'title',
                 'amount',
                 'currency',

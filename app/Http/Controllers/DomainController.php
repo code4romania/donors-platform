@@ -41,7 +41,7 @@ class DomainController extends Controller
 
         return Redirect::route('domains.index')
             ->with('success', __('dashboard.event.created', [
-                'model' => __('dashboard.model.domain.singular'),
+                'model' => __('model.domain.singular'),
             ]));
     }
 
@@ -64,7 +64,7 @@ class DomainController extends Controller
 
         return Redirect::back()
             ->with('success', __('dashboard.event.updated', [
-                'model' => __('dashboard.model.domain.singular'),
+                'model' => __('model.domain.singular'),
             ]));
     }
 
@@ -74,7 +74,7 @@ class DomainController extends Controller
 
         return Redirect::back()
             ->with('success', __('dashboard.event.deleted', [
-                'model' => __('dashboard.model.domain.singular'),
+                'model' => __('model.domain.singular'),
             ]));
     }
 }

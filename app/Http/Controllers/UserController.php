@@ -47,7 +47,7 @@ class UserController extends Controller
 
         return Redirect::route('users.index')
             ->with('success', __('dashboard.event.created', [
-                'model' => __('dashboard.model.user.singular'),
+                'model' => __('model.user.singular'),
             ]));
     }
 
@@ -74,7 +74,7 @@ class UserController extends Controller
 
         return Redirect::back()
             ->with('success', __('dashboard.event.updated', [
-                'model' => __('dashboard.model.user.singular'),
+                'model' => __('model.user.singular'),
             ]));
     }
 
@@ -84,7 +84,7 @@ class UserController extends Controller
 
         return Redirect::back()
             ->with('success', __('dashboard.event.deleted', [
-                'model' => __('dashboard.model.user.singular'),
+                'model' => __('model.user.singular'),
             ]));
     }
 }

@@ -7,15 +7,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreGrantRequest;
 use App\Http\Resources\DomainResource;
 use App\Http\Resources\DonorResource;
-use App\Http\Resources\GranteeResource;
 use App\Http\Resources\GrantIndexResource;
 use App\Http\Resources\GrantShowResource;
+use App\Http\Resources\UserResource;
 use App\Models\Domain;
 use App\Models\Donor;
 use App\Models\Grant;
-use App\Models\Grantee;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -26,7 +25,7 @@ class GrantController extends Controller
     {
         return Inertia::render('Grants/Index', [
             'columns' => $this->getIndexColumns(Donor::class, [
-                'name', 'domain',
+                'name', 'domain', 'published_status',
             ]),
             'sort' => $this->getSortProps(),
             'grants'  => GrantIndexResource::collection(
@@ -46,21 +45,21 @@ class GrantController extends Controller
             'domains' => DomainResource::collection(
                 Domain::orderByTranslation('name', 'asc')->get()
             ),
-            'grantees' => GranteeResource::collection(
-                Grantee::orderBy('name', 'asc')->get()
+            'managers' => UserResource::collection(
+                User::withRole('manager')->get()
             ),
         ]);
     }
 
     public function store(StoreGrantRequest $request): RedirectResponse
     {
-        $grant = Grant::create($request->except('grantees'));
+        $grant = Grant::create($request->all());
 
-        $grant->grantees()->sync($request->input('grantees'));
+        $grant->publish($request->input('_publish'));
 
         return Redirect::route('grants.show', $grant)
             ->with('success', __('dashboard.event.created', [
-                'model' => __('dashboard.model.grant.singular'),
+                'model' => __('model.grant.singular'),
             ]));
     }
 
@@ -75,14 +74,31 @@ class GrantController extends Controller
     {
         return Inertia::render('Grants/Edit', [
             'grant' => GrantShowResource::make($grant),
+            'donors' => DonorResource::collection(
+                Donor::orderBy('name', 'asc')->get()
+            ),
+            'domains' => DomainResource::collection(
+                Domain::orderByTranslation('name', 'asc')->get()
+            ),
+            'managers' => UserResource::collection(
+                User::withRole('manager')->get()
+            ),
         ]);
     }
 
-    public function update(Request $request, Grant $grant): RedirectResponse
+    public function update(StoreGrantRequest $request, Grant $grant): RedirectResponse
     {
+        $grant->update($request->except('domain'));
+
+        if ($request->input('_publish') !== $grant->isPublished()) {
+            $grant->publish($request->input('_publish'));
+        }
+
+        $grant->domain()->associate($request->input('domain'));
+
         return Redirect::back()
             ->with('success', __('dashboard.event.updated', [
-                'model' => __('dashboard.model.grant.singular'),
+                'model' => __('model.grant.singular'),
             ]));
     }
 
@@ -90,9 +106,9 @@ class GrantController extends Controller
     {
         $grant->delete();
 
-        return Redirect::back()
+        return Redirect::route('grants.index')
             ->with('success', __('dashboard.event.deleted', [
-                'model' => __('dashboard.model.grant.singular'),
+                'model' => __('model.grant.singular'),
             ]));
     }
 }
