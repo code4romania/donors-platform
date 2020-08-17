@@ -1,15 +1,15 @@
 <template>
     <div
-        v-if="show && type !== null"
+        v-if="show && hasMessage"
         role="alert"
         class="fixed inset-x-0 bottom-0 z-50 w-full px-4 pb-8 md:px-12 lg:max-w-3xl lg:left-auto"
     >
         <div
-            class="relative flex justify-between px-4 py-5 pr-12 rounded-md shadow"
+            class="relative flex items-center px-4 py-5 pr-12 rounded-md shadow"
             :class="alertColor"
         >
             <svg-vue
-                v-if="type === 'success'"
+                v-if="isSuccess"
                 icon="System/checkbox-circle-fill"
                 class="w-5 h-5 mr-2 fill-current"
             />
@@ -40,44 +40,45 @@
         name: 'FlashMessages',
         data() {
             return {
-                show: false,
+                show: true,
             };
         },
         computed: {
-            type() {
-                if (this.$page.flash.success) {
-                    return 'success';
-                } else if (
-                    this.$page.flash.error ||
+            hasMessage() {
+                return this.isSuccess || this.isError;
+            },
+            isSuccess() {
+                return this.$page.flash.success !== null;
+            },
+            isError() {
+                return (
+                    this.$page.flash.error !== null ||
                     Object.keys(this.$page.errors).length > 0
-                ) {
-                    return 'error';
-                } else {
-                    return null;
-                }
+                );
             },
             message() {
-                if (this.type === 'error') {
+                if (this.isSuccess) {
+                    return this.$page.flash.success;
+                }
+
+                if (this.isError) {
                     if (this.$page.flash.error !== null) {
                         return this.$page.flash.error;
                     } else {
                         let count = Object.keys(this.$page.errors).length;
                         return this.$tc('dashboard.event.errors', count, { count });
                     }
-                } else if (this.type === 'success') {
-                    return this.$page.flash.success;
                 }
+
+                return null;
             },
             alertColor() {
-                return this.type === 'success'
+                return this.isSuccess
                     ? 'text-green-500 bg-green-100'
                     : 'text-red-500 bg-red-100';
             },
-            textColor() {
-                return this.type === 'success' ? 'text-green-800' : 'text-red-800';
-            },
             buttonColor() {
-                return this.type === 'success'
+                return this.isSuccess
                     ? 'hover:bg-green-200 focus:bg-green-200'
                     : 'hover:bg-red-200 focus:bg-red-200';
             },

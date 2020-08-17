@@ -16,7 +16,7 @@ return [
         'createModel' => 'Create :model',
         'delete'      => 'Delete',
         'deleteModel' => 'Delete :model',
-        'draft'       => 'Create draft',
+        'draft'       => 'Save draft',
         'edit'        => 'Edit',
         'editModel'   => 'Edit :model',
         'view'        => 'View',

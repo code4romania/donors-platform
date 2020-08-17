@@ -16,6 +16,9 @@ export default {
         createLabel() {
             return this.$t('dashboard.action.create');
         },
+        draftLabel() {
+            return this.$t('dashboard.action.draft');
+        },
         deleteLabel() {
             return this.$t('dashboard.action.delete');
         },
