@@ -1,9 +1,5 @@
 <template>
-    <layout>
-        <template v-slot:title>
-            {{ $t('model.user.plural') }}
-        </template>
-
+    <layout :breadcrumbs="breadcrumbs">
         <template v-slot:actions>
             <div>
                 <form-button color="blue" :href="$route('users.create')">
@@ -36,6 +32,14 @@
                 return this.$t('dashboard.action.create', {
                     model: this.$t('model.user.singular').toLowerCase(),
                 });
+            },
+            breadcrumbs() {
+                return [
+                    {
+                        label: this.$t('model.user.plural'),
+                        href: null,
+                    },
+                ];
             },
         },
     };

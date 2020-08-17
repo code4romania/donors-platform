@@ -1,16 +1,5 @@
 <template>
-    <layout>
-        <template v-slot:title>
-            <inertia-link
-                :href="$route('users.index')"
-                class="text-blue-500 hover:text-blue-600"
-            >
-                {{ $t('model.user.plural') }}
-            </inertia-link>
-            <span class="font-normal text-gray-300" aria-hidden="true">//</span>
-            {{ pageTitle }}
-        </template>
-
+    <layout :breadcrumbs="breadcrumbs">
         <form @submit.prevent="submit" method="post" class="grid row-gap-8">
             <form-panel
                 :title="$t('model.user.section.title')"
@@ -23,6 +12,7 @@
                     v-model="form.name"
                     class="lg:col-span-2"
                     autofocus
+                    required
                 />
 
                 <form-input
@@ -31,6 +21,18 @@
                     :label="$t('field.email')"
                     v-model="form.email"
                     class="lg:col-span-2"
+                    required
+                />
+
+                <form-select
+                    id="locale"
+                    :label="$t('field.language')"
+                    v-model="form.locale"
+                    :options="localeOptions"
+                    option-value-key="value"
+                    option-label-key="label"
+                    class="lg:col-span-2"
+                    required
                 />
 
                 <form-select
@@ -39,22 +41,23 @@
                     :options="roles"
                     v-model="form.role"
                     class="lg:col-span-2"
+                    required
                 />
             </form-panel>
 
             <div class="flex justify-end space-x-3">
-                <form-button color="blue">
-                    {{ submitLabel }}
+                <form-button color="blue" :disabled="sending">
+                    {{ createLabel }}
                 </form-button>
             </div>
         </form>
     </layout>
 </template>
 <script>
-    import LocaleMixin from '@/mixins/locale';
+    import FormMixin from '@/mixins/form';
 
     export default {
-        mixins: [LocaleMixin],
+        mixins: [FormMixin],
         metaInfo() {
             return {
                 title: this.pageTitle,
@@ -62,7 +65,11 @@
         },
         data() {
             return {
-                form: this.prepareFields(['name', 'email', 'role']),
+                formAction: this.$route('users.store'),
+                form: {
+                    locale: this.$page.locale,
+                    ...this.prepareFields(['name', 'email', 'role']),
+                },
             };
         },
         props: {
@@ -74,18 +81,17 @@
                     model: this.$t('model.user.singular').toLowerCase(),
                 });
             },
-            submitLabel() {
-                return this.$t('dashboard.action.create', {
-                    model: this.$t('model.user.singular').toLowerCase(),
-                });
-            },
-        },
-        methods: {
-            submit() {
-                this.$inertia.post(
-                    this.$route('users.store'),
-                    this.prepareFormData(this.form)
-                );
+            breadcrumbs() {
+                return [
+                    {
+                        label: this.$t('model.user.plural'),
+                        href: this.$route('users.index'),
+                    },
+                    {
+                        label: this.pageTitle,
+                        href: null,
+                    },
+                ];
             },
         },
     };

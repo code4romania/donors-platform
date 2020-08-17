@@ -82,7 +82,7 @@ class UserController extends Controller
     {
         $user->delete();
 
-        return Redirect::back()
+        return Redirect::route('users.index')
             ->with('success', __('dashboard.event.deleted', [
                 'model' => __('model.user.singular'),
             ]));

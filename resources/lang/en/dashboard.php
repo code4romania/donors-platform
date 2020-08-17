@@ -11,15 +11,19 @@ return [
     ],
 
     'action' => [
-        'cancel'    => 'Cancel',
-        'create'    => 'Create :model',
-        'delete'    => 'Delete :model',
-        'draft'     => 'Create draft',
-        'edit'      => 'Edit :model',
-        'view'      => 'View :model',
-        'publish'   => 'Publish',
-        'unpublish' => 'Unublish',
-        'save'      => 'Save',
+        'cancel'      => 'Cancel',
+        'create'      => 'Create',
+        'createModel' => 'Create :model',
+        'delete'      => 'Delete',
+        'deleteModel' => 'Delete :model',
+        'draft'       => 'Create draft',
+        'edit'        => 'Edit',
+        'editModel'   => 'Edit :model',
+        'view'        => 'View',
+        'viewModel'   => 'View :model',
+        'publish'     => 'Publish',
+        'unpublish'   => 'Unublish',
+        'save'        => 'Save',
     ],
 
     'event' => [

@@ -14,6 +14,7 @@ return [
     'grant_value'           => 'Grant value',
     'grantee_count'         => 'Number of grantees',
     'hq'                    => 'HQ',
+    'language'              => 'Language',
     'last_name'             => 'Last name',
     'logo'                  => 'Logo',
     'managed'               => 'Managed by a grant manager',

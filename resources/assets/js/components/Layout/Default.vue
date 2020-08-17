@@ -18,7 +18,12 @@
             <main class="flex-1 overflow-y-auto scrolling-touch" scroll-region>
                 <div class="grid row-gap-6 px-4 py-8 md:p-12">
                     <h1 class="text-2xl font-bold text-gray-900 md:text-3xl">
-                        <slot name="title" />
+                        <slot name="title">
+                            <breadcrumbs
+                                v-if="breadcrumbs.length"
+                                :items="breadcrumbs"
+                            />
+                        </slot>
                     </h1>
 
                     <div
@@ -42,6 +47,12 @@
         name: 'Layout',
         computed: {
             url: () => location.origin + location.pathname,
+        },
+        props: {
+            breadcrumbs: {
+                type: Array,
+                default: () => [],
+            },
         },
     };
 </script>

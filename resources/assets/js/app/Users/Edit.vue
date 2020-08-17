@@ -1,20 +1,5 @@
 <template>
-    <layout>
-        <template v-slot:title>
-            <inertia-link
-                :href="$route('users.index')"
-                class="text-blue-500 hover:text-blue-600"
-            >
-                {{ $t('model.user.plural') }}
-            </inertia-link>
-            <span class="font-normal text-gray-300" aria-hidden="true">//</span>
-            {{
-                $t('dashboard.action.edit', {
-                    model: $t('model.user.singular').toLowerCase(),
-                })
-            }}
-        </template>
-
+    <layout :breadcrumbs="breadcrumbs">
         <form @submit.prevent="submit" method="post" class="grid row-gap-8">
             <form-panel
                 :title="$t('model.user.section.title')"
@@ -51,23 +36,25 @@
             <div class="flex justify-end space-x-3">
                 <form-button
                     color="red"
-                    :href="$route('users.index')"
+                    :href="deleteAction"
                     :disabled="sending"
+                    method="delete"
                 >
-                    {{ $t('dashboard.action.cancel') }}
+                    {{ deleteLabel }}
                 </form-button>
+
                 <form-button color="blue" :disabled="sending">
-                    {{ $t('dashboard.action.save') }}
+                    {{ saveLabel }}
                 </form-button>
             </div>
         </form>
     </layout>
 </template>
 <script>
-    import LocaleMixin from '@/mixins/locale';
+    import FormMixin from '@/mixins/form';
 
     export default {
-        mixins: [LocaleMixin],
+        mixins: [FormMixin],
         metaInfo() {
             return {
                 title: this.pageTitle,
@@ -75,7 +62,12 @@
         },
         data() {
             return {
-                sending: false,
+                deleteAction: this.$route('users.destroy', {
+                    user: this.user.data.id,
+                }),
+                formAction: this.$route('users.update', {
+                    user: this.user.data.id,
+                }),
                 form: {
                     _method: 'PUT', // html form method spoofing
                     ...this.prepareFields(
@@ -90,32 +82,25 @@
             roles: Array,
         },
         computed: {
+            routeParams() {
+                return;
+            },
             pageTitle() {
-                return this.$t('dashboard.action.edit', {
+                return this.$t('dashboard.action.editModel', {
                     model: this.$t('model.user.singular').toLowerCase(),
                 });
             },
-            submitLabel() {
-                return this.$t('dashboard.action.edit', {
-                    model: this.$t('model.user.singular').toLowerCase(),
-                });
-            },
-        },
-        methods: {
-            submit() {
-                if (this.sending) {
-                    return;
-                }
-
-                this.sending = true;
-                this.$inertia
-                    .post(
-                        this.$route('users.update', {
-                            user: this.user.data.id,
-                        }),
-                        this.prepareFormData(this.form)
-                    )
-                    .then(() => (this.sending = false));
+            breadcrumbs() {
+                return [
+                    {
+                        label: this.$t('model.user.plural'),
+                        href: this.$route('users.index'),
+                    },
+                    {
+                        label: this.$t('dashboard.action.edit'),
+                        href: null,
+                    },
+                ];
             },
         },
     };
