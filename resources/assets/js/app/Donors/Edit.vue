@@ -1,20 +1,5 @@
 <template>
-    <layout>
-        <template v-slot:title>
-            <inertia-link
-                :href="$route('donors.index')"
-                class="text-blue-500 hover:text-blue-600"
-            >
-                {{ $t('model.donor.plural') }}
-            </inertia-link>
-            <span class="font-normal text-gray-300" aria-hidden="true">//</span>
-            {{
-                $t('dashboard.action.edit', {
-                    model: $t('model.donor.singular').toLowerCase(),
-                })
-            }}
-        </template>
-
+    <layout :breadcrumbs="breadcrumbs">
         <form @submit.prevent="submit" method="post" class="grid row-gap-8">
             <form-panel
                 :title="$t('model.donor.section.organization.title')"
@@ -118,10 +103,10 @@
     </layout>
 </template>
 <script>
-    import LocaleMixin from '@/mixins/locale';
+    import FormMixin from '@/mixins/form';
 
     export default {
-        mixins: [LocaleMixin],
+        mixins: [FormMixin],
         metaInfo() {
             return {
                 title: this.pageTitle,
@@ -133,12 +118,10 @@
                 form: {
                     _method: 'PUT', // html form method spoofing
                     _publish: this.donor.data.published_status === 'published',
-                    name: this.donor.data.name,
-                    type: this.donor.data.type,
-                    hq: this.donor.data.hq,
-                    contact: this.donor.data.contact,
-                    email: this.donor.data.email,
-                    phone: this.donor.data.phone,
+                    ...this.prepareFields(
+                        ['name', 'type', 'hq', 'contact', 'email', 'phone', 'logo'],
+                        this.donor.data
+                    ),
                     domains: this.donor.data.domains.map((area) => area.id),
                 },
             };
@@ -149,48 +132,21 @@
         },
         computed: {
             pageTitle() {
-                return this.$t('dashboard.action.edit', {
+                return this.$t('dashboard.action.editModel', {
                     model: this.$t('model.donor.singular').toLowerCase(),
                 });
             },
-            submitLabel() {
-                return this.$t('dashboard.action.edit', {
-                    model: this.$t('model.donor.singular').toLowerCase(),
-                });
-            },
-            changeVisibilityLabel() {
-                let label =
-                    this.donor.data.published_status === 'published'
-                        ? 'dashboard.action.unpublish'
-                        : 'dashboard.action.publish';
-
-                return this.$t(label, {
-                    model: this.$t('model.donor.singular').toLowerCase(),
-                });
-            },
-        },
-        methods: {
-            submit() {
-                if (this.sending) {
-                    return;
-                }
-
-                this.sending = true;
-
-                this.$inertia
-                    .post(
-                        this.$route('donors.update', { donor: this.donor.data.id }),
-                        this.prepareFormData(this.form)
-                    )
-                    .then(() => (this.sending = false));
-            },
-            changeVisibility() {
-                if (this.sending) {
-                    return;
-                }
-
-                this.form._publish = !this.form._publish;
-                this.submit();
+            breadcrumbs() {
+                return [
+                    {
+                        label: this.$t('model.donor.plural'),
+                        href: this.$route('donors.index'),
+                    },
+                    {
+                        label: this.$t('dashboard.action.edit'),
+                        href: null,
+                    },
+                ];
             },
         },
     };

@@ -1,23 +1,12 @@
 <template>
-    <layout>
-        <template v-slot:title>
-            <inertia-link
-                :href="$route('donors.index')"
-                class="text-blue-500 hover:text-blue-600"
-            >
-                {{ $t('model.donor.plural') }}
-            </inertia-link>
-            <span class="font-normal text-gray-300" aria-hidden="true">//</span>
-            {{ pageTitle }}
-        </template>
-
+    <layout :breadcrumbs="breadcrumbs">
         <template v-slot:actions>
             <div>
                 <form-button
                     color="blue"
                     :href="$route('donors.edit', { donor: donor.data.id })"
                 >
-                    {{ submitLabel }}
+                    {{ editLabel }}
                 </form-button>
             </div>
         </template>
@@ -125,33 +114,30 @@
         },
         metaInfo() {
             return {
-                title: this.donor.data.name,
+                title: this.pageTitle,
             };
         },
         computed: {
             pageTitle() {
-                return this.$t('dashboard.action.view', {
+                return this.$t('dashboard.action.viewModel', {
                     model: this.$t('model.donor.singular').toLowerCase(),
                 });
             },
-            submitLabel() {
-                return this.$t('dashboard.action.edit', {
-                    model: this.$t('model.donor.singular').toLowerCase(),
-                });
+            editLabel() {
+                return this.$t('dashboard.action.edit');
             },
-        },
-        data() {
-            return {
-                form: {
-                    name: null,
-                    type: null,
-                    hq: null,
-                    contact: null,
-                    email: null,
-                    phone: null,
-                    areas: [],
-                },
-            };
+            breadcrumbs() {
+                return [
+                    {
+                        label: this.$t('model.donor.plural'),
+                        href: this.$route('donors.index'),
+                    },
+                    {
+                        label: this.pageTitle,
+                        href: null,
+                    },
+                ];
+            },
         },
     };
 </script>

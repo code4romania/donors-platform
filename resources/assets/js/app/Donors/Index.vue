@@ -1,9 +1,5 @@
 <template>
-    <layout>
-        <template v-slot:title>
-            {{ $t('model.donor.plural') }}
-        </template>
-
+    <layout :breadcrumbs="breadcrumbs">
         <template v-slot:actions>
             <div>
                 <form-button color="blue" :href="$route('donors.create')">
@@ -32,14 +28,25 @@
         },
         metaInfo() {
             return {
-                title: this.$t('model.donor.plural'),
+                title: this.pageTitle,
             };
         },
         computed: {
+            pageTitle() {
+                return this.$t('model.donor.plural');
+            },
             createLabel() {
                 return this.$t('dashboard.action.create', {
                     model: this.$t('model.donor.singular').toLowerCase(),
                 });
+            },
+            breadcrumbs() {
+                return [
+                    {
+                        label: this.pageTitle,
+                        href: null,
+                    },
+                ];
             },
         },
     };
