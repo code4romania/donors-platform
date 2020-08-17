@@ -1,9 +1,5 @@
 <template>
-    <layout>
-        <template v-slot:title>
-            {{ $t('dashboard.menu.dashboard') }}
-        </template>
-
+    <layout :breadcrumbs="breadcrumbs">
         <grid class="md:grid-cols-3">
             <stats-card
                 v-for="(card, index) in cards"
@@ -15,9 +11,7 @@
 
         <data-block :table-data="donors.data" :columns="columns">
             <template v-slot:total_funding="column">
-                <span>
-                    {{ column.total_funding.formatted }}
-                </span>
+                {{ column.total_funding.formatted }}
             </template>
         </data-block>
     </layout>
@@ -27,7 +21,7 @@
     export default {
         metaInfo() {
             return {
-                title: this.$t('dashboard.menu.dashboard'),
+                title: this.pageTitle,
             };
         },
         props: {
@@ -78,6 +72,19 @@
                     },
                 ],
             };
+        },
+        computed: {
+            pageTitle() {
+                return this.$t('dashboard.menu.dashboard');
+            },
+            breadcrumbs() {
+                return [
+                    {
+                        label: this.pageTitle,
+                        href: null,
+                    },
+                ];
+            },
         },
     };
 </script>

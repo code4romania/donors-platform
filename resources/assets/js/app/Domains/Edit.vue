@@ -1,5 +1,5 @@
 <template>
-    <layout>
+    <layout :breadcrumbs="breadcrumbs">
         <template v-slot:title>
             <inertia-link
                 :href="$route('domains.index')"
@@ -35,11 +35,13 @@
             <div class="flex justify-end space-x-3">
                 <form-button
                     color="red"
-                    :href="$route('domains.index')"
+                    :href="deleteAction"
                     :disabled="sending"
+                    method="delete"
                 >
-                    {{ $t('dashboard.action.cancel') }}
+                    {{ deleteLabel }}
                 </form-button>
+
                 <form-button color="blue" :disabled="sending">
                     {{ $t('dashboard.action.save') }}
                 </form-button>
@@ -47,11 +49,12 @@
         </form>
     </layout>
 </template>
+
 <script>
-    import LocaleMixin from '@/mixins/locale';
+    import FormMixin from '@/mixins/form';
 
     export default {
-        mixins: [LocaleMixin],
+        mixins: [FormMixin],
         metaInfo() {
             return {
                 title: this.pageTitle,
@@ -59,7 +62,12 @@
         },
         data() {
             return {
-                sending: false,
+                deleteAction: this.$route('domains.destroy', {
+                    domain: this.domain.data.id,
+                }),
+                formAction: this.$route('domains.update', {
+                    domain: this.domain.data.id,
+                }),
                 form: {
                     _method: 'PUT', // html form method spoofing
                     ...this.prepareFields(['name'], this.domain.data),
@@ -71,31 +79,21 @@
         },
         computed: {
             pageTitle() {
-                return this.$t('dashboard.action.edit', {
+                return this.$t('dashboard.action.editModel', {
                     model: this.$t('model.domain.singular').toLowerCase(),
                 });
             },
-            submitLabel() {
-                return this.$t('dashboard.action.edit', {
-                    model: this.$t('model.domain.singular').toLowerCase(),
-                });
-            },
-        },
-        methods: {
-            submit() {
-                if (this.sending) {
-                    return;
-                }
-
-                this.sending = true;
-                this.$inertia
-                    .post(
-                        this.$route('domains.update', {
-                            domain: this.domain.data.id,
-                        }),
-                        this.prepareFormData(this.form)
-                    )
-                    .then(() => (this.sending = false));
+            breadcrumbs() {
+                return [
+                    {
+                        label: this.$t('model.domain.plural'),
+                        href: this.$route('domains.index'),
+                    },
+                    {
+                        label: this.pageTitle,
+                        href: null,
+                    },
+                ];
             },
         },
     };

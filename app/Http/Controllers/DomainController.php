@@ -72,7 +72,7 @@ class DomainController extends Controller
     {
         $domain->delete();
 
-        return Redirect::back()
+        return Redirect::route('domains.index')
             ->with('success', __('dashboard.event.deleted', [
                 'model' => __('model.domain.singular'),
             ]));

@@ -1,9 +1,5 @@
 <template>
-    <layout>
-        <template v-slot:title>
-            {{ $t('model.domain.plural') }}
-        </template>
-
+    <layout :breadcrumbs="breadcrumbs">
         <template v-slot:actions>
             <div>
                 <form-button color="blue" :href="$route('domains.create')">
@@ -20,6 +16,7 @@
         />
     </layout>
 </template>
+
 <script>
     export default {
         props: {
@@ -28,14 +25,25 @@
         },
         metaInfo() {
             return {
-                title: this.$t('model.domain.plural'),
+                title: this.pageTitle,
             };
         },
         computed: {
+            pageTitle() {
+                return this.$t('model.domain.plural');
+            },
             createLabel() {
-                return this.$t('dashboard.action.create', {
+                return this.$t('dashboard.action.createModel', {
                     model: this.$t('model.domain.singular').toLowerCase(),
                 });
+            },
+            breadcrumbs() {
+                return [
+                    {
+                        label: this.pageTitle,
+                        href: null,
+                    },
+                ];
             },
         },
     };
