@@ -1,17 +1,6 @@
 <template>
-    <layout>
-        <template v-slot:title>
-            <inertia-link
-                :href="$route('grants.index')"
-                class="text-blue-500 hover:text-blue-600"
-            >
-                {{ $t('model.grant.plural') }}
-            </inertia-link>
-            <span class="font-normal text-gray-300" aria-hidden="true">//</span>
-            {{ pageTitle }}
-        </template>
-
-        <form @submit.prevent="submit" method="post" class="grid row-gap-8">
+    <layout :breadcrumbs="breadcrumbs">
+        <form @submit.prevent="publish" method="post" class="grid row-gap-8">
             <form-panel
                 :title="$t('model.grant.section.info.title')"
                 :description="$t('model.grant.section.info.description')"
@@ -149,26 +138,22 @@
             </form-panel>
 
             <div class="flex justify-end space-x-3">
-                <form-button
-                    type="button"
-                    @click.native.prevent="draft"
-                    :disabled="sending"
-                >
+                <form-button type="button" @click="draft" :disabled="sending">
                     {{ draftLabel }}
                 </form-button>
 
-                <form-button color="blue">
-                    {{ submitLabel }}
+                <form-button type="submit" color="blue" :disabled="sending">
+                    {{ createLabel }}
                 </form-button>
             </div>
         </form>
     </layout>
 </template>
 <script>
-    import LocaleMixin from '@/mixins/locale';
+    import FormMixin from '@/mixins/form';
 
     export default {
-        mixins: [LocaleMixin],
+        mixins: [FormMixin],
         metaInfo() {
             return {
                 title: this.pageTitle,
@@ -177,8 +162,8 @@
         data() {
             return {
                 managed: false,
+                formAction: this.$route('grants.store'),
                 form: {
-                    _publish: true,
                     donors: [],
                     grantee_count: 1,
                     donor_count: 1,
@@ -202,45 +187,24 @@
         },
         computed: {
             pageTitle() {
-                return this.$t('dashboard.action.create', {
+                return this.$t('dashboard.action.createModel', {
                     model: this.$t('model.grant.singular').toLowerCase(),
                 });
             },
-            submitLabel() {
-                return this.$t('dashboard.action.create', {
-                    model: this.$t('model.grant.singular').toLowerCase(),
-                });
-            },
-            draftLabel() {
-                return this.$t('dashboard.action.draft', {
-                    model: this.$t('model.grant.singular').toLowerCase(),
-                });
+            breadcrumbs() {
+                return [
+                    {
+                        label: this.$t('model.grant.plural'),
+                        href: this.$route('grants.index'),
+                    },
+                    {
+                        label: this.$t('dashboard.action.create'),
+                        href: null,
+                    },
+                ];
             },
         },
-        methods: {
-            submit() {
-                if (this.sending) {
-                    return;
-                }
 
-                this.sending = true;
-
-                this.$inertia
-                    .post(
-                        this.$route('grants.store'),
-                        this.prepareFormData(this.form)
-                    )
-                    .then(() => (this.sending = false));
-            },
-            draft() {
-                if (this.sending) {
-                    return;
-                }
-
-                this.form._publish = false;
-                this.submit();
-            },
-        },
         watch: {
             'form.donor_count': {
                 handler(newValue, oldValue) {

@@ -1,16 +1,5 @@
 <template>
-    <layout>
-        <template v-slot:title>
-            <inertia-link
-                :href="$route('grants.index')"
-                class="text-blue-500 hover:text-blue-600"
-            >
-                {{ $t('model.grant.plural') }}
-            </inertia-link>
-            <span class="font-normal text-gray-300" aria-hidden="true">//</span>
-            {{ pageTitle }}
-        </template>
-
+    <layout :breadcrumbs="breadcrumbs">
         <template v-slot:actions>
             <div>
                 <form-button
@@ -46,11 +35,19 @@
             </grid>
         </panel>
 
-        <data-block :table-data="grant.projects" :columns="columns">
+        <data-block
+            :table-data="grant.projects"
+            :columns="columns"
+            route-name="projects.edit"
+            :route-args="{ grant: grant.id }"
+            :route-fill="{ project: 'id' }"
+        >
+            <template v-slot:grantee="column">
+                {{ column.grantee.name }}
+            </template>
+
             <template v-slot:amount="column">
-                <span>
-                    {{ column.amount.formatted }}
-                </span>
+                {{ column.amount.formatted }}
             </template>
         </data-block>
     </layout>
@@ -66,33 +63,31 @@
             };
         },
         computed: {
-            pageTitle() {
-                return this.$t('dashboard.action.view', {
-                    model: this.$t('model.grant.singular').toLowerCase(),
-                });
-            },
             submitLabel() {
-                return this.$t('dashboard.action.edit', {
+                return this.$t('dashboard.action.editModel', {
                     model: this.$t('model.grant.singular').toLowerCase(),
                 });
             },
             newProjectLabel() {
-                return this.$t('dashboard.action.create', {
+                return this.$t('dashboard.action.createModel', {
                     model: this.$t('model.project.singular').toLowerCase(),
                 });
+            },
+            breadcrumbs() {
+                return [
+                    {
+                        label: this.$t('model.grant.plural'),
+                        href: this.$route('grants.index'),
+                    },
+                    {
+                        label: this.$t('dashboard.action.view'),
+                        href: null,
+                    },
+                ];
             },
         },
         data() {
             return {
-                form: {
-                    name: null,
-                    type: null,
-                    hq: null,
-                    contact: null,
-                    email: null,
-                    phone: null,
-                    areas: [],
-                },
                 cards: [
                     {
                         title: 'Donors',
@@ -115,7 +110,9 @@
                     {
                         field: 'grantee',
                         label: 'Grantee',
-                        sortable: true,
+                        sortable: {
+                            prop: 'name',
+                        },
                     },
                     {
                         field: 'title',

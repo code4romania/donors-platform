@@ -114,6 +114,14 @@ export default {
                 .post(this.formAction, this.prepareFormData(this.form))
                 .then(() => (this.sending = false));
         },
+        publish() {
+            this.form._publish = true;
+            this.submit();
+        },
+        draft() {
+            this.form._publish = false;
+            this.submit();
+        },
         changeVisibility() {
             this.form._publish = !this.form._publish;
             this.submit();

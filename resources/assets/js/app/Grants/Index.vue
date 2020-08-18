@@ -1,9 +1,5 @@
 <template>
-    <layout>
-        <template v-slot:title>
-            {{ $t('model.grant.plural') }}
-        </template>
-
+    <layout :breadcrumbs="breadcrumbs">
         <template v-slot:actions>
             <div>
                 <form-button color="blue" :href="$route('grants.create')">
@@ -37,9 +33,17 @@
         },
         computed: {
             createLabel() {
-                return this.$t('dashboard.action.create', {
+                return this.$t('dashboard.action.createModel', {
                     model: this.$t('model.grant.singular').toLowerCase(),
                 });
+            },
+            breadcrumbs() {
+                return [
+                    {
+                        label: this.$t('model.grant.plural'),
+                        href: null,
+                    },
+                ];
             },
         },
     };

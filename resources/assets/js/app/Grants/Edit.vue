@@ -1,16 +1,5 @@
 <template>
-    <layout>
-        <template v-slot:title>
-            <inertia-link
-                :href="$route('grants.index')"
-                class="text-blue-500 hover:text-blue-600"
-            >
-                {{ $t('model.grant.plural') }}
-            </inertia-link>
-            <span class="font-normal text-gray-300" aria-hidden="true">//</span>
-            {{ pageTitle }}
-        </template>
-
+    <layout :breadcrumbs="breadcrumbs">
         <form @submit.prevent="submit" method="post" class="grid row-gap-8">
             <form-panel
                 :title="$t('model.grant.section.info.title')"
@@ -150,41 +139,48 @@
 
             <div class="flex justify-end space-x-3">
                 <form-button
+                    type="button"
                     color="red"
-                    :href="$route('grants.destroy', { grant: grant.id })"
+                    @click="destroy"
                     :disabled="sending"
-                    method="delete"
                 >
                     {{ deleteLabel }}
                 </form-button>
+
                 <form-button
                     type="button"
-                    @click.native.prevent="changeVisibility"
+                    @click="changeVisibility"
                     :disabled="sending"
                 >
-                    {{ changeVisibilityLabel }}
+                    {{ visibilityLabel }}
                 </form-button>
-                <form-button color="blue">
-                    {{ submitLabel }}
+
+                <form-button type="submit" color="blue" :disabled="sending">
+                    {{ saveLabel }}
                 </form-button>
             </div>
         </form>
     </layout>
 </template>
 <script>
-    import LocaleMixin from '@/mixins/locale';
+    import FormMixin from '@/mixins/form';
 
     export default {
-        mixins: [LocaleMixin],
+        mixins: [FormMixin],
         metaInfo() {
             return {
                 title: this.pageTitle,
             };
         },
         data() {
+            let routeParams = {
+                grant: this.grant.id,
+            };
+
             return {
-                sending: false,
                 managed: false,
+                deleteAction: this.$route('grants.destroy', routeParams),
+                formAction: this.$route('grants.update', routeParams),
                 form: {
                     _method: 'PUT', // html form method spoofing
                     _publish: this.grant.published_status === 'published',
@@ -209,53 +205,21 @@
         },
         computed: {
             pageTitle() {
-                return this.$t('dashboard.action.edit', {
+                return this.$t('dashboard.action.editModel', {
                     model: this.$t('model.grant.singular').toLowerCase(),
                 });
             },
-            submitLabel() {
-                return this.$t('dashboard.action.edit', {
-                    model: this.$t('model.grant.singular').toLowerCase(),
-                });
-            },
-            deleteLabel() {
-                return this.$t('dashboard.action.delete', {
-                    model: this.$t('model.grant.singular').toLowerCase(),
-                });
-            },
-            changeVisibilityLabel() {
-                let label =
-                    this.grant.published_status === 'published'
-                        ? 'dashboard.action.unpublish'
-                        : 'dashboard.action.publish';
-
-                return this.$t(label, {
-                    model: this.$t('model.grant.singular').toLowerCase(),
-                });
-            },
-        },
-        methods: {
-            submit() {
-                if (this.sending) {
-                    return;
-                }
-
-                this.sending = true;
-
-                this.$inertia
-                    .post(
-                        this.$route('grants.update', { grant: this.grant.id }),
-                        this.prepareFormData(this.form)
-                    )
-                    .then(() => (this.sending = false));
-            },
-            changeVisibility() {
-                if (this.sending) {
-                    return;
-                }
-
-                this.form._publish = !this.form._publish;
-                this.submit();
+            breadcrumbs() {
+                return [
+                    {
+                        label: this.$t('model.grant.plural'),
+                        href: this.$route('grants.index'),
+                    },
+                    {
+                        label: this.$t('dashboard.action.edit'),
+                        href: null,
+                    },
+                ];
             },
         },
         watch: {
