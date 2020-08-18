@@ -1,20 +1,5 @@
 <template>
     <layout :breadcrumbs="breadcrumbs">
-        <template v-slot:title>
-            <inertia-link
-                :href="$route('domains.index')"
-                class="text-blue-500 hover:text-blue-600"
-            >
-                {{ $t('model.domain.plural') }}
-            </inertia-link>
-            <span class="font-normal text-gray-300" aria-hidden="true">//</span>
-            {{
-                $t('dashboard.action.edit', {
-                    model: $t('model.domain.singular').toLowerCase(),
-                })
-            }}
-        </template>
-
         <form @submit.prevent="submit" method="post" class="grid row-gap-8">
             <form-panel
                 :title="$t('model.domain.section.title')"
@@ -34,16 +19,16 @@
 
             <div class="flex justify-end space-x-3">
                 <form-button
+                    type="button"
                     color="red"
-                    :href="deleteAction"
+                    @click="destroy"
                     :disabled="sending"
-                    method="delete"
                 >
                     {{ deleteLabel }}
                 </form-button>
 
-                <form-button color="blue" :disabled="sending">
-                    {{ $t('dashboard.action.save') }}
+                <form-button type="submit" color="blue" :disabled="sending">
+                    {{ saveLabel }}
                 </form-button>
             </div>
         </form>
@@ -61,13 +46,13 @@
             };
         },
         data() {
+            let routeParams = {
+                domain: this.domain.data.id,
+            };
+
             return {
-                deleteAction: this.$route('domains.destroy', {
-                    domain: this.domain.data.id,
-                }),
-                formAction: this.$route('domains.update', {
-                    domain: this.domain.data.id,
-                }),
+                deleteAction: this.$route('domains.destroy', routeParams),
+                formAction: this.$route('domains.update', routeParams),
                 form: {
                     _method: 'PUT', // html form method spoofing
                     ...this.prepareFields(['name'], this.domain.data),
@@ -90,7 +75,7 @@
                         href: this.$route('domains.index'),
                     },
                     {
-                        label: this.pageTitle,
+                        label: this.$t('dashboard.action.edit'),
                         href: null,
                     },
                 ];

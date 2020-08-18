@@ -18,7 +18,7 @@
             </form-panel>
 
             <div class="flex justify-end space-x-3">
-                <form-button color="blue" :disabled="sending">
+                <form-button type="submit" color="blue" :disabled="sending">
                     {{ createLabel }}
                 </form-button>
             </div>
@@ -55,7 +55,7 @@
                         href: this.$route('domains.index'),
                     },
                     {
-                        label: this.pageTitle,
+                        label: this.$t('dashboard.action.create'),
                         href: null,
                     },
                 ];

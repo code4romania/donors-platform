@@ -107,6 +107,7 @@
         </div>
     </layout>
 </template>
+
 <script>
     export default {
         props: {
@@ -133,7 +134,7 @@
                         href: this.$route('donors.index'),
                     },
                     {
-                        label: this.pageTitle,
+                        label: this.$t('dashboard.action.view'),
                         href: null,
                     },
                 ];

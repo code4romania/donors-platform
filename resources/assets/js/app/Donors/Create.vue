@@ -98,6 +98,7 @@
         </form>
     </layout>
 </template>
+
 <script>
     import FormMixin from '@/mixins/form';
 
@@ -130,7 +131,7 @@
         },
         computed: {
             pageTitle() {
-                return this.$t('dashboard.action.create', {
+                return this.$t('dashboard.action.createModel', {
                     model: this.$t('model.donor.singular').toLowerCase(),
                 });
             },
@@ -141,7 +142,7 @@
                         href: this.$route('donors.index'),
                     },
                     {
-                        label: this.pageTitle,
+                        label: this.$t('dashboard.action.create'),
                         href: null,
                     },
                 ];

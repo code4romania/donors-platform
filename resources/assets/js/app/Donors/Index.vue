@@ -20,6 +20,7 @@
         </model-table>
     </layout>
 </template>
+
 <script>
     export default {
         props: {
@@ -36,14 +37,14 @@
                 return this.$t('model.donor.plural');
             },
             createLabel() {
-                return this.$t('dashboard.action.create', {
+                return this.$t('dashboard.action.createModel', {
                     model: this.$t('model.donor.singular').toLowerCase(),
                 });
             },
             breadcrumbs() {
                 return [
                     {
-                        label: this.pageTitle,
+                        label: this.$t('model.donor.plural'),
                         href: null,
                     },
                 ];

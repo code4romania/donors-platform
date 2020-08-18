@@ -149,6 +149,7 @@
         </form>
     </layout>
 </template>
+
 <script>
     import FormMixin from '@/mixins/form';
 
@@ -204,7 +205,6 @@
                 ];
             },
         },
-
         watch: {
             'form.donor_count': {
                 handler(newValue, oldValue) {

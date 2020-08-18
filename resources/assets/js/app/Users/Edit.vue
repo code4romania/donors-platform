@@ -35,21 +35,22 @@
 
             <div class="flex justify-end space-x-3">
                 <form-button
+                    type="button"
                     color="red"
-                    :href="deleteAction"
+                    @click="destroy"
                     :disabled="sending"
-                    method="delete"
                 >
                     {{ deleteLabel }}
                 </form-button>
 
-                <form-button color="blue" :disabled="sending">
+                <form-button type="submit" color="blue" :disabled="sending">
                     {{ saveLabel }}
                 </form-button>
             </div>
         </form>
     </layout>
 </template>
+
 <script>
     import FormMixin from '@/mixins/form';
 
@@ -61,19 +62,15 @@
             };
         },
         data() {
+            let routeParams = {
+                user: this.user.id,
+            };
             return {
-                deleteAction: this.$route('users.destroy', {
-                    user: this.user.data.id,
-                }),
-                formAction: this.$route('users.update', {
-                    user: this.user.data.id,
-                }),
+                deleteAction: this.$route('users.destroy', routeParams),
+                formAction: this.$route('users.update', routeParams),
                 form: {
                     _method: 'PUT', // html form method spoofing
-                    ...this.prepareFields(
-                        ['name', 'email', 'role'],
-                        this.user.data
-                    ),
+                    ...this.prepareFields(['name', 'email', 'role'], this.user),
                 },
             };
         },
@@ -82,9 +79,6 @@
             roles: Array,
         },
         computed: {
-            routeParams() {
-                return;
-            },
             pageTitle() {
                 return this.$t('dashboard.action.editModel', {
                     model: this.$t('model.user.singular').toLowerCase(),

@@ -40,7 +40,7 @@
             breadcrumbs() {
                 return [
                     {
-                        label: this.pageTitle,
+                        label: this.$t('model.domain.plural'),
                         href: null,
                     },
                 ];

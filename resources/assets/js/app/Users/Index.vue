@@ -16,6 +16,7 @@
         />
     </layout>
 </template>
+
 <script>
     export default {
         props: {
@@ -29,7 +30,7 @@
         },
         computed: {
             createLabel() {
-                return this.$t('dashboard.action.create', {
+                return this.$t('dashboard.action.createModel', {
                     model: this.$t('model.user.singular').toLowerCase(),
                 });
             },

@@ -46,13 +46,14 @@
             </form-panel>
 
             <div class="flex justify-end space-x-3">
-                <form-button color="blue" :disabled="sending">
+                <form-button type="submit" color="blue" :disabled="sending">
                     {{ createLabel }}
                 </form-button>
             </div>
         </form>
     </layout>
 </template>
+
 <script>
     import FormMixin from '@/mixins/form';
 
@@ -77,7 +78,7 @@
         },
         computed: {
             pageTitle() {
-                return this.$t('dashboard.action.create', {
+                return this.$t('dashboard.action.createModel', {
                     model: this.$t('model.user.singular').toLowerCase(),
                 });
             },
@@ -88,7 +89,7 @@
                         href: this.$route('users.index'),
                     },
                     {
-                        label: this.pageTitle,
+                        label: this.$t('dashboard.action.create'),
                         href: null,
                     },
                 ];

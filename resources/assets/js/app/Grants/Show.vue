@@ -52,6 +52,7 @@
         </data-block>
     </layout>
 </template>
+
 <script>
     export default {
         props: {

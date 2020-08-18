@@ -20,6 +20,7 @@
         </model-table>
     </layout>
 </template>
+
 <script>
     export default {
         props: {

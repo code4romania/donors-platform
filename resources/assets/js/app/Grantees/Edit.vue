@@ -33,6 +33,7 @@
         </form>
     </layout>
 </template>
+
 <script>
     import FormMixin from '@/mixins/form';
 
