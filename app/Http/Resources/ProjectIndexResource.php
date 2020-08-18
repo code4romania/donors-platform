@@ -6,7 +6,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProjectResource extends JsonResource
+class ProjectIndexResource extends JsonResource
 {
     /**
      * The "data" wrapper that should be applied.
@@ -24,11 +24,13 @@ class ProjectResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'grantee'    => $this->name,
+            'grantee'    => $this->only('id', 'name'),
+            'id'         => $this->project->id,
             'title'      => $this->project->title,
             'start_date' => $this->project->formatted_start_date,
             'end_date'   => $this->project->formatted_end_date,
             'amount'     => $this->project->amount,
+            'currency'   => $this->project->currency,
         ];
     }
 }

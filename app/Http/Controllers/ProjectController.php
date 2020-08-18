@@ -12,12 +12,9 @@ use App\Models\Grant;
 use App\Models\Grantee;
 use App\Models\Project;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
-use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProjectController extends Controller
 {
@@ -26,11 +23,6 @@ class ProjectController extends Controller
         return Redirect::route('grants.show', ['grant' => $grant]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create(Grant $grant): Response
     {
         return Inertia::render('Projects/Create', [
@@ -41,13 +33,6 @@ class ProjectController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Model\Grant          $grant
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreProjectRequest $request, Grant $grant): RedirectResponse
     {
         $grant->grantees()->attach($request->input('grantee'), [
@@ -64,22 +49,16 @@ class ProjectController extends Controller
             ]));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Model\Grant          $grant
-     * @return \Illuminate\Http\Response
-     */
     public function show(Grant $grant): RedirectResponse
     {
         return Redirect::route('grants.show', ['grant' => $grant]);
     }
 
-    public function edit(Grant $grant, int $project): Response
+    public function edit(Grant $grant, Project $project): Response
     {
-        $grantee = $grant->grantees->firstWhere('project.id', $project);
+        $grantee = $grant->grantees->firstWhere('project.id', $project->id);
 
-        abort_unless($project, 403);
+        abort_unless($grantee, 403);
 
         return Inertia::render('Projects/Edit', [
             'project'  => ProjectShowResource::make($grantee->project),
@@ -90,14 +69,6 @@ class ProjectController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Model\Grant          $grant
-     * @param  \App\Model\Project        $project
-     * @return \Illuminate\Http\Response
-     */
     public function update(StoreProjectRequest $request, Grant $grant, Project $project): RedirectResponse
     {
         abort_unless($grant->grantees->firstWhere('project.id', $project->id), 403);
@@ -120,15 +91,15 @@ class ProjectController extends Controller
             ]));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Model\Grant          $grant
-     * @param  \App\Model\Project        $project
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Grant $grant, Project $project)
+    public function destroy(Grant $grant, Project $project): RedirectResponse
     {
-        //
+        abort_unless($grant->grantees->firstWhere('project.id', $project->id), 403);
+
+        $project->delete();
+
+        return Redirect::route('grants.show', ['grant' => $grant])
+            ->with('success', __('dashboard.event.deleted', [
+                'model' => __('model.project.singular'),
+            ]));
     }
 }

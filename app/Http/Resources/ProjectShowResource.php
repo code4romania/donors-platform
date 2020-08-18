@@ -25,12 +25,12 @@ class ProjectShowResource extends JsonResource
     {
         return [
             'id'         => $this->id,
-            'grant'      => $this->grant_id,
-            'grantee'    => $this->grantee_id,
+            'grant'      => $this->grant->only('id', 'name'),
+            'grantee'    => $this->grantee->only('id', 'name'),
             'title'      => $this->title,
             'start_date' => $this->formatted_start_date,
             'end_date'   => $this->formatted_end_date,
-            'amount'     => floatval($this->amount->formatByDecimal()),
+            'amount'     => $this->amount,
             'currency'   => $this->currency,
         ];
     }

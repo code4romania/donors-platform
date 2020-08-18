@@ -1,23 +1,5 @@
 <template>
-    <layout>
-        <template v-slot:title>
-            <inertia-link
-                :href="$route('grants.index')"
-                class="text-blue-500 hover:text-blue-600"
-            >
-                {{ $t('model.grant.plural') }}
-            </inertia-link>
-            <span class="font-normal text-gray-300" aria-hidden="true">//</span>
-            <inertia-link
-                :href="$route('grants.show', { grant: grant.id })"
-                class="text-blue-500 hover:text-blue-600"
-            >
-                {{ grant.name }}
-            </inertia-link>
-            <span class="font-normal text-gray-300" aria-hidden="true">//</span>
-            {{ pageTitle }}
-        </template>
-
+    <layout :breadcrumbs="breadcrumbs">
         <form @submit.prevent="submit" method="post" class="grid row-gap-8">
             <form-panel
                 :title="$t('model.project.section.title')"
@@ -72,18 +54,18 @@
             </form-panel>
 
             <div class="flex justify-end space-x-3">
-                <form-button color="blue">
-                    {{ submitLabel }}
+                <form-button type="submit" color="blue" :disabled="sending">
+                    {{ createLabel }}
                 </form-button>
             </div>
         </form>
     </layout>
 </template>
 <script>
-    import LocaleMixin from '@/mixins/locale';
+    import FormMixin from '@/mixins/form';
 
     export default {
-        mixins: [LocaleMixin],
+        mixins: [FormMixin],
         props: {
             columns: Array,
             grant: Object,
@@ -96,6 +78,7 @@
         },
         data() {
             return {
+                formAction: this.$route('projects.store', { grant: this.grant.id }),
                 form: this.prepareFields(['title']),
             };
         },
@@ -105,18 +88,21 @@
                     model: this.$t('model.project.singular').toLowerCase(),
                 });
             },
-            submitLabel() {
-                return this.$t('dashboard.action.create', {
-                    model: this.$t('model.project.singular').toLowerCase(),
-                });
-            },
-        },
-        methods: {
-            submit() {
-                this.$inertia.post(
-                    this.$route('projects.store', { grant: this.grant.id }),
-                    this.prepareFormData(this.form)
-                );
+            breadcrumbs() {
+                return [
+                    {
+                        label: this.$t('model.grant.plural'),
+                        href: this.$route('grants.index'),
+                    },
+                    {
+                        label: this.grant.name,
+                        href: this.$route('grants.show', { grant: this.grant.id }),
+                    },
+                    {
+                        label: this.$t('dashboard.action.create'),
+                        href: null,
+                    },
+                ];
             },
         },
     };

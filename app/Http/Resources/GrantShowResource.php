@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Resources;
 
 use App\Http\Resources\DomainResource;
-use App\Http\Resources\ProjectResource;
-use Cknow\Money\Money;
+use App\Http\Resources\ProjectIndexResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class GrantShowResource extends JsonResource
@@ -32,7 +31,7 @@ class GrantShowResource extends JsonResource
             'domain'           => DomainResource::make($this->domain),
             'amount'           => $this->formatted_amount,
             'currency'         => $this->currency,
-            'projects'         => ProjectResource::collection($this->grantees),
+            'projects'         => ProjectIndexResource::collection($this->grantees),
 
             'donors'           => $this->donors->pluck('name', 'id'),
             'grantees'         => $this->grantees->unique()->count(),
