@@ -1,16 +1,5 @@
 <template>
-    <layout>
-        <template v-slot:title>
-            <inertia-link
-                :href="$route('grantees.index')"
-                class="text-blue-500 hover:text-blue-600"
-            >
-                {{ $t('model.domain.plural') }}
-            </inertia-link>
-            <span class="font-normal text-gray-300" aria-hidden="true">//</span>
-            {{ pageTitle }}
-        </template>
-
+    <layout :breadcrumbs="breadcrumbs">
         <form @submit.prevent="submit" method="post" class="grid row-gap-8">
             <form-panel
                 :title="$t('model.domain.section.title')"
@@ -28,18 +17,18 @@
             </form-panel>
 
             <div class="flex justify-end space-x-3">
-                <form-button color="blue">
-                    {{ submitLabel }}
+                <form-button type="submit" color="blue" :disabled="sending">
+                    {{ createLabel }}
                 </form-button>
             </div>
         </form>
     </layout>
 </template>
 <script>
-    import LocaleMixin from '@/mixins/locale';
+    import FormMixin from '@/mixins/form';
 
     export default {
-        mixins: [LocaleMixin],
+        mixins: [FormMixin],
         metaInfo() {
             return {
                 title: this.pageTitle,
@@ -47,27 +36,27 @@
         },
         data() {
             return {
+                formAction: this.$route('grantees.store'),
                 form: this.prepareFields(['name']),
             };
         },
         computed: {
             pageTitle() {
-                return this.$t('dashboard.action.create', {
-                    model: this.$t('model.domain.singular').toLowerCase(),
+                return this.$t('dashboard.action.createModel', {
+                    model: this.$t('model.grantee.singular').toLowerCase(),
                 });
             },
-            submitLabel() {
-                return this.$t('dashboard.action.create', {
-                    model: this.$t('model.domain.singular').toLowerCase(),
-                });
-            },
-        },
-        methods: {
-            submit() {
-                this.$inertia.post(
-                    this.$route('grantees.store'),
-                    this.prepareFormData(this.form)
-                );
+            breadcrumbs() {
+                return [
+                    {
+                        label: this.$t('model.grantee.plural'),
+                        href: this.$route('grantees.index'),
+                    },
+                    {
+                        label: this.$t('dashboard.action.create'),
+                        href: null,
+                    },
+                ];
             },
         },
     };

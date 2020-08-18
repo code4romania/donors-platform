@@ -69,7 +69,7 @@ class GranteeController extends Controller
     {
         $grantee->delete();
 
-        return Redirect::back()
+        return Redirect::route('grantees.index')
             ->with('success', __('dashboard.event.deleted', [
                 'model' => __('model.grantee.singular'),
             ]));

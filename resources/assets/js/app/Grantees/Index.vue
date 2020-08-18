@@ -1,5 +1,5 @@
 <template>
-    <layout>
+    <layout :breadcrumbs="breadcrumbs">
         <template v-slot:title>
             {{ $t('model.grantee.plural') }}
         </template>

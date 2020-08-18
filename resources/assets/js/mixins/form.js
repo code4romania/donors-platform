@@ -118,5 +118,24 @@ export default {
             this.form._publish = !this.form._publish;
             this.submit();
         },
+        destroy() {
+            if (!this.deleteAction) {
+                throw Error('deleteAction is not configured.');
+            }
+
+            if (this.sending) {
+                return;
+            }
+
+            if (!confirm(this.$t('dashboard.action.deleteConfirm'))) {
+                return;
+            }
+
+            this.sending = true;
+
+            this.$inertia
+                .delete(this.deleteAction)
+                .then(() => (this.sending = false));
+        },
     },
 };
