@@ -1,6 +1,6 @@
 <template>
-    <div class="leading-tight text-gray-900">
-        <div class="max-w-full overflow-x-auto bg-white rounded shadow">
+    <div class="min-w-0 leading-tight text-gray-900">
+        <div class="overflow-x-auto bg-white rounded shadow">
             <table class="w-full">
                 <thead>
                     <tr class="font-semibold leading-tight text-left">

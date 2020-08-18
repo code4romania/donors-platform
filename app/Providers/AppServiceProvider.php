@@ -47,9 +47,9 @@ class AppServiceProvider extends ServiceProvider
         Inertia::setRootView('layouts.app');
 
         Inertia::share([
-            'locale' => fn () => app()->getLocale(),
+            'locale'  => fn () => app()->getLocale(),
             'locales' => fn () => config('translatable.locale_names'),
-            'route' => fn () => Route::currentRouteName(),
+            'route'   => fn () => Route::currentRouteName(),
 
             'auth' => function () {
                 return [

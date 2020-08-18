@@ -16,21 +16,29 @@
                 <tbody>
                     <tr
                         class="border-t border-gray-100"
-                        :class="rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50'"
+                        :class="[
+                            rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50',
+                            rowClass,
+                        ]"
                         v-for="(row, rowIndex) in orderedData"
                         :key="rowIndex"
                     >
                         <td
-                            class="px-6 py-4"
                             v-for="(column, columnIndex) in columns"
                             :key="columnIndex"
                         >
-                            <slot
-                                :name="column.field"
-                                :[column.field]="row[column.field]"
+                            <component
+                                :is="componentType"
+                                :href="componentHref(row.id)"
+                                class="block px-6 py-4 focus:outline-none"
                             >
-                                {{ row[column.field] }}
-                            </slot>
+                                <slot
+                                    :name="column.field"
+                                    :[column.field]="row[column.field]"
+                                >
+                                    {{ row[column.field] }}
+                                </slot>
+                            </component>
                         </td>
                     </tr>
                 </tbody>
@@ -50,6 +58,18 @@
             columns: {
                 type: Array,
                 required: true,
+            },
+            routeName: {
+                type: [String, null],
+                default: null,
+            },
+            routeArgs: {
+                type: Object,
+                default: () => ({}),
+            },
+            routeFill: {
+                type: Object,
+                default: () => ({}),
             },
         },
         data() {
@@ -93,6 +113,30 @@
                         ) * modifier
                     );
                 });
+            },
+            isLinkable() {
+                return this.routeName !== null;
+            },
+            rowClass() {
+                return this.isLinkable
+                    ? 'hover:bg-blue-50 focus-within:bg-blue-50'
+                    : '';
+            },
+            componentType() {
+                return this.isLinkable ? 'inertia-link' : 'div';
+            },
+        },
+        methods: {
+            componentHref(id) {
+                let args = this.routeArgs;
+
+                if (this.routeFill) {
+                    Object.keys(this.routeFill).forEach((prop) => {
+                        args[prop] = id;
+                    });
+                }
+
+                return this.isLinkable ? this.$route(this.routeName, args) : false;
             },
         },
     };

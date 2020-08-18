@@ -17,20 +17,26 @@
             </div>
             <main class="flex-1 overflow-y-auto scrolling-touch" scroll-region>
                 <div class="grid row-gap-6 px-4 py-8 md:p-12">
-                    <h1 class="text-2xl font-bold text-gray-900 md:text-3xl">
-                        <slot name="title">
-                            <breadcrumbs
-                                v-if="breadcrumbs.length"
-                                :items="breadcrumbs"
-                            />
-                        </slot>
-                    </h1>
-
                     <div
-                        v-if="$slots.actions"
-                        class="flex justify-end space-x-4"
+                        class="flex flex-wrap items-center space-y-6 md:flex-no-wrap md:space-y-0"
                     >
-                        <slot name="actions" />
+                        <h1
+                            class="flex-1 w-full text-2xl font-bold text-gray-900 md:text-3xl md:w-auto"
+                        >
+                            <slot name="title">
+                                <breadcrumbs
+                                    v-if="breadcrumbs.length"
+                                    :items="breadcrumbs"
+                                />
+                            </slot>
+                        </h1>
+
+                        <div
+                            v-if="$slots.actions"
+                            class="flex justify-end w-full space-x-4 md:w-auto"
+                        >
+                            <slot name="actions" />
+                        </div>
                     </div>
 
                     <slot />

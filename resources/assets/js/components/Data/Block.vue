@@ -26,6 +26,9 @@
 
         <data-table
             v-if="tableData && isCurrentView('table')"
+            :route-name="routeName"
+            :route-args="routeArgs"
+            :route-fill="routeFill"
             :data="tableData"
             :columns="columns"
         >
@@ -83,6 +86,18 @@
             columns: {
                 type: Array,
                 required: true,
+            },
+            routeName: {
+                type: [String, null],
+                default: null,
+            },
+            routeArgs: {
+                type: Object,
+                default: () => ({}),
+            },
+            routeFill: {
+                type: Object,
+                default: () => ({}),
             },
         },
         data() {

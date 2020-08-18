@@ -3,8 +3,10 @@
         :is="buttonComponent"
         class="relative px-6 py-2 font-semibold leading-snug tracking-wide text-center rounded shadow-md sm:w-auto focus:outline-none"
         :class="[buttonColor, buttonWidth, buttonDisabled]"
+        :disabled="disabled"
         :href="href"
         v-bind="$attrs"
+        @click="$emit('click')"
     >
         <slot />
     </component>
@@ -31,7 +33,6 @@
                 default: false,
             },
         },
-
         computed: {
             buttonComponent() {
                 return !this.href ? 'button' : 'inertia-link';
