@@ -47,7 +47,7 @@
         },
         data() {
             let routeParams = {
-                domain: this.domain.data.id,
+                domain: this.domain.id,
             };
 
             return {
@@ -55,7 +55,7 @@
                 formAction: this.$route('domains.update', routeParams),
                 form: {
                     _method: 'PUT', // html form method spoofing
-                    ...this.prepareFields(['name'], this.domain.data),
+                    ...this.prepareFields(['name'], this.domain),
                 },
             };
         },

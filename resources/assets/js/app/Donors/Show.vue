@@ -4,7 +4,7 @@
             <div>
                 <form-button
                     color="blue"
-                    :href="$route('donors.edit', { donor: donor.data.id })"
+                    :href="$route('donors.edit', { donor: donor.id })"
                 >
                     {{ editLabel }}
                 </form-button>
@@ -20,66 +20,62 @@
                         <div
                             class="absolute inset-0 flex items-center justify-center"
                         >
-                            <img
-                                class="w-full"
-                                :src="donor.data.logo_url"
-                                alt=""
-                            />
+                            <img class="w-full" :src="donor.logo_url" alt="" />
                         </div>
                     </div>
                 </div>
 
                 <div class="sm:col-span-2 md:col-span-4">
-                    <published-badge :status="donor.data.published_status" />
+                    <published-badge :status="donor.published_status" />
 
                     <h2
                         class="mt-2 text-2xl font-bold leading-tight md:text-3xl"
-                        v-text="donor.data.name"
+                        v-text="donor.name"
                     />
 
-                    <div v-if="donor.data.hq" class="flex items-center">
+                    <div v-if="donor.hq" class="flex items-center">
                         <svg-vue
                             icon="Map/map-pin-line"
                             class="w-4 h-6 mr-1 text-gray-500 fill-current"
                         />
 
-                        <span v-text="donor.data.hq" />
+                        <span v-text="donor.hq" />
                     </div>
                 </div>
 
                 <div class="sm:col-span-3 md:col-span-2">
-                    <strong class="text-lg" v-text="donor.data.contact" />
+                    <strong class="text-lg" v-text="donor.contact" />
 
-                    <div v-if="donor.data.email" class="flex items-center mt-1">
+                    <div v-if="donor.email" class="flex items-center mt-1">
                         <svg-vue
                             icon="Business/at-line"
                             class="w-4 h-6 mr-1 text-gray-500 fill-current"
                         />
 
                         <a
-                            :href="`mailto:${donor.data.email}`"
+                            :href="`mailto:${donor.email}`"
                             class="hover:underline"
-                            v-text="donor.data.email"
+                            v-text="donor.email"
                         />
                     </div>
 
-                    <div v-if="donor.data.phone" class="flex items-center mt-1">
+                    <div v-if="donor.phone" class="flex items-center mt-1">
                         <svg-vue
                             icon="Device/phone-line"
                             class="w-4 h-6 mr-1 text-gray-500 fill-current"
                         />
 
                         <a
-                            :href="`tel:${donor.data.phone}`"
+                            :href="`tel:${donor.phone}`"
                             class="hover:underline"
-                            v-text="donor.data.phone"
+                            v-text="donor.phone"
                         />
                     </div>
                 </div>
 
                 <div
                     class="sm:col-span-3 md:col-span-2"
-                    v-if="donor.data.domains.length"
+                    v-if="donor.domains.length"
                 >
                     <strong class="text-lg" v-text="$t('field.areas')" />
                     <div class="flex mt-1">
@@ -89,7 +85,7 @@
                         />
                         <div
                             v-html="
-                                donor.data.domains
+                                donor.domains
                                     .map((area) => area.name)
                                     .join(', ')
                             "

@@ -85,13 +85,13 @@
             <div class="flex justify-end space-x-3">
                 <form-button
                     type="button"
-                    @click.native.prevent="changeVisibility"
+                    @click.prevent="changeVisibility"
                     :disabled="sending"
                 >
                     {{ draftLabel }}
                 </form-button>
 
-                <form-button color="blue" :disabled="sending">
+                <form-button type="submit" color="blue" :disabled="sending">
                     {{ createLabel }}
                 </form-button>
             </div>

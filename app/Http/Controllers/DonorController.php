@@ -94,7 +94,7 @@ class DonorController extends Controller
     {
         $donor->delete();
 
-        return Redirect::back()
+        return Redirect::route('donors.index')
             ->with('success', __('dashboard.event.deleted', [
                 'model' => __('model.donor.singular'),
             ]));

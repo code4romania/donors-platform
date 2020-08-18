@@ -46,7 +46,7 @@
         },
         data() {
             let routeParams = {
-                grantee: this.grantee.data.id,
+                grantee: this.grantee.id,
             };
 
             return {
@@ -54,7 +54,7 @@
                 formAction: this.$route('grantees.update', routeParams),
                 form: {
                     _method: 'PUT', // html form method spoofing
-                    ...this.prepareFields(['name'], this.grantee.data),
+                    ...this.prepareFields(['name'], this.grantee),
                 },
             };
         },

@@ -82,21 +82,24 @@
 
             <div class="flex justify-end space-x-3">
                 <form-button
+                    type="button"
                     color="red"
-                    :href="$route('donors.show', { donor: donor.data.id })"
+                    @click="destroy"
                     :disabled="sending"
                 >
-                    {{ $t('dashboard.action.cancel') }}
+                    {{ deleteLabel }}
                 </form-button>
+
                 <form-button
                     type="button"
-                    @click.native.prevent="changeVisibility"
+                    @click="changeVisibility"
                     :disabled="sending"
                 >
-                    {{ changeVisibilityLabel }}
+                    {{ visibilityLabel }}
                 </form-button>
-                <form-button color="blue" :disabled="sending">
-                    {{ $t('dashboard.action.save') }}
+
+                <form-button type="submit" color="blue" :disabled="sending">
+                    {{ saveLabel }}
                 </form-button>
             </div>
         </form>
@@ -114,16 +117,21 @@
             };
         },
         data() {
+            let routeParams = {
+                donor: this.donor.id,
+            };
+
             return {
-                sending: false,
+                deleteAction: this.$route('donors.destroy', routeParams),
+                formAction: this.$route('donors.update', routeParams),
                 form: {
                     _method: 'PUT', // html form method spoofing
-                    _publish: this.donor.data.published_status === 'published',
+                    _publish: this.donor.published_status === 'published',
                     ...this.prepareFields(
                         ['name', 'type', 'hq', 'contact', 'email', 'phone', 'logo'],
-                        this.donor.data
+                        this.donor
                     ),
-                    domains: this.donor.data.domains.map((area) => area.id),
+                    domains: this.donor.domains.map((area) => area.id),
                 },
             };
         },
