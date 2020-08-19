@@ -1,6 +1,6 @@
 <template>
     <layout :breadcrumbs="breadcrumbs">
-        <form @submit.prevent="publish" method="post" class="grid row-gap-8">
+        <form @submit.prevent="publish" method="post" class="grid gap-y-8">
             <form-panel
                 :title="$t('model.grant.section.info.title')"
                 :description="$t('model.grant.section.info.description')"
@@ -88,7 +88,7 @@
                 :title="$t('model.grant.section.donors.title')"
                 :description="$t('model.grant.section.donors.description')"
             >
-                <grid class="row-gap-4 lg:col-span-2">
+                <grid class="gap-y-4 lg:col-span-2">
                     <form-select
                         v-for="(_, index) in form.donor_count"
                         :key="index"

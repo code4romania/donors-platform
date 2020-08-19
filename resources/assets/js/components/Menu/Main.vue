@@ -47,7 +47,7 @@
             <div
                 class="flex flex-col flex-1 px-2 py-4 overflow-y-auto bg-gray-800"
             >
-                <nav class="grid row-gap-1">
+                <nav class="grid gap-y-1">
                     <template v-for="(item, index) in items">
                         <menu-item
                             v-if="showMenuItem(item)"

@@ -8,7 +8,7 @@
             </a>
         </div>
 
-        <div class="grid w-full row-gap-4 mx-auto mt-8 sm:max-w-md">
+        <div class="grid w-full gap-y-4 mx-auto mt-8 sm:max-w-md">
             <div class="px-4 sm:px-8">
                 <h1 class="text-xl font-bold leading-tight text-gray-900">
                     <slot name="title" />

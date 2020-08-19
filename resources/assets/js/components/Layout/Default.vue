@@ -16,7 +16,7 @@
                 </div>
             </div>
             <main class="flex-1 overflow-y-auto scrolling-touch" scroll-region>
-                <div class="grid row-gap-6 px-4 py-8 md:p-12">
+                <div class="grid gap-y-6 px-4 py-8 md:p-12">
                     <div
                         class="flex flex-wrap items-center space-y-6 md:flex-no-wrap md:space-y-0"
                     >

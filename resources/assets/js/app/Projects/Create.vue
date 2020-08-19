@@ -1,6 +1,6 @@
 <template>
     <layout :breadcrumbs="breadcrumbs">
-        <form @submit.prevent="submit" method="post" class="grid row-gap-8">
+        <form @submit.prevent="submit" method="post" class="grid gap-y-8">
             <form-panel
                 :title="$t('model.project.section.title')"
                 :description="$t('model.project.section.description')"

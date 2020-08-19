@@ -4,7 +4,7 @@
             {{ $t('auth.login') }}
         </template>
 
-        <form @submit.prevent="submit" method="post" class="grid row-gap-6">
+        <form @submit.prevent="submit" method="post" class="grid gap-y-6">
             <form-input
                 type="email"
                 id="email"

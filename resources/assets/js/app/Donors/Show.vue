@@ -13,7 +13,7 @@
 
         <panel>
             <div
-                class="grid gap-4 sm:grid-cols-3 md:col-gap-6 md:row-gap-8 md:grid-cols-5"
+                class="grid gap-4 sm:grid-cols-3 md:gap-x-6 md:gap-y-8 md:grid-cols-5"
             >
                 <div class="md:row-span-2">
                     <div class="relative border aspect-ratio-1/1">
