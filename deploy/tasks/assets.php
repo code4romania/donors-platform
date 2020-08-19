@@ -29,4 +29,5 @@ task('assets:build', function () {
 desc('Upload assets to your hosts');
 task('assets:upload', function () {
     upload('public/assets/', '{{release_path}}/public/assets/');
+    upload('public/mix-manifest.json', '{{release_path}}/public/mix-manifest.json');
 });

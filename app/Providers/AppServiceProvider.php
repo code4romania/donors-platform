@@ -42,7 +42,7 @@ class AppServiceProvider extends ServiceProvider
 
     private function registerInertia(): void
     {
-        Inertia::version(fn () => md5_file(public_path('assets/mix-manifest.json')));
+        Inertia::version(fn () => md5_file(public_path('mix-manifest.json')));
 
         Inertia::setRootView('layouts.app');
 

@@ -20,7 +20,7 @@ mix.options({
     },
 });
 
-mix.config.fileLoaderDirs.fonts = 'fonts';
+mix.config.fileLoaderDirs.fonts = 'assets/fonts';
 
 mix.webpackConfig({
     devtool: mix.config.production ? 'none' : 'source-map',
@@ -37,10 +37,7 @@ if (mix.config.production) {
     mix.version();
 }
 
-mix.setPublicPath('public/assets')
-    .setResourceRoot('/')
-
-    .js('resources/assets/js/app.js', 'public/assets')
+mix.js('resources/assets/js/app.js', 'public/assets')
     .postCss('resources/assets/css/app.pcss', 'public/assets', [
         require('postcss-import'),
         require('tailwindcss')('./tailwind.config.js'),
