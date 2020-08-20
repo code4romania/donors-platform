@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreGrantRequest;
+use App\Http\Requests\GrantRequest;
 use App\Http\Resources\DomainResource;
 use App\Http\Resources\DonorResource;
 use App\Http\Resources\GrantIndexResource;
@@ -51,7 +51,7 @@ class GrantController extends Controller
         ]);
     }
 
-    public function store(StoreGrantRequest $request): RedirectResponse
+    public function store(GrantRequest $request): RedirectResponse
     {
         $grant = Grant::create($request->all());
 
@@ -86,7 +86,7 @@ class GrantController extends Controller
         ]);
     }
 
-    public function update(StoreGrantRequest $request, Grant $grant): RedirectResponse
+    public function update(GrantRequest $request, Grant $grant): RedirectResponse
     {
         $grant->update($request->except('domain'));
 

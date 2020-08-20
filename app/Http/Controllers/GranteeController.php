@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreGranteeRequest;
+use App\Http\Requests\GranteeRequest;
 use App\Http\Resources\GranteeResource;
 use App\Models\Grantee;
 use Illuminate\Http\RedirectResponse;
@@ -33,7 +33,7 @@ class GranteeController extends Controller
         return Inertia::render('Grantees/Create');
     }
 
-    public function store(StoreGranteeRequest $request): RedirectResponse
+    public function store(GranteeRequest $request): RedirectResponse
     {
         Grantee::create($request->all());
 
@@ -55,7 +55,7 @@ class GranteeController extends Controller
         ]);
     }
 
-    public function update(StoreGranteeRequest $request, Grantee $grantee): RedirectResponse
+    public function update(GranteeRequest $request, Grantee $grantee): RedirectResponse
     {
         $grantee->update($request->all());
 

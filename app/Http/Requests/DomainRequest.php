@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+use Astrotomic\Translatable\Validation\RuleFactory;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreProjectRequest extends FormRequest
+class DomainRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,7 +16,7 @@ class StoreProjectRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->user()->can('manage projects');
+        return $this->user()->can('manage donors');
     }
 
     /**
@@ -25,13 +26,9 @@ class StoreProjectRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'title'      => ['required', 'string'],
-            'grantee'    => ['required', 'exists:grantees,id'],
-            'amount'     => ['required', 'numeric'],
-            'start_date' => ['required', 'date_format:Y-m-d', 'before:end_date'],
-            'end_date'   => ['required', 'date_format:Y-m-d', 'after:start_date'],
-        ];
+        return RuleFactory::make([
+            '%name%' => ['required', 'string'],
+        ]);
     }
 
     /**
@@ -41,8 +38,10 @@ class StoreProjectRequest extends FormRequest
      */
     protected function prepareForValidation()
     {
-        $this->merge([
-            'amount' => floatval($this->amount),
-        ]);
+        $this->merge(
+            collect(config('translatable.locales'))
+                ->mapwithKeys(fn ($locale) => [$locale => json_decode($this->$locale, true)])
+                ->toArray()
+        );
     }
 }

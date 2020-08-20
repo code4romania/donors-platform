@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -39,7 +39,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function store(StoreUserRequest $request): RedirectResponse
+    public function store(UserRequest $request): RedirectResponse
     {
         $user = User::create($request->all());
 
@@ -66,7 +66,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function update(StoreuserRequest $request, User $user): RedirectResponse
+    public function update(userRequest $request, User $user): RedirectResponse
     {
         $user->update($request->all());
 

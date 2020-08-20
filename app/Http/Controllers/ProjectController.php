@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreProjectRequest;
+use App\Http\Requests\ProjectRequest;
 use App\Http\Resources\GranteeResource;
 use App\Http\Resources\GrantShowResource;
 use App\Http\Resources\ProjectShowResource;
@@ -33,7 +33,7 @@ class ProjectController extends Controller
         ]);
     }
 
-    public function store(StoreProjectRequest $request, Grant $grant): RedirectResponse
+    public function store(ProjectRequest $request, Grant $grant): RedirectResponse
     {
         $grant->grantees()->attach($request->input('grantee'), [
             'title'      => $request->input('title'),
@@ -69,7 +69,7 @@ class ProjectController extends Controller
         ]);
     }
 
-    public function update(StoreProjectRequest $request, Grant $grant, Project $project): RedirectResponse
+    public function update(ProjectRequest $request, Grant $grant, Project $project): RedirectResponse
     {
         abort_unless($grant->grantees->firstWhere('project.id', $project->id), 403);
 

@@ -6,7 +6,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreDonorRequest extends FormRequest
+class DonorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -34,7 +34,7 @@ class StoreDonorRequest extends FormRequest
             'phone'     => ['required', 'string'],
             'domains.*' => ['required', 'exists:domains,id'],
             'logo'      => [
-                'sometimes',
+                'nullable',
                 'image',
                 'mimes:jpeg,png,gif',
                 'dimensions:min_width=300,min_height=300',

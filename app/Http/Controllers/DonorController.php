@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreDonorRequest;
+use App\Http\Requests\DonorRequest;
 use App\Http\Resources\DomainResource;
 use App\Http\Resources\DonorResource;
 use App\Models\Domain;
@@ -40,9 +40,9 @@ class DonorController extends Controller
         ]);
     }
 
-    public function store(StoreDonorRequest $request): RedirectResponse
+    public function store(DonorRequest $request): RedirectResponse
     {
-        $donor = Donor::create($request->except('logo', 'areas'));
+        $donor = Donor::create($request->except('logo'));
 
         $donor->publish($request->boolean('_publish'));
 
@@ -74,9 +74,9 @@ class DonorController extends Controller
         ]);
     }
 
-    public function update(StoreDonorRequest $request, Donor $donor): RedirectResponse
+    public function update(DonorRequest $request, Donor $donor): RedirectResponse
     {
-        $donor->update($request->except('logo', 'areas'));
+        $donor->update($request->except('logo'));
 
         if ($request->boolean('_publish') !== $donor->isPublished()) {
             $donor->publish($request->boolean('_publish'));

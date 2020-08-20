@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+use Astrotomic\Translatable\Validation\RuleFactory;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreGranteeRequest extends FormRequest
+class UserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,7 +16,7 @@ class StoreGranteeRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->user()->can('manage grantees');
+        return $this->user()->can('manage users');
     }
 
     /**
@@ -26,7 +27,9 @@ class StoreGranteeRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'       => ['required', 'string'],
+            'name'    => ['required', 'string'],
+            'email'   => ['required', 'email'],
+            'role'    => ['required', 'string', 'exists:roles,name'],
         ];
     }
 }

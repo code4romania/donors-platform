@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreDomainRequest;
+use App\Http\Requests\DomainRequest;
 use App\Http\Resources\DomainResource;
 use App\Models\Domain;
 use Illuminate\Http\RedirectResponse;
@@ -35,7 +35,7 @@ class DomainController extends Controller
         ]);
     }
 
-    public function store(StoreDomainRequest $request): RedirectResponse
+    public function store(DomainRequest $request): RedirectResponse
     {
         Domain::create($request->all());
 
@@ -58,7 +58,7 @@ class DomainController extends Controller
         ]);
     }
 
-    public function update(StoreDomainRequest $request, Domain $domain): RedirectResponse
+    public function update(DomainRequest $request, Domain $domain): RedirectResponse
     {
         $domain->update($request->all());
 
