@@ -95,6 +95,11 @@
                         children: [],
                     },
                     {
+                        icon: 'Finance/money-euro-circle-line',
+                        href: this.$route('managers.index'),
+                        label: this.$t('model.manager.plural'),
+                    },
+                    {
                         icon: 'Design/focus-3-line',
                         href: this.$route('domains.index'),
                         label: this.$t('model.domain.plural'),

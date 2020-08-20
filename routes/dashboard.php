@@ -11,6 +11,7 @@ Route::resource('donors', 'DonorController');
 Route::resource('domains', 'DomainController');
 Route::resource('grants', 'GrantController');
 Route::resource('grants/{grant}/projects', 'ProjectController');
+Route::resource('managers', 'GrantManagerController');
 
 Route::resource('grantees', 'GranteeController');
 Route::resource('users', 'UserController');
