@@ -35,7 +35,7 @@ export default {
         },
     },
     methods: {
-        isObject: value => value === Object(value),
+        isObject: value => value !== null && value === Object(value),
         isFile: value => value instanceof File,
 
         prepareFields(fields, model) {
@@ -87,12 +87,15 @@ export default {
                 formData = new FormData();
 
             for (const field in data) {
-                formData.append(
-                    field,
-                    this.isObject(data[field]) && !this.isFile(data[field])
-                        ? JSON.stringify(data[field])
-                        : data[field]
-                );
+                let value = '';
+
+                if (this.isObject(data[field]) && !this.isFile(data[field])) {
+                    value = JSON.stringify(data[field]);
+                } else if (null !== data[field]) {
+                    value = data[field];
+                }
+
+                formData.append(field, value);
             }
 
             return formData;

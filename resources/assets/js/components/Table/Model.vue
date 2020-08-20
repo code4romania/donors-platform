@@ -38,6 +38,19 @@
                     </tr>
                 </tbody>
             </table>
+
+            <div
+                v-if="!collection.data.length"
+                class="flex flex-col items-center px-6 py-20 border-t border-gray-100"
+            >
+                <svg-vue
+                    icon="System/search-eye-line"
+                    class="w-10 h-10 text-gray-400 fill-current"
+                />
+                <span class="mt-4 text-lg text-gray-700">
+                    {{ $t('dashboard.table.empty') }}
+                </span>
+            </div>
         </div>
 
         <pagination v-if="paginate" class="mt-4" :meta="collection.meta" />

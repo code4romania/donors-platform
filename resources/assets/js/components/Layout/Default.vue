@@ -9,14 +9,12 @@
                 <portal-target name="menu-mobile-button" slim />
                 <div class="flex items-center justify-end flex-1 px-4">
                     <div class="flex items-center ml-4 lg:ml-6">
-                        <notifications />
-
                         <profile />
                     </div>
                 </div>
             </div>
             <main class="flex-1 overflow-y-auto scrolling-touch" scroll-region>
-                <div class="grid gap-y-6 px-4 py-8 md:p-12">
+                <div class="grid px-4 py-8 gap-y-6 md:p-12">
                     <div
                         class="flex flex-wrap items-center space-y-6 md:flex-no-wrap md:space-y-0"
                     >

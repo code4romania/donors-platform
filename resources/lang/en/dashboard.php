@@ -56,4 +56,7 @@ return [
         'manager' => 'Grant manager',
     ],
 
+    'table' => [
+        'empty' => 'No matching records found.',
+    ],
 ];
