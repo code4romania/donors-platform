@@ -44,7 +44,7 @@ class DonorController extends Controller
     {
         $donor = Donor::create($request->except('logo', 'areas'));
 
-        $donor->publish($request->input('_publish'));
+        $donor->publish($request->boolean('_publish'));
 
         $donor->domains()->sync($request->input('domains'));
 
@@ -78,11 +78,17 @@ class DonorController extends Controller
     {
         $donor->update($request->except('logo', 'areas'));
 
-        if ($request->input('_publish') !== $donor->isPublished()) {
-            $donor->publish($request->input('_publish'));
+        if ($request->boolean('_publish') !== $donor->isPublished()) {
+            $donor->publish($request->boolean('_publish'));
         }
 
         $donor->domains()->sync($request->input('domains'));
+
+        if ($request->file('logo')) {
+            $donor->clearMediaCollection('logo');
+            $donor->addMedia($request->file('logo'))
+                ->toMediaCollection('logo');
+        }
 
         return Redirect::back()
             ->with('success', __('dashboard.event.updated', [

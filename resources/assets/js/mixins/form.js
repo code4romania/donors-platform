@@ -36,6 +36,7 @@ export default {
     },
     methods: {
         isObject: value => value === Object(value),
+        isFile: value => value instanceof File,
 
         prepareFields(fields, model) {
             let prepared = {};
@@ -70,10 +71,6 @@ export default {
             let fields = { ...originalFields },
                 locales = {};
 
-            if (!this.translatable.length) {
-                return fields;
-            }
-
             this.translatable.forEach(field => {
                 Object.keys(this.$page.locales).forEach(locale => {
                     if (!locales.hasOwnProperty(locale)) {
@@ -90,11 +87,12 @@ export default {
                 formData = new FormData();
 
             for (const field in data) {
-                let value = this.isObject(data[field])
-                    ? JSON.stringify(data[field])
-                    : data[field];
-
-                formData.append(field, value);
+                formData.append(
+                    field,
+                    this.isObject(data[field]) && !this.isFile(data[field])
+                        ? JSON.stringify(data[field])
+                        : data[field]
+                );
             }
 
             return formData;

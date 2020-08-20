@@ -55,7 +55,7 @@ class GrantController extends Controller
     {
         $grant = Grant::create($request->all());
 
-        $grant->publish($request->input('_publish'));
+        $grant->publish($request->boolean('_publish'));
 
         return Redirect::route('grants.show', $grant)
             ->with('success', __('dashboard.event.created', [
@@ -90,8 +90,8 @@ class GrantController extends Controller
     {
         $grant->update($request->except('domain'));
 
-        if ($request->input('_publish') !== $grant->isPublished()) {
-            $grant->publish($request->input('_publish'));
+        if ($request->boolean('_publish') !== $grant->isPublished()) {
+            $grant->publish($request->boolean('_publish'));
         }
 
         $grant->domain()->associate($request->input('domain'));
