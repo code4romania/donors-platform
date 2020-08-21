@@ -45,8 +45,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Inertia::version(fn () => md5_file(public_path('mix-manifest.json')));
 
-        Inertia::setRootView('layouts.app');
-
         Inertia::share([
             'locale'  => fn () => app()->getLocale(),
             'locales' => fn () => config('translatable.locale_names'),
