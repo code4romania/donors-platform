@@ -66,7 +66,7 @@ class Donor extends Model implements HasMedia
 
     public function domains()
     {
-        return $this->belongsToMany(Domain::class);
+        return $this->morphToMany(Domain::class, 'domainable');
     }
 
     public function grants()

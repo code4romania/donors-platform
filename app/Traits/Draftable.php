@@ -8,10 +8,6 @@ use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Builder;
 
-/**
- * @method static Builder withDrafts
- * @method static Builder onlyDrafts
- */
 trait Draftable
 {
     /**

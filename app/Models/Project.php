@@ -6,11 +6,14 @@ namespace App\Models;
 
 use App\Models\Grant;
 use App\Models\Grantee;
+use App\Traits\HasDates;
 use Cknow\Money\MoneyCast;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class Project extends Pivot
 {
+    use HasDates;
+
     /**
      * Indicates if the IDs are auto-incrementing.
      *
@@ -60,15 +63,5 @@ class Project extends Pivot
     public function grantee()
     {
         return $this->belongsTo(Grantee::class);
-    }
-
-    public function getFormattedStartDateAttribute(): string
-    {
-        return $this->start_date->format('Y-m-d');
-    }
-
-    public function getFormattedEndDateAttribute(): string
-    {
-        return $this->end_date->format('Y-m-d');
     }
 }

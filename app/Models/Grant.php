@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Traits\Draftable;
+use App\Traits\HasDates;
 use App\Traits\Sortable;
 use Cknow\Money\Money;
 use Cknow\Money\MoneyCast;
@@ -12,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Grant extends Model
 {
-    use Draftable, Sortable;
+    use Draftable, HasDates, Sortable;
 
     /**
      * The attributes that are mass assignable.
@@ -20,7 +21,7 @@ class Grant extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'amount', 'currency', 'start_date', 'end_date',
+        'name', 'amount', 'currency', 'start_date', 'end_date', 'max_grantees', 'regranting_amount', 'matching',
     ];
 
     /**
@@ -38,8 +39,12 @@ class Grant extends Model
      * @var array
      */
     protected $casts = [
-        'published_at' => 'datetime',
-        'amount' => MoneyCast::class . ':currency',
+        'start_date'        => 'date',
+        'end_date'          => 'date',
+        'published_at'      => 'datetime',
+        'matching'          => 'boolean',
+        'amount'            => MoneyCast::class . ':currency',
+        'regranting_amount' => MoneyCast::class . ':currency',
     ];
 
     public function donors()
@@ -47,9 +52,9 @@ class Grant extends Model
         return $this->belongsToMany(Donor::class);
     }
 
-    public function managers()
+    public function manager()
     {
-        return $this->belongsToMany(User::class, 'grant_manager');
+        return $this->belongsTo(GrantManager::class, 'grant_manager_id');
     }
 
     public function grantees()

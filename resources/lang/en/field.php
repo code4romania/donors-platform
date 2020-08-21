@@ -25,7 +25,7 @@ return [
     'password'              => 'Password',
     'phone'                 => 'Phone',
     'published_status'      => 'Status',
-    'regranting_value'      => 'Regranting value',
+    'regranting_amount'     => 'Regranting value',
     'role'                  => 'Role',
     'roleLabel'             => 'Role',
     'start_date'            => 'Start date',

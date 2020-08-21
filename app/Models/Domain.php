@@ -48,6 +48,6 @@ class Domain extends Model implements TranslatableContract
 
     public function donors()
     {
-        return $this->belongsToMany(Donor::class);
+        return $this->morphedByMany(Donor::class, 'domainable');
     }
 }
