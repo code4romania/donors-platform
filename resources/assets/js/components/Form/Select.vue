@@ -19,6 +19,11 @@
             v-model="dataSelected"
         >
             <option
+                v-if="optionPlaceholder"
+                :value="null"
+                v-text="optionPlaceholder"
+            />
+            <option
                 v-for="(option, index) in options"
                 :key="index"
                 :checked="dataSelected === option"
@@ -55,6 +60,10 @@
             optionLabelKey: {
                 type: String,
                 default: 'label',
+            },
+            optionPlaceholder: {
+                type: [String, null],
+                default: null,
             },
             multiple: {
                 type: Boolean,

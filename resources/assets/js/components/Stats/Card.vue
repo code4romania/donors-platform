@@ -21,7 +21,7 @@
         props: {
             number: {
                 type: [Number, String, null],
-                required: true,
+                default: null,
             },
             title: {
                 type: [String, null],

@@ -91,6 +91,8 @@ export default {
 
                 if (this.isObject(data[field]) && !this.isFile(data[field])) {
                     value = JSON.stringify(data[field]);
+                } else if (typeof data[field] === 'boolean') {
+                    value = data[field] ? 1 : 0;
                 } else if (null !== data[field]) {
                     value = data[field];
                 }
