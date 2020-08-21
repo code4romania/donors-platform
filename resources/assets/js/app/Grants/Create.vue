@@ -62,7 +62,7 @@
                     type="number"
                     id="donor_count"
                     :label="$t('field.donor_count')"
-                    v-model.number="form.donor_count"
+                    v-model.number="donor_count"
                     required
                     min="1"
                     max="100"
@@ -70,9 +70,9 @@
 
                 <form-input
                     type="number"
-                    id="grantee_count"
+                    id="max_grantees"
                     :label="$t('field.grantee_count')"
-                    v-model.number="form.grantee_count"
+                    v-model.number="form.max_grantees"
                     required
                     min="1"
                 />
@@ -90,7 +90,7 @@
             >
                 <grid class="gap-y-4 lg:col-span-2">
                     <form-select
-                        v-for="(_, index) in form.donor_count"
+                        v-for="(_, index) in donor_count"
                         :key="index"
                         id="donors"
                         :label="$t('model.donor.singular') + ` #${index + 1}`"
@@ -110,20 +110,20 @@
             >
                 <form-select
                     id="manager"
-                    :label="$t('model.user.singular')"
+                    :label="$t('model.manager.singular')"
                     :options="managers.data"
                     v-model="form.manager"
                     option-value-key="id"
                     option-label-key="name"
+                    :option-placeholder="$t('none')"
                     class="lg:col-span-2"
-                    required
                 />
 
                 <form-input
                     type="number"
-                    id="regranting"
-                    :label="$t('field.regranting_value')"
-                    v-model="form.regranting"
+                    id="regranting_amount"
+                    :label="$t('field.regranting_amount')"
+                    v-model="form.regranting_amount"
                     min="0"
                     step="0.01"
                     required
@@ -163,26 +163,28 @@
         data() {
             return {
                 managed: false,
+                donor_count: 1,
+
                 formAction: this.$route('grants.store'),
                 form: {
                     donors: [],
-                    grantee_count: 1,
-                    donor_count: 1,
-                    amount: 0,
-                    regranting: 0,
-                    matching: false,
                     ...this.prepareFields([
                         'name',
+                        'amount',
+                        'currency',
                         'domain',
                         'start_date',
                         'end_date',
+                        'max_grantees',
+                        'manager',
+                        'regranting_amount',
+                        'matching',
                     ]),
                 },
             };
         },
         props: {
             domains: Object,
-            grantees: Object,
             donors: Object,
             managers: Object,
         },
@@ -206,7 +208,7 @@
             },
         },
         watch: {
-            'form.donor_count': {
+            donor_count: {
                 handler(newValue, oldValue) {
                     if (newValue > oldValue) {
                         this.form.donors = this.form.donors.concat(

@@ -110,20 +110,20 @@
             >
                 <form-select
                     id="manager"
-                    :label="$t('model.user.singular')"
+                    :label="$t('model.manager.singular')"
                     :options="managers.data"
                     v-model="form.manager"
                     option-value-key="id"
                     option-label-key="name"
+                    :option-placeholder="$t('none')"
                     class="lg:col-span-2"
-                    required
                 />
 
                 <form-input
                     type="number"
-                    id="regranting"
-                    :label="$t('field.regranting_value')"
-                    v-model="form.regranting"
+                    id="regranting_amount"
+                    :label="$t('field.regranting_amount')"
+                    v-model="form.regranting_amount"
                     min="0"
                     step="0.01"
                     required
@@ -179,20 +179,29 @@
             };
 
             return {
-                managed: false,
+                managed: this.grant.manager !== null,
                 deleteAction: this.$route('grants.destroy', routeParams),
                 formAction: this.$route('grants.update', routeParams),
                 form: {
                     _method: 'PUT', // html form method spoofing
                     _publish: this.grant.published_status === 'published',
                     donors: Object.keys(this.grant.donors),
-                    grantee_count: 1,
-                    donor_count: Object.keys(this.grant.donors).length,
-                    regranting: 0,
+                    donor_count: Object.keys(this.grant.donors).length || 1,
                     domain: this.grant.domain.id || null,
-                    matching: false,
+                    amount: this.grant.amount.amount / 100,
+                    regranting_amount: this.grant.regranting_amount.amount / 100,
                     ...this.prepareFields(
-                        ['name', 'amount', 'currency', 'start_date', 'end_date'],
+                        [
+                            'name',
+                            'currency',
+                            'start_date',
+                            'end_date',
+                            'max_grantees',
+                            'manager',
+
+                            'max_grantees',
+                            'matching',
+                        ],
                         this.grant
                     ),
                 },

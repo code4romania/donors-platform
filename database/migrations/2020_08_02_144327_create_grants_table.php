@@ -23,8 +23,13 @@ class CreateGrantsTable extends Migration
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
 
+            $table->unsignedSmallInteger('max_grantees')->nullable();
+
             $table->foreignId('domain_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('grant_manager_id')->nullable()->constrained()->onDelete('cascade');
+
+            $table->decimal('regranting_amount', 16, 2)->nullable();
+            $table->boolean('matching')->nullable();
 
             $table->timestamps();
             $table->timestamp('published_at')->nullable();

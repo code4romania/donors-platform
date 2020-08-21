@@ -29,8 +29,10 @@ class CreateDomainsTable extends Migration
             $table->unique(['domain_id', 'locale']);
         });
 
-        Schema::create('domain_donor', function (Blueprint $table) {
-            $table->foreignId('donor_id')->constrained()->onDelete('cascade');
+        Schema::create('domainables', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('domainable_id')->nullable();
+            $table->string('domainable_type')->nullable();
             $table->foreignId('domain_id')->constrained()->onDelete('cascade');
         });
     }
@@ -42,7 +44,7 @@ class CreateDomainsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('domain_donor');
+        Schema::dropIfExists('domainables');
         Schema::dropIfExists('domain_translations');
         Schema::dropIfExists('domains');
     }

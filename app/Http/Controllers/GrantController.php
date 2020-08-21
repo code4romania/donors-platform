@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GrantManagerRequest;
 use App\Http\Requests\GrantRequest;
 use App\Http\Resources\DomainResource;
 use App\Http\Resources\DonorResource;
 use App\Http\Resources\GrantIndexResource;
+use App\Http\Resources\GrantManagerResource;
 use App\Http\Resources\GrantShowResource;
-use App\Http\Resources\UserResource;
 use App\Models\Domain;
 use App\Models\Donor;
 use App\Models\Grant;
-use App\Models\User;
+use App\Models\GrantManager;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -28,7 +29,7 @@ class GrantController extends Controller
                 'name', 'domain', 'published_status',
             ]),
             'sort' => $this->getSortProps(),
-            'grants'  => GrantIndexResource::collection(
+            'grants' => GrantIndexResource::collection(
                 Grant::with('domain')
                     ->sort()
                     ->paginate(),
@@ -45,8 +46,8 @@ class GrantController extends Controller
             'domains' => DomainResource::collection(
                 Domain::orderByTranslation('name', 'asc')->get()
             ),
-            'managers' => UserResource::collection(
-                User::withRole('manager')->get()
+            'managers' => GrantManagerResource::collection(
+                GrantManager::all(),
             ),
         ]);
     }
@@ -55,7 +56,12 @@ class GrantController extends Controller
     {
         $grant = Grant::create($request->all());
 
-        $grant->publish($request->boolean('_publish'));
+        $grant->setPublished($request->boolean('_publish'));
+
+        $grant->domain()->associate($request->input('domain'));
+        $grant->manager()->associate($request->input('manager'));
+
+        $grant->save();
 
         return Redirect::route('grants.show', $grant)
             ->with('success', __('dashboard.event.created', [
@@ -80,8 +86,8 @@ class GrantController extends Controller
             'domains' => DomainResource::collection(
                 Domain::orderByTranslation('name', 'asc')->get()
             ),
-            'managers' => UserResource::collection(
-                User::withRole('manager')->get()
+            'managers' => GrantManagerResource::collection(
+                GrantManager::all()
             ),
         ]);
     }
@@ -95,6 +101,9 @@ class GrantController extends Controller
         }
 
         $grant->domain()->associate($request->input('domain'));
+        $grant->manager()->associate($request->input('manager'));
+
+        $grant->save();
 
         return Redirect::back()
             ->with('success', __('dashboard.event.updated', [

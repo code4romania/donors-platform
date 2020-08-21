@@ -19,6 +19,7 @@
         </template>
 
         <panel>
+            <published-badge :status="grant.published_status" />
             <h2
                 class="max-w-3xl mt-2 text-2xl font-bold leading-tight md:text-3xl"
                 v-text="grant.name"
@@ -96,7 +97,10 @@
                     },
                     {
                         title: 'Total value of grants',
-                        number: this.grant.total_value.formatted || null,
+                        number:
+                            this.grant.total_value !== null
+                                ? this.grant.total_value.formatted
+                                : null,
                     },
                     {
                         title: 'Total number of grantees',

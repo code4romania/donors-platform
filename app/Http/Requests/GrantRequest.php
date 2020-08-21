@@ -27,13 +27,16 @@ class GrantRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'       => ['required', 'string'],
-            'domain'     => ['required', 'exists:domains,id'],
-            'grantees.*' => [],
-            'start_date' => ['required', 'date_format:Y-m-d', 'before:end_date'],
-            'end_date'   => ['required', 'date_format:Y-m-d', 'after:start_date'],
-            'amount'     => ['required', 'numeric'],
-            'currency'   => ['required', Rule::in(config('money.currencies.iso'))],
+            'name'              => ['required', 'string'],
+            'domain'            => ['required', 'exists:domains,id'],
+            'max_grantees'      => ['required', 'numeric'],
+            'start_date'        => ['required', 'date_format:Y-m-d', 'before:end_date'],
+            'end_date'          => ['required', 'date_format:Y-m-d', 'after:start_date'],
+            'amount'            => ['required', 'numeric'],
+            'currency'          => ['required', Rule::in(config('money.currencies.iso'))],
+            'manager'           => ['nullable', 'exists:grant_managers,id'],
+            'regranting_amount' => ['nullable', 'lte:amount'],
+            'matching'          => ['nullable', 'boolean'],
         ];
     }
 
@@ -45,7 +48,10 @@ class GrantRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'amount' => floatval($this->amount),
+            '_publish'          => boolval(json_decode($this->_publish ?? false, true)),
+            'amount'            => floatval($this->amount),
+            'regranting_amount' => floatval($this->regranting_amount),
+            'donors'            => array_filter(json_decode($this->donors, true)),
         ]);
     }
 }
