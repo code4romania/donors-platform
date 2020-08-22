@@ -15,11 +15,7 @@ class PermissionsSeeder extends Seeder
             'view users',
             'manage users',
         ],
-        'donor' => [
-            'manage own grants',
-        ],
-        'manager' => [
-            'manage grants',
+        'user' => [
         ],
     ];
 
@@ -53,8 +49,8 @@ class PermissionsSeeder extends Seeder
         ])->assignRole('admin');
 
         factory(User::class)->create([
-            'name'  => 'Grant manager',
-            'email' => 'manager@example.com',
-        ])->assignRole('manager');
+            'name'  => 'User',
+            'email' => 'user@example.com',
+        ])->assignRole('user');
     }
 }

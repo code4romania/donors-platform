@@ -20,6 +20,7 @@
         "laravel/ui": "^2.1",
         "lorisleiva/laravel-deployer": "^0.3.2",
         "reinink/remember-query-strings": "^0.1.0",
+        "spatie/laravel-activitylog": "^3.14",
         "spatie/laravel-medialibrary": "^8.3",
         "spatie/laravel-permission": "^3.13",
         "tightenco/ziggy": "^0.9.4"

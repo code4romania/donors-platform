@@ -52,8 +52,7 @@ return [
 
     'role' => [
         'admin'   => 'Administrator',
-        'donor'   => 'Donor',
-        'manager' => 'Grant manager',
+        'user'    => 'User',
     ],
 
     'table' => [

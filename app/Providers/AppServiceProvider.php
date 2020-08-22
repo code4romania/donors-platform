@@ -42,6 +42,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Relation::morphMap($this->morphMap);
+
+        collect($this->morphMap)
+            ->each(fn ($model) => app($model)::observe(\App\Observers\ActivityObserver::class));
     }
 
     private function registerInertia(): void

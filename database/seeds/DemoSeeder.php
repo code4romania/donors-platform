@@ -6,9 +6,11 @@ use App\Models\Domain;
 use App\Models\Donor;
 use App\Models\Grant;
 use App\Models\Grantee;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class DemoSeeder extends Seeder
 {
@@ -19,7 +21,18 @@ class DemoSeeder extends Seeder
      */
     public function run()
     {
+        $this->loginAsAdmin();
+
         $this->seedRafData();
+    }
+
+    protected function loginAsAdmin()
+    {
+        $user = User::withRole('admin')->first();
+
+        if ($user) {
+            Auth::login($user);
+        }
     }
 
     protected function readData(string $filename): Collection
