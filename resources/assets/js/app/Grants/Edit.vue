@@ -61,11 +61,12 @@
                 <form-input
                     type="number"
                     id="donor_count"
+                    ref="donor_count"
                     :label="$t('field.donor_count')"
-                    v-model.number="form.donor_count"
+                    v-model.number="donor_count"
                     required
                     min="1"
-                    max="100"
+                    max="10"
                 />
 
                 <form-input
@@ -90,7 +91,7 @@
             >
                 <grid class="gap-y-4 lg:col-span-2">
                     <form-select
-                        v-for="(_, index) in form.donor_count"
+                        v-for="(_, index) in form.donors"
                         :key="index"
                         id="donors"
                         :label="$t('model.donor.singular') + ` #${index + 1}`"
@@ -180,16 +181,19 @@
 
             return {
                 managed: this.grant.manager !== null,
+                donor_count: Object.keys(this.grant.donors).length || 1,
+
                 deleteAction: this.$route('grants.destroy', routeParams),
                 formAction: this.$route('grants.update', routeParams),
                 form: {
                     _method: 'PUT', // html form method spoofing
                     _publish: this.grant.published_status === 'published',
                     donors: Object.keys(this.grant.donors),
-                    donor_count: Object.keys(this.grant.donors).length || 1,
                     domain: this.grant.domain.id || null,
-                    amount: this.grant.amount.amount / 100,
-                    regranting_amount: this.grant.regranting_amount.amount / 100,
+                    amount: this.formatAmount(this.grant.amount),
+                    regranting_amount: this.formatAmount(
+                        this.grant.regranting_amount
+                    ),
                     ...this.prepareFields(
                         [
                             'name',
@@ -198,7 +202,6 @@
                             'end_date',
                             'max_grantees',
                             'manager',
-
                             'max_grantees',
                             'matching',
                         ],
@@ -233,8 +236,14 @@
             },
         },
         watch: {
-            'form.donor_count': {
+            donor_count: {
                 handler(newValue, oldValue) {
+                    newValue = this.clamp(
+                        newValue,
+                        parseInt(this.$refs.donor_count.$attrs.min),
+                        parseInt(this.$refs.donor_count.$attrs.max)
+                    );
+
                     if (newValue > oldValue) {
                         this.form.donors = this.form.donors.concat(
                             Array(newValue - this.form.donors.length).fill(null)

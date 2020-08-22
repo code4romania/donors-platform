@@ -63,9 +63,10 @@
                     id="donor_count"
                     :label="$t('field.donor_count')"
                     v-model.number="donor_count"
+                    ref="donor_count"
                     required
                     min="1"
-                    max="100"
+                    max="10"
                 />
 
                 <form-input
@@ -90,7 +91,7 @@
             >
                 <grid class="gap-y-4 lg:col-span-2">
                     <form-select
-                        v-for="(_, index) in donor_count"
+                        v-for="(_, index) in form.donors"
                         :key="index"
                         id="donors"
                         :label="$t('model.donor.singular') + ` #${index + 1}`"
@@ -210,6 +211,12 @@
         watch: {
             donor_count: {
                 handler(newValue, oldValue) {
+                    newValue = this.clamp(
+                        newValue,
+                        parseInt(this.$refs.donor_count.$attrs.min),
+                        parseInt(this.$refs.donor_count.$attrs.max)
+                    );
+
                     if (newValue > oldValue) {
                         this.form.donors = this.form.donors.concat(
                             Array(newValue - this.form.donors.length).fill(null)
