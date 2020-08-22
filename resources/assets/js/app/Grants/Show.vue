@@ -43,12 +43,12 @@
             :route-args="{ grant: grant.id }"
             :route-fill="{ project: 'id' }"
         >
-            <template v-slot:grantee="column">
-                {{ column.grantee.name }}
+            <template v-slot:grantee="{ grantee }">
+                {{ grantee.name }}
             </template>
 
-            <template v-slot:amount="column">
-                {{ column.amount.formatted }}
+            <template v-slot:amount="{ amount }">
+                {{ amount.formatted }}
             </template>
         </data-block>
     </layout>

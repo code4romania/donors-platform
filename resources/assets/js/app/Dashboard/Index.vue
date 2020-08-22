@@ -10,8 +10,8 @@
         </grid>
 
         <data-block :table-data="donors.data" :columns="columns">
-            <template v-slot:total_funding="column">
-                {{ column.total_funding.formatted }}
+            <template v-slot:total_funding="{ total_funding }">
+                {{ total_funding.formatted }}
             </template>
         </data-block>
     </layout>

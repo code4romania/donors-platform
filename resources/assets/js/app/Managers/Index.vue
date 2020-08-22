@@ -14,8 +14,8 @@
             route="managers.show"
             :paginate="true"
         >
-            <template v-slot:published_status="column">
-                <published-badge :status="column.published_status" />
+            <template v-slot:published_status="{ published_status }">
+                <published-badge :status="published_status" />
             </template>
         </model-table>
     </layout>

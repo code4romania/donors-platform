@@ -14,8 +14,12 @@
             route="grants.show"
             :paginate="true"
         >
-            <template v-slot:published_status="column">
-                <published-badge :status="column.published_status" />
+            <template v-slot:domains="{ domains }">
+                {{ domains.map((domain) => domain.name).join(', ') }}
+            </template>
+
+            <template v-slot:published_status="{ published_status }">
+                <published-badge :status="published_status" />
             </template>
         </model-table>
     </layout>
