@@ -10,8 +10,8 @@ use App\Http\Resources\GrantManagerResource;
 use App\Models\Domain;
 use App\Models\GrantManager;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -23,7 +23,7 @@ class GrantManagerController extends Controller
             'columns' => $this->getIndexColumns(GrantManager::class, [
                 'name', 'hq', 'published_status',
             ]),
-            'sort' => $this->getSortProps(),
+            'sort'     => Request::all('order', 'direction'),
             'managers' => GrantManagerResource::collection(
                 GrantManager::query()
                     ->sort()

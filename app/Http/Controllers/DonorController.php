@@ -11,6 +11,7 @@ use App\Models\Domain;
 use App\Models\Donor;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -22,7 +23,7 @@ class DonorController extends Controller
             'columns' => $this->getIndexColumns(Donor::class, [
                 'name', 'type', 'hq', 'published_status',
             ]),
-            'sort' => $this->getSortProps(),
+            'sort'   => Request::all('order', 'direction'),
             'donors' => DonorResource::collection(
                 Donor::with('domains')
                     ->sort()

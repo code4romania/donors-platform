@@ -29,9 +29,4 @@ class Controller extends BaseController
                 ];
             });
     }
-
-    public function getSortProps(): array
-    {
-        return Request::all('order', 'direction');
-    }
 }
