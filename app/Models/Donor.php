@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Traits\Draftable;
+use App\Traits\HasDomains;
 use App\Traits\Sortable;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
@@ -12,7 +13,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Donor extends Model implements HasMedia
 {
-    use Draftable, InteractsWithMedia, Sortable;
+    use Draftable, HasDomains, InteractsWithMedia, Sortable;
 
     /**
      * The relationships that should always be loaded.
@@ -62,11 +63,6 @@ class Donor extends Model implements HasMedia
     public function getLogoUrlAttribute(): ?string
     {
         return $this->getFirstMediaUrl('logo') ?: null;
-    }
-
-    public function domains()
-    {
-        return $this->morphToMany(Domain::class, 'domainable');
     }
 
     public function grants()

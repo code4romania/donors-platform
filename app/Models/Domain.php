@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Traits\Sortable;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Domain extends Model implements TranslatableContract
 {
@@ -46,8 +47,35 @@ class Domain extends Model implements TranslatableContract
         'name',
     ];
 
-    public function donors()
+    /**
+     * morphedByMany template.
+     *
+     * @param  string      $related
+     * @return MorphToMany
+     */
+    private function relatedTo(string $related): MorphToMany
     {
-        return $this->morphedByMany(Donor::class, 'domainable');
+        return $this->morphedByMany(
+            $related,
+            'model',
+            'model_has_domains',
+            'domain_id',
+            'model_id'
+        );
+    }
+
+    public function donors(): MorphToMany
+    {
+        return $this->relatedTo(Donor::class);
+    }
+
+    public function managers(): MorphToMany
+    {
+        return $this->relatedTo(GrantManager::class);
+    }
+
+    public function grants(): MorphToMany
+    {
+        return $this->relatedTo(Grant::class);
     }
 }

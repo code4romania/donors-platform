@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Traits\Draftable;
 use App\Traits\HasDates;
+use App\Traits\HasDomains;
 use App\Traits\Sortable;
 use Cknow\Money\Money;
 use Cknow\Money\MoneyCast;
@@ -13,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Grant extends Model
 {
-    use Draftable, HasDates, Sortable;
+    use Draftable, HasDates, HasDomains, Sortable;
 
     /**
      * The attributes that are mass assignable.
@@ -75,11 +76,6 @@ class Grant extends Model
     public function projects()
     {
         return $this->grantees->pluck('project');
-    }
-
-    public function domains()
-    {
-        return $this->morphToMany(Domain::class, 'domainable');
     }
 
     public function getFormattedAmountAttribute(): ?string

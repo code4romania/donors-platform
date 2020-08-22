@@ -16,6 +16,7 @@ class PermissionsSeeder extends Seeder
             'manage users',
         ],
         'user' => [
+            //
         ],
     ];
 
@@ -41,16 +42,5 @@ class PermissionsSeeder extends Seeder
                 Role::create(['name' => $role])
                     ->givePermissionTo($permissions);
             });
-
-        // create demo users
-        factory(User::class)->create([
-            'name'  => 'Administrator',
-            'email' => 'admin@example.com',
-        ])->assignRole('admin');
-
-        factory(User::class)->create([
-            'name'  => 'User',
-            'email' => 'user@example.com',
-        ])->assignRole('user');
     }
 }

@@ -29,11 +29,13 @@ class CreateDomainsTable extends Migration
             $table->unique(['domain_id', 'locale']);
         });
 
-        Schema::create('domainables', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('domainable_id')->nullable();
-            $table->string('domainable_type')->nullable();
+        Schema::create('model_has_domains', function (Blueprint $table) {
             $table->foreignId('domain_id')->constrained()->onDelete('cascade');
+            $table->string('model_type')->nullable();
+            $table->unsignedBigInteger('model_id')->nullable();
+
+            $table->primary(['domain_id', 'model_id', 'model_type']);
+            $table->index(['model_id', 'model_type']);
         });
     }
 
@@ -44,7 +46,7 @@ class CreateDomainsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('domainables');
+        Schema::dropIfExists('model_has_domains');
         Schema::dropIfExists('domain_translations');
         Schema::dropIfExists('domains');
     }

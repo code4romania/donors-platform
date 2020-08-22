@@ -22,6 +22,7 @@ $factory->define(GrantManager::class, function (Faker $faker) {
 
 $factory->afterCreating(GrantManager::class, function (GrantManager $manager, Faker $faker) {
     $manager->domains()->sync(
-        factory(Domain::class, $faker->numberBetween(0, 3))->create()
+        // factory(Domain::class, $faker->numberBetween(0, 3))->create()
+        Domain::inRandomOrder()->take($faker->numberBetween(0, 3))->get()
     );
 });

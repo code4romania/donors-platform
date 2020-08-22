@@ -18,10 +18,11 @@ class DatabaseSeeder extends Seeder
         $this->call(DemoSeeder::class);
 
         if (App::environment('local')) {
-            // $this->call(UserSeeder::class);
             // $this->call(DomainSeeder::class);
             // $this->call(DonorSeeder::class);
             // $this->call(GrantSeeder::class);
+            $this->call(GrantManagerSeeder::class);
+            $this->call(UserSeeder::class);
         }
     }
 }
