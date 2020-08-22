@@ -13,6 +13,17 @@ use Inertia\Inertia;
 
 class AppServiceProvider extends ServiceProvider
 {
+    /** @var string[] */
+    protected $morphMap = [
+        'domain'     => \App\Models\Domain::class,
+        'donor'      => \App\Models\Donor::class,
+        'grant'      => \App\Models\Grant::class,
+        'grantee'    => \App\Models\Grantee::class,
+        'manager'    => \App\Models\GrantManager::class,
+        'project'    => \App\Models\Project::class,
+        'user'       => \App\Models\User::class,
+    ];
+
     /**
      * Register any application services.
      *
@@ -30,15 +41,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Relation::morphMap([
-            'domain'     => \App\Models\Domain::class,
-            'donor'      => \App\Models\Donor::class,
-            'grant'      => \App\Models\Grant::class,
-            'grantee'    => \App\Models\Grantee::class,
-            'manager'    => \App\Models\GrantManager::class,
-            'project'    => \App\Models\Project::class,
-            'user'       => \App\Models\User::class,
-        ]);
+        Relation::morphMap($this->morphMap);
     }
 
     private function registerInertia(): void

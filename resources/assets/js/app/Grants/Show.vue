@@ -108,7 +108,10 @@
                     },
                     {
                         title: 'Areas covered',
-                        number: this.grant.domain.name || null,
+                        number:
+                            this.grant.domains
+                                .map((domain) => domain.name)
+                                .join(', ') || null,
                     },
                 ],
                 columns: [

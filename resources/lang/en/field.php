@@ -6,6 +6,7 @@ return [
 
     'amount'                => 'Amount',
     'currency'              => 'Currency',
+    'domain'                => 'Domain',
     'domains'               => 'Domains',
     'donor_count'           => 'Number of donors',
     'email'                 => 'Email address',

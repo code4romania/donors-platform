@@ -45,6 +45,10 @@ class DemoSeeder extends Seeder
                     case 'amount':
                         $row[$key] = intval($value);
                         break;
+
+                    case 'domains':
+                        $row[$key] = collect(explode(', ', $value));
+                        break;
                 }
             }
 
@@ -69,42 +73,61 @@ class DemoSeeder extends Seeder
 
         $data = $this->readData('raf');
 
-        $data->pluck('grant')
+        $domains = $data->pluck('domains')
+            ->flatten()
             ->unique()
             ->filter()
-            ->each(function ($grantName) use ($donor) {
-                $grant = Grant::firstOrCreate([
-                    'name'         => $grantName,
+            ->values()
+            ->map(fn ($name) => Domain::create(['name' => $name]));
+
+        $grants = $data->pluck('grant')
+            ->unique()
+            ->filter()
+            ->map(function ($name) use ($donor, $domains, $data) {
+                $grant = Grant::create([
+                    'name'         => $name,
                     'currency'     => 'USD',
                     'published_at' => Carbon::now(),
                 ]);
 
+                $grant->domains()->attach(
+                    $data->where('grant', $name)
+                        ->pluck('domains')
+                        ->flatten()
+                        ->unique()
+                        ->map(fn ($name) => $domains->firstWhere('name', $name)->id ?? null)
+                        ->filter()
+                );
+
                 $grant->donors()->sync($donor->id);
+
+                return $grant;
             });
 
-        $data->each(function ($project) {
-            $domain = Domain::whereTranslation('name', $project['domain'])->first()
-                ?? Domain::create(['name' => $project['domain']]);
+        $grantees = $data->pluck('grantee')
+            ->unique()
+            ->map(fn ($name) => Grantee::create(['name' => $name]));
 
-            $grantee = Grantee::firstOrCreate(['name' => $project['grantee']]);
-
-            if (is_null($project['grant'])) {
+        $data->each(function ($project) use ($grants, $grantees) {
+            if (null === $grant = $grants->firstWhere('name', $project['grant'])) {
                 return;
             }
 
-            $grant = Grant::firstWhere('name', $project['grant']);
+            if (null === $grantee = $grantees->firstWhere('name', $project['grantee'])) {
+                return;
+            }
 
-            $grant->domain()->associate($domain)->save();
-
-            $grant->grantees()->attach([
-                $grantee->id => [
-                    'title'      => $project['title'],
-                    'amount'     => $project['amount'],
-                    'currency'   => 'USD',
-                    'start_date' => $project['start_date'],
-                    'end_date'   => $project['end_date'],
-                ],
-            ]);
+            $grant
+                ->grantees()
+                ->attach([
+                    $grantee->id => [
+                        'title'      => '',
+                        'amount'     => $project['amount'],
+                        'currency'   => 'USD',
+                        'start_date' => $project['start_date'],
+                        'end_date'   => $project['end_date'],
+                    ],
+                ]);
         });
 
         return $data;

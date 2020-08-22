@@ -49,7 +49,6 @@
                     :options="domains.data"
                     option-value-key="id"
                     option-label-key="name"
-                    :other="true"
                 />
             </form-panel>
 

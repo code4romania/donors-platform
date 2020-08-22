@@ -131,7 +131,7 @@
                         ['name', 'type', 'hq', 'contact', 'email', 'phone', 'logo'],
                         this.donor
                     ),
-                    domains: this.donor.domains.map((area) => area.id),
+                    domains: this.donor.domains.map((domain) => domain.id),
                 },
             };
         },

@@ -15,15 +15,15 @@
                     autofocus
                 />
 
-                <form-select
-                    id="domain"
-                    :label="$t('model.domain.singular')"
-                    :options="domains.data"
-                    v-model="form.domain"
+                <form-checkbox-group
+                    id="domains"
+                    :label="$t('field.domains')"
+                    :other-label="$t('field.other')"
+                    v-model="form.domains"
                     class="lg:col-span-2"
+                    :options="domains.data"
                     option-value-key="id"
                     option-label-key="name"
-                    required
                 />
 
                 <form-date-picker
@@ -166,9 +166,14 @@
 
 <script>
     import FormMixin from '@/mixins/form';
+    import DonorCountMixin from '@/mixins/donorCount';
 
     export default {
-        mixins: [FormMixin],
+        mixins: [
+            //
+            FormMixin,
+            DonorCountMixin,
+        ],
         metaInfo() {
             return {
                 title: this.pageTitle,
@@ -189,7 +194,7 @@
                     _method: 'PUT', // html form method spoofing
                     _publish: this.grant.published_status === 'published',
                     donors: Object.keys(this.grant.donors),
-                    domain: this.grant.domain.id || null,
+                    domains: this.grant.domains.map((domain) => domain.id),
                     amount: this.formatAmount(this.grant.amount),
                     regranting_amount: this.formatAmount(
                         this.grant.regranting_amount
@@ -233,25 +238,6 @@
                         href: null,
                     },
                 ];
-            },
-        },
-        watch: {
-            donor_count: {
-                handler(newValue, oldValue) {
-                    newValue = this.clamp(
-                        newValue,
-                        parseInt(this.$refs.donor_count.$attrs.min),
-                        parseInt(this.$refs.donor_count.$attrs.max)
-                    );
-
-                    if (newValue > oldValue) {
-                        this.form.donors = this.form.donors.concat(
-                            Array(newValue - this.form.donors.length).fill(null)
-                        );
-                    } else {
-                        this.form.donors.splice(newValue);
-                    }
-                },
             },
         },
     };

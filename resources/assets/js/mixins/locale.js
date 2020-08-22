@@ -26,7 +26,6 @@ export default {
         isTranslatableField(field) {
             return (this.$page.translatable || []).indexOf(field) >= 0;
         },
-
         changeLocale(locale) {
             if (!this.isValidLocale(locale)) {
                 return;

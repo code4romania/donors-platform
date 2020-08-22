@@ -26,11 +26,11 @@ class GrantController extends Controller
     {
         return Inertia::render('Grants/Index', [
             'columns' => $this->getIndexColumns(Donor::class, [
-                'name', 'domain', 'published_status',
+                'name', 'domains', 'published_status',
             ]),
             'sort' => $this->getSortProps(),
             'grants' => GrantIndexResource::collection(
-                Grant::with('domain')
+                Grant::with('domains')
                     ->sort()
                     ->paginate(),
             ),

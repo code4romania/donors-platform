@@ -77,9 +77,9 @@ class Grant extends Model
         return $this->grantees->pluck('project');
     }
 
-    public function domain()
+    public function domains()
     {
-        return $this->belongsTo(Domain::class);
+        return $this->morphToMany(Domain::class, 'domainable');
     }
 
     public function getFormattedAmountAttribute(): ?string

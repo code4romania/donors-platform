@@ -1,4 +1,4 @@
-grantee,title,start_date,end_date,amount,grant,domain
+grantee,grant,start_date,end_date,amount,domains,_
 "Centrul de Evaluare și Analize Educaționale","Fizica Altfel – Consolidarea utilizării IBL în predarea fizicii",2020-08-05,2021-08-04,118384,"Educația STEM",Educație
 "Federația Fundațiile Comunitare din România","Sprijin la nivel național pentru dezvoltarea fundațiilor comunitare 2020-2022",2020-07-29,2021-07-28,55000,"Infrastructură pentru filantropie și implicare civică","Dezvoltare comunitară"
 "Asociația Teach for Romania","Teach for Romania – etapa de maturitate și digitalizare",2020-07-02,2021-07-01,150000,"Alte prioritati",Educație

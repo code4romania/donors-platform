@@ -28,7 +28,7 @@ class GrantShowResource extends JsonResource
         return [
             'id'                => $this->id,
             'name'              => $this->name,
-            'domain'            => DomainResource::make($this->domain),
+            'domains'           => DomainResource::collection($this->domains),
             'amount'            => $this->amount,
             'currency'          => $this->currency,
             'projects'          => ProjectIndexResource::collection($this->grantees),
