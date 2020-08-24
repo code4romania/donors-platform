@@ -1,5 +1,6 @@
 const mix = require('laravel-mix');
 require('laravel-mix-svg-vue');
+require('laravel-mix-bundle-analyzer');
 
 mix.extend(
     'translations',
@@ -33,9 +34,13 @@ mix.webpackConfig({
     },
 });
 
-if (mix.config.production) {
+if (mix.inProduction()) {
     mix.version();
 }
+
+// if (mix.isWatching()) {
+//     mix.bundleAnalyzer();
+// }
 
 mix.js('resources/assets/js/app.js', 'public/assets')
     .postCss('resources/assets/css/app.pcss', 'public/assets', [
