@@ -8,6 +8,8 @@
             </div>
         </template>
 
+        <search-filter v-model="filter.search" />
+
         <model-table
             :collection="grantees"
             :columns="columns"
@@ -18,7 +20,10 @@
 </template>
 
 <script>
+    import FilterMixin from '@/mixins/filter';
+
     export default {
+        mixins: [FilterMixin],
         props: {
             columns: Array,
             grantees: Object,
