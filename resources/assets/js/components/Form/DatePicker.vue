@@ -33,6 +33,8 @@
     import FlatPickr from 'vue-flatpickr-component';
     import 'flatpickr/dist/flatpickr.css';
 
+    import { Romanian } from 'flatpickr/dist/l10n/ro.js';
+
     export default {
         name: 'FormDatePicker',
         inheritAttrs: false,
@@ -67,12 +69,12 @@
             },
         },
         data() {
+            let defaultLocale = { firstDayOfWeek: 1 };
+
             return {
                 dataValue: this.value,
                 config: {
-                    locale: {
-                        firstDayOfWeek: 1,
-                    },
+                    locale: this.$page.locale === 'ro' ? Romanian : defaultLocale,
                 },
             };
         },

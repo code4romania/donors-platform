@@ -38,7 +38,7 @@
         watch: {
             value: {
                 immediate: true,
-                handler: function (newValue) {
+                handler(newValue) {
                     this.dataValue = newValue;
                 },
             },
