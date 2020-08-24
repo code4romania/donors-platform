@@ -17,10 +17,10 @@
         <portal to="menu-mobile-button">
             <button
                 @click="open = true"
-                class="px-4 text-gray-500 border-r border-gray-200 focus:outline-none focus:bg-gray-100 focus:text-gray-600 lg:hidden"
+                class="px-4 text-gray-100 focus:outline-none focus:bg-blue-900 hover:bg-gray-800 lg:hidden"
                 aria-label="Open sidebar"
             >
-                <svg-vue icon="System/menu-fill" class="w-6 h-6" />
+                <svg-vue icon="System/menu-fill" class="w-6 h-6 fill-current" />
             </button>
         </portal>
 

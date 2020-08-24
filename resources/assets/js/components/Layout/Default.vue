@@ -5,7 +5,9 @@
         <main-menu :url="url" />
 
         <div class="relative z-0 flex flex-col flex-1 focus:outline-none">
-            <div class="relative z-10 flex flex-shrink-0 h-16 bg-white shadow">
+            <div
+                class="relative z-10 flex flex-shrink-0 h-16 bg-gray-900 shadow-xs"
+            >
                 <portal-target name="menu-mobile-button" slim />
                 <div class="flex items-center justify-end flex-1 px-4">
                     <profile />
