@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Traits\Filterable;
+use App\Traits\Sortable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -12,12 +14,15 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasRoles, Notifiable;
+    use Filterable,
+        HasRoles,
+        Notifiable,
+        Sortable;
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var string[]
      */
     protected $fillable = [
         'name', 'email', 'password', 'locale',
@@ -26,7 +31,7 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * The attributes that should be hidden for arrays.
      *
-     * @var array
+     * @var string[]
      */
     protected $hidden = [
         'password', 'remember_token',
@@ -35,10 +40,26 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var string[]
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+    ];
+
+    /**
+     * @var string[]
+     */
+    public $searchable = [
+        'id', 'name', 'email',
+    ];
+
+    /**
+     * The attributes that are sortable.
+     *
+     * @var string[]
+     */
+    protected $sortable = [
+        'name', 'role',
     ];
 
     public function getRoleNameAttribute(): ?string

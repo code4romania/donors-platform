@@ -20,6 +20,21 @@ class GrantRequest extends FormRequest
     }
 
     /**
+     * Prepare the data for validation.
+     *
+     * @return void
+     */
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            '_publish'          => boolval(json_decode($this->_publish ?? false, true)),
+            'amount'            => floatval($this->amount),
+            'regranting_amount' => floatval($this->regranting_amount),
+            'donors'            => array_filter(json_decode($this->donors, true)),
+        ]);
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array
@@ -38,20 +53,5 @@ class GrantRequest extends FormRequest
             'regranting_amount' => ['nullable', 'lte:amount'],
             'matching'          => ['nullable', 'boolean'],
         ];
-    }
-
-    /**
-     * Prepare the data for validation.
-     *
-     * @return void
-     */
-    protected function prepareForValidation()
-    {
-        $this->merge([
-            '_publish'          => boolval(json_decode($this->_publish ?? false, true)),
-            'amount'            => floatval($this->amount),
-            'regranting_amount' => floatval($this->regranting_amount),
-            'donors'            => array_filter(json_decode($this->donors, true)),
-        ]);
     }
 }

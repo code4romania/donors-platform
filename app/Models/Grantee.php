@@ -4,26 +4,36 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Models\Grant;
+use App\Traits\Filterable;
 use App\Traits\Sortable;
 use Illuminate\Database\Eloquent\Model;
 
 class Grantee extends Model
 {
-    use Sortable;
+    use Filterable,
+        Sortable;
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var string[]
      */
     protected $fillable = [
         'name',
     ];
 
     /**
+     * @var string[]
+     */
+    public $searchable = [
+        'id', 'name',
+    ];
+
+    /**
      * The attributes that are sortable.
      *
-     * @var array
+     * @var string[]
      */
     protected $sortable = [
         'name',

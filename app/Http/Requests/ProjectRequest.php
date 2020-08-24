@@ -19,6 +19,18 @@ class ProjectRequest extends FormRequest
     }
 
     /**
+     * Prepare the data for validation.
+     *
+     * @return void
+     */
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'amount' => floatval($this->amount),
+        ]);
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array
@@ -32,17 +44,5 @@ class ProjectRequest extends FormRequest
             'start_date' => ['required', 'date_format:Y-m-d', 'before:end_date'],
             'end_date'   => ['required', 'date_format:Y-m-d', 'after:start_date'],
         ];
-    }
-
-    /**
-     * Prepare the data for validation.
-     *
-     * @return void
-     */
-    protected function prepareForValidation()
-    {
-        $this->merge([
-            'amount' => floatval($this->amount),
-        ]);
     }
 }

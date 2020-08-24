@@ -20,18 +20,6 @@ class DomainRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
-    public function rules()
-    {
-        return RuleFactory::make([
-            '%name%' => ['required', 'string'],
-        ]);
-    }
-
-    /**
      * Prepare the data for validation.
      *
      * @return void
@@ -43,5 +31,17 @@ class DomainRequest extends FormRequest
                 ->mapwithKeys(fn ($locale) => [$locale => json_decode($this->$locale, true)])
                 ->toArray()
         );
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return RuleFactory::make([
+            '%name%' => ['required', 'string'],
+        ]);
     }
 }

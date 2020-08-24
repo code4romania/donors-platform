@@ -19,6 +19,19 @@ class DonorRequest extends FormRequest
     }
 
     /**
+     * Prepare the data for validation.
+     *
+     * @return void
+     */
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            '_publish' => boolval(json_decode($this->_publish ?? false, true)),
+            'domains'  => array_filter(json_decode($this->domains, true)),
+        ]);
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array
@@ -41,18 +54,5 @@ class DonorRequest extends FormRequest
                 'max:' . config('media-library.max_file_size'),
             ],
         ];
-    }
-
-    /**
-     * Prepare the data for validation.
-     *
-     * @return void
-     */
-    protected function prepareForValidation()
-    {
-        $this->merge([
-            '_publish' => boolval(json_decode($this->_publish ?? false, true)),
-            'domains'  => array_filter(json_decode($this->domains, true)),
-        ]);
     }
 }

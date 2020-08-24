@@ -6,6 +6,7 @@ namespace App\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Request;
+use ReflectionClass;
 
 trait Sortable
 {
@@ -29,12 +30,15 @@ trait Sortable
         $column = Request::input('order', null);
         $direction = Request::input('direction', 'asc');
 
-        if (in_array($column, $this->sortable_columns)) {
-            return $query->orderBy($column, $direction);
+        if (! in_array($column, $this->sortable_columns)) {
+            return $query;
         }
 
-        // Column not sortable
-        return $query;
+        if (property_exists($this, 'translatedAttributes') && in_array($column, $this->translatedAttributes)) {
+            return $query->orderByTranslation($column, $direction);
+        }
+
+        return $query->orderBy($column, $direction);
     }
 
     public function getSortableColumnsAttribute(): array

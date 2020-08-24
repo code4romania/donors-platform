@@ -4,57 +4,58 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Services\Normalize;
+use App\Traits\Filterable;
 use App\Traits\Sortable;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
-use Laravel\Scout\Searchable;
 
 class Domain extends Model implements TranslatableContract
 {
-    use Searchable, Sortable, Translatable;
-
-    /**
-     * The relationships that should always be loaded.
-     *
-     * @var array
-     */
-    protected $with = [
-        'translations',
-    ];
+    use Filterable,
+        Sortable,
+        Translatable;
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var string[]
      */
     protected $fillable = [
         'name',
     ];
 
     /**
+     * @var string[]
+     */
+    public $searchable = [
+        'id', 'name',
+    ];
+
+    /**
      * The attributes that are sortable.
      *
-     * @var array
+     * @var string[]
      */
     protected $sortable = [
         'name',
     ];
 
     /**
-     * @var array
+     * @var string[]
      */
     public $translatedAttributes = [
         'name',
     ];
 
-    public function toSearchableArray(): array
-    {
-        return collect($this->only(['id', 'name']))
-            ->map(fn ($field) => Normalize::string($field))
-            ->toArray();
-    }
+    /**
+     * The relationships that should always be loaded.
+     *
+     * @var string[]
+     */
+    protected $with = [
+        'translations',
+    ];
 
     /**
      * morphedByMany template.

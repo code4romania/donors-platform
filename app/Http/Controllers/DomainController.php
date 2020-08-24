@@ -9,7 +9,6 @@ use App\Http\Resources\DomainResource;
 use App\Models\Domain;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -21,9 +20,10 @@ class DomainController extends Controller
             'columns' => $this->getIndexColumns(Domain::class, [
                 'name',
             ]),
-            'sort'    => Request::all('order', 'direction'),
             'domains' => DomainResource::collection(
-                Domain::sort()
+                Domain::query()
+                    ->filter()
+                    ->sort()
                     ->paginate()
             ),
         ]);

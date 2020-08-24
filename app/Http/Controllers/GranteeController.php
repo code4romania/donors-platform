@@ -9,7 +9,6 @@ use App\Http\Resources\GranteeResource;
 use App\Models\Grantee;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -21,9 +20,10 @@ class GranteeController extends Controller
             'columns' => $this->getIndexColumns(Grantee::class, [
                 'name',
             ]),
-            'sort'      => Request::all('order', 'direction'),
             'grantees'  => GranteeResource::collection(
-                Grantee::sort()
+                Grantee::query()
+                    ->filter()
+                    ->sort()
                     ->paginate(),
             ),
         ]);

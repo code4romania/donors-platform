@@ -6,13 +6,17 @@ namespace App\Models;
 
 use App\Models\Grant;
 use App\Models\Grantee;
+use App\Traits\Filterable;
 use App\Traits\HasDates;
+use App\Traits\Sortable;
 use Cknow\Money\MoneyCast;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class Project extends Pivot
 {
-    use HasDates;
+    use Filterable,
+        HasDates,
+        Sortable;
 
     /**
      * Indicates if the IDs are auto-incrementing.
@@ -38,7 +42,7 @@ class Project extends Pivot
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var string[]
      */
     protected $fillable = [
         'title', 'amount', 'currency', 'start_date', 'end_date',
@@ -47,12 +51,26 @@ class Project extends Pivot
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var string[]
      */
     protected $casts = [
         'amount'     => MoneyCast::class . ':currency',
         'start_date' => 'date',
         'end_date'   => 'date',
+    ];
+
+    /**
+     * @var string[]
+     */
+    public $searchable = [
+        'id', 'title',
+    ];
+
+    /**
+     * @var string[]
+     */
+    public $sortable = [
+        'title',
     ];
 
     public function grant()

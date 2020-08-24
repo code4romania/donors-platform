@@ -27,7 +27,10 @@ class UserController extends Controller
                 'name', 'roleLabel',
             ]),
             'users' => UserResource::collection(
-                User::paginate()
+                User::query()
+                    ->filter()
+                    ->sort()
+                    ->paginate()
             ),
         ]);
     }

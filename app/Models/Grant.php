@@ -4,40 +4,38 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Services\Normalize;
 use App\Traits\Draftable;
+use App\Traits\Filterable;
 use App\Traits\HasDates;
 use App\Traits\HasDomains;
 use App\Traits\Sortable;
 use Cknow\Money\Money;
 use Cknow\Money\MoneyCast;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Grant extends Model
 {
-    use Draftable, HasDates, HasDomains, Sortable;
+    use Draftable,
+        Filterable,
+        HasDates,
+        HasDomains,
+        Sortable;
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var string[]
      */
     protected $fillable = [
         'name', 'amount', 'currency', 'start_date', 'end_date', 'max_grantees', 'regranting_amount', 'matching',
     ];
 
     /**
-     * The attributes that are sortable.
-     *
-     * @var array
-     */
-    protected $sortable = [
-        'name',
-    ];
-
-    /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var string[]
      */
     protected $casts = [
         'start_date'        => 'date',
@@ -46,6 +44,22 @@ class Grant extends Model
         'matching'          => 'boolean',
         'amount'            => MoneyCast::class . ':currency',
         'regranting_amount' => MoneyCast::class . ':currency',
+    ];
+
+    /**
+     * @var string[]
+     */
+    public $searchable = [
+        'id', 'name', 'donors.name',
+    ];
+
+    /**
+     * The attributes that are sortable.
+     *
+     * @var string[]
+     */
+    protected $sortable = [
+        'name',
     ];
 
     public function donors()

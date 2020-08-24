@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\GrantManagerRequest;
 use App\Http\Requests\GrantRequest;
 use App\Http\Resources\DomainResource;
 use App\Http\Resources\DonorResource;
@@ -17,7 +16,6 @@ use App\Models\Grant;
 use App\Models\GrantManager;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -29,9 +27,10 @@ class GrantController extends Controller
             'columns' => $this->getIndexColumns(Donor::class, [
                 'name', 'domains', 'published_status',
             ]),
-            'sort'   => Request::all('order', 'direction'),
             'grants' => GrantIndexResource::collection(
-                Grant::with('domains')
+                Grant::query()
+                    ->with('domains')
+                    ->filter()
                     ->sort()
                     ->paginate(),
             ),

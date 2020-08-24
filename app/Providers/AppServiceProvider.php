@@ -6,6 +6,7 @@ namespace App\Providers;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ServiceProvider;
@@ -56,13 +57,16 @@ class AppServiceProvider extends ServiceProvider
             'locales' => fn () => config('translatable.locale_names'),
             'route'   => fn () => Route::currentRouteName(),
 
+            'sort'    => fn () => Request::all('order', 'direction'),
+            'filters' => fn () => Request::all('search'),
+
             'auth' => function () {
                 return [
                     'user' => Auth::user() ? [
                         'id'          => Auth::user()->id,
                         'name'        => Auth::user()->name,
                         'email'       => Auth::user()->email,
-                        'roles'       => Auth::user()->role_name,
+                        'role'        => Auth::user()->role_name,
                         'permissions' => Auth::user()->getAllPermissions()->pluck('name'),
                     ] : null,
                 ];
