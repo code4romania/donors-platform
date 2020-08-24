@@ -13,7 +13,7 @@
                 autocomplete="off"
                 type="text"
                 name="search"
-                :placeholder="$t('field.search') + '…'"
+                :placeholder="$t('dashboard.action.search') + '…'"
                 v-model="search"
             />
             <button
