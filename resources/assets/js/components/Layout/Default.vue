@@ -8,9 +8,7 @@
             <div class="relative z-10 flex flex-shrink-0 h-16 bg-white shadow">
                 <portal-target name="menu-mobile-button" slim />
                 <div class="flex items-center justify-end flex-1 px-4">
-                    <div class="flex items-center ml-4 lg:ml-6">
-                        <profile />
-                    </div>
+                    <profile />
                 </div>
             </div>
             <main class="flex-1 overflow-y-auto scrolling-touch" scroll-region>

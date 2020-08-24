@@ -8,6 +8,8 @@ return [
         'dashboard'    => 'Dashboard',
         'users'        => 'User management',
         'back_to_site' => 'Back to site',
+        'settings'     => 'Settings',
+        'logout'       => 'Logout',
     ],
 
     'action' => [
