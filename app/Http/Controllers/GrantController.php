@@ -58,7 +58,8 @@ class GrantController extends Controller
 
         $grant->setPublished($request->boolean('_publish'));
 
-        $grant->domain()->associate($request->input('domain'));
+        $grant->domains()->sync($request->input('domains'));
+        $grant->donors()->sync($request->input('donors'));
         $grant->manager()->associate($request->input('manager'));
 
         $grant->save();
@@ -100,7 +101,8 @@ class GrantController extends Controller
             $grant->publish($request->boolean('_publish'));
         }
 
-        $grant->domain()->associate($request->input('domain'));
+        $grant->domains()->sync($request->input('domains'));
+        $grant->donors()->sync($request->input('donors'));
         $grant->manager()->associate($request->input('manager'));
 
         $grant->save();

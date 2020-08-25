@@ -34,6 +34,7 @@ class GrantShowResource extends JsonResource
             'projects'          => ProjectIndexResource::collection($this->grantees),
 
             'donors'            => $this->donors->pluck('name', 'id'),
+            'max_grantees'      => $this->max_grantees,
             'grantees'          => $this->grantees->unique()->count(),
             'total_value'       => $this->total_value,
 

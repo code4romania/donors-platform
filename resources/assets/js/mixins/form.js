@@ -88,18 +88,30 @@ export default {
             let data = { ...fields, ...locales },
                 formData = new FormData();
 
-            for (const field in data) {
-                let value = '';
+            for (let field in data) {
+                switch (this.typeof(data[field])) {
+                    case 'array':
+                        data[field].forEach(value => {
+                            formData.append(field + '[]', value);
+                        });
+                        break;
 
-                if (this.isObject(data[field]) && !this.isFile(data[field])) {
-                    value = JSON.stringify(data[field]);
-                } else if (typeof data[field] === 'boolean') {
-                    value = data[field] ? 1 : 0;
-                } else if (null !== data[field]) {
-                    value = data[field];
+                    case 'object':
+                        formData.append(field, JSON.stringify(data[field]));
+                        break;
+
+                    case 'boolean':
+                        formData.append(field, data[field] ? 1 : 0);
+                        break;
+
+                    case 'null':
+                        // not sending null values
+                        break;
+
+                    default:
+                        formData.append(field, data[field]);
+                        break;
                 }
-
-                formData.append(field, value);
             }
 
             return formData;

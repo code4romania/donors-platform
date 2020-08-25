@@ -13,7 +13,10 @@
                     <profile />
                 </div>
             </div>
-            <main class="flex-1 overflow-y-auto scrolling-touch" scroll-region>
+            <main
+                class="flex-1 w-full mx-auto overflow-y-auto scrolling-touch max-w-7xl"
+                scroll-region
+            >
                 <div class="grid px-4 py-8 gap-y-6 md:p-12">
                     <div
                         class="flex flex-wrap items-center space-y-6 md:flex-no-wrap md:space-y-0"

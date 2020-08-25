@@ -71,9 +71,9 @@
 
                 <form-input
                     type="number"
-                    id="grantee_count"
+                    id="max_grantees"
                     :label="$t('field.grantee_count')"
-                    v-model.number="form.grantee_count"
+                    v-model.number="form.max_grantees"
                     required
                     min="1"
                 />
@@ -207,7 +207,6 @@
                             'end_date',
                             'max_grantees',
                             'manager',
-                            'max_grantees',
                             'matching',
                         ],
                         this.grant
