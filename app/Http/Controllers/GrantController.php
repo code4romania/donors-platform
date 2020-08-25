@@ -34,6 +34,15 @@ class GrantController extends Controller
                     ->sort()
                     ->paginate(),
             ),
+            'donors' => DonorResource::collection(
+                Donor::orderBy('name', 'asc')->get()
+            ),
+            'domains' => DomainResource::collection(
+                Domain::orderByTranslation('name', 'asc')->get()
+            ),
+            'managers' => GrantManagerResource::collection(
+                GrantManager::all(),
+            ),
         ]);
     }
 

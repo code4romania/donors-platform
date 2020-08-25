@@ -8,7 +8,37 @@
             </div>
         </template>
 
-        <search-filter v-model="filter.search" />
+        <search-filter v-model="search" @reset="reset">
+            <form-select
+                id="domain"
+                :label="$t('model.domain.plural')"
+                :options="domains.data"
+                :option-placeholder="$t('dashboard.all')"
+                option-value-key="id"
+                option-label-key="name"
+                v-model="filters.domain"
+            />
+
+            <form-select
+                id="donor"
+                :label="$t('model.donor.plural')"
+                :options="donors.data"
+                :option-placeholder="$t('dashboard.all')"
+                option-value-key="id"
+                option-label-key="name"
+                v-model="filters.donor"
+            />
+
+            <form-select
+                id="manager"
+                :label="$t('model.manager.plural')"
+                :options="managers.data"
+                :option-placeholder="$t('dashboard.all')"
+                option-value-key="id"
+                option-label-key="name"
+                v-model="filters.manager"
+            />
+        </search-filter>
 
         <model-table
             :collection="grants"
@@ -35,6 +65,9 @@
         props: {
             columns: Array,
             grants: Object,
+            donors: Object,
+            domains: Object,
+            managers: Object,
         },
         metaInfo() {
             return {

@@ -14,8 +14,12 @@ class Normalize
      * @param  mixed  $value
      * @return string
      */
-    public static function string($value): string
+    public static function string($value): ?string
     {
+        if ($value === null) {
+            return null;
+        }
+
         return (string) Str::of(self::cleanup($value))
             ->lower()
             ->ascii();

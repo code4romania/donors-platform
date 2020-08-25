@@ -5,15 +5,15 @@
             <inertia-link
                 v-if="column.sortable"
                 :href="$route($page.route)"
-                :data="alternativeSortData"
-                class="duration-150 transition-color"
+                :data="linkData"
+                class="duration-150 transition-color hover:text-gray-600"
                 :class="{
-                    'text-gray-300 hover:text-gray-600': !isActive,
-                    'text-gray-900 hover:text-gray-600': isActive,
+                    'text-gray-300': !isActive,
+                    'text-gray-900': isActive,
                 }"
             >
                 <svg-vue
-                    v-show="isOrderAsc"
+                    v-show="isOrderAsc || !$page.sort.order"
                     icon="Editor/sort-asc"
                     :class="iconClass"
                 />
@@ -29,6 +29,9 @@
 </template>
 
 <script>
+    import merge from 'lodash/merge';
+    import pickBy from 'lodash/pickBy';
+
     export default {
         name: 'TableHead',
         props: {
@@ -38,11 +41,30 @@
             },
         },
         computed: {
-            alternativeSortData() {
-                return {
-                    order: this.column.name,
-                    direction: this.isOrderAsc ? 'desc' : 'asc',
-                };
+            linkData() {
+                const filters = pickBy(
+                    merge(this.$page.filters, { search: this.$page.search })
+                );
+
+                console.log(this.$page.filters, this.$page.search, filters);
+
+                if (this.isOrderAsc) {
+                    return {
+                        order: this.column.name,
+                        direction: 'desc',
+                        ...filters,
+                    };
+                } else if (this.isOrderDesc) {
+                    return {
+                        ...filters,
+                    };
+                } else {
+                    return {
+                        order: this.column.name,
+                        direction: 'asc',
+                        ...filters,
+                    };
+                }
             },
             label() {
                 return this.$t('field.' + this.column.name);
@@ -54,7 +76,7 @@
                 return this.$page.sort.direction === 'asc';
             },
             isOrderDesc() {
-                return !this.isOrderAsc;
+                return this.$page.sort.direction === 'desc';
             },
             iconClass() {
                 return 'w-5 h-5 fill-current';

@@ -58,7 +58,8 @@ class AppServiceProvider extends ServiceProvider
             'route'   => fn () => Route::currentRouteName(),
 
             'sort'    => fn () => Request::all('order', 'direction'),
-            'filters' => fn () => Request::all('search'),
+            'search'  => fn () => Request::input('search'),
+            'filters' => fn () => Request::all('domain', 'donor', 'manager'),
 
             'auth' => function () {
                 return [

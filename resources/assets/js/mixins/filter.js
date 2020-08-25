@@ -1,25 +1,50 @@
-import throttle from 'lodash/throttle';
+import mapValues from 'lodash/mapValues';
+import merge from 'lodash/merge';
 import pickBy from 'lodash/pickBy';
+import throttle from 'lodash/throttle';
 
 export default {
-    props: {
-        filters: Object,
-    },
     data() {
         return {
-            filter: {
-                search: this.filters.search,
-            },
+            filters: this.$page.filters,
+            search: this.$page.search,
+            sort: this.$page.sort,
         };
     },
+    methods: {
+        reset() {
+            this.filters = mapValues(this.filters, () => null);
+            this.search = null;
+            this.sort = mapValues(this.sort, () => null);
+        },
+        submit() {
+            this.$inertia.replace(
+                this.$route(
+                    this.$page.route,
+                    pickBy(
+                        merge(this.filters, this.sort, { search: this.search })
+                    )
+                )
+            );
+        },
+    },
     watch: {
-        filter: {
-            deep: true,
+        search: {
             handler: throttle(function() {
-                this.$inertia.replace(
-                    this.$route(this.$page.route, pickBy(this.filter))
-                );
-            }, 200),
+                this.submit();
+            }, 250),
+        },
+        sort: {
+            deep: true,
+            handler: function() {
+                this.submit();
+            },
+        },
+        filters: {
+            deep: true,
+            handler: function() {
+                this.submit();
+            },
         },
     },
 };

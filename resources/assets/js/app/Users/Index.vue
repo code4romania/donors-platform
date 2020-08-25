@@ -8,7 +8,7 @@
             </div>
         </template>
 
-        <search-filter v-model="filter.search" />
+        <search-filter v-model="search" @reset="reset" />
 
         <model-table
             :collection="users"

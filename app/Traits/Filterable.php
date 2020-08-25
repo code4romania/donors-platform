@@ -15,24 +15,21 @@ trait Filterable
 {
     use Searchable;
 
-    public function scopeFilter(Builder $query, array $filters = []): Builder
+    public function scopeFilter(Builder $query): Builder
     {
-        $filters = $this->sanitizeFilters($filters);
+        $filters = collect(Request::all('search', 'domain', 'donor', 'manager'))
+            ->map(fn ($filter) => Normalize::string($filter));
 
-        return $query->when($filters['search'], function ($q, $search) {
-            return $q->whereIn('id', $this->search($search)->keys());
-        });
+        return $query
+            ->when($filters['search'], fn ($q, string $search) => $q->whereIn($this->getTable() . '.id', $this->search($search)->keys()))
+            ->when($filters['domain'], fn ($q, int $domain) => $this->whereHas($q, $domain, 'domains'))
+            ->when($filters['donor'], fn ($q, int $donor) => $this->whereHas($q, $donor, 'donors'))
+            ->when($filters['manager'], fn ($q, int $manager) => $this->whereHas($q, $manager, 'managers'));
     }
 
-    protected function sanitizeFilters(array $filters): Collection
+    protected function whereHas(Builder $query, int $id, string $relationship): Builder
     {
-        $defaults = collect([
-            'search' => Request::input('search'),
-        ]);
-
-        return $defaults
-            ->merge($filters)
-            ->map(fn ($filter) => Normalize::string($filter));
+        return $query->whereHas($relationship, fn ($q) => $q->where('id', $id));
     }
 
     public function toSearchableArray(): array
