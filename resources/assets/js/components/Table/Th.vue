@@ -46,8 +46,6 @@
                     merge(this.$page.filters, { search: this.$page.search })
                 );
 
-                console.log(this.$page.filters, this.$page.search, filters);
-
                 if (this.isOrderAsc) {
                     return {
                         order: this.column.name,

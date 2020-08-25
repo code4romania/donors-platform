@@ -81,7 +81,7 @@
                     class="sm:col-span-3 md:col-span-2"
                     v-if="manager.domains.length"
                 >
-                    <strong class="text-lg" v-text="$t('field.areas')" />
+                    <strong class="text-lg" v-text="$t('field.domains')" />
                     <div class="flex mt-1">
                         <svg-vue
                             icon="Design/focus-3-line"
@@ -90,7 +90,7 @@
                         <div
                             v-html="
                                 manager.domains
-                                    .map((area) => area.name)
+                                    .map((domain) => domain.name)
                                     .join(', ')
                             "
                         />

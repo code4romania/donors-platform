@@ -62,6 +62,15 @@ class Grant extends Model
         'name',
     ];
 
+    /**
+     * The relationships that should always be loaded.
+     *
+     * @var string[]
+     */
+    protected $with = [
+        'domains',
+    ];
+
     public function donors()
     {
         return $this->belongsToMany(Donor::class);
