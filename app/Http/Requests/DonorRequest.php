@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+use App\Services\OrganizationType;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class DonorRequest extends FormRequest
 {
@@ -40,7 +42,7 @@ class DonorRequest extends FormRequest
     {
         return [
             'name'      => ['required', 'string'],
-            'type'      => ['required', 'string'],
+            'type'      => ['required', 'string', Rule::in(OrganizationType::types())],
             'hq'        => ['nullable', 'string'],
             'contact'   => ['required', 'string'],
             'email'     => ['required', 'email'],

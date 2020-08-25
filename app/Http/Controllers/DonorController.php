@@ -9,6 +9,7 @@ use App\Http\Resources\DomainResource;
 use App\Http\Resources\DonorResource;
 use App\Models\Domain;
 use App\Models\Donor;
+use App\Services\OrganizationType;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -22,6 +23,7 @@ class DonorController extends Controller
             'columns' => $this->getIndexColumns(Donor::class, [
                 'name', 'type', 'hq', 'published_status',
             ]),
+            'types'  => OrganizationType::all(),
             'donors' => DonorResource::collection(
                 Donor::query()
                     ->with('domains')
@@ -35,6 +37,7 @@ class DonorController extends Controller
     public function create(): Response
     {
         return Inertia::render('Donors/Create', [
+            'types'   => OrganizationType::all(),
             'domains' => DomainResource::collection(
                 Domain::all()
             ),
@@ -68,6 +71,7 @@ class DonorController extends Controller
     public function edit(Donor $donor): Response
     {
         return Inertia::render('Donors/Edit', [
+            'types'   => OrganizationType::all(),
             'donor'   => DonorResource::make($donor),
             'domains' => DomainResource::collection(
                 Domain::all()

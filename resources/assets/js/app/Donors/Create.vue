@@ -20,7 +20,7 @@
                     id="type"
                     :label="$t('field.type')"
                     v-model="form.type"
-                    :options="['a', 'b']"
+                    :options="types"
                     required
                 />
 
@@ -127,6 +127,7 @@
         },
         props: {
             domains: Object,
+            types: Array,
         },
         computed: {
             pageTitle() {
