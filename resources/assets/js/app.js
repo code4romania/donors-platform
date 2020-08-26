@@ -12,6 +12,7 @@ import ThemePlugin from '@/plugins/theme';
 import ComponentsPlugin from '@/plugins/components';
 import PermissionsPlugin from '@/plugins/permissions';
 import RoutePlugin from '@/plugins/route';
+import PatternPlugin from '@/plugins/pattern';
 
 Vue.config.productionTip = false;
 
@@ -24,6 +25,7 @@ Vue.use(ThemePlugin);
 Vue.use(ComponentsPlugin);
 Vue.use(PermissionsPlugin);
 Vue.use(RoutePlugin);
+Vue.use(PatternPlugin);
 
 Vue.directive('click-away', VueClickOutside);
 
