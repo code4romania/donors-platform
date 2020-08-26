@@ -6,7 +6,6 @@ namespace App\Traits;
 
 use App\Services\Normalize;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
 use Laravel\Scout\Searchable;
@@ -50,7 +49,7 @@ trait Filterable
                         return null;
                     }
 
-                    return $this->$relationship->pluck($attribute);
+                    return $this->$relationship()->get()->pluck($attribute);
                 })
             )
             ->filter()

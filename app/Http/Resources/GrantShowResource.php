@@ -31,7 +31,6 @@ class GrantShowResource extends JsonResource
             'domains'           => DomainResource::collection($this->domains),
             'amount'            => $this->amount,
             'currency'          => $this->currency,
-            'projects'          => ProjectIndexResource::collection($this->grantees),
 
             'donors'            => $this->donors->pluck('name', 'id'),
             'max_grantees'      => $this->max_grantees,

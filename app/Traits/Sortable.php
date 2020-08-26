@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Str;
 use ReflectionClass;
 
 trait Sortable
@@ -38,6 +40,21 @@ trait Sortable
             return $query->orderByTranslation($column, $direction);
         }
 
+        if (Str::contains($column, '.')) {
+            [$relationship, $attribute] = explode('.', $column);
+
+            if (! $this->hasRelation($relationship)) {
+                return $query;
+            }
+
+            $plural = Str::plural($relationship);
+            $singular = Str::singular($relationship);
+
+            return $query->join($plural, "{$plural}.id", '=', $this->getTable() . ".{$singular}_id")
+                ->orderBy("{$plural}.{$attribute}", $direction)
+                ->with($relationship);
+        }
+
         return $query->orderBy($column, $direction);
     }
 
@@ -49,5 +66,18 @@ trait Sortable
         }
 
         return array_merge($this->sortable, $this->defaultColumns);
+    }
+
+    public function hasRelation(string $key): bool
+    {
+        if ($this->relationLoaded($key)) {
+            return true;
+        }
+
+        if (method_exists($this, $key)) {
+            return is_a($this->$key(), Relation::class);
+        }
+
+        return false;
     }
 }

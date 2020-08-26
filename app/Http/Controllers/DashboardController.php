@@ -18,7 +18,7 @@ class DashboardController extends Controller
     {
         return Inertia::render('Dashboard/Index', [
             'donors'  => DonorDashboardResource::collection(
-                Donor::with('grants.grantees')->get()
+                Donor::with('domains')->get()
             ),
             'stats' => [
                 'donors'   => Donor::count(),
