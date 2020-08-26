@@ -10,10 +10,12 @@ use App\Http\Resources\DonorResource;
 use App\Http\Resources\GrantIndexResource;
 use App\Http\Resources\GrantManagerResource;
 use App\Http\Resources\GrantShowResource;
+use App\Http\Resources\ProjectIndexResource;
 use App\Models\Domain;
 use App\Models\Donor;
 use App\Models\Grant;
 use App\Models\GrantManager;
+use App\Models\Project;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -82,7 +84,17 @@ class GrantController extends Controller
     public function show(Grant $grant): Response
     {
         return Inertia::render('Grants/Show', [
-            'grant' => GrantShowResource::make($grant),
+            'grant'    => GrantShowResource::make($grant),
+            'columns'  => $this->getIndexColumns(Project::class, [
+                'grantee.name', 'title', 'amount', 'start_date', 'end_date',
+            ]),
+            'projects' => ProjectIndexResource::collection(
+                Project::query()
+                    ->where('grant_id', $grant->id)
+                    ->filter()
+                    ->sort()
+                    ->paginate()
+            ),
         ]);
     }
 

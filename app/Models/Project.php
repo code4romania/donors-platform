@@ -10,9 +10,9 @@ use App\Traits\Filterable;
 use App\Traits\HasDates;
 use App\Traits\Sortable;
 use Cknow\Money\MoneyCast;
-use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Database\Eloquent\Model;
 
-class Project extends Pivot
+class Project extends Model
 {
     use Filterable,
         HasDates,
@@ -63,14 +63,23 @@ class Project extends Pivot
      * @var string[]
      */
     public $searchable = [
-        'id', 'title',
+        'id', 'title', 'grantee.name',
     ];
 
     /**
      * @var string[]
      */
     public $sortable = [
-        'title',
+        'title', 'amount', 'start_date', 'end_date', 'grantee.name',
+    ];
+
+    /**
+     * The relationships that should always be loaded.
+     *
+     * @var string[]
+     */
+    protected $with = [
+        'grantee',
     ];
 
     public function grant()

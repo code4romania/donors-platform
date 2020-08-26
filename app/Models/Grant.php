@@ -81,24 +81,21 @@ class Grant extends Model
         return $this->belongsTo(GrantManager::class, 'grant_manager_id');
     }
 
-    public function grantees()
-    {
-        return $this->belongsToMany(Grantee::class, 'projects')
-            ->using(Project::class)
-            ->as('project')
-            ->withPivot([
-                'id',
-                'title',
-                'amount',
-                'currency',
-                'start_date',
-                'end_date',
-            ]);
-    }
-
     public function projects()
     {
-        return $this->grantees->pluck('project');
+        return $this->hasMany(Project::class);
+    }
+
+    public function grantees()
+    {
+        return $this->hasManyThrough(
+            Grantee::class,
+            Project::class,
+            'grant_id', // Foreign key on projects table
+            'id', // Foreign key on grantees table
+            'id', // Local key on grants table
+            'grantee_id' // Local key on projects table
+        )->groupBy('id');
     }
 
     public function getFormattedAmountAttribute(): ?string
@@ -112,7 +109,7 @@ class Grant extends Model
 
     public function getTotalValueAttribute()
     {
-        return $this->grantees->pluck('project.amount')
+        return $this->projects->pluck('amount')
             ->filter()
             ->unlessEmpty(
                 fn ($amounts) => Money::sum(...$amounts),

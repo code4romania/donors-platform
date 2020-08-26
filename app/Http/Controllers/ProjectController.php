@@ -35,13 +35,18 @@ class ProjectController extends Controller
 
     public function store(ProjectRequest $request, Grant $grant): RedirectResponse
     {
-        $grant->grantees()->attach($request->input('grantee'), [
+        $project = Project::make([
             'title'      => $request->input('title'),
             'amount'     => $request->input('amount'),
             'currency'   => $grant->currency,
             'start_date' => $request->input('start_date'),
             'end_date'   => $request->input('end_date'),
         ]);
+
+        $project->grant()->associate($grant);
+        $project->grantee()->associate($request->input('grantee'));
+
+        $project->save();
 
         return Redirect::route('grants.show', $grant)
             ->with('success', __('dashboard.event.created', [
@@ -56,12 +61,10 @@ class ProjectController extends Controller
 
     public function edit(Grant $grant, Project $project): Response
     {
-        $grantee = $grant->grantees->firstWhere('project.id', $project->id);
-
-        abort_unless($grantee, 403);
+        abort_unless($grant->is($project->grant), 403);
 
         return Inertia::render('Projects/Edit', [
-            'project'  => ProjectShowResource::make($grantee->project),
+            'project'  => ProjectShowResource::make($project),
             'grant'    => GrantShowResource::make($grant),
             'grantees' => GranteeResource::collection(
                 Grantee::orderBy('name', 'asc')->get()
@@ -71,9 +74,7 @@ class ProjectController extends Controller
 
     public function update(ProjectRequest $request, Grant $grant, Project $project): RedirectResponse
     {
-        abort_unless($grant->grantees->firstWhere('project.id', $project->id), 403);
-
-        $project->grantee_id = $request->input('grantee');
+        abort_unless($grant->is($project->grant), 403);
 
         $project->fill([
             'title'      => $request->input('title'),
@@ -82,6 +83,8 @@ class ProjectController extends Controller
             'start_date' => $request->input('start_date'),
             'end_date'   => $request->input('end_date'),
         ]);
+
+        $project->grantee()->associate($request->input('grantee'));
 
         $project->save();
 
@@ -93,7 +96,7 @@ class ProjectController extends Controller
 
     public function destroy(Grant $grant, Project $project): RedirectResponse
     {
-        abort_unless($grant->grantees->firstWhere('project.id', $project->id), 403);
+        abort_unless($grant->is($project->grant), 403);
 
         $project->delete();
 

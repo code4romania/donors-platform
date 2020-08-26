@@ -6,6 +6,7 @@ use App\Models\Domain;
 use App\Models\Donor;
 use App\Models\Grant;
 use App\Models\Grantee;
+use App\Models\Project;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
@@ -130,17 +131,18 @@ class DemoSeeder extends Seeder
                 return;
             }
 
-            $grant
-                ->grantees()
-                ->attach([
-                    $grantee->id => [
-                        'title'      => '',
-                        'amount'     => $project['amount'],
-                        'currency'   => 'USD',
-                        'start_date' => $project['start_date'],
-                        'end_date'   => $project['end_date'],
-                    ],
-                ]);
+            $project = Project::make([
+                'title'      => null,
+                'amount'     => $project['amount'],
+                'currency'   => 'USD',
+                'start_date' => $project['start_date'],
+                'end_date'   => $project['end_date'],
+            ]);
+
+            $project->grant()->associate($grant);
+            $project->grantee()->associate($grantee);
+
+            $project->save();
         });
 
         return $data;

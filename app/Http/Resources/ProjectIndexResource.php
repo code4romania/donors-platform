@@ -24,13 +24,13 @@ class ProjectIndexResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'grantee'    => $this->only('id', 'name'),
-            'id'         => $this->project->id,
-            'title'      => $this->project->title,
-            'start_date' => $this->project->formatted_start_date,
-            'end_date'   => $this->project->formatted_end_date,
-            'amount'     => $this->project->amount,
-            'currency'   => $this->project->currency,
+            'grantee'    => $this->grantee->only('id', 'name'),
+            'id'         => $this->id,
+            'title'      => $this->title,
+            'start_date' => $this->formatted_start_date,
+            'end_date'   => $this->formatted_end_date,
+            'amount'     => $this->amount,
+            'currency'   => $this->currency,
         ];
     }
 }
