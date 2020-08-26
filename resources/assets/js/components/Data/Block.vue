@@ -1,8 +1,6 @@
 <template>
-    <div
-        class="min-w-0 overflow-hidden bg-white rounded-sm shadow sm:rounded-lg md:shadow-md"
-    >
-        <div class="flex p-4 space-x-5">
+    <div class="min-w-0">
+        <div v-if="canChangeView" class="flex p-4 space-x-5">
             <template v-for="view in views">
                 <button
                     v-if="hasData(view.name)"
@@ -24,28 +22,19 @@
             </template>
         </div>
 
-        <data-table
-            v-if="tableData && isCurrentView('table')"
-            :route-name="routeName"
-            :route-args="routeArgs"
-            :route-fill="routeFill"
-            :data="tableData"
-            :columns="columns"
-        >
-            <template
-                v-for="(_, name) in $scopedSlots"
-                :slot="name"
-                slot-scope="slotData"
-            >
-                <slot :name="name" v-bind="slotData" />
-            </template>
-        </data-table>
+        <slot name="table" v-if="isCurrentView('table')" />
 
-        <bar-chart
-            v-if="chartData && isCurrentView('chart')"
-            class="relative max-h-screen px-4 py-5 sm:p-6"
-            :chart-data="chartData"
-        />
+        <div
+            class="relative max-h-screen px-4 py-5 bg-white rounded shadow sm:p-6"
+            v-if="isCurrentView('chart')"
+        >
+            <slot name="chart">
+                <bar-chart
+                    v-if="chartData && isCurrentView('chart')"
+                    :chart-data="chartData"
+                />
+            </slot>
+        </div>
     </div>
 </template>
 
@@ -55,7 +44,7 @@
         props: {
             tableData: {
                 type: Array,
-                required: true,
+                default: () => [],
             },
             chartData: {
                 type: Object,
@@ -85,7 +74,7 @@
             },
             columns: {
                 type: Array,
-                required: true,
+                default: () => [],
             },
             routeName: {
                 type: [String, null],
@@ -102,7 +91,7 @@
         },
         data() {
             return {
-                currentView: 'table',
+                currentView: this.hasData('table') ? 'table' : 'chart',
                 views: [
                     {
                         name: 'table',
@@ -115,7 +104,11 @@
                 ],
             };
         },
-        computed: {},
+        computed: {
+            canChangeView() {
+                return this.hasData('table') && this.hasData('chart');
+            },
+        },
         methods: {
             isCurrentView(name) {
                 return this.currentView === name;

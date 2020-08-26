@@ -13,7 +13,7 @@
         <model-table
             :collection="domains"
             :columns="columns"
-            route="domains.edit"
+            route-name="domains.edit"
             :paginate="true"
         />
     </layout>

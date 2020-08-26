@@ -13,7 +13,7 @@
         <model-table
             :collection="grantees"
             :columns="columns"
-            route="grantees.edit"
+            route-name="grantees.edit"
             :paginate="true"
         />
     </layout>

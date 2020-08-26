@@ -25,7 +25,7 @@
                 v-text="grant.name"
             />
 
-            <grid class="mt-8 md:grid-cols-4">
+            <grid class="mt-8 md:grid-cols-2 xl:grid-cols-4">
                 <stats-card
                     v-for="(card, index) in cards"
                     :key="index"
@@ -36,28 +36,40 @@
             </grid>
         </panel>
 
-        <data-block
-            :table-data="grant.projects"
-            :columns="columns"
-            route-name="projects.edit"
-            :route-args="{ grant: grant.id }"
-            :route-fill="{ project: 'id' }"
-        >
-            <template v-slot:grantee="{ grantee }">
-                {{ grantee.name }}
-            </template>
+        <search-filter v-model="search" @reset="reset" />
 
-            <template v-slot:amount="{ amount }">
-                {{ amount.formatted }}
+        <data-block :table-data="projects.data" :columns="columns">
+            <template slot="table">
+                <model-table
+                    :collection="projects"
+                    :columns="columns"
+                    route-name="projects.edit"
+                    :route-args="routeArgs"
+                    :route-fill="{ project: 'id' }"
+                    :paginate="true"
+                >
+                    <template v-slot:grantee___name="{ row }">
+                        {{ row.grantee.name }}
+                    </template>
+
+                    <template v-slot:amount="{ amount }">
+                        {{ amount.formatted }}
+                    </template>
+                </model-table>
             </template>
         </data-block>
     </layout>
 </template>
 
 <script>
+    import FilterMixin from '@/mixins/filter';
+
     export default {
+        mixins: [FilterMixin],
         props: {
+            columns: Array,
             grant: Object,
+            projects: Object,
         },
         metaInfo() {
             return {
@@ -90,6 +102,7 @@
         },
         data() {
             return {
+                routeArgs: { grant: this.grant.id },
                 cards: [
                     {
                         title: 'Donors',
@@ -112,38 +125,6 @@
                             this.grant.domains
                                 .map((domain) => domain.name)
                                 .join(', ') || null,
-                    },
-                ],
-                columns: [
-                    {
-                        field: 'grantee',
-                        label: 'Grantee',
-                        sortable: {
-                            prop: 'name',
-                        },
-                    },
-                    {
-                        field: 'title',
-                        label: 'Title',
-                        sortable: true,
-                    },
-                    {
-                        field: 'amount',
-                        label: 'Amount',
-                        sortable: {
-                            prop: 'amount',
-                            numeric: true,
-                        },
-                    },
-                    {
-                        field: 'start_date',
-                        label: 'Start date',
-                        sortable: true,
-                    },
-                    {
-                        field: 'end_date',
-                        label: 'End date',
-                        sortable: true,
                     },
                 ],
             };

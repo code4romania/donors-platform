@@ -13,7 +13,7 @@
         <model-table
             :collection="managers"
             :columns="columns"
-            route="managers.show"
+            route-name="managers.show"
             :paginate="true"
         >
             <template v-slot:published_status="{ published_status }">

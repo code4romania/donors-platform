@@ -13,7 +13,7 @@
         <model-table
             :collection="donors"
             :columns="columns"
-            route="donors.show"
+            route-name="donors.show"
             :paginate="true"
         >
             <template v-slot:published_status="{ published_status }">

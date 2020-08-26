@@ -6,10 +6,26 @@ import throttle from 'lodash/throttle';
 export default {
     data() {
         return {
+            routeArgs: {},
             filters: this.$page.filters,
             search: this.$page.search,
             sort: this.$page.sort,
         };
+    },
+    computed: {
+        routeData() {
+            return pickBy(
+                merge(
+                    //
+                    this.routeArgs,
+                    this.filters,
+                    this.sort,
+                    {
+                        search: this.search,
+                    }
+                )
+            );
+        },
     },
     methods: {
         reset() {
@@ -19,12 +35,7 @@ export default {
         },
         submit() {
             this.$inertia.replace(
-                this.$route(
-                    this.$page.route,
-                    pickBy(
-                        merge(this.filters, this.sort, { search: this.search })
-                    )
-                )
+                this.$route(this.$page.route, this.routeData)
             );
         },
     },

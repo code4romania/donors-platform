@@ -43,7 +43,7 @@
         <model-table
             :collection="grants"
             :columns="columns"
-            route="grants.show"
+            route-name="grants.show"
             :paginate="true"
         >
             <template v-slot:domains="{ domains }">

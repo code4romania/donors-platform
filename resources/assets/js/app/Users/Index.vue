@@ -13,7 +13,7 @@
         <model-table
             :collection="users"
             :columns="columns"
-            route="users.edit"
+            route-name="users.edit"
             :paginate="true"
         />
     </layout>

@@ -9,6 +9,7 @@
                             v-for="(column, index) in columns"
                             :key="index"
                             :column="column"
+                            :route="thRoute"
                         />
                     </tr>
                 </thead>
@@ -24,14 +25,15 @@
                         >
                             <inertia-link
                                 class="block px-6 py-4 focus:outline-none"
-                                :href="$route(route, row.id)"
+                                :href="rowUrl(row)"
                                 :tabindex="columnIndex === 0 ? false : -1"
                             >
                                 <slot
-                                    :name="column.name"
-                                    :[column.name]="row[column.name]"
+                                    :name="column.field"
+                                    :[column.field]="row[column.field]"
+                                    :row="row"
                                 >
-                                    {{ row[column.name] }}
+                                    {{ row[column.field] }}
                                 </slot>
                             </inertia-link>
                         </td>
@@ -58,6 +60,11 @@
 </template>
 
 <script>
+    import cloneDeep from 'lodash/cloneDeep';
+    import isEmpty from 'lodash/isEmpty';
+    import mapValues from 'lodash/mapValues';
+    import merge from 'lodash/merge';
+
     export default {
         name: 'ModelTable',
         props: {
@@ -69,13 +76,45 @@
                 type: Array,
                 required: true,
             },
-            route: {
-                type: String,
-                required: true,
-            },
             paginate: {
                 type: Boolean,
                 default: true,
+            },
+            routeName: {
+                type: String,
+                required: true,
+            },
+            routeArgs: {
+                type: Object,
+                default: () => ({}),
+            },
+            routeFill: {
+                type: Object,
+                default: () => ({}),
+            },
+        },
+        computed: {
+            thRoute() {
+                return this.$route(this.$page.route, this.routeArgs);
+            },
+        },
+        methods: {
+            rowUrl(row) {
+                if (isEmpty(this.routeArgs)) {
+                    return this.$route(this.routeName, row.id);
+                }
+
+                let args = cloneDeep(this.routeArgs);
+
+                if (this.routeFill) {
+                    Object.entries(this.routeFill).forEach(([key, prop]) => {
+                        if (row.hasOwnProperty(prop)) {
+                            args[key] = row[prop];
+                        }
+                    });
+                }
+
+                return this.$route(this.routeName, args);
             },
         },
     };

@@ -1,12 +1,12 @@
 <template>
     <th>
         <div class="flex justify-between">
-            <span v-text="label" />
+            <span v-text="column.label" />
             <inertia-link
                 v-if="column.sortable"
-                :href="$route($page.route)"
+                :href="computedRoute"
                 :data="linkData"
-                class="duration-150 transition-color hover:text-gray-600"
+                class="duration-150 cursor-pointer transition-color focus:outline-none focus:text-blue-600 hover:text-gray-600"
                 :class="{
                     'text-gray-300': !isActive,
                     'text-gray-900': isActive,
@@ -39,8 +39,22 @@
                 type: Object,
                 required: true,
             },
+            route: {
+                type: [String, null],
+                default: null,
+            },
         },
         computed: {
+            field() {
+                return this.column.field.replace('___', '.');
+            },
+            computedRoute() {
+                if (!this.route) {
+                    return this.$route(this.$page.route);
+                }
+
+                return this.route;
+            },
             linkData() {
                 const filters = pickBy(
                     merge(this.$page.filters, { search: this.$page.search })
@@ -48,7 +62,7 @@
 
                 if (this.isOrderAsc) {
                     return {
-                        order: this.column.name,
+                        order: this.field,
                         direction: 'desc',
                         ...filters,
                     };
@@ -58,17 +72,15 @@
                     };
                 } else {
                     return {
-                        order: this.column.name,
+                        order: this.field,
                         direction: 'asc',
                         ...filters,
                     };
                 }
             },
-            label() {
-                return this.$t('field.' + this.column.name);
-            },
+
             isActive() {
-                return this.$page.sort.order === this.column.name;
+                return this.$page.sort.order === this.field;
             },
             isOrderAsc() {
                 return this.$page.sort.direction === 'asc';
