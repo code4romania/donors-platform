@@ -13,6 +13,7 @@ return [
     'end_date'              => 'End date',
     'first_name'            => 'First name',
     'grant_value'           => 'Grant value',
+    'grantee.name'          => 'Grantee',
     'grantee_count'         => 'Number of grantees',
     'hq'                    => 'HQ',
     'language'              => 'Language',

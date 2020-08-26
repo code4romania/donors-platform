@@ -1,7 +1,5 @@
 <template>
-    <div
-        class="overflow-hidden bg-white rounded-sm shadow sm:rounded-lg md:shadow-md"
-    >
+    <div class="overflow-hidden bg-white rounded shadow">
         <div
             v-if="title || icon"
             class="flex items-center p-4"

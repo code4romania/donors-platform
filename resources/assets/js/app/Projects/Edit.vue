@@ -11,7 +11,6 @@
                     :label="$t('field.title')"
                     v-model="form.title"
                     class="lg:col-span-2"
-                    required
                     autofocus
                 />
 

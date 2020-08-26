@@ -1206,16 +1206,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v7.25.0",
+            "version": "v7.26.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "fdf3d4a40447eb286ba3820768306cae64bcc0b3"
+                "reference": "f64299a11dedaaadf1cfff07b2b3220a9b791837"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/fdf3d4a40447eb286ba3820768306cae64bcc0b3",
-                "reference": "fdf3d4a40447eb286ba3820768306cae64bcc0b3",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/f64299a11dedaaadf1cfff07b2b3220a9b791837",
+                "reference": "f64299a11dedaaadf1cfff07b2b3220a9b791837",
                 "shasum": ""
             },
             "require": {
@@ -1321,6 +1321,7 @@
                 "nyholm/psr7": "Required to use PSR-7 bridging features (^1.2).",
                 "pda/pheanstalk": "Required to use the beanstalk queue driver (^4.0).",
                 "phpunit/phpunit": "Required to use assertions and run tests (^8.4|^9.0).",
+                "predis/predis": "Required to use the predis connector (^1.1.2).",
                 "psr/http-message": "Required to allow Storage::put to accept a StreamInterface (^1.0).",
                 "pusher/pusher-php-server": "Required to use the Pusher broadcast driver (^4.0).",
                 "symfony/cache": "Required to PSR-6 cache bridge (^5.0).",
@@ -1359,36 +1360,36 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2020-08-11T13:43:10+00:00"
+            "time": "2020-08-25T13:44:44+00:00"
         },
         {
             "name": "laravel/scout",
-            "version": "v8.2.1",
+            "version": "v8.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/scout.git",
-                "reference": "74e2d6a3859579dd7b246478d0bb62f13583d6c4"
+                "reference": "da05fbb539889338a7f0cabb0cf5acdd0083278c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/scout/zipball/74e2d6a3859579dd7b246478d0bb62f13583d6c4",
-                "reference": "74e2d6a3859579dd7b246478d0bb62f13583d6c4",
+                "url": "https://api.github.com/repos/laravel/scout/zipball/da05fbb539889338a7f0cabb0cf5acdd0083278c",
+                "reference": "da05fbb539889338a7f0cabb0cf5acdd0083278c",
                 "shasum": ""
             },
             "require": {
-                "illuminate/bus": "^6.0|^7.0",
-                "illuminate/contracts": "^6.0|^7.0",
-                "illuminate/database": "^6.0|^7.0",
-                "illuminate/http": "^6.0|^7.0",
-                "illuminate/pagination": "^6.0|^7.0",
-                "illuminate/queue": "^6.0|^7.0",
-                "illuminate/support": "^6.0|^7.0",
+                "illuminate/bus": "^6.0|^7.0|^8.0",
+                "illuminate/contracts": "^6.0|^7.0|^8.0",
+                "illuminate/database": "^6.0|^7.0|^8.0",
+                "illuminate/http": "^6.0|^7.0|^8.0",
+                "illuminate/pagination": "^6.0|^7.0|^8.0",
+                "illuminate/queue": "^6.0|^7.0|^8.0",
+                "illuminate/support": "^6.0|^7.0|^8.0",
                 "php": "^7.2"
             },
             "require-dev": {
                 "algolia/algoliasearch-client-php": "^2.2",
                 "mockery/mockery": "^1.0",
-                "phpunit/phpunit": "^8.0"
+                "phpunit/phpunit": "^8.0|^9.3"
             },
             "suggest": {
                 "algolia/algoliasearch-client-php": "Required to use the Algolia engine (^2.2)."
@@ -1425,7 +1426,7 @@
                 "laravel",
                 "search"
             ],
-            "time": "2020-08-06T11:13:20+00:00"
+            "time": "2020-08-25T18:14:31+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -1493,27 +1494,27 @@
         },
         {
             "name": "laravel/ui",
-            "version": "v2.1.0",
+            "version": "v2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/ui.git",
-                "reference": "da9350533d0da60d5dc42fb7de9c561c72129bba"
+                "reference": "fb1404f04ece6eee128e3fb750d3a1e064238b33"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/ui/zipball/da9350533d0da60d5dc42fb7de9c561c72129bba",
-                "reference": "da9350533d0da60d5dc42fb7de9c561c72129bba",
+                "url": "https://api.github.com/repos/laravel/ui/zipball/fb1404f04ece6eee128e3fb750d3a1e064238b33",
+                "reference": "fb1404f04ece6eee128e3fb750d3a1e064238b33",
                 "shasum": ""
             },
             "require": {
-                "illuminate/console": "^7.0",
-                "illuminate/filesystem": "^7.0",
-                "illuminate/support": "^7.0",
+                "illuminate/console": "^7.0|^8.0",
+                "illuminate/filesystem": "^7.0|^8.0",
+                "illuminate/support": "^7.0|^8.0",
                 "php": "^7.2.5"
             },
             "require-dev": {
                 "mockery/mockery": "^1.0",
-                "phpunit/phpunit": "^8.0"
+                "phpunit/phpunit": "^8.0|^9.0"
             },
             "type": "library",
             "extra": {
@@ -1544,7 +1545,7 @@
                 "laravel",
                 "ui"
             ],
-            "time": "2020-06-30T20:56:33+00:00"
+            "time": "2020-08-25T18:30:43+00:00"
         },
         {
             "name": "league/commonmark",
@@ -3332,16 +3333,16 @@
         },
         {
             "name": "spatie/laravel-medialibrary",
-            "version": "8.5.0",
+            "version": "8.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-medialibrary.git",
-                "reference": "8a51de55977dbc4aa8ce7f901e83aa449846937a"
+                "reference": "92d3613133fa7b9f5207588d86b66f662b2dd38d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/8a51de55977dbc4aa8ce7f901e83aa449846937a",
-                "reference": "8a51de55977dbc4aa8ce7f901e83aa449846937a",
+                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/92d3613133fa7b9f5207588d86b66f662b2dd38d",
+                "reference": "92d3613133fa7b9f5207588d86b66f662b2dd38d",
                 "shasum": ""
             },
             "require": {
@@ -3428,7 +3429,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-08-06T09:34:42+00:00"
+            "time": "2020-08-26T07:18:50+00:00"
         },
         {
             "name": "spatie/laravel-permission",
