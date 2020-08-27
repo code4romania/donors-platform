@@ -31,7 +31,7 @@ class GrantShowResource extends JsonResource
             'currency'          => $this->currency,
 
             'donors'            => $this->donors->pluck('name', 'id'),
-            'max_grantees'      => $this->max_grantees,
+            'project_count'     => $this->project_count,
             'grantees'          => $this->grantees->unique()->count(),
             'funding_value'     => $this->funding_value,
 
