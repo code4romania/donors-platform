@@ -93,8 +93,10 @@
                     </div>
                 </div>
             </div>
+        </panel>
 
-            <grid class="mt-8 lg:grid-cols-3">
+        <panel>
+            <grid class="lg:grid-cols-3">
                 <stats-card
                     v-for="(card, index) in cards"
                     :key="index"
