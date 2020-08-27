@@ -71,9 +71,9 @@
 
                 <form-input
                     type="number"
-                    id="max_grantees"
-                    :label="$t('field.grantee_count')"
-                    v-model.number="form.max_grantees"
+                    id="project_count"
+                    :label="$t('field.project_count')"
+                    v-model.number="form.project_count"
                     required
                     min="1"
                 />
@@ -181,7 +181,7 @@
                         'currency',
                         'start_date',
                         'end_date',
-                        'max_grantees',
+                        'project_count',
                         'manager',
                         'regranting_amount',
                         'matching',

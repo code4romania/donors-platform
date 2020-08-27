@@ -8,6 +8,7 @@ use App\Models\Grant;
 use App\Models\Grantee;
 use App\Models\Project;
 use App\Models\User;
+use Cknow\Money\Money;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
@@ -76,7 +77,7 @@ class DemoSeeder extends Seeder
     {
         $donor = Donor::create([
             'name'    => 'Romanian-American Foundation',
-            'type'    => '',
+            'type'    => 'foundation',
             'hq'      => 'București',
             'contact' => 'Contact Name',
             'email'   => 'office@rafonline.org',
@@ -146,6 +147,20 @@ class DemoSeeder extends Seeder
             $project->grantee()->associate($grantee);
 
             $project->save();
+        });
+
+        $grants->each(function ($grant) {
+            $grant->amount = $grant->projects
+                ->pluck('amount')
+                ->filter()
+                ->unlessEmpty(
+                    fn ($amounts) => Money::sum(...$amounts),
+                    fn () => money(0),
+                );
+
+            $grant->project_count = $grant->projects->count();
+
+            $grant->save();
         });
 
         return $data;

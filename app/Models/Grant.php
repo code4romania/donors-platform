@@ -27,7 +27,7 @@ class Grant extends Model
      * @var string[]
      */
     protected $fillable = [
-        'name', 'amount', 'currency', 'start_date', 'end_date', 'max_grantees', 'regranting_amount', 'matching',
+        'name', 'amount', 'currency', 'start_date', 'end_date', 'project_count', 'regranting_amount', 'matching',
     ];
 
     /**
@@ -57,7 +57,7 @@ class Grant extends Model
      * @var string[]
      */
     protected $sortable = [
-        'name',
+        'name', 'amount',
     ];
 
     /**

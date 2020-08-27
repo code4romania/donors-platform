@@ -23,7 +23,7 @@ class CreateGrantsTable extends Migration
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
 
-            $table->unsignedSmallInteger('max_grantees')->nullable();
+            $table->unsignedSmallInteger('project_count')->nullable();
 
             $table->foreignId('grant_manager_id')->nullable()->constrained()->onDelete('cascade');
 

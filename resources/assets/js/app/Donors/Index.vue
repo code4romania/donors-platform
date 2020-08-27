@@ -16,6 +16,18 @@
             route-name="donors.show"
             :paginate="true"
         >
+            <template v-slot:domains="{ domains }">
+                {{ domains.map((domain) => domain.name).join(', ') }}
+            </template>
+
+            <template v-slot:type="{ type }">
+                {{ $t(`dashboard.org_types.${type}`) }}
+            </template>
+
+            <template v-slot:total_funding="{ total_funding }">
+                {{ total_funding.formatted }}
+            </template>
+
             <template v-slot:published_status="{ published_status }">
                 <published-badge :status="published_status" />
             </template>

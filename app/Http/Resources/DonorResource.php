@@ -34,6 +34,9 @@ class DonorResource extends JsonResource
             'domains'          => $this->domains->map->only('id', 'name'),
             'logo_url'         => $this->logo_url,
             'published_status' => $this->published_status,
+            'total_funding'    => $this->total_funding,
+            'grant_count'      => $this->grant_count,
+            'grantee_count'    => $this->grantee_count,
         ];
     }
 }

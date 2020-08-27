@@ -13,6 +13,7 @@ return [
     'end_date'              => 'End date',
     'first_name'            => 'First name',
     'funding_value'         => 'Funding value',
+    'grant_count'           => 'Number of grants',
     'grant_value'           => 'Grant value',
     'grantee.name'          => 'Grantee',
     'grantee_count'         => 'Number of grantees',
@@ -33,6 +34,7 @@ return [
     'roleLabel'             => 'Role',
     'start_date'            => 'Start date',
     'title'                 => 'Title',
+    'total_funding'         => 'Total funding',
     'type'                  => 'Type',
 
 ];

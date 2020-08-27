@@ -13,6 +13,7 @@ return [
     'end_date'              => 'Dată sfârșit',
     'first_name'            => 'Prenume',
     'funding_value'         => 'Valoare finanțare',
+    'grant_count'           => 'Număr de granturi',
     'grant_value'           => 'Valoare grant',
     'grantee.name'          => 'Beneficiar',
     'grantee_count'         => 'Număr de beneficiari',
@@ -33,6 +34,7 @@ return [
     'roleLabel'             => 'Rol',
     'start_date'            => 'Dată început',
     'title'                 => 'Titlu',
+    'total_funding'         => 'Finanțare totală',
     'type'                  => 'Tip',
 
 ];

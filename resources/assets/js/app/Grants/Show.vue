@@ -38,26 +38,22 @@
 
         <search-filter v-model="search" @reset="reset" />
 
-        <data-block :table-data="projects.data" :columns="columns">
-            <template slot="table">
-                <model-table
-                    :collection="projects"
-                    :columns="columns"
-                    route-name="projects.edit"
-                    :route-args="routeArgs"
-                    :route-fill="{ project: 'id' }"
-                    :paginate="true"
-                >
-                    <template v-slot:grantee___name="{ row }">
-                        {{ row.grantee.name }}
-                    </template>
-
-                    <template v-slot:amount="{ amount }">
-                        {{ amount.formatted }}
-                    </template>
-                </model-table>
+        <model-table
+            :collection="projects"
+            :columns="columns"
+            route-name="projects.edit"
+            :route-args="routeArgs"
+            :route-fill="{ project: 'id' }"
+            :paginate="true"
+        >
+            <template v-slot:grantee___name="{ row }">
+                {{ row.grantee.name }}
             </template>
-        </data-block>
+
+            <template v-slot:amount="{ amount }">
+                {{ amount.formatted }}
+            </template>
+        </model-table>
     </layout>
 </template>
 

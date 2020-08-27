@@ -27,6 +27,7 @@ class GrantIndexResource extends JsonResource
             'id'               => $this->id,
             'name'             => $this->name,
             'domains'          => $this->domains->map->only('id', 'name'),
+            'amount'           => $this->amount,
             'funding_value'    => $this->funding_value,
             'published_status' => $this->published_status,
         ];

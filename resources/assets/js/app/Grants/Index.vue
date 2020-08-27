@@ -50,6 +50,10 @@
                 {{ domains.map((domain) => domain.name).join(', ') }}
             </template>
 
+            <template v-slot:amount="{ amount }">
+                {{ amount.formatted }}
+            </template>
+
             <template v-slot:published_status="{ published_status }">
                 <published-badge :status="published_status" />
             </template>

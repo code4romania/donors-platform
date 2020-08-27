@@ -70,7 +70,7 @@ class Donor extends Model implements HasMedia
      * @var string[]
      */
     protected $appends = [
-        'logo_url',
+        'logo_url', 'total_funding',
     ];
 
     public function getLogoUrlAttribute(): ?string
@@ -78,17 +78,25 @@ class Donor extends Model implements HasMedia
         return $this->getFirstMediaUrl('logo') ?: null;
     }
 
-    public function getFundingValueAttribute()
+    public function getTotalFundingAttribute()
     {
-        return $this->grants()
-            ->with('projects')
-            ->get()
-            ->pluck('funding_value')
+        return $this->grants
+            ->pluck('amount')
             ->filter()
             ->unlessEmpty(
                 fn ($amounts) => Money::sum(...$amounts),
-                fn () => null,
+                fn () => money(0),
             );
+    }
+
+    public function getGrantCountAttribute()
+    {
+        return $this->grants->count();
+    }
+
+    public function getGranteeCountAttribute()
+    {
+        return Grantee::query()->count();
     }
 
     public function grants()

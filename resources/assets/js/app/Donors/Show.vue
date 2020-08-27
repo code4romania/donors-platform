@@ -188,8 +188,8 @@
                     {
                         title: this.$t('dashboard.stats.total.grants'),
                         number:
-                            this.stats.total !== null
-                                ? this.stats.total.formatted
+                            this.donor.total_funding !== null
+                                ? this.donor.total_funding.formatted
                                 : 0,
                     },
                     {

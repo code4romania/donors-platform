@@ -24,7 +24,7 @@ class DonorController extends Controller
     {
         return Inertia::render('Donors/Index', [
             'columns' => $this->getIndexColumns(Donor::class, [
-                'name', 'type', 'hq', 'published_status',
+                'name', 'domains', 'type', 'grantee_count', 'grant_count', 'total_funding', 'published_status',
             ]),
             'types'  => OrganizationType::all(),
             'donors' => DonorResource::collection(
@@ -82,7 +82,6 @@ class DonorController extends Controller
             ),
             'stats'  => [
                 'grantees' => Grantee::query()->count(),
-                'total'    => $donor->funding_value,
                 'domains'  => $donor->grants()
                     ->with('domains')
                     ->get()
