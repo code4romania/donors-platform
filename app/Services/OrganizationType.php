@@ -11,7 +11,9 @@ class OrganizationType
 {
     /** @var string[] */
     private static $types = [
-        'a', 'b', 'c', 'd', 'e',
+        'foundation',
+        'federation',
+        'company',
     ];
 
     private static function translate(string $key): ?string

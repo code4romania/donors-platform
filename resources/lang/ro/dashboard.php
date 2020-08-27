@@ -72,9 +72,8 @@ return [
     ],
 
     'org_types' => [
-        'a' => 'Mollitia quo totam',
-        'b' => 'In distinctio aspernatur',
-        'c' => 'Nihil porro',
-        'd' => 'Consequatur quis',
+        'foundation' => 'Fundație',
+        'federation' => 'Federație',
+        'company'    => 'Companie',
     ],
 ];
