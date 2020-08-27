@@ -6,6 +6,7 @@ namespace App\Traits;
 
 use App\Services\Normalize;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
 use Laravel\Scout\Searchable;
@@ -24,6 +25,11 @@ trait Filterable
             ->when($filters['domain'], fn ($q, int $domain) => $this->whereHas($q, $domain, 'domains'))
             ->when($filters['donor'], fn ($q, int $donor) => $this->whereHas($q, $donor, 'donors'))
             ->when($filters['manager'], fn ($q, int $manager) => $this->whereHas($q, $manager, 'manager'));
+    }
+
+    public function scopeGetColumn(Builder $query, string $column): Collection
+    {
+        return $query->select($this->getTable() . '.id', $column)->get();
     }
 
     protected function whereHas(Builder $query, int $id, string $relationship): Builder

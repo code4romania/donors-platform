@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
-use ReflectionClass;
 
 trait Sortable
 {

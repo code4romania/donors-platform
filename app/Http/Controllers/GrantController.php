@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\GrantRequest;
-use App\Http\Resources\DomainResource;
-use App\Http\Resources\DonorResource;
 use App\Http\Resources\GrantIndexResource;
-use App\Http\Resources\GrantManagerResource;
 use App\Http\Resources\GrantShowResource;
+use App\Http\Resources\NameResource;
 use App\Http\Resources\ProjectIndexResource;
 use App\Models\Domain;
 use App\Models\Donor;
@@ -36,14 +34,14 @@ class GrantController extends Controller
                     ->sort()
                     ->paginate(),
             ),
-            'donors' => DonorResource::collection(
-                Donor::orderBy('name', 'asc')->get()
+            'donors' => NameResource::collection(
+                Donor::orderBy('name', 'asc')->getColumn('name')
             ),
-            'domains' => DomainResource::collection(
-                Domain::orderByTranslation('name', 'asc')->get()
+            'domains' => NameResource::collection(
+                Domain::orderByTranslation('name', 'asc')->getColumn('name')
             ),
-            'managers' => GrantManagerResource::collection(
-                GrantManager::all(),
+            'managers' => NameResource::collection(
+                GrantManager::getColumn('name'),
             ),
         ]);
     }
@@ -51,14 +49,14 @@ class GrantController extends Controller
     public function create(): Response
     {
         return Inertia::render('Grants/Create', [
-            'donors' => DonorResource::collection(
-                Donor::orderBy('name', 'asc')->get()
+            'donors' => NameResource::collection(
+                Donor::orderBy('name', 'asc')->getColumn('name')
             ),
-            'domains' => DomainResource::collection(
-                Domain::orderByTranslation('name', 'asc')->get()
+            'domains' => NameResource::collection(
+                Domain::orderByTranslation('name', 'asc')->getColumn('name')
             ),
-            'managers' => GrantManagerResource::collection(
-                GrantManager::all(),
+            'managers' => NameResource::collection(
+                GrantManager::getColumn('name'),
             ),
         ]);
     }
@@ -102,14 +100,14 @@ class GrantController extends Controller
     {
         return Inertia::render('Grants/Edit', [
             'grant' => GrantShowResource::make($grant),
-            'donors' => DonorResource::collection(
-                Donor::orderBy('name', 'asc')->get()
+            'donors' => NameResource::collection(
+                Donor::orderBy('name', 'asc')->getColumn('name')
             ),
-            'domains' => DomainResource::collection(
-                Domain::orderByTranslation('name', 'asc')->get()
+            'domains' => NameResource::collection(
+                Domain::orderByTranslation('name', 'asc')->getColumn('name')
             ),
-            'managers' => GrantManagerResource::collection(
-                GrantManager::all()
+            'managers' => NameResource::collection(
+                GrantManager::getColumn('name'),
             ),
         ]);
     }
