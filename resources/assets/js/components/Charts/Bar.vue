@@ -44,7 +44,6 @@
                 let data = this.chartData;
 
                 data.datasets = data.datasets.map((dataset, index) => {
-                    console.log(dataset, index);
                     dataset.backgroundColor = this.theme[index];
 
                     return dataset;
