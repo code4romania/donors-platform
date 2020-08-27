@@ -117,11 +117,13 @@
                     },
                     {
                         title: this.$t('dashboard.stats.total.grantees'),
-                        number: this.grant.grantees || null,
+                        number: this.grant.max_grantees || null,
                     },
                     {
                         title: this.$t('dashboard.stats.total.domains'),
-                        number: this.grant.domains.length,
+                        number: this.grant.domains
+                            .map((domain) => domain.name)
+                            .join(','),
                     },
                 ],
             };

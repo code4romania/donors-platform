@@ -51,8 +51,8 @@ return [
         'funding' => 'Euro investiți în :count arii strategice',
         'grantees' => 'Beneficiari susținuți de toți finanțatorii',
         'total' => [
-            'grant' => 'Valoarea totală a grant-ului',
-            'grants' => 'Valoarea totală a grant-urilor',
+            'grant' => 'Valoarea totală a grantului',
+            'grants' => 'Valoarea totală a granturilor',
             'grantees' => 'Numărul total al beneficiarilor',
             'domains' => 'Domenii acoperite',
         ],

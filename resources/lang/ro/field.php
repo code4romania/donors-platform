@@ -10,7 +10,7 @@ return [
     'domains'               => 'Domenii',
     'donor_count'           => 'Număr de finanțatori',
     'email'                 => 'Adresă de email',
-    'end_date'              => 'Dată sfărșit',
+    'end_date'              => 'Dată sfârșit',
     'first_name'            => 'Prenume',
     'funding_value'         => 'Valoare finanțare',
     'grant_value'           => 'Valoare grant',
