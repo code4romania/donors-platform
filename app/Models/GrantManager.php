@@ -77,6 +77,19 @@ class GrantManager extends Model implements HasMedia
         return $this->getFirstMediaUrl('logo') ?: null;
     }
 
+    public function getFundingValueAttribute()
+    {
+        return $this->grants()
+            ->with('projects')
+            ->get()
+            ->pluck('funding_value')
+            ->filter()
+            ->unlessEmpty(
+                fn ($amounts) => Money::sum(...$amounts),
+                fn () => null,
+            );
+    }
+
     public function grants()
     {
         return $this->hasMany(Grant::class);

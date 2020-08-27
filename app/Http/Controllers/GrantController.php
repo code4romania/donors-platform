@@ -31,7 +31,7 @@ class GrantController extends Controller
             ]),
             'grants' => GrantIndexResource::collection(
                 Grant::query()
-                    ->with('domains')
+                    ->with('domains', 'projects')
                     ->filter()
                     ->sort()
                     ->paginate(),

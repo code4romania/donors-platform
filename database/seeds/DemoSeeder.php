@@ -75,9 +75,12 @@ class DemoSeeder extends Seeder
     protected function seedRafData()
     {
         $donor = Donor::create([
-            'name' => 'RAF',
-            'type' => '',
-            'hq'   => 'București',
+            'name'    => 'Romanian-American Foundation',
+            'type'    => '',
+            'hq'      => 'București',
+            'contact' => 'Contact Name',
+            'email'   => 'office@rafonline.org',
+            'phone'   => '+40 312 261 223',
         ]);
 
         $donor->publish();

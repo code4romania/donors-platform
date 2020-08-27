@@ -6,9 +6,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\GrantManagerRequest;
 use App\Http\Resources\DomainResource;
+use App\Http\Resources\GrantIndexResource;
 use App\Http\Resources\GrantManagerResource;
 use App\Models\Domain;
+use App\Models\Grant;
 use App\Models\GrantManager;
+use App\Models\Grantee;
+use Cknow\Money\Money;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -62,7 +66,31 @@ class GrantManagerController extends Controller
     public function show(GrantManager $manager): Response
     {
         return Inertia::render('Managers/Show', [
+            'columns' => $this->getIndexColumns(Grant::class, [
+                'name', 'domains', 'funding_value',
+            ]),
             'manager' => GrantManagerResource::make($manager),
+            'domains' => DomainResource::collection(
+                Domain::orderByTranslation('name', 'asc')->get()
+            ),
+            'grants' => GrantIndexResource::collection(
+                $manager->grants()->with('projects')
+                    ->filter()
+                    ->sort()
+                    ->paginate()
+            ),
+            'stats'  => [
+                'grantees' => Grantee::query()->count(),
+                'total'    => $manager->funding_value,
+                'domains'  => $manager->grants()
+                    ->with('domains')
+                    ->get()
+                    ->pluck('domains')
+                    ->flatten()
+                    ->pluck('id')
+                    ->unique()
+                    ->count(),
+            ],
         ]);
     }
 

@@ -30,7 +30,7 @@ class DonorDashboardResource extends JsonResource
             'type'             => $this->type,
             'grant_count'      => $this->grants->count(),
             'domains'          => $this->domains->map->only('id', 'name'),
-            'total_funding'    => Money::sum(...$this->grants->pluck('total_value')),
+            'total_funding'    => Money::sum(...$this->grants->pluck('funding_value')),
         ];
     }
 }

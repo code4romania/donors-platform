@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Services\Normalize;
 use App\Traits\Draftable;
 use App\Traits\Filterable;
 use App\Traits\HasDates;
@@ -13,7 +12,6 @@ use App\Traits\Sortable;
 use Cknow\Money\Money;
 use Cknow\Money\MoneyCast;
 use Illuminate\Database\Eloquent\Model;
-use Laravel\Scout\Searchable;
 
 class Grant extends Model
 {
@@ -68,7 +66,7 @@ class Grant extends Model
      * @var string[]
      */
     protected $with = [
-        'domains',
+        'domains', 'projects',
     ];
 
     public function donors()
@@ -107,7 +105,7 @@ class Grant extends Model
         return $this->amount->format();
     }
 
-    public function getTotalValueAttribute()
+    public function getFundingValueAttribute()
     {
         return $this->projects->pluck('amount')
             ->filter()

@@ -8,6 +8,7 @@ use App\Traits\Draftable;
 use App\Traits\Filterable;
 use App\Traits\HasDomains;
 use App\Traits\Sortable;
+use Cknow\Money\Money;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -75,6 +76,19 @@ class Donor extends Model implements HasMedia
     public function getLogoUrlAttribute(): ?string
     {
         return $this->getFirstMediaUrl('logo') ?: null;
+    }
+
+    public function getFundingValueAttribute()
+    {
+        return $this->grants()
+            ->with('projects')
+            ->get()
+            ->pluck('funding_value')
+            ->filter()
+            ->unlessEmpty(
+                fn ($amounts) => Money::sum(...$amounts),
+                fn () => null,
+            );
     }
 
     public function grants()

@@ -7,8 +7,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\DonorRequest;
 use App\Http\Resources\DomainResource;
 use App\Http\Resources\DonorResource;
+use App\Http\Resources\GrantIndexResource;
 use App\Models\Domain;
 use App\Models\Donor;
+use App\Models\Grant;
+use App\Models\Grantee;
 use App\Services\OrganizationType;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
@@ -64,7 +67,31 @@ class DonorController extends Controller
     public function show(Donor $donor): Response
     {
         return Inertia::render('Donors/Show', [
-            'donor' => DonorResource::make($donor),
+            'columns' => $this->getIndexColumns(Grant::class, [
+                'name', 'domains', 'funding_value',
+            ]),
+            'donor'  => DonorResource::make($donor),
+            'domains' => DomainResource::collection(
+                Domain::orderByTranslation('name', 'asc')->get()
+            ),
+            'grants' => GrantIndexResource::collection(
+                $donor->grants()->with('projects')
+                    ->filter()
+                    ->sort()
+                    ->paginate()
+            ),
+            'stats'  => [
+                'grantees' => Grantee::query()->count(),
+                'total'    => $donor->funding_value,
+                'domains'  => $donor->grants()
+                    ->with('domains')
+                    ->get()
+                    ->pluck('domains')
+                    ->flatten()
+                    ->pluck('id')
+                    ->unique()
+                    ->count(),
+            ],
         ]);
     }
 
