@@ -51,6 +51,7 @@ return [
         'funding' => 'Euros invested in :count strategic areas',
         'grantees' => 'Grantees supported by all donors',
         'total' => [
+            'grant' => 'Total value of grant',
             'grants' => 'Total value of grants',
             'grantees' => 'Total number of grantees',
             'domains' => 'Domains covered',

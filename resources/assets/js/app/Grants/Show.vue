@@ -109,10 +109,10 @@
                         number: Object.values(this.grant.donors).join(', ') || null,
                     },
                     {
-                        title: this.$t('dashboard.stats.total.grants'),
+                        title: this.$t('dashboard.stats.total.grant'),
                         number:
-                            this.grant.funding_value !== null
-                                ? this.grant.funding_value.formatted
+                            this.grant.amount !== null
+                                ? this.grant.amount.formatted
                                 : null,
                     },
                     {
