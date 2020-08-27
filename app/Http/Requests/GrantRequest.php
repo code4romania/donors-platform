@@ -42,7 +42,7 @@ class GrantRequest extends FormRequest
         return [
             'name'              => ['required', 'string'],
             'domains.*'         => ['required', 'exists:domains,id'],
-            'max_grantees'      => ['required', 'numeric'],
+            'project_count'     => ['required', 'numeric'],
             'start_date'        => ['required', 'date_format:Y-m-d', 'before:end_date'],
             'end_date'          => ['required', 'date_format:Y-m-d', 'after:start_date'],
             'amount'            => ['required', 'numeric'],
