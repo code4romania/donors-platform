@@ -93,21 +93,66 @@
                     </div>
                 </div>
             </div>
+
+            <grid class="mt-8 lg:grid-cols-3">
+                <stats-card
+                    v-for="(card, index) in cards"
+                    :key="index"
+                    :title="card.title"
+                    :number="card.number"
+                    :with-panel="false"
+                />
+            </grid>
         </panel>
 
-        <div class="grid gap-8 md:grid-cols-3">
-            <panel class="md:col-span-2">a</panel>
-            <panel title="Total Funding" icon="Weather/sun-fill">
-                Total funding
-            </panel>
-        </div>
+        <search-filter v-model="search" @reset="reset">
+            <form-select
+                id="domain"
+                :label="$t('model.domain.plural')"
+                :options="domains.data"
+                :option-placeholder="$t('dashboard.all')"
+                option-value-key="id"
+                option-label-key="name"
+                v-model="filters.domain"
+            />
+        </search-filter>
+
+        <data-block>
+            <template slot="table">
+                <model-table
+                    :collection="grants"
+                    :columns="columns"
+                    route-name="grants.show"
+                    :route-args="routeArgs"
+                    :route-fill="{ grant: 'id' }"
+                    :paginate="true"
+                >
+                    <template v-slot:domains="{ row }">
+                        {{
+                            row.domains.map((domain) => domain.name).join(', ')
+                        }}
+                    </template>
+
+                    <template v-slot:funding_value="{ funding_value }">
+                        {{ funding_value.formatted }}
+                    </template>
+                </model-table>
+            </template>
+        </data-block>
     </layout>
 </template>
 
 <script>
+    import FilterMixin from '@/mixins/filter';
+
     export default {
+        mixins: [FilterMixin],
         props: {
+            columns: Array,
             donor: Object,
+            domains: Object,
+            grants: Object,
+            stats: Object,
         },
         metaInfo() {
             return {
@@ -135,6 +180,28 @@
                     },
                 ];
             },
+        },
+        data() {
+            return {
+                routeArgs: { donor: this.donor.id },
+                cards: [
+                    {
+                        title: this.$t('dashboard.stats.total.grants'),
+                        number:
+                            this.stats.total !== null
+                                ? this.stats.total.formatted
+                                : 0,
+                    },
+                    {
+                        title: this.$t('dashboard.stats.total.grantees'),
+                        number: this.stats.grantees,
+                    },
+                    {
+                        title: this.$t('dashboard.stats.total.domains'),
+                        number: this.stats.domains,
+                    },
+                ],
+            };
         },
     };
 </script>

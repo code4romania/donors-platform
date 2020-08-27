@@ -6,7 +6,6 @@ import throttle from 'lodash/throttle';
 export default {
     data() {
         return {
-            routeArgs: {},
             filters: this.$page.filters,
             search: this.$page.search,
             sort: this.$page.sort,
@@ -16,13 +15,11 @@ export default {
         routeData() {
             return pickBy(
                 merge(
-                    //
-                    this.routeArgs,
+                    {},
                     this.filters,
                     this.sort,
-                    {
-                        search: this.search,
-                    }
+                    { search: this.search },
+                    this.routeArgs
                 )
             );
         },

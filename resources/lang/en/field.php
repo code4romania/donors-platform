@@ -12,6 +12,7 @@ return [
     'email'                 => 'Email address',
     'end_date'              => 'End date',
     'first_name'            => 'First name',
+    'funding_value'         => 'Funding value',
     'grant_value'           => 'Grant value',
     'grantee.name'          => 'Grantee',
     'grantee_count'         => 'Number of grantees',

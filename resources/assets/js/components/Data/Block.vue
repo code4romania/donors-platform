@@ -3,7 +3,6 @@
         <div v-if="canChangeView" class="flex p-4 space-x-5">
             <template v-for="view in views">
                 <button
-                    v-if="hasData(view.name)"
                     :key="view.name"
                     class="inline-flex items-center transition duration-150 focus:outline-none"
                     :class="
@@ -39,13 +38,11 @@
 </template>
 
 <script>
+    import isEmpty from 'lodash/isEmpty';
+
     export default {
         name: 'DataBlock',
         props: {
-            tableData: {
-                type: Array,
-                default: () => [],
-            },
             chartData: {
                 type: Object,
                 default: () => ({
@@ -91,7 +88,7 @@
         },
         data() {
             return {
-                currentView: this.hasData('table') ? 'table' : 'chart',
+                currentView: this.hasTable() ? 'table' : 'chart',
                 views: [
                     {
                         name: 'table',
@@ -106,15 +103,18 @@
         },
         computed: {
             canChangeView() {
-                return this.hasData('table') && this.hasData('chart');
+                return this.hasTable() && this.hasChart();
             },
         },
         methods: {
+            hasTable() {
+                return this.$slots.hasOwnProperty('table');
+            },
+            hasChart() {
+                return !isEmpty(this.chartData);
+            },
             isCurrentView(name) {
                 return this.currentView === name;
-            },
-            hasData(name) {
-                return Object.keys(this[`${name}Data`]).length > 0;
             },
             changeView(name) {
                 this.currentView = name;

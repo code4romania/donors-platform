@@ -17,7 +17,12 @@
             leave-class="transform scale-100 opacity-100"
             leave-to-class="transform scale-95 opacity-0"
         >
-            <div v-if="open" ref="dropdown" class="rounded shadow-xl">
+            <div
+                v-if="open"
+                ref="dropdown"
+                class="rounded shadow-xl"
+                style="z-index: 99999;"
+            >
                 <div class="mt-2 bg-white rounded shadow-xs">
                     <slot name="dropdown" slim />
                 </div>

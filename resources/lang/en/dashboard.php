@@ -50,6 +50,11 @@ return [
         'donors' => 'Donors registered on the platform',
         'funding' => 'Euros invested in :count strategic areas',
         'grantees' => 'Grantees supported by all donors',
+        'total' => [
+            'grants' => 'Total value of grants',
+            'grantees' => 'Total number of grantees',
+            'domains' => 'Domains covered',
+        ],
     ],
 
     'view' => [

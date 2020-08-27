@@ -105,22 +105,22 @@
                 routeArgs: { grant: this.grant.id },
                 cards: [
                     {
-                        title: 'Donors',
+                        title: this.$t('model.donor.plural'),
                         number: Object.values(this.grant.donors).join(', ') || null,
                     },
                     {
-                        title: 'Total value of grants',
+                        title: this.$t('dashboard.stats.total.grants'),
                         number:
-                            this.grant.total_value !== null
-                                ? this.grant.total_value.formatted
+                            this.grant.funding_value !== null
+                                ? this.grant.funding_value.formatted
                                 : null,
                     },
                     {
-                        title: 'Total number of grantees',
+                        title: this.$t('dashboard.stats.total.grantees'),
                         number: this.grant.grantees || null,
                     },
                     {
-                        title: 'Areas covered',
+                        title: this.$t('dashboard.stats.total.grants'),
                         number:
                             this.grant.domains
                                 .map((domain) => domain.name)
