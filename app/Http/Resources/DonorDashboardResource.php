@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
-use Cknow\Money\Money;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class DonorDashboardResource extends JsonResource
@@ -30,7 +29,7 @@ class DonorDashboardResource extends JsonResource
             'type'             => $this->type,
             'grant_count'      => $this->grants->count(),
             'domains'          => $this->domains->map->only('id', 'name'),
-            'total_funding'    => Money::sum(...$this->grants->pluck('funding_value')),
+            'total_funding'    => $this->total_funding,
         ];
     }
 }
