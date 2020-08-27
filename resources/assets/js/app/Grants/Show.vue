@@ -120,11 +120,8 @@
                         number: this.grant.grantees || null,
                     },
                     {
-                        title: this.$t('dashboard.stats.total.grants'),
-                        number:
-                            this.grant.domains
-                                .map((domain) => domain.name)
-                                .join(', ') || null,
+                        title: this.$t('dashboard.stats.total.domains'),
+                        number: this.grant.domains.length,
                     },
                 ],
             };

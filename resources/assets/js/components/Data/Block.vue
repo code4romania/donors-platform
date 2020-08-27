@@ -69,22 +69,6 @@
                     ],
                 }),
             },
-            columns: {
-                type: Array,
-                default: () => [],
-            },
-            routeName: {
-                type: [String, null],
-                default: null,
-            },
-            routeArgs: {
-                type: Object,
-                default: () => ({}),
-            },
-            routeFill: {
-                type: Object,
-                default: () => ({}),
-            },
         },
         data() {
             return {

@@ -1,30 +1,27 @@
 <template>
     <th>
-        <div class="flex justify-between">
+        <component
+            :is="thComponent"
+            class="flex justify-between px-6 py-4 group"
+            :href="computedRoute"
+            :data="nextSortOrder"
+        >
             <span v-text="column.label" />
-            <inertia-link
-                v-if="column.sortable"
-                :href="computedRoute"
-                :data="linkData"
-                class="duration-150 cursor-pointer transition-color focus:outline-none focus:text-blue-600 hover:text-gray-600"
-                :class="{
-                    'text-gray-300': !isActive,
-                    'text-gray-900': isActive,
-                }"
-            >
+
+            <template v-if="column.sortable">
                 <svg-vue
-                    v-show="isOrderAsc || !$page.sort.order"
+                    v-if="isOrderAsc || !$page.sort.order"
                     icon="Editor/sort-asc"
                     :class="iconClass"
                 />
 
                 <svg-vue
-                    v-show="isOrderDesc"
+                    v-if="isOrderDesc"
                     icon="Editor/sort-desc"
                     :class="iconClass"
                 />
-            </inertia-link>
-        </div>
+            </template>
+        </component>
     </th>
 </template>
 
@@ -34,6 +31,7 @@
 
     export default {
         name: 'TableHead',
+        inheritAttrs: false,
         props: {
             column: {
                 type: Object,
@@ -45,40 +43,48 @@
             },
         },
         computed: {
+            thComponent() {
+                return this.column.sortable ? 'inertia-link' : 'div';
+            },
             field() {
                 return this.column.field.replace('___', '.');
             },
             computedRoute() {
+                if (this.thComponent !== 'inertia-link') {
+                    return false;
+                }
+
                 if (!this.route) {
                     return this.$route(this.$page.route);
                 }
 
                 return this.route;
             },
-            linkData() {
+            nextSortOrder() {
                 const filters = pickBy(
-                    merge(this.$page.filters, { search: this.$page.search })
+                    merge({ search: this.$page.search }, this.$page.filters)
                 );
 
-                if (this.isOrderAsc) {
-                    return {
-                        order: this.field,
-                        direction: 'desc',
-                        ...filters,
-                    };
-                } else if (this.isOrderDesc) {
-                    return {
-                        ...filters,
-                    };
-                } else {
+                if (!this.isActive) {
                     return {
                         order: this.field,
                         direction: 'asc',
                         ...filters,
                     };
+                } else {
+                    if (this.isOrderDesc) {
+                        return {
+                            ...filters,
+                        };
+                    } else {
+                        return {
+                            order: this.field,
+                            direction: 'desc',
+                            ...filters,
+                        };
+                    }
                 }
             },
-
             isActive() {
                 return this.$page.sort.order === this.field;
             },
@@ -89,7 +95,10 @@
                 return this.$page.sort.direction === 'desc';
             },
             iconClass() {
-                return 'w-5 h-5 fill-current';
+                return (
+                    'w-5 h-5 fill-current duration-150 cursor-pointer transition-color group-focus:outline-none group-focus:text-blue-600 group-hover:text-blue-500 ' +
+                    (this.isActive ? 'text-gray-900' : 'text-gray-300')
+                );
             },
         },
     };

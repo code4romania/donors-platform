@@ -18,12 +18,7 @@ task('assets:build', function () {
     if (test('[ -d public/assets ]')) {
         return;
     }
-
-    if (get['stage'] === 'production') {
-        run('{{bin/npm}} run production');
-    } else {
-        run('{{bin/npm}} run development');
-    }
+    run('{{bin/npm}} run production');
 })->local();
 
 desc('Upload assets to your hosts');

@@ -5,7 +5,6 @@
                 <thead>
                     <tr class="font-semibold leading-tight text-left">
                         <table-head
-                            class="px-6 py-4"
                             v-for="(column, index) in columns"
                             :key="index"
                             :column="column"
@@ -88,6 +87,10 @@
                 type: Object,
                 default: () => ({}),
             },
+            sortArgs: {
+                type: Object,
+                default: () => ({}),
+            },
             routeFill: {
                 type: Object,
                 default: () => ({}),
@@ -95,7 +98,10 @@
         },
         computed: {
             thRoute() {
-                return this.$route(this.$page.route, this.routeArgs);
+                return this.$route(
+                    this.$page.route,
+                    !isEmpty(this.sortArgs) ? this.sortArgs : this.routeArgs
+                );
             },
         },
         methods: {

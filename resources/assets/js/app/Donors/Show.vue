@@ -123,7 +123,7 @@
                     :collection="grants"
                     :columns="columns"
                     route-name="grants.show"
-                    :route-args="routeArgs"
+                    :sort-args="routeArgs"
                     :route-fill="{ grant: 'id' }"
                     :paginate="true"
                 >
