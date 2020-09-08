@@ -16,8 +16,8 @@ return [
 
     'action' => [
         'cancel'        => 'Cancel',
-        'create'        => 'Create',
-        'createModel'   => 'Create :model',
+        'create'        => 'Add',
+        'createModel'   => 'Add :model',
         'delete'        => 'Delete',
         'deleteConfirm' => 'Are you sure you want to delete this?',
         'deleteModel'   => 'Delete :model',

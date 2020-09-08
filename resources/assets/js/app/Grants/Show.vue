@@ -19,11 +19,16 @@
         </template>
 
         <panel>
-            <published-badge :status="grant.published_status" />
-            <h2
-                class="max-w-3xl mt-2 text-2xl font-bold leading-tight md:text-3xl"
-                v-text="grant.name"
-            />
+            <div class="max-w-3xl">
+                <published-badge :status="grant.published_status" />
+
+                <h2
+                    class="mt-2 mb-5 text-2xl font-bold leading-tight md:text-3xl"
+                    v-text="grant.name"
+                />
+
+                <p class="max-w-md" v-text="grant.description" />
+            </div>
 
             <grid class="mt-8 md:grid-cols-2 xl:grid-cols-4">
                 <stats-card

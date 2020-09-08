@@ -17,21 +17,30 @@ class CreateGrantsTable extends Migration
     {
         Schema::create('grants', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->decimal('amount', 16, 2)->nullable();
             $table->string('currency');
+            $table->decimal('amount', 16, 2)->nullable();
+            $table->decimal('regranting_amount', 16, 2)->nullable();
+
+            $table->boolean('matching')->nullable();
+            $table->unsignedSmallInteger('project_count')->nullable();
+
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
 
-            $table->unsignedSmallInteger('project_count')->nullable();
-
             $table->foreignId('grant_manager_id')->nullable()->constrained()->onDelete('cascade');
-
-            $table->decimal('regranting_amount', 16, 2)->nullable();
-            $table->boolean('matching')->nullable();
 
             $table->timestamps();
             $table->timestamp('published_at')->nullable();
+        });
+
+        Schema::create('grant_translations', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('grant_id')->constrained()->onDelete('cascade');
+            $table->timestamps();
+            $table->string('locale')->index();
+            $table->string('name');
+            $table->text('description');
+            $table->unique(['grant_id', 'locale']);
         });
 
         Schema::create('grantees', function (Blueprint $table) {
@@ -55,6 +64,7 @@ class CreateGrantsTable extends Migration
     {
         Schema::dropIfExists('donor_grant');
         Schema::dropIfExists('grantees');
+        Schema::dropIfExists('grant_translations');
         Schema::dropIfExists('grants');
     }
 }

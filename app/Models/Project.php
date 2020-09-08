@@ -8,7 +8,6 @@ use App\Traits\Filterable;
 use App\Traits\HasDates;
 use App\Traits\Sortable;
 use Cknow\Money\MoneyCast;
-use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {

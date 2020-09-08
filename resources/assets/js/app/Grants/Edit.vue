@@ -11,8 +11,18 @@
                     :label="$t('field.name')"
                     v-model="form.name"
                     class="lg:col-span-2"
+                    translated
                     required
                     autofocus
+                />
+
+                <form-input
+                    type="textarea"
+                    id="description"
+                    :label="$t('field.description')"
+                    v-model="form.description"
+                    class="lg:col-span-2"
+                    translated
                 />
 
                 <form-checkbox-group
@@ -116,7 +126,7 @@
                     v-model="form.manager"
                     option-value-key="id"
                     option-label-key="name"
-                    :option-placeholder="$t('none')"
+                    :option-placeholder="$t('field.none')"
                     class="lg:col-span-2"
                 />
 
@@ -133,7 +143,7 @@
 
                 <form-checkbox
                     id="matching"
-                    :label="$t('matching funds')"
+                    :label="$t('field.matching_funds')"
                     v-model="form.matching"
                 />
             </form-panel>
@@ -202,6 +212,7 @@
                     ...this.prepareFields(
                         [
                             'name',
+                            'description',
                             'currency',
                             'start_date',
                             'end_date',

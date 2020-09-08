@@ -6,6 +6,7 @@ return [
 
     'amount'                => 'Amount',
     'currency'              => 'Currency',
+    'description'           => 'Description',
     'domain'                => 'Domain',
     'domains'               => 'Domains',
     'donor_count'           => 'Number of donors',
@@ -23,7 +24,9 @@ return [
     'logo'                  => 'Logo',
     'managed'               => 'Managed by a grant manager',
     'manager'               => 'Grant manager',
+    'matching_funds'        => 'Matching funds',
     'name'                  => 'Name',
+    'none'                  => '–',
     'other'                 => 'Other',
     'password_confirmation' => 'Password confirmation',
     'password'              => 'Password',

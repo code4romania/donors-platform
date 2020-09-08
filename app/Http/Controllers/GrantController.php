@@ -58,6 +58,7 @@ class GrantController extends Controller
             'managers' => NameResource::collection(
                 GrantManager::getColumn('name'),
             ),
+            'translatable' => app(Grant::class)->translatable,
         ]);
     }
 
@@ -87,8 +88,7 @@ class GrantController extends Controller
                 'grantee.name', 'title', 'amount', 'start_date', 'end_date',
             ]),
             'projects' => ProjectIndexResource::collection(
-                Project::query()
-                    ->where('grant_id', $grant->id)
+                $grant->projects()
                     ->filter()
                     ->sort()
                     ->paginate()
@@ -109,6 +109,7 @@ class GrantController extends Controller
             'managers' => NameResource::collection(
                 GrantManager::getColumn('name'),
             ),
+            'translatable' => $grant->translatable,
         ]);
     }
 

@@ -8,7 +8,6 @@ use App\Traits\Draftable;
 use App\Traits\Filterable;
 use App\Traits\HasDomains;
 use App\Traits\Sortable;
-use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 

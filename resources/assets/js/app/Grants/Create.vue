@@ -116,7 +116,7 @@
                     v-model="form.manager"
                     option-value-key="id"
                     option-label-key="name"
-                    :option-placeholder="$t('none')"
+                    :option-placeholder="$t('field.none')"
                     class="lg:col-span-2"
                 />
 
@@ -133,7 +133,7 @@
 
                 <form-checkbox
                     id="matching"
-                    :label="$t('matching funds')"
+                    :label="$t('field.matching_funds')"
                     v-model="form.matching"
                 />
             </form-panel>

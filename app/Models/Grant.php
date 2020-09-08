@@ -9,17 +9,19 @@ use App\Traits\Filterable;
 use App\Traits\HasDates;
 use App\Traits\HasDomains;
 use App\Traits\Sortable;
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+use Astrotomic\Translatable\Translatable;
 use Cknow\Money\Money;
 use Cknow\Money\MoneyCast;
-use Illuminate\Database\Eloquent\Model;
 
-class Grant extends Model
+class Grant extends Model implements TranslatableContract
 {
     use Draftable,
         Filterable,
         HasDates,
         HasDomains,
-        Sortable;
+        Sortable,
+        Translatable;
 
     /**
      * The attributes that are mass assignable.
@@ -27,7 +29,7 @@ class Grant extends Model
      * @var string[]
      */
     protected $fillable = [
-        'name', 'amount', 'currency', 'start_date', 'end_date', 'project_count', 'regranting_amount', 'matching',
+        'name', 'description', 'amount', 'currency', 'start_date', 'end_date', 'project_count', 'regranting_amount', 'matching',
     ];
 
     /**
@@ -58,6 +60,13 @@ class Grant extends Model
      */
     protected $sortable = [
         'name', 'amount',
+    ];
+
+    /**
+     * @var string[]
+     */
+    public $translatedAttributes = [
+        'name', 'description',
     ];
 
     /**

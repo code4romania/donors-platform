@@ -6,6 +6,7 @@ return [
 
     'amount'                => 'Sumă',
     'currency'              => 'Monedă',
+    'description'           => 'Descriere',
     'domain'                => 'Domeniu',
     'domains'               => 'Domenii',
     'donor_count'           => 'Număr de finanțatori',
@@ -23,7 +24,9 @@ return [
     'logo'                  => 'Logo',
     'managed'               => 'Gestionat de un grant manager',
     'manager'               => 'Grant manager',
+    'matching_funds'        => 'Matching funds',
     'name'                  => 'Nume',
+    'none'                  => '–',
     'other'                 => 'Altele',
     'password_confirmation' => 'Confirmarea parolei',
     'password'              => 'Parolă',

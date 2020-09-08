@@ -16,8 +16,8 @@ return [
 
     'action' => [
         'cancel'        => 'Anulează',
-        'create'        => 'Creează',
-        'createModel'   => 'Creează :model',
+        'create'        => 'Adaugă',
+        'createModel'   => 'Adaugă :model',
         'delete'        => 'Șterge',
         'deleteConfirm' => 'Sigur vrei să ștergi asta?',
         'deleteModel'   => 'Șterge :model',

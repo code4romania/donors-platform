@@ -4,7 +4,7 @@
             <form-label
                 v-if="label"
                 :label="label"
-                :id="id"
+                :id="translated && locales ? `${id}_${locale}` : id"
                 :required="$attrs.required"
                 class="flex-1"
             />
@@ -25,7 +25,8 @@
                     v-show="isCurrentLocale(locale)"
                     :key="locale"
                     :type="type"
-                    :id="id"
+                    :id="`${id}_${locale}`"
+                    :autofocus="$attrs.autofocus && isCurrentLocale(locale)"
                     v-bind="$attrs"
                     v-model="dataValue[locale]"
                     @input="update(locale, ...arguments)"

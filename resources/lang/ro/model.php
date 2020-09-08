@@ -46,14 +46,14 @@ return [
                 'description' => 'Iste et quisquam enim aut error aut. A quidem quas. Ex tenetur id nesciunt eligendi tenetur ut. Porro esse vero adipisci qui est. Ipsam ab non aut. Suscipit nulla est sed et enim illo eos.',
             ],
             'grantees' => [
-                'title' => 'Beneficiari',
+                'title' => 'Titulari de grant',
                 'description' => 'Iste et quisquam enim aut error aut. A quidem quas. Ex tenetur id nesciunt eligendi tenetur ut. Porro esse vero adipisci qui est. Ipsam ab non aut. Suscipit nulla est sed et enim illo eos.',
             ],
         ],
     ],
     'grantee' => [
-        'singular' => 'Beneficiar',
-        'plural'   => 'Beneficiari',
+        'singular' => 'Titular de grant',
+        'plural'   => 'Titulari de grant',
 
         'section' => [
             'title' => 'Lorem ipsum',

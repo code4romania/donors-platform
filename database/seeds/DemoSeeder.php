@@ -6,13 +6,14 @@ use App\Models\Domain;
 use App\Models\Donor;
 use App\Models\Grant;
 use App\Models\Grantee;
+use App\Models\GrantManager;
 use App\Models\Project;
 use App\Models\User;
-use Cknow\Money\Money;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class DemoSeeder extends Seeder
 {
@@ -37,40 +38,49 @@ class DemoSeeder extends Seeder
         }
     }
 
-    protected function readData(string $filename): Collection
+    public function readData(string $filename): Collection
     {
-        $rows = array_map('str_getcsv', file(database_path("demo/{$filename}.csv")));
-        $header = array_shift($rows);
+        $file = file(database_path("demo/{$filename}.csv"));
 
-        $data = [];
-        foreach ($rows as $row) {
-            $row = array_combine($header, $row);
+        $header = collect(str_getcsv(array_shift($file), ';'))
+            ->map(fn ($col) => Str::snake($col));
 
-            foreach ($row as $key => $value) {
-                if (! $value) {
-                    $row[$key] = null;
-                }
+        return collect($file)
+            ->map(
+                fn ($row) => $header->combine(str_getcsv($row, ';'))
+                    ->map(function ($value, $key) {
+                        if (! $value) {
+                            return null;
+                        }
 
-                switch ($key) {
-                    case 'start_date':
-                    case 'end_date':
-                        $row[$key] = $value ? Carbon::parse($value)->format('Y-m-d') : null;
-                        break;
+                        $value = trim($value);
 
-                    case 'amount':
-                        $row[$key] = intval($value);
-                        break;
+                        switch (Str::lower($key)) {
+                            case 'start_date':
+                            case 'end_date':
+                                return $value ? Carbon::parse($value)->format('Y-m-d') : null;
+                                break;
 
-                    case 'domains':
-                        $row[$key] = collect(explode(', ', $value));
-                        break;
-                }
-            }
+                            case 're-granted_amount':
+                            case 'contracted_in2019':
+                            case 'contracted_in2020':
+                                return floatval($value);
+                                break;
 
-            $data[] = $row;
-        }
+                            case 'domain':
+                                return collect(explode(', ', $value));
+                                break;
 
-        return collect($data);
+                            case 'grant_manager':
+                                return boolval($value);
+                                break;
+
+                            default:
+                                return $value;
+                                break;
+                        }
+                    })
+            );
     }
 
     protected function seedRafData()
@@ -91,77 +101,83 @@ class DemoSeeder extends Seeder
 
         $data = $this->readData('raf');
 
-        $domains = $data->pluck('domains')
+        $domains = $data->pluck('domain')
             ->flatten()
             ->unique()
             ->filter()
             ->values()
             ->map(fn ($name) => Domain::create(['name' => $name]));
 
-        $grants = $data->pluck('grant')
+        $grantees = $data->pluck('grant_beneficiary')
             ->unique()
             ->filter()
-            ->map(function ($name) use ($donor, $domains, $data) {
+            ->map(fn ($name) => Grantee::create(['name' => $name]));
+
+        $managers = $data->where('grant_manager', true)
+            ->pluck('grant_beneficiary')
+            ->unique()
+            ->filter()
+            ->map(fn ($name) => GrantManager::create(['name' => $name]));
+
+        $data->groupBy('program_name_en')
+            ->map(function ($projects, $name) use ($donor, $domains, $grantees, $managers, $data) {
                 $grant = Grant::create([
-                    'name'         => $name,
-                    'currency'     => 'USD',
-                    'published_at' => Carbon::now(),
+                    'currency'          => 'USD',
+                    'amount'            => $projects->pluck('contracted_in2019')->sum(),
+                    'project_count'     => $projects->count(),
+                    'regranting_amount' => $projects->first()->get('re-granted_amount'),
+                    'start_date'        => $projects->first()->get('start_date'),
+                    'end_date'          => $projects->first()->get('end_date'),
+                    'en'                => [
+                        'name'        => $projects->first()->get('program_name_en'),
+                        'description' => $projects->first()->get('program_description_en'),
+                    ],
+                    'ro'                => [
+                        'name'        => $projects->first()->get('program_name_ro'),
+                        'description' => $projects->first()->get('program_description_ro'),
+                    ],
+                    'published_at'      => Carbon::now(),
                 ]);
+
+                $grant->donors()->sync($donor->id);
 
                 $grant->domains()->attach(
                     $data->where('grant', $name)
-                        ->pluck('domains')
+                        ->pluck('domain')
                         ->flatten()
                         ->unique()
                         ->map(fn ($name) => $domains->firstWhere('name', $name)->id ?? null)
                         ->filter()
                 );
 
-                $grant->donors()->sync($donor->id);
+                if ($projects->first()->get('grant_manager') === true) {
+                    $grant->manager()->associate(
+                        $managers->firstWhere('name', $projects->first()->get('grant_beneficiary'))->id
+                    );
+                }
+
+                $grant->save();
+
+                $projects->map(function ($projectData) use ($grant, $grantees) {
+                    $project = Project::make([
+                        'title'      => null,
+                        'amount'     => $projectData['contracted_in2019'],
+                        'currency'   => 'USD',
+                        'start_date' => $projectData['start_date'],
+                        'end_date'   => $projectData['end_date'],
+                    ]);
+
+                    $project->grant()->associate($grant);
+
+                    $project->grantee()->associate(
+                        $grantees->firstWhere('name', $projectData['grant_beneficiary'])->id
+                    );
+
+                    $project->save();
+                });
 
                 return $grant;
             });
-
-        $grantees = $data->pluck('grantee')
-            ->unique()
-            ->map(fn ($name) => Grantee::create(['name' => $name]));
-
-        $data->each(function ($project) use ($grants, $grantees) {
-            if (null === $grant = $grants->firstWhere('name', $project['grant'])) {
-                return;
-            }
-
-            if (null === $grantee = $grantees->firstWhere('name', $project['grantee'])) {
-                return;
-            }
-
-            $project = Project::make([
-                'title'      => null,
-                'amount'     => $project['amount'],
-                'currency'   => 'USD',
-                'start_date' => $project['start_date'],
-                'end_date'   => $project['end_date'],
-            ]);
-
-            $project->grant()->associate($grant);
-            $project->grantee()->associate($grantee);
-
-            $project->save();
-        });
-
-        $grants->each(function ($grant) {
-            $grant->amount = $grant->projects
-                ->pluck('amount')
-                ->filter()
-                ->unlessEmpty(
-                    fn ($amounts) => Money::sum(...$amounts),
-                    fn () => money(0),
-                );
-
-            $grant->project_count = $grant->projects->count();
-
-            $grant->save();
-        });
 
         return $data;
     }
