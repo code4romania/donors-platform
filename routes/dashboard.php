@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+Route::get('/', \App\Http\Controllers\DashboardController::class)->name('dashboard');
 
 Route::resource('donors', \App\Http\Controllers\DonorController::class);
 Route::resource('domains', \App\Http\Controllers\DomainController::class);

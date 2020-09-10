@@ -39,7 +39,7 @@ class CreateGrantsTable extends Migration
             $table->timestamps();
             $table->string('locale')->index();
             $table->string('name');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->unique(['grant_id', 'locale']);
         });
 

@@ -38,7 +38,7 @@
                 </button>
             </div>
             <inertia-link
-                :href="$route('dashboard.index')"
+                :href="$route('dashboard')"
                 class="flex items-center flex-shrink-0 h-16 px-4 transition-colors duration-150 bg-gray-900 hover:bg-gray-700 focus:bg-gray-700 focus:outline-none"
             >
                 <Logo class="w-full h-8 text-gray-200" />
@@ -85,7 +85,7 @@
                 items: [
                     {
                         icon: 'System/dashboard-fill',
-                        href: this.$route('dashboard.index'),
+                        href: this.$route('dashboard'),
                         label: this.$t('dashboard.menu.dashboard'),
                     },
                     {

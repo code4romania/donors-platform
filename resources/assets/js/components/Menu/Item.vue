@@ -58,7 +58,7 @@
             isCurrentUrl(href) {
                 let currentUrl = location.origin + location.pathname;
 
-                if (href !== this.$route('dashboard.index')) {
+                if (href !== this.$route('dashboard')) {
                     return currentUrl.startsWith(href);
                 }
 
