@@ -7,11 +7,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
 
-Route::resource('donors', 'DonorController');
-Route::resource('domains', 'DomainController');
-Route::resource('grants', 'GrantController');
-Route::resource('grants/{grant}/projects', 'ProjectController');
-Route::resource('managers', 'GrantManagerController');
+Route::resource('donors', \App\Http\Controllers\DonorController::class);
+Route::resource('domains', \App\Http\Controllers\DomainController::class);
+Route::resource('grants', \App\Http\Controllers\GrantController::class);
+Route::resource('grants/{grant}/projects', \App\Http\Controllers\ProjectController::class);
+Route::resource('managers', \App\Http\Controllers\GrantManagerController::class);
 
-Route::resource('grantees', 'GranteeController');
-Route::resource('users', 'UserController');
+Route::resource('grantees', \App\Http\Controllers\GranteeController::class);
+Route::resource('users', \App\Http\Controllers\UserController::class);

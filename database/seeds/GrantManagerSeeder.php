@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Database\Seeders;
+
 use App\Models\GrantManager;
 use Illuminate\Database\Seeder;
 
@@ -14,7 +16,8 @@ class GrantManagerSeeder extends Seeder
      */
     public function run()
     {
-        factory(GrantManager::class, 20)
+        GrantManager::factory()
+            ->count(20)
             ->create();
     }
 }

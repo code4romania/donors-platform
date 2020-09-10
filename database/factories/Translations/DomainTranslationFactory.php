@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Database\Factories;
+namespace Database\Factories\Translations;
 
-use App\Models\Grantee;
+use App\Translations\DomainTranslation;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class GranteeFactory extends Factory
+class DomainTranslationFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Grantee::class;
+    protected $model = DomainTranslation::class;
 
     /**
      * Define the model's default state.
@@ -23,8 +23,10 @@ class GranteeFactory extends Factory
      */
     public function definition()
     {
-        return  [
-            'name' => $this->faker->sentence,
+        return [
+            'domain_id' => null,
+            'name'      => $this->faker->sentence,
+            'locale'    => config('app.locale'),
         ];
     }
 }

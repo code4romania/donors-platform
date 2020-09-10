@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Database\Seeders;
+
 use App\Models\Donor;
 use Illuminate\Database\Seeder;
 
@@ -14,7 +16,8 @@ class DonorSeeder extends Seeder
      */
     public function run()
     {
-        factory(Donor::class, 20)
+        Donor::factory()
+            ->count(20)
             ->create();
     }
 }

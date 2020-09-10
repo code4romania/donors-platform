@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Database\Seeders;
+
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -14,14 +16,15 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        factory(User::class)
+        User::factory()
             ->create([
                 'name'  => 'Administrator',
                 'email' => 'admin@example.com',
             ])
             ->assignRole('admin');
 
-        factory(User::class, 10)
+        User::factory()
+            ->count(10)
             ->create()
             ->each
             ->assignRole('user');

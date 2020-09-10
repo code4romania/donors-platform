@@ -9,30 +9,30 @@
     "license": "MIT",
     "require": {
         "php": "^7.4",
-        "astrotomic/laravel-translatable": "^11.8",
-        "cknow/laravel-money": "^5.0",
+        "astrotomic/laravel-translatable": "^11.9",
+        "cknow/laravel-money": "^6.0",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
-        "guzzlehttp/guzzle": "^7.0",
+        "guzzlehttp/guzzle": "^7.0.1",
         "inertiajs/inertia-laravel": "^0.2.5",
-        "laravel/framework": "^7.0",
+        "laravel/framework": "^8.0",
         "laravel/scout": "^8.2",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.1",
-        "lorisleiva/laravel-deployer": "^0.3.2",
+        "lorisleiva/laravel-deployer": "dev-laravel-8-support",
         "reinink/remember-query-strings": "^0.1.0",
         "spatie/laravel-activitylog": "^3.14",
         "spatie/laravel-medialibrary": "^8.3",
         "spatie/laravel-permission": "^3.13",
-        "teamtnt/laravel-scout-tntsearch-driver": "^9.0",
+        "teamtnt/laravel-scout-tntsearch-driver": "dev-master",
         "tightenco/ziggy": "^0.9.4"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.3",
-        "facade/ignition": "^2.0",
+        "facade/ignition": "^2.3.6",
         "fzaninotto/faker": "^1.9.1",
         "mockery/mockery": "^1.3.1",
-        "nunomaduro/collision": "^4.1",
+        "nunomaduro/collision": "^5.0.2",
         "phpunit/phpunit": "^9.0"
     },
     "config": {
@@ -74,5 +74,11 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ]
-    }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:andreiio/laravel-deployer.git"
+        }
+    ]
 }

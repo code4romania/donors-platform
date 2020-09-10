@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Database\Seeders;
+
 use App\Models\Domain;
 use App\Models\Donor;
 use App\Models\Grant;

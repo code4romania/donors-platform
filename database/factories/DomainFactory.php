@@ -2,38 +2,55 @@
 
 declare(strict_types=1);
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
 use App\Models\Domain;
 use App\Translations\DomainTranslation;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Domain::class, function (Faker $faker) {
-    return [];
-});
+class DomainFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Domain::class;
 
-$factory->define(DomainTranslation::class, function (Faker $faker) {
-    return [
-        'domain_id' => null,
-        'name'      => $faker->sentence,
-        'locale'    => 'en',
-    ];
-});
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            //
+        ];
+    }
 
-$factory->afterCreating(Domain::class, function (Domain $domain, Faker $faker) {
-    $locales = collect(config('translatable.locales'));
+    /**
+     * Configure the model factory.
+     *
+     * @return $this
+     */
+    public function configure()
+    {
+        return $this->afterCreating(function (Domain $domain) {
+            $locales = collect(config('translatable.locales'));
 
-    $domain->translation()->saveMany(
-        $locales->map(function ($locale) use ($domain) {
-            return factory(DomainTranslation::class)
-                ->create([
-                    'domain_id' => $domain->id,
-                    'locale'    => $locale,
-                ]);
-        })
-    );
+            $domain->translation()->saveMany(
+                $locales->map(fn ($locale) => DomainTranslation::factory()
+                    ->create([
+                        'domain_id' => $domain->id,
+                        'locale'    => $locale,
+                    ])
+                )
+            );
 
-    // we need to manually "reload" the collection built from the relationship
-    // otherwise $this->translations()->get() would NOT be the same as $this->translations
-    $domain->load('translations');
-});
+            // we need to manually "reload" the collection built from the relationship
+            // otherwise $this->translations()->get() would NOT be the same as $this->translations
+            $domain->load('translations');
+        });
+    }
+}

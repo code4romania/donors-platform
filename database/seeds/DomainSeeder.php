@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Database\Seeders;
+
 use App\Models\Domain;
 use Illuminate\Database\Seeder;
 
@@ -14,7 +16,8 @@ class DomainSeeder extends Seeder
      */
     public function run()
     {
-        factory(Domain::class, 10)
+        Domain::factory()
+            ->count(10)
             ->create();
     }
 }
