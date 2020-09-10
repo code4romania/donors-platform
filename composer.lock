@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a2ec73a7bf31fec571b2f8d69a62a425",
+    "content-hash": "ac087022df90c899bd17977b13dc6a3f",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1911,16 +1911,16 @@
         },
         {
             "name": "lorisleiva/laravel-deployer",
-            "version": "dev-laravel-8-support",
+            "version": "v0.3.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/andreiio/laravel-deployer.git",
-                "reference": "919bcfe064097b6acebbb52ac37c43d591948478"
+                "url": "https://github.com/lorisleiva/laravel-deployer.git",
+                "reference": "7ad11205a1965a04fcd3757c8ef340476a0901a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/andreiio/laravel-deployer/zipball/919bcfe064097b6acebbb52ac37c43d591948478",
-                "reference": "919bcfe064097b6acebbb52ac37c43d591948478",
+                "url": "https://api.github.com/repos/lorisleiva/laravel-deployer/zipball/7ad11205a1965a04fcd3757c8ef340476a0901a4",
+                "reference": "7ad11205a1965a04fcd3757c8ef340476a0901a4",
                 "shasum": ""
             },
             "require": {
@@ -1947,14 +1947,7 @@
                     "src/autoload.php"
                 ]
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Lorisleiva\\LaravelDeployer\\Test\\": "tests"
-                },
-                "files": [
-                    "tests/autoload.php"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1965,16 +1958,7 @@
                 }
             ],
             "description": "Laravel Deployer is a lightweight wrapper of Deployer giving Artisan the power of zero-downtime deployment.",
-            "support": {
-                "source": "https://github.com/andreiio/laravel-deployer/tree/laravel-8-support"
-            },
-            "funding": [
-                {
-                    "type": "github",
-                    "url": "https://github.com/andreiio"
-                }
-            ],
-            "time": "2020-09-10T09:30:47+00:00"
+            "time": "2020-09-10T20:04:38+00:00"
         },
         {
             "name": "maennchen/zipstream-php",
@@ -8908,7 +8892,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "lorisleiva/laravel-deployer": 20,
         "teamtnt/laravel-scout-tntsearch-driver": 20
     },
     "prefer-stable": true,

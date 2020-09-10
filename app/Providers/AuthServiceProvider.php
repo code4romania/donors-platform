@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Inertia\Inertia;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -32,5 +34,14 @@ class AuthServiceProvider extends ServiceProvider
 
         //
         Gate::guessPolicyNamesUsing(fn ($model) => str_replace('App\Models', 'App\Policies', $model) . 'Policy');
+
+        Inertia::share('auth', fn () => Auth::check() ? [
+            'id'          => Auth::user()->id,
+            'name'        => Auth::user()->name,
+            'email'       => Auth::user()->email,
+            'avatar'      => Auth::user()->avatar,
+            'role'        => Auth::user()->role,
+            'permissions' => Auth::user()->all_permissions,
+        ] : null);
     }
 }

@@ -46,12 +46,26 @@
             route-name="grants.show"
             :paginate="true"
         >
-            <template v-slot:domains="{ domains }">
-                {{ domains.map((domain) => domain.name).join(', ') }}
+            <template v-slot:name="{ name, row }">
+                <div>{{ name }}</div>
+
+                <div v-if="row.domains.length" class="flex mt-2 space-x-3">
+                    <base-badge
+                        v-for="domain in row.domains"
+                        :key="domain"
+                        :text="domain"
+                        color="orange"
+                        shade="light"
+                    />
+                </div>
+            </template>
+
+            <template v-slot:donors="{ donors }">
+                {{ donors.join(', ') }}
             </template>
 
             <template v-slot:amount="{ amount }">
-                {{ amount.formatted }}
+                <div class="text-right" v-text="amount" />
             </template>
 
             <template v-slot:published_status="{ published_status }">

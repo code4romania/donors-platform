@@ -6,8 +6,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\GrantManagerRequest;
 use App\Http\Resources\DomainResource;
-use App\Http\Resources\GrantIndexResource;
 use App\Http\Resources\GrantManagerResource;
+use App\Http\Resources\GrantResource;
 use App\Models\Domain;
 use App\Models\Grant;
 use App\Models\Grantee;
@@ -72,7 +72,7 @@ class GrantManagerController extends Controller
             'domains' => DomainResource::collection(
                 Domain::orderByTranslation('name', 'asc')->get()
             ),
-            'grants' => GrantIndexResource::collection(
+            'grants' => GrantResource::collection(
                 $manager->grants()->with('projects')
                     ->filter()
                     ->sort()

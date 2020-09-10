@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+use Astrotomic\Translatable\Validation\RuleFactory;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -29,6 +30,10 @@ class GrantRequest extends FormRequest
         $this->merge([
             'amount'            => floatval($this->amount),
             'regranting_amount' => floatval($this->regranting_amount),
+
+            collect(config('translatable.locales'))
+                ->mapwithKeys(fn ($locale) => [$locale => json_decode($this->$locale, true)])
+                ->toArray(),
         ]);
     }
 
@@ -39,8 +44,9 @@ class GrantRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name'              => ['required', 'string'],
+        return RuleFactory::make([
+            '%name%'            => ['required', 'string'],
+            '%description%'     => ['nullable', 'string'],
             'domains.*'         => ['required', 'exists:domains,id'],
             'project_count'     => ['required', 'numeric'],
             'start_date'        => ['required', 'date_format:Y-m-d', 'before:end_date'],
@@ -51,6 +57,6 @@ class GrantRequest extends FormRequest
             'manager'           => ['nullable', 'exists:grant_managers,id'],
             'regranting_amount' => ['nullable', 'lte:amount'],
             'matching'          => ['nullable', 'boolean'],
-        ];
+        ]);
     }
 }

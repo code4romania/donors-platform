@@ -10,6 +10,7 @@ return [
     'domain'                => 'Domeniu',
     'domains'               => 'Domenii',
     'donor_count'           => 'Număr de finanțatori',
+    'donors'                => 'Finanțatori',
     'email'                 => 'Adresă de email',
     'end_date'              => 'Dată sfârșit',
     'first_name'            => 'Prenume',

@@ -51,10 +51,6 @@ class DemoSeeder extends Seeder
             ->map(
                 fn ($row) => $header->combine(str_getcsv($row, ';'))
                     ->map(function ($value, $key) {
-                        if (! $value) {
-                            return null;
-                        }
-
                         $value = trim($value);
 
                         switch (Str::lower($key)) {
@@ -78,7 +74,7 @@ class DemoSeeder extends Seeder
                                 break;
 
                             default:
-                                return $value;
+                                return $value ?: null;
                                 break;
                         }
                     })
@@ -122,7 +118,7 @@ class DemoSeeder extends Seeder
             ->map(fn ($name) => GrantManager::create(['name' => $name]));
 
         $data->groupBy('program_name_en')
-            ->map(function ($projects, $name) use ($donor, $domains, $grantees, $managers, $data) {
+            ->map(function ($projects, $name) use ($donor, $domains, $grantees, $managers) {
                 $grant = Grant::create([
                     'currency'          => 'USD',
                     'amount'            => $projects->pluck('contracted_in2019')->sum(),
@@ -143,8 +139,8 @@ class DemoSeeder extends Seeder
 
                 $grant->donors()->sync($donor->id);
 
-                $grant->domains()->attach(
-                    $data->where('grant', $name)
+                $grant->domains()->sync(
+                    $projects
                         ->pluck('domain')
                         ->flatten()
                         ->unique()
@@ -163,8 +159,7 @@ class DemoSeeder extends Seeder
                 $projects->map(function ($projectData) use ($grant, $grantees) {
                     $project = Project::make([
                         'title'      => null,
-                        'amount'     => $projectData['contracted_in2019'],
-                        'currency'   => 'USD',
+                        'amount'     => $projectData['contracted_in2019'] ?? 0,
                         'start_date' => $projectData['start_date'],
                         'end_date'   => $projectData['end_date'],
                     ]);

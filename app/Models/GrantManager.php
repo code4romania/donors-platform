@@ -85,7 +85,7 @@ class GrantManager extends Model implements HasMedia
             ->filter()
             ->unlessEmpty(
                 fn ($amounts) => Money::sum(...$amounts),
-                fn () => null,
+                fn () => money(0),
             );
     }
 

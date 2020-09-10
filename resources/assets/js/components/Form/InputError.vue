@@ -27,22 +27,14 @@
                     : this.id;
             },
             hasErrors() {
-                if (!this.$page.errors.hasOwnProperty(this.errorKey)) {
-                    return false;
-                }
-
-                if (!Array.isArray(this.$page.errors[this.errorKey])) {
-                    return false;
-                }
-
-                return this.$page.errors[this.errorKey].length > 0;
+                return this.$page.errors.hasOwnProperty(this.errorKey);
             },
             message() {
                 if (!this.hasErrors) {
                     return null;
                 }
 
-                return this.$page.errors[this.errorKey][0];
+                return this.$page.errors[this.errorKey];
             },
         },
         methods: {},

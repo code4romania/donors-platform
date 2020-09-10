@@ -21,8 +21,8 @@ class CreateProjectsTable extends Migration
             $table->foreignId('grantee_id')->constrained()->onDelete('cascade');
 
             $table->string('title')->nullable();
-            $table->decimal('amount', 16, 2)->nullable();
-            $table->string('currency');
+            $table->decimal('amount', 16, 2);
+
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
 

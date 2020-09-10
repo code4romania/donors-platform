@@ -7,7 +7,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProjectRequest;
 use App\Http\Resources\GranteeResource;
 use App\Http\Resources\GrantShowResource;
-use App\Http\Resources\ProjectShowResource;
+use App\Http\Resources\ProjectResource;
 use App\Models\Grant;
 use App\Models\Grantee;
 use App\Models\Project;
@@ -20,15 +20,21 @@ class ProjectController extends Controller
 {
     public function index(Grant $grant): RedirectResponse
     {
-        return Redirect::route('grants.show', ['grant' => $grant]);
+        return Redirect::route('grants.show', [
+            'grant' => $grant,
+        ]);
     }
 
     public function create(Grant $grant): Response
     {
+        abort_unless($grant->projects->count() < $grant->project_count, 403);
+
         return Inertia::render('Projects/Create', [
             'grant'    => GrantShowResource::make($grant),
             'grantees' => GranteeResource::collection(
-                Grantee::orderBy('name', 'asc')->get()
+                Grantee::query()
+                    ->orderBy('name', 'asc')
+                    ->get()
             ),
         ]);
     }
@@ -56,18 +62,26 @@ class ProjectController extends Controller
 
     public function show(Grant $grant): RedirectResponse
     {
-        return Redirect::route('grants.show', ['grant' => $grant]);
+        return Redirect::route('grants.show', [
+            'grant' => $grant,
+        ]);
     }
 
-    public function edit(Grant $grant, Project $project): Response
+    public function edit(Grant $grant, int $project): Response
     {
-        abort_unless($grant->is($project->grant), 403);
+        $project = $grant->projects->firstWhere('id', $project);
+
+        abort_unless($project, 404);
+
+        $project->setRelation('grant', $grant);
 
         return Inertia::render('Projects/Edit', [
-            'project'  => ProjectShowResource::make($project),
+            'project'  => ProjectResource::make($project),
             'grant'    => GrantShowResource::make($grant),
             'grantees' => GranteeResource::collection(
-                Grantee::orderBy('name', 'asc')->get()
+                Grantee::query()
+                    ->orderBy('name', 'asc')
+                    ->get()
             ),
         ]);
     }

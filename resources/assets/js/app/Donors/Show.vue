@@ -135,8 +135,8 @@
                         }}
                     </template>
 
-                    <template v-slot:funding_value="{ funding_value }">
-                        {{ funding_value.formatted }}
+                    <template v-slot:amount="{ amount }">
+                        {{ amount.formatted }}
                     </template>
                 </model-table>
             </template>
@@ -163,9 +163,7 @@
         },
         computed: {
             pageTitle() {
-                return this.$t('dashboard.action.viewModel', {
-                    model: this.$t('model.donor.singular').toLowerCase(),
-                });
+                return this.donor.name;
             },
             editLabel() {
                 return this.$t('dashboard.action.edit');

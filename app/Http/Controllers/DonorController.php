@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\DonorRequest;
 use App\Http\Resources\DonorResource;
-use App\Http\Resources\GrantIndexResource;
+use App\Http\Resources\GrantResource;
 use App\Http\Resources\NameResource;
 use App\Models\Domain;
 use App\Models\Donor;
@@ -68,13 +68,13 @@ class DonorController extends Controller
     {
         return Inertia::render('Donors/Show', [
             'columns' => $this->getIndexColumns(Grant::class, [
-                'name', 'domains', 'funding_value',
+                'name', 'domains', 'amount',
             ]),
             'donor'  => DonorResource::make($donor),
             'domains' => NameResource::collection(
                 Domain::orderByTranslation('name', 'asc')->getColumn('name')
             ),
-            'grants' => GrantIndexResource::collection(
+            'grants' => GrantResource::collection(
                 $donor->grants()
                     ->filter()
                     ->sort()

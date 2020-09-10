@@ -19,7 +19,7 @@
         "laravel/scout": "^8.2",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.1",
-        "lorisleiva/laravel-deployer": "dev-laravel-8-support",
+        "lorisleiva/laravel-deployer": "^0.3.3",
         "reinink/remember-query-strings": "^0.1.0",
         "spatie/laravel-activitylog": "^3.14",
         "spatie/laravel-medialibrary": "^8.3",
@@ -74,11 +74,5 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ]
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:andreiio/laravel-deployer.git"
-        }
-    ]
+    }
 }

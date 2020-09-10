@@ -118,7 +118,7 @@
                         icon: 'User/user-settings-line',
                         href: this.$route('users.index'),
                         label: this.$t('dashboard.menu.users'),
-                        guard: 'manage users',
+                        guard: this.$userCan('create', 'users'),
                     },
                 ],
             };
@@ -134,7 +134,7 @@
                     return true;
                 }
 
-                return this.$userCan(item.guard);
+                return item.guard;
             },
         },
     };

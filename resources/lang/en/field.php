@@ -10,6 +10,7 @@ return [
     'domain'                => 'Domain',
     'domains'               => 'Domains',
     'donor_count'           => 'Number of donors',
+    'donors'                => 'Donors',
     'email'                 => 'Email address',
     'end_date'              => 'End date',
     'first_name'            => 'First name',

@@ -3,7 +3,9 @@
         <template v-slot:actions>
             <div>
                 <form-button
-                    color="teal"
+                    v-if="grant.project_count > projects.meta.total"
+                    color="blue"
+                    shade="light"
                     :href="$route('projects.create', { grant: grant.id })"
                 >
                     {{ newProjectLabel }}
@@ -56,7 +58,7 @@
             </template>
 
             <template v-slot:amount="{ amount }">
-                {{ amount.formatted }}
+                <div class="text-right" v-text="amount" />
             </template>
         </model-table>
     </layout>
@@ -111,20 +113,15 @@
                     },
                     {
                         title: this.$t('dashboard.stats.total.grant'),
-                        number:
-                            this.grant.amount !== null
-                                ? this.grant.amount.formatted
-                                : null,
+                        number: this.grant.amount,
                     },
                     {
                         title: this.$t('dashboard.stats.total.grantees'),
-                        number: this.grant.max_grantees || null,
+                        number: this.grant.project_count,
                     },
                     {
                         title: this.$t('dashboard.stats.total.domains'),
-                        number: this.grant.domains
-                            .map((domain) => domain.name)
-                            .join(','),
+                        number: this.grant.domains.join(','),
                     },
                 ],
             };

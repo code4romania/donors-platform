@@ -8,6 +8,7 @@ use App\Traits\Filterable;
 use App\Traits\HasDates;
 use App\Traits\Sortable;
 use Cknow\Money\MoneyCast;
+use Illuminate\Database\Eloquent\Builder;
 
 class Project extends Model
 {
@@ -16,12 +17,29 @@ class Project extends Model
         Sortable;
 
     /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted(): void
+    {
+        static::addGlobalScope('withGrantCurrency', function (Builder $query) {
+            return $query->addSelect([
+                'currency' => Grant::select('currency')
+                    ->whereColumn('grant_id', 'grants.id')
+                    ->latest()
+                    ->take(1),
+            ]);
+        });
+    }
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var string[]
      */
     protected $fillable = [
-        'title', 'amount', 'currency', 'start_date', 'end_date',
+        'title', 'amount', 'start_date', 'end_date',
     ];
 
     /**
@@ -31,6 +49,7 @@ class Project extends Model
      */
     protected $casts = [
         'amount'     => MoneyCast::class . ':currency',
+        'currency'   => 'string',
         'start_date' => 'date',
         'end_date'   => 'date',
     ];

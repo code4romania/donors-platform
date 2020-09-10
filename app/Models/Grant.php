@@ -75,7 +75,7 @@ class Grant extends Model implements TranslatableContract
      * @var string[]
      */
     protected $with = [
-        'domains', 'projects',
+        'domains', 'projects', 'translations',
     ];
 
     public function donors()
@@ -98,29 +98,28 @@ class Grant extends Model implements TranslatableContract
         return $this->hasManyThrough(
             Grantee::class,
             Project::class,
-            'grant_id', // Foreign key on projects table
-            'id', // Foreign key on grantees table
-            'id', // Local key on grants table
+            'grant_id',  // Foreign key on projects table
+            'id',        // Foreign key on grantees table
+            'id',        // Local key on grants table
             'grantee_id' // Local key on projects table
         )->groupBy('id');
     }
 
-    public function getFormattedAmountAttribute(): ?string
+    public function getGrantableAmountAttribute(): Money
     {
-        if (! $this->amount) {
-            return null;
-        }
-
-        return $this->amount->format();
+        return $this->regranting_amount ?? $this->amount;
     }
 
-    public function getFundingValueAttribute()
+    public function getGrantedAmountAttribute(): Money
     {
-        return $this->projects->pluck('amount')
-            ->filter()
-            ->unlessEmpty(
-                fn ($amounts) => Money::sum(...$amounts),
-                fn () => null,
-            );
+        return Money::parseByDecimal(
+            $this->projects()->sum('amount'),
+            $this->currency
+        );
+    }
+
+    public function getRemainingAmountAttribute(): Money
+    {
+        return $this->grantable_amount->subtract($this->granted_amount);
     }
 }

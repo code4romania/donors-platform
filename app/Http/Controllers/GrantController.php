@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\GrantRequest;
-use App\Http\Resources\GrantIndexResource;
-use App\Http\Resources\GrantShowResource;
+use App\Http\Resources\GrantResource;
 use App\Http\Resources\NameResource;
-use App\Http\Resources\ProjectIndexResource;
+use App\Http\Resources\ProjectResource;
 use App\Models\Domain;
 use App\Models\Donor;
 use App\Models\Grant;
@@ -25,9 +24,9 @@ class GrantController extends Controller
     {
         return Inertia::render('Grants/Index', [
             'columns' => $this->getIndexColumns(Grant::class, [
-                'name', 'domains', 'amount', 'published_status',
+                'name', 'donors', 'amount', 'published_status',
             ]),
-            'grants' => GrantIndexResource::collection(
+            'grants' => GrantResource::collection(
                 Grant::query()
                     ->with('domains', 'projects')
                     ->filter()
@@ -64,7 +63,7 @@ class GrantController extends Controller
 
     public function store(GrantRequest $request): RedirectResponse
     {
-        $grant = Grant::create($request->all());
+        $grant = Grant::create($request->validated());
 
         $grant->setPublished($request->boolean('_publish'));
 
@@ -83,11 +82,11 @@ class GrantController extends Controller
     public function show(Grant $grant): Response
     {
         return Inertia::render('Grants/Show', [
-            'grant'    => GrantShowResource::make($grant),
+            'grant'    => GrantResource::make($grant),
             'columns'  => $this->getIndexColumns(Project::class, [
-                'grantee.name', 'title', 'amount', 'start_date', 'end_date',
+                'grantee.name', 'amount', 'start_date', 'end_date',
             ]),
-            'projects' => ProjectIndexResource::collection(
+            'projects' => ProjectResource::collection(
                 $grant->projects()
                     ->filter()
                     ->sort()
@@ -99,7 +98,7 @@ class GrantController extends Controller
     public function edit(Grant $grant): Response
     {
         return Inertia::render('Grants/Edit', [
-            'grant' => GrantShowResource::make($grant),
+            'grant' => GrantResource::make($grant),
             'donors' => NameResource::collection(
                 Donor::orderBy('name', 'asc')->getColumn('name')
             ),
@@ -115,7 +114,7 @@ class GrantController extends Controller
 
     public function update(GrantRequest $request, Grant $grant): RedirectResponse
     {
-        $grant->update($request->except('domain'));
+        $grant->update($request->validated());
 
         if ($request->boolean('_publish') !== $grant->isPublished()) {
             $grant->publish($request->boolean('_publish'));

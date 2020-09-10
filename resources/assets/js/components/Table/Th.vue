@@ -1,5 +1,5 @@
 <template>
-    <th>
+    <th :class="maybeShrinkColumn">
         <component
             :is="thComponent"
             class="flex justify-between px-6 py-4 group"
@@ -46,11 +46,14 @@
             thComponent() {
                 return this.column.sortable ? 'inertia-link' : 'div';
             },
+            isSortable() {
+                return this.thComponent === 'inertia-link';
+            },
             field() {
                 return this.column.field.replace('___', '.');
             },
             computedRoute() {
-                if (this.thComponent !== 'inertia-link') {
+                if (!this.isSortable) {
                     return false;
                 }
 
@@ -61,6 +64,10 @@
                 return this.route;
             },
             nextSortOrder() {
+                if (!this.isSortable) {
+                    return false;
+                }
+
                 const filters = pickBy(
                     merge({ search: this.$page.search }, this.$page.filters)
                 );
@@ -96,9 +103,24 @@
             },
             iconClass() {
                 return (
-                    'w-5 h-5 fill-current duration-150 cursor-pointer transition-color group-focus:outline-none group-focus:text-blue-600 group-hover:text-blue-500 ' +
+                    'w-5 h-5 -mr-0.5 ml-2 fill-current duration-150 cursor-pointer transition-color group-focus:outline-none group-focus:text-blue-600 group-hover:text-blue-500 ' +
                     (this.isActive ? 'text-gray-900' : 'text-gray-300')
                 );
+            },
+            maybeShrinkColumn() {
+                let shrinkableColumns = [
+                    'published_status',
+
+                    'start_date',
+                    'end_date',
+
+                    'regranting_amount',
+                    'amount',
+                ];
+
+                return shrinkableColumns.includes(this.column.field)
+                    ? 'w-1 whitespace-no-wrap'
+                    : false;
             },
         },
     };

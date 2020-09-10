@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Observers\ActivityObserver;
+use App\Services\MoneyWithoutDecimalsFormatter;
+use Cknow\Money\Money;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -45,7 +47,9 @@ class AppServiceProvider extends ServiceProvider
         Relation::morphMap($this->morphMap);
 
         collect($this->morphMap)
-            ->each(fn ($model) => app($model)::observe(\App\Observers\ActivityObserver::class));
+            ->each(fn ($model) => app($model)::observe(ActivityObserver::class));
+
+        $this->registerMoneyMacros();
     }
 
     private function registerInertia(): void
@@ -61,17 +65,7 @@ class AppServiceProvider extends ServiceProvider
             'search'  => fn () => Request::input('search'),
             'filters' => fn () => Request::all('domain', 'donor', 'manager'),
 
-            'auth' => function () {
-                return [
-                    'user' => Auth::user() ? [
-                        'id'          => Auth::user()->id,
-                        'name'        => Auth::user()->name,
-                        'email'       => Auth::user()->email,
-                        'role'        => Auth::user()->role_name,
-                        'permissions' => Auth::user()->getAllPermissions()->pluck('name'),
-                    ] : null,
-                ];
-            },
+            'currencies' => fn () => config('money.currencies.iso', []),
 
             'flash' => function () {
                 return [
@@ -79,14 +73,17 @@ class AppServiceProvider extends ServiceProvider
                     'error'   => Session::get('error'),
                 ];
             },
-
-            'errors' => function () {
-                return Session::get('errors')
-                    ? Session::get('errors')->getBag('default')->getMessages()
-                    : (object) [];
-            },
-
-            'currencies' => fn () => config('money.currencies.iso', []),
         ]);
+    }
+
+    private function registerMoneyMacros(): void
+    {
+        Money::macro('formatWithoutDecimals', function (): string {
+            return $this->formatByFormatter(new MoneyWithoutDecimalsFormatter());
+        });
+
+        Money::macro('toInteger', function (): int {
+            return (int) $this->format(null, null, null);
+        });
     }
 }

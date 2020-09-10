@@ -32,7 +32,6 @@
                     v-model="form.amount"
                     class="lg:col-span-2"
                     :suffix="grant.currency"
-                    step="0.01"
                     min="0"
                     required
                 />
@@ -97,9 +96,8 @@
                 form: {
                     _method: 'PUT', // html form method spoofing
                     grantee: this.project.grantee.id,
-                    amount: this.project.amount.amount / 100,
                     ...this.prepareFields(
-                        ['title', 'start_date', 'end_date'],
+                        ['title', 'start_date', 'end_date', 'amount'],
                         this.project
                     ),
                 },
