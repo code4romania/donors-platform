@@ -166,11 +166,11 @@ class DemoSeeder extends Seeder
 
                     $project->grant()->associate($grant);
 
-                    $project->grantee()->associate(
+                    $project->save();
+
+                    $project->grantees()->sync(
                         $grantees->firstWhere('name', $projectData['grant_beneficiary'])->id
                     );
-
-                    $project->save();
                 });
 
                 return $grant;

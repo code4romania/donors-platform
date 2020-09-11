@@ -66,7 +66,7 @@ class GrantResource extends JsonResource
 
             'donors'            => $this->donors->pluck('name', 'id'),
             'project_count'     => $this->project_count,
-            'grantees'          => $this->grantees->unique()->count(),
+            'grantees'          => $this->grantees->pluck('name', 'id'),
             'funding_value'     => $this->funding_value,
 
             'published_status'  => $this->published_status,

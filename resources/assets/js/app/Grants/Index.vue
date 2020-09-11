@@ -47,17 +47,14 @@
             :paginate="true"
         >
             <template v-slot:name="{ name, row }">
-                <div>{{ name }}</div>
+                {{ name }}
 
-                <div v-if="row.domains.length" class="flex mt-2 space-x-3">
-                    <base-badge
-                        v-for="domain in row.domains"
-                        :key="domain"
-                        :text="domain"
-                        color="orange"
-                        shade="light"
-                    />
-                </div>
+                <div
+                    v-if="row.domains.length"
+                    class="flex items-center mt-2 text-sm text-gray-500"
+                    :aria-label="$t('model.domain.plural')"
+                    v-text="row.domains.join(', ')"
+                />
             </template>
 
             <template v-slot:donors="{ donors }">

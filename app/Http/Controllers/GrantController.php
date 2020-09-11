@@ -84,7 +84,7 @@ class GrantController extends Controller
         return Inertia::render('Grants/Show', [
             'grant'    => GrantResource::make($grant),
             'columns'  => $this->getIndexColumns(Project::class, [
-                'grantee.name', 'amount', 'start_date', 'end_date',
+                'grantees', 'amount', 'start_date', 'end_date',
             ]),
             'projects' => ProjectResource::collection(
                 $grant->projects()
@@ -100,7 +100,7 @@ class GrantController extends Controller
         return Inertia::render('Grants/Edit', [
             'grant' => GrantResource::make($grant),
             'donors' => NameResource::collection(
-                Donor::orderBy('name', 'asc')->getColumn('name')
+                Donor::without('media')->orderBy('name', 'asc')->getColumn('name')
             ),
             'domains' => NameResource::collection(
                 Domain::orderByTranslation('name', 'asc')->getColumn('name')

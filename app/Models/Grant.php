@@ -13,6 +13,7 @@ use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 use Cknow\Money\Money;
 use Cknow\Money\MoneyCast;
+use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
 class Grant extends Model implements TranslatableContract
 {
@@ -20,6 +21,7 @@ class Grant extends Model implements TranslatableContract
         Filterable,
         HasDates,
         HasDomains,
+        HasRelationships,
         Sortable,
         Translatable;
 
@@ -75,7 +77,7 @@ class Grant extends Model implements TranslatableContract
      * @var string[]
      */
     protected $with = [
-        'domains', 'projects', 'translations',
+        'donors', 'domains', 'projects', 'translations',
     ];
 
     public function donors()
@@ -95,13 +97,11 @@ class Grant extends Model implements TranslatableContract
 
     public function grantees()
     {
-        return $this->hasManyThrough(
+        return $this->hasManyDeep(
             Grantee::class,
-            Project::class,
-            'grant_id',  // Foreign key on projects table
-            'id',        // Foreign key on grantees table
-            'id',        // Local key on grants table
-            'grantee_id' // Local key on projects table
+            [Project::class, 'grantee_project'],
+            [null, 'project_id', 'id'],
+            [null, 'id', 'grantee_id']
         )->groupBy('id');
     }
 

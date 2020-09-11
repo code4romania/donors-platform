@@ -53,8 +53,8 @@
             :route-fill="{ project: 'id' }"
             :paginate="true"
         >
-            <template v-slot:grantee___name="{ row }">
-                {{ row.grantee.name }}
+            <template v-slot:grantees="{ row }">
+                {{ row.grantees.join(', ') }}
             </template>
 
             <template v-slot:amount="{ amount }">
