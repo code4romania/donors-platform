@@ -35,7 +35,7 @@ class ProjectResource extends JsonResource
     {
         return [
             'id'         => $this->id,
-            'grantee'    => $this->grantee->only('id', 'name'),
+            'grantees'   => $this->grantees->pluck('name'),
             'title'      => $this->title,
             'start_date' => $this->formatted_start_date,
             'end_date'   => $this->formatted_end_date,
@@ -48,7 +48,7 @@ class ProjectResource extends JsonResource
         return [
             'id'         => $this->id,
             'grant'      => $this->grant->only('id', 'name'),
-            'grantee'    => $this->grantee->only('id', 'name'),
+            'grantees'   => $this->grantees->pluck('name', 'id'),
             'title'      => $this->title,
             'start_date' => $this->formatted_start_date,
             'end_date'   => $this->formatted_end_date,

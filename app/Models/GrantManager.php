@@ -59,7 +59,7 @@ class GrantManager extends Model implements HasMedia
      * @var string[]
      */
     protected $with = [
-        'domains', 'grants', 'media',
+        // 'domains', 'grants', 'media',
     ];
 
     /**

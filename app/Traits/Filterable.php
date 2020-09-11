@@ -55,7 +55,7 @@ trait Filterable
                         return null;
                     }
 
-                    return $this->$relationship()->get()->pluck($attribute);
+                    return $this->$relationship->pluck($attribute);
                 })
             )
             ->filter()

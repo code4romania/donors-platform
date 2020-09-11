@@ -58,14 +58,14 @@ class Project extends Model
      * @var string[]
      */
     public $searchable = [
-        'id', 'title', 'grantee.name',
+        'id', 'title', 'grantees.name',
     ];
 
     /**
      * @var string[]
      */
     public $sortable = [
-        'title', 'amount', 'start_date', 'end_date', 'grantee.name',
+        'title', 'amount', 'start_date', 'end_date',
     ];
 
     /**
@@ -74,7 +74,7 @@ class Project extends Model
      * @var string[]
      */
     protected $with = [
-        'grantee',
+        'grantees',
     ];
 
     public function donors()
@@ -87,8 +87,8 @@ class Project extends Model
         return $this->belongsTo(Grant::class);
     }
 
-    public function grantee()
+    public function grantees()
     {
-        return $this->belongsTo(Grantee::class);
+        return $this->belongsToMany(Grantee::class);
     }
 }
