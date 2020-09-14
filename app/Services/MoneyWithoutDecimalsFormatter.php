@@ -20,6 +20,8 @@ class MoneyWithoutDecimalsFormatter implements MoneyFormatter
     public function __construct()
     {
         $this->formatter = new NumberFormatter(App::getLocale(), NumberFormatter::CURRENCY);
+        $this->formatter->setAttribute(NumberFormatter::FRACTION_DIGITS, 0);
+
         $this->currencies = CknowMoney::getCurrencies();
     }
 
@@ -50,8 +52,6 @@ class MoneyWithoutDecimalsFormatter implements MoneyFormatter
         if ($negative === true) {
             $formatted = '-' . $formatted;
         }
-
-        $this->formatter->setAttribute(NumberFormatter::FRACTION_DIGITS, 0);
 
         return $this->formatter->formatCurrency(floatval($formatted), $money->getCurrency()->getCode());
     }

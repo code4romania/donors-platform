@@ -17,7 +17,7 @@ class CreateGrantsTable extends Migration
     {
         Schema::create('grants', function (Blueprint $table) {
             $table->id();
-            $table->string('currency');
+            $table->string('currency', 3);
             $table->decimal('amount', 16, 2)->nullable();
             $table->decimal('regranting_amount', 16, 2)->nullable();
 
