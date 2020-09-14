@@ -63,7 +63,7 @@ class AppServiceProvider extends ServiceProvider
 
             'sort'    => fn () => Request::all('order', 'direction'),
             'search'  => fn () => Request::input('search'),
-            'filters' => fn () => Request::all('domain', 'donor', 'manager'),
+            'filters' => fn () => Request::all('domain', 'donor', 'manager', 'orgtype'),
 
             'currencies' => fn () => config('money.currencies.iso', []),
 

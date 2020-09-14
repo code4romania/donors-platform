@@ -17,14 +17,15 @@ trait Filterable
 
     public function scopeFilter(Builder $query): Builder
     {
-        $filters = collect(Request::all('search', 'domain', 'donor', 'manager'))
+        $filters = collect(Request::all('search', 'domain', 'donor', 'manager', 'orgtype'))
             ->map(fn ($filter) => Normalize::string($filter));
 
         return $query
             ->when($filters['search'], fn ($q, string $search) => $q->whereIn($this->getTable() . '.id', $this->search($search)->keys()))
             ->when($filters['domain'], fn ($q, int $domain) => $this->whereHas($q, $domain, 'domains'))
             ->when($filters['donor'], fn ($q, int $donor) => $this->whereHas($q, $donor, 'donors'))
-            ->when($filters['manager'], fn ($q, int $manager) => $this->whereHas($q, $manager, 'manager'));
+            ->when($filters['manager'], fn ($q, int $manager) => $this->whereHas($q, $manager, 'manager'))
+            ->when($filters['orgtype'], fn ($q, string $type) => $q->where('type', $type));
     }
 
     public function scopeGetColumn(Builder $query, string $column): Collection
