@@ -7,7 +7,6 @@ namespace App\Http\Controllers;
 use App\Http\Resources\DonorDashboardResource;
 use App\Models\Domain;
 use App\Models\Donor;
-use App\Models\Grant;
 use App\Models\Grantee;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -19,14 +18,13 @@ class DashboardController extends Controller
     {
         return Inertia::render('Dashboard/Index', [
             'donors'  => DonorDashboardResource::collection(
-                Donor::with('domains', 'grants.projects')
-                    ->get()
+                Donor::with('domains')->get()
             ),
             'stats' => [
                 'donors'   => Donor::count(),
-                'funding'  => 1 * Grant::sum('amount'),
                 'domains'  => Domain::count(),
                 'grantees' => Grantee::count(),
+                'funding'  => Donor::all()->map->total_funding,
             ],
         ]);
     }

@@ -8,7 +8,8 @@ use App\Traits\Draftable;
 use App\Traits\Filterable;
 use App\Traits\HasDomains;
 use App\Traits\Sortable;
-use Cknow\Money\Money;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -63,34 +64,28 @@ class Donor extends Model implements HasMedia
         // 'media',
     ];
 
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var string[]
-     */
-    protected $appends = [
-        'logo_url', 'total_funding',
-    ];
-
     public function getLogoUrlAttribute(): ?string
     {
         return $this->getFirstMediaUrl('logo') ?: null;
     }
 
-    public function getTotalFundingAttribute()
+    public function getTotalFundingAttribute(): Collection
     {
-        return $this->grants
-            ->pluck('amount')
-            ->filter()
-            ->unlessEmpty(
-                fn ($amounts) => Money::sum(...$amounts),
-                fn () => money(0),
-            );
+        return DB::table('grants')
+            ->join('donor_grant', 'grants.id', '=', 'donor_grant.grant_id')
+            ->where('donor_grant.donor_id', '=', $this->id)
+            ->select(
+                DB::raw('SUM(amount) as amount'),
+                DB::raw('DATE_FORMAT(start_date, "%Y-%m") as date'),
+                'currency'
+            )
+            ->groupBy('date', 'currency')
+            ->get('amount', 'date', 'currency');
     }
 
     public function getGrantCountAttribute()
     {
-        return $this->grants->count();
+        return $this->grants()->count();
     }
 
     public function getGranteeCountAttribute()

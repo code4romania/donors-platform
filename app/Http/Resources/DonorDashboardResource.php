@@ -27,7 +27,7 @@ class DonorDashboardResource extends JsonResource
             'id'               => $this->id,
             'name'             => $this->name,
             'type'             => $this->type,
-            'grant_count'      => $this->grants->count(),
+            'grant_count'      => $this->grant_count,
             'domains'          => $this->domains->map->only('id', 'name'),
             'total_funding'    => $this->total_funding,
         ];

@@ -23,6 +23,29 @@ class DonorResource extends JsonResource
      */
     public function toArray($request): array
     {
+        if ($request->route()->getName() === 'donors.index') {
+            return $this->getIndexAttributes($request);
+        }
+
+        return $this->getShowAttributes($request);
+    }
+
+    public function getIndexAttributes($request): array
+    {
+        return [
+            'id'               => $this->id,
+            'name'             => $this->name,
+            'type'             => $this->type,
+            'domains'          => $this->domains->pluck('name'),
+            'published_status' => $this->published_status,
+            'total_funding'    => $this->total_funding,
+            'grant_count'      => $this->grant_count,
+            'grantee_count'    => $this->grantee_count,
+        ];
+    }
+
+    public function getShowAttribute($requests): array
+    {
         return [
             'id'               => $this->id,
             'name'             => $this->name,

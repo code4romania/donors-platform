@@ -33,7 +33,7 @@
 
                 <inertia-link
                     :href="$route('password.request')"
-                    class="font-semibold leading-tight text-blue-500 hover:text-blue-600 focus:outline-none focus:underline"
+                    class="mb-1 text-sm font-semibold leading-tight text-blue-500 hover:text-blue-600 focus:outline-none focus:underline"
                     v-text="$t('auth.forgot')"
                 />
             </div>

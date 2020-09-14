@@ -9,11 +9,7 @@
             />
         </grid>
 
-        <data-block :table-data="donors.data" :columns="columns">
-            <template v-slot:total_funding="{ total_funding }">
-                {{ total_funding.formatted }}
-            </template>
-        </data-block>
+        <data-block />
     </layout>
 </template>
 
@@ -35,40 +31,15 @@
                         title: this.$t('dashboard.stats.donors'),
                         number: this.stats.donors,
                     },
-                    {
-                        title: this.$t('dashboard.stats.funding', {
-                            count: this.stats.domains,
-                        }),
-                        number: this.stats.funding,
-                    },
+                    // {
+                    //     title: this.$t('dashboard.stats.funding', {
+                    //         count: this.stats.domains,
+                    //     }),
+                    //     number: this.stats.funding,
+                    // },
                     {
                         title: this.$t('dashboard.stats.grantees'),
                         number: this.stats.grantees,
-                    },
-                ],
-                columns: [
-                    {
-                        field: 'name',
-                        label: 'Donor',
-                        sortable: true,
-                    },
-                    {
-                        field: 'type',
-                        label: 'Type',
-                        sortable: true,
-                    },
-                    {
-                        field: 'grant_count',
-                        label: 'Grants',
-                        sortable: true,
-                    },
-                    {
-                        field: 'total_funding',
-                        label: 'Total funding',
-                        sortable: {
-                            prop: 'amount',
-                            numeric: true,
-                        },
                     },
                 ],
             };

@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             // $this->call(DomainSeeder::class);
             // $this->call(DonorSeeder::class);
             // $this->call(GrantSeeder::class);
-            $this->call(GrantManagerSeeder::class);
+            // $this->call(GrantManagerSeeder::class);
             $this->call(UserSeeder::class);
         }
     }

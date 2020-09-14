@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 return [
 
-    'all'  => 'All',
-    'none' => 'None',
+    'all'  => 'Toate',
+    'none' => 'Niciunul',
 
     'menu' => [
         'dashboard'    => 'Panoul de control',

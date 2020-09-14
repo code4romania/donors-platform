@@ -8,7 +8,25 @@
             </div>
         </template>
 
-        <search-filter v-model="search" @reset="reset" />
+        <search-filter v-model="search" @reset="reset">
+            <form-select
+                id="domain"
+                :label="$t('model.domain.plural')"
+                :options="domains.data"
+                :option-placeholder="$t('dashboard.all')"
+                option-value-key="id"
+                option-label-key="name"
+                v-model="filters.domain"
+            />
+
+            <form-select
+                id="orgtype"
+                :label="$t('field.type')"
+                :options="types"
+                :option-placeholder="$t('dashboard.all')"
+                v-model="filters.orgtype"
+            />
+        </search-filter>
 
         <model-table
             :collection="donors"
@@ -16,8 +34,15 @@
             route-name="donors.show"
             :paginate="true"
         >
-            <template v-slot:domains="{ domains }">
-                {{ domains.map((domain) => domain.name).join(', ') }}
+            <template v-slot:name="{ name, row }">
+                {{ name }}
+
+                <div
+                    v-if="row.domains.length"
+                    class="flex items-center mt-2 text-sm text-gray-500"
+                    :aria-label="$t('model.domain.plural')"
+                    v-text="row.domains.join(', ')"
+                />
             </template>
 
             <template v-slot:type="{ type }">
@@ -43,6 +68,8 @@
         props: {
             columns: Array,
             donors: Object,
+            domains: Object,
+            types: Array,
         },
         metaInfo() {
             return {
