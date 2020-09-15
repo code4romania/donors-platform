@@ -23,6 +23,28 @@ class GrantManagerResource extends JsonResource
      */
     public function toArray($request)
     {
+        if ($request->route()->getName() === 'managers.index') {
+            return $this->getIndexAttributes($request);
+        }
+
+        return $this->getShowAttributes($request);
+    }
+
+    public function getIndexAttributes($request): array
+    {
+        return [
+            'id'               => $this->id,
+            'name'             => $this->name,
+            'domains'          => $this->domains->pluck('name'),
+            'published_status' => $this->published_status,
+            'total_funding'    => $this->total_funding->formatWithoutDecimals(),
+            'grant_count'      => $this->grant_count,
+            'grantee_count'    => $this->grantee_count,
+        ];
+    }
+
+    public function getShowAttributes($request): array
+    {
         return [
             'id'               => $this->id,
             'name'             => $this->name,
@@ -33,7 +55,9 @@ class GrantManagerResource extends JsonResource
             'domains'          => $this->domains->map->only('id', 'name'),
             'logo_url'         => $this->logo_url,
             'published_status' => $this->published_status,
-            'grant_count'      => $this->grants->count(),
+            'total_funding'    => $this->total_funding->formatWithoutDecimals(),
+            'grant_count'      => $this->grant_count,
+            'grantee_count'    => $this->grantee_count,
         ];
     }
 }

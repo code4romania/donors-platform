@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Traits\Draftable;
 use App\Traits\Filterable;
 use App\Traits\HasDomains;
+use App\Traits\ProvidesFunding;
 use App\Traits\Sortable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -16,6 +17,7 @@ class GrantManager extends Model implements HasMedia
     use Draftable,
         Filterable,
         HasDomains,
+        ProvidesFunding,
         InteractsWithMedia,
         Sortable;
 
@@ -68,25 +70,12 @@ class GrantManager extends Model implements HasMedia
      * @var string[]
      */
     protected $appends = [
-        'logo_url',
+        // 'logo_url',
     ];
 
     public function getLogoUrlAttribute(): ?string
     {
         return $this->getFirstMediaUrl('logo') ?: null;
-    }
-
-    public function getFundingValueAttribute()
-    {
-        return $this->grants()
-            ->with('projects')
-            ->get()
-            ->pluck('funding_value')
-            ->filter()
-            ->unlessEmpty(
-                fn ($amounts) => Money::sum(...$amounts),
-                fn () => money(0),
-            );
     }
 
     public function grants()

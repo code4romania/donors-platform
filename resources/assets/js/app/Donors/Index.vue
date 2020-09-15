@@ -50,7 +50,7 @@
             </template>
 
             <template v-slot:total_funding="{ total_funding }">
-                {{ total_funding.formatted }}
+                <div class="text-right" v-text="total_funding" />
             </template>
 
             <template v-slot:published_status="{ published_status }">

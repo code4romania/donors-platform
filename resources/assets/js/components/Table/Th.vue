@@ -114,8 +114,9 @@
                     'start_date',
                     'end_date',
 
-                    'regranting_amount',
                     'amount',
+                    'regranting_amount',
+                    'total_funding',
                 ];
 
                 return shrinkableColumns.includes(this.column.field)

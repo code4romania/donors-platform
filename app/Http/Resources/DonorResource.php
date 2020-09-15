@@ -38,13 +38,13 @@ class DonorResource extends JsonResource
             'type'             => $this->type,
             'domains'          => $this->domains->pluck('name'),
             'published_status' => $this->published_status,
-            'total_funding'    => $this->total_funding,
+            'total_funding'    => $this->total_funding->formatWithoutDecimals(),
             'grant_count'      => $this->grant_count,
             'grantee_count'    => $this->grantee_count,
         ];
     }
 
-    public function getShowAttribute($requests): array
+    public function getShowAttributes($requests): array
     {
         return [
             'id'               => $this->id,
@@ -57,7 +57,7 @@ class DonorResource extends JsonResource
             'domains'          => $this->domains->map->only('id', 'name'),
             'logo_url'         => $this->logo_url,
             'published_status' => $this->published_status,
-            'total_funding'    => $this->total_funding,
+            'total_funding'    => $this->total_funding->formatWithoutDecimals(),
             'grant_count'      => $this->grant_count,
             'grantee_count'    => $this->grantee_count,
         ];

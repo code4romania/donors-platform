@@ -129,14 +129,19 @@
                     :route-fill="{ grant: 'id' }"
                     :paginate="true"
                 >
-                    <template v-slot:domains="{ row }">
-                        {{
-                            row.domains.map((domain) => domain.name).join(', ')
-                        }}
+                    <template v-slot:name="{ name, row }">
+                        {{ name }}
+
+                        <div
+                            v-if="row.domains.length"
+                            class="flex items-center mt-2 text-sm text-gray-500"
+                            :aria-label="$t('model.domain.plural')"
+                            v-text="row.domains.join(', ')"
+                        />
                     </template>
 
                     <template v-slot:amount="{ amount }">
-                        {{ amount.formatted }}
+                        <div class="text-right" v-text="amount" />
                     </template>
                 </model-table>
             </template>
@@ -187,10 +192,7 @@
                 cards: [
                     {
                         title: this.$t('dashboard.stats.total.grants'),
-                        number:
-                            this.donor.total_funding !== null
-                                ? this.donor.total_funding.formatted
-                                : 0,
+                        number: this.donor.total_funding,
                     },
                     {
                         title: this.$t('dashboard.stats.total.grantees'),

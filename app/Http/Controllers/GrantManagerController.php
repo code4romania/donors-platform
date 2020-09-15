@@ -23,7 +23,7 @@ class GrantManagerController extends Controller
     {
         return Inertia::render('Managers/Index', [
             'columns' => $this->getIndexColumns(GrantManager::class, [
-                'name', 'hq', 'published_status',
+                'name', 'grantee_count', 'grant_count', 'total_funding', 'published_status',
             ]),
             'managers' => GrantManagerResource::collection(
                 GrantManager::query()

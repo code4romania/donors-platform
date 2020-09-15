@@ -31,12 +31,12 @@
                         title: this.$t('dashboard.stats.donors'),
                         number: this.stats.donors,
                     },
-                    // {
-                    //     title: this.$t('dashboard.stats.funding', {
-                    //         count: this.stats.domains,
-                    //     }),
-                    //     number: this.stats.funding,
-                    // },
+                    {
+                        title: this.$t('dashboard.stats.funding', {
+                            count: this.stats.domains,
+                        }),
+                        number: this.stats.funding,
+                    },
                     {
                         title: this.$t('dashboard.stats.grantees'),
                         number: this.stats.grantees,

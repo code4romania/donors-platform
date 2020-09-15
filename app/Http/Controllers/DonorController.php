@@ -71,7 +71,7 @@ class DonorController extends Controller
     {
         return Inertia::render('Donors/Show', [
             'columns' => $this->getIndexColumns(Grant::class, [
-                'name', 'domains', 'amount',
+                'name', 'amount',
             ]),
             'donor'  => DonorResource::make($donor),
             'domains' => NameResource::collection(

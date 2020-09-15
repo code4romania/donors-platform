@@ -8,6 +8,7 @@ use App\Http\Resources\DonorDashboardResource;
 use App\Models\Domain;
 use App\Models\Donor;
 use App\Models\Grantee;
+use Cknow\Money\Money;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -24,7 +25,7 @@ class DashboardController extends Controller
                 'donors'   => Donor::count(),
                 'domains'  => Domain::count(),
                 'grantees' => Grantee::count(),
-                'funding'  => Donor::all()->map->total_funding,
+                'funding'  => Money::sum(...Donor::all()->map->total_funding)->formatWithoutDecimals(),
             ],
         ]);
     }
