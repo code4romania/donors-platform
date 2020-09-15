@@ -8,8 +8,10 @@ use App\Traits\Draftable;
 use App\Traits\Filterable;
 use App\Traits\HasDomains;
 use App\Traits\Sortable;
-use Illuminate\Support\Collection;
+use Cknow\Money\Money;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Request;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -69,9 +71,9 @@ class Donor extends Model implements HasMedia
         return $this->getFirstMediaUrl('logo') ?: null;
     }
 
-    public function getTotalFundingAttribute(): Collection
+    public function getTotalFundingAttribute()
     {
-        return DB::table('grants')
+        $amounts = DB::table('grants')
             ->join('donor_grant', 'grants.id', '=', 'donor_grant.grant_id')
             ->where('donor_grant.donor_id', '=', $this->id)
             ->select(
@@ -80,7 +82,15 @@ class Donor extends Model implements HasMedia
                 'currency'
             )
             ->groupBy('date', 'currency')
-            ->get('amount', 'date', 'currency');
+            ->get('amount', 'date', 'currency')
+            ->map(fn ($item) =>  ExchangeRate::convert(
+                Money::parseByDecimal($item->amount, $item->currency),
+                // config('currency'),
+                Request::input('currency', 'RON'),
+                Carbon::parse($item->date)
+            ));
+
+        return Money::sum(...$amounts);
     }
 
     public function getGrantCountAttribute()

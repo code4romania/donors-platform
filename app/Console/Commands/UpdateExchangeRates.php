@@ -50,9 +50,9 @@ class UpdateExchangeRates extends Command
      */
     public function handle()
     {
-        $steps = $this->getCurrencyPairs()->count();
+        $currencyPairCount = $this->getCurrencyPairs()->count();
 
-        $this->progressBar = $this->output->createProgressBar($steps);
+        $this->progressBar = $this->output->createProgressBar($currencyPairCount);
         $this->progressBar->setFormat('%current%/%max% [%bar%] %message%');
 
         $this->progressBar->setMessage('');
@@ -63,9 +63,9 @@ class UpdateExchangeRates extends Command
             ->values()
             ->filter();
 
-        $this->progressBar->setMaxSteps(
-            $steps + $data->pluck('rates')->map->count()->sum()
-        );
+        $rateCount = $data->pluck('rates')->map->count()->sum();
+
+        $this->progressBar->setMaxSteps($currencyPairCount + $rateCount);
 
         $data->each(function ($currencyPair) {
             $currencyPair['rates']->each(function ($rate, $date) use ($currencyPair) {
@@ -84,7 +84,11 @@ class UpdateExchangeRates extends Command
             });
         });
 
-        $this->progressBar->setMessage('Finished importing');
+        $this->progressBar->setMessage(
+            $this->progressBar->getMaxSteps() === $currencyPairCount
+                ? 'Nothing to import'
+                : "Finished importing {$rateCount} exchange rates"
+        );
         $this->progressBar->finish();
         $this->info('');
 
@@ -93,7 +97,7 @@ class UpdateExchangeRates extends Command
 
     public function getMonthlyAvg(string $currency_from, string $currency_to): ?array
     {
-        $start_at = $this->getLatestExchangeRate($currency_from, $currency_to) ?? Carbon::parse(self::DEFAULT_START_DATE)->startOfDay();
+        $start_at = $this->getExchangeRateStartAt($currency_from, $currency_to);
         $end_at = Carbon::now()->subMonth()->endOfMonth()->startOfDay();
 
         if ($end_at->lessThanOrEqualTo($start_at)) {
@@ -116,7 +120,7 @@ class UpdateExchangeRates extends Command
         ];
     }
 
-    public function getLatestExchangeRate(string $currency_from, string $currency_to): ?Carbon
+    public function getExchangeRateStartAt(string $currency_from, string $currency_to): ?Carbon
     {
         if (! $this->latestExchangeRates) {
             $this->latestExchangeRates = $this->getCurrencyPairs()
@@ -139,7 +143,13 @@ class UpdateExchangeRates extends Command
                 });
         }
 
-        return $this->latestExchangeRates["{$currency_from}-{$currency_to}"] ?? null;
+        if (! $this->latestExchangeRates["{$currency_from}-{$currency_to}"]) {
+            return Carbon::parse(self::DEFAULT_START_DATE)->startOfDay();
+        }
+
+        return $this->latestExchangeRates["{$currency_from}-{$currency_to}"]
+            ->addMonth()
+            ->startOfMonth();
     }
 
     public function getCurrencyPairs(): Collection
