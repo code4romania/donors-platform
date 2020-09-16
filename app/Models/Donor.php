@@ -7,8 +7,9 @@ namespace App\Models;
 use App\Traits\Draftable;
 use App\Traits\Filterable;
 use App\Traits\HasDomains;
-use App\Traits\ProvidesFunding;
+use App\Traits\HasExchangeRates;
 use App\Traits\Sortable;
+use Illuminate\Support\Facades\DB;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -17,7 +18,7 @@ class Donor extends Model implements HasMedia
     use Draftable,
         Filterable,
         HasDomains,
-        ProvidesFunding,
+        HasExchangeRates,
         InteractsWithMedia,
         Sortable;
 
@@ -82,5 +83,22 @@ class Donor extends Model implements HasMedia
     public function grants()
     {
         return $this->belongsToMany(Grant::class);
+    }
+
+    public function getTotalFundingAttribute()
+    {
+        return $this->sumForCurrency(
+            Grant::query()
+                ->setEagerLoads([])
+                ->join('donor_grant', 'grants.id', '=', 'donor_grant.grant_id')
+                ->where('donor_grant.donor_id', '=', $this->id)
+                ->select(
+                    DB::raw('SUM(amount) as amount'),
+                    DB::raw('LAST_DAY(start_date) as date'),
+                    'currency'
+                )
+                ->groupBy('date', 'currency')
+                ->get('amount', 'date', 'currency', 'rate_*')
+        );
     }
 }

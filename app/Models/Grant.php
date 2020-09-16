@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Scopes\WithExchangeRatesScope;
 use App\Traits\Draftable;
 use App\Traits\Filterable;
 use App\Traits\HasDates;
 use App\Traits\HasDomains;
+use App\Traits\HasExchangeRates;
 use App\Traits\Sortable;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
@@ -21,6 +23,7 @@ class Grant extends Model implements TranslatableContract
         Filterable,
         HasDates,
         HasDomains,
+        HasExchangeRates,
         HasRelationships,
         Sortable,
         Translatable;
@@ -77,8 +80,18 @@ class Grant extends Model implements TranslatableContract
      * @var string[]
      */
     protected $with = [
-        'donors', 'domains', 'projects', 'translations',
+        'donors', 'domains.translation', 'projects', 'translations',
     ];
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted(): void
+    {
+        static::addGlobalScope(new WithExchangeRatesScope);
+    }
 
     public function donors()
     {
@@ -121,5 +134,10 @@ class Grant extends Model implements TranslatableContract
     public function getRemainingAmountAttribute(): Money
     {
         return $this->grantable_amount->subtract($this->granted_amount);
+    }
+
+    public function getMultiannualAttribute()
+    {
+        dd($this->end_date->subtract($this->start_date));
     }
 }

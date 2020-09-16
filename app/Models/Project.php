@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Scopes\WithExchangeRatesScope;
 use App\Traits\Filterable;
 use App\Traits\HasDates;
 use App\Traits\Sortable;
@@ -25,7 +26,9 @@ class Project extends Model
     {
         static::addGlobalScope('withGrantCurrency', function (Builder $query) {
             return $query->addSelect([
-                'currency' => Grant::select('currency')
+                'currency' => Grant::query()
+                    ->withoutGlobalScope(WithExchangeRatesScope::class)
+                    ->select('currency')
                     ->whereColumn('grant_id', 'grants.id')
                     ->latest()
                     ->take(1),

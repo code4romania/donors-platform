@@ -7,7 +7,6 @@ namespace App\Models;
 use App\Traits\Draftable;
 use App\Traits\Filterable;
 use App\Traits\HasDomains;
-use App\Traits\ProvidesFunding;
 use App\Traits\Sortable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -17,7 +16,6 @@ class GrantManager extends Model implements HasMedia
     use Draftable,
         Filterable,
         HasDomains,
-        ProvidesFunding,
         InteractsWithMedia,
         Sortable;
 
@@ -62,15 +60,6 @@ class GrantManager extends Model implements HasMedia
      */
     protected $with = [
         // 'domains', 'grants', 'media',
-    ];
-
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var string[]
-     */
-    protected $appends = [
-        // 'logo_url',
     ];
 
     public function getLogoUrlAttribute(): ?string
