@@ -15,7 +15,7 @@
         "@kirschbaum-development/laravel-translations-loader": "^1.0.2",
         "@popperjs/core": "^2.4.4",
         "@tailwindcss/typography": "^0.2.0",
-        "@tailwindcss/ui": "^0.6.1",
+        "@tailwindcss/ui": "^0.6.2",
         "axios": "^0.20.0",
         "chart.js": "^2.9.3",
         "cleave.js": "^1.6.0",

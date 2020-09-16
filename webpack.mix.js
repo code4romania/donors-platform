@@ -8,7 +8,7 @@ mix.extend(
         webpackRules() {
             return {
                 test: path.resolve('resources/lang/index.js'),
-                loader: `@kirschbaum-development/laravel-translations-loader/php?parameters={$1}`,
+                loader: `@kirschbaum-development/laravel-translations-loader/?parameters={$1}`,
             };
         }
     })()
