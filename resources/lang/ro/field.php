@@ -41,5 +41,6 @@ return [
     'title'                 => 'Titlu',
     'total_funding'         => 'Finanțare totală',
     'type'                  => 'Tip',
+    'year'                  => 'An',
 
 ];

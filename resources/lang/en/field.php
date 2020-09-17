@@ -41,5 +41,6 @@ return [
     'title'                 => 'Title',
     'total_funding'         => 'Total funding',
     'type'                  => 'Type',
+    'year'                  => 'Year',
 
 ];

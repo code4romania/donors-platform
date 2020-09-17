@@ -136,8 +136,13 @@ class Grant extends Model implements TranslatableContract
         return $this->grantable_amount->subtract($this->granted_amount);
     }
 
-    public function getMultiannualAttribute()
+    public function scopeAggregateByMonth(Builder $query)
     {
-        dd($this->end_date->subtract($this->start_date));
+        return $query
+            ->addSelect('currency')
+            ->selectRaw('SUM(amount) as amount')
+            ->selectRaw('LAST_DAY(start_date) as date')
+            ->selectRaw('YEAR(start_date) as year')
+            ->groupBy('date', 'currency');
     }
 }

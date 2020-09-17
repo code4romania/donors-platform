@@ -31,6 +31,7 @@
                 <bar-chart
                     v-if="chartData && isCurrentView('chart')"
                     :chart-data="chartData"
+                    :chart-options="chartOptions"
                 />
             </slot>
         </div>
@@ -68,6 +69,10 @@
                         },
                     ],
                 }),
+            },
+            chartOptions: {
+                type: Object,
+                default: () => ({}),
             },
         },
         data() {

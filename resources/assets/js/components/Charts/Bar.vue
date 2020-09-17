@@ -1,5 +1,15 @@
 <script>
+    import defaultsDeep from 'lodash/defaultsDeep';
     import { Bar, mixins } from 'vue-chartjs';
+
+    function formatNumber(value, currency) {
+        return new Intl.NumberFormat(document.documentElement.lang, {
+            style: 'currency',
+            currency: currency,
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
+        }).format(value);
+    }
 
     export default {
         name: 'BarChart',
@@ -11,6 +21,10 @@
             },
             height: {
                 default: null,
+            },
+            chartOptions: {
+                type: Object,
+                default: () => ({}),
             },
         },
 
@@ -50,6 +64,44 @@
                 });
 
                 return data;
+            },
+            options() {
+                let defaults = {
+                    responsive: true,
+                    legend: {
+                        display: true,
+                        align: 'end',
+                    },
+                    tooltips: {
+                        callbacks: {
+                            label(tooltip, data) {
+                                let dataset = data.datasets[tooltip.datasetIndex];
+
+                                return (
+                                    dataset.label +
+                                    ': ' +
+                                    formatNumber(tooltip.yLabel, data.currency)
+                                );
+                            },
+                        },
+                    },
+                    scales: {
+                        yAxes: [
+                            {
+                                ticks: {
+                                    callback(value, index, values) {
+                                        return formatNumber(
+                                            value,
+                                            this.chart.data.currency
+                                        );
+                                    },
+                                },
+                            },
+                        ],
+                    },
+                };
+
+                return defaultsDeep({}, this.chartOptions, defaults);
             },
         },
         mounted() {

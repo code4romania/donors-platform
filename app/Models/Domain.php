@@ -5,14 +5,17 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Traits\Filterable;
+use App\Traits\HasExchangeRates;
 use App\Traits\Sortable;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Domain extends Model implements TranslatableContract
 {
     use Filterable,
+        HasExchangeRates,
         Sortable,
         Translatable;
 
@@ -87,5 +90,12 @@ class Domain extends Model implements TranslatableContract
     public function grants(): MorphToMany
     {
         return $this->relatedTo(Grant::class);
+    }
+
+    public function scopeWithGrantStats(Builder $query)
+    {
+        return $query->with([
+            'grants' => fn ($query) => $query->aggregateByMonth(),
+        ]);
     }
 }

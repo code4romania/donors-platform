@@ -9,7 +9,7 @@
             />
         </grid>
 
-        <data-block />
+        <data-block :chart-data="chart" :chart-options="chartOptions" />
     </layout>
 </template>
 
@@ -21,6 +21,7 @@
             };
         },
         props: {
+            chart: Object,
             donors: Object,
             stats: Object,
         },
@@ -55,6 +56,31 @@
                         href: null,
                     },
                 ];
+            },
+            chartOptions() {
+                return {
+                    scales: {
+                        xAxes: [
+                            {
+                                display: true,
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: this.$t('field.year'),
+                                },
+                            },
+                        ],
+                        yAxes: [
+                            {
+                                display: true,
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: this.$t('field.amount'),
+                                },
+                                ticks: {},
+                            },
+                        ],
+                    },
+                };
             },
         },
     };
