@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::redirect('/', '/dashboard')->name('home');
-
 Auth::routes(['verify' => true]);
+
+Route::prefix('{locale?}')->group(function () {
+    Route::get('/{slug?}', \App\Http\Controllers\PageController::class)->name('public.page');
+});

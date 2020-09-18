@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d6ab510ea35eb2f0ee5b7ff7b1bbd2d1",
+    "content-hash": "9f49a6cc3b3f2ec3a3a83aa8b7df7a38",
     "packages": [
         {
             "name": "ashallendesign/laravel-exchange-rates",
@@ -199,6 +199,81 @@
                 }
             ],
             "time": "2020-09-09T19:37:03+00:00"
+        },
+        {
+            "name": "blade-ui-kit/blade-icons",
+            "version": "0.4.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/blade-ui-kit/blade-icons.git",
+                "reference": "b93505c65a1fc095df517d5640bae295779411e6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/blade-ui-kit/blade-icons/zipball/b93505c65a1fc095df517d5640bae295779411e6",
+                "reference": "b93505c65a1fc095df517d5640bae295779411e6",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^7.14|^8.0",
+                "illuminate/filesystem": "^7.14|^8.0",
+                "illuminate/support": "^7.14|^8.0",
+                "illuminate/view": "^7.14|^8.0",
+                "php": "^7.2"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.16",
+                "mockery/mockery": "^1.3",
+                "orchestra/testbench": "^5.0|^6.0",
+                "phpunit/phpunit": "^8.0|^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "BladeUI\\Icons\\BladeIconsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "BladeUI\\Icons\\": "src"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Adam Wathan",
+                    "email": "adam.wathan@gmail.com"
+                },
+                {
+                    "name": "Dries Vints",
+                    "email": "dries@vints.io",
+                    "homepage": "https://driesvints.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A package to easily make use of icons in your Laravel Blade views.",
+            "homepage": "https://github.com/blade-ui-kit/blade-icons",
+            "keywords": [
+                "blade",
+                "icons",
+                "laravel",
+                "svg"
+            ],
+            "funding": [
+                {
+                    "url": "https://github.com/driesvints",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-09-04T11:36:46+00:00"
         },
         {
             "name": "brick/math",
@@ -1198,16 +1273,16 @@
         },
         {
             "name": "inertiajs/inertia-laravel",
-            "version": "v0.2.11",
+            "version": "v0.2.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inertiajs/inertia-laravel.git",
-                "reference": "0a9af997c0a2e141984d9c8fc3b2a9911512f63f"
+                "reference": "4f0e1ef6410276ebb4ae6e958e73e9339de2c0cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/0a9af997c0a2e141984d9c8fc3b2a9911512f63f",
-                "reference": "0a9af997c0a2e141984d9c8fc3b2a9911512f63f",
+                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/4f0e1ef6410276ebb4ae6e958e73e9339de2c0cf",
+                "reference": "4f0e1ef6410276ebb4ae6e958e73e9339de2c0cf",
                 "shasum": ""
             },
             "require": {
@@ -1254,7 +1329,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-09-09T02:38:18+00:00"
+            "time": "2020-09-17T15:38:25+00:00"
         },
         {
             "name": "intervention/image",
@@ -1328,16 +1403,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.3.0",
+            "version": "v8.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "7f8ac4f4abee41215b7f421f0dc491c844aea7b9"
+                "reference": "1c57ab5e375d0a897c22b29e8352453be514131e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/7f8ac4f4abee41215b7f421f0dc491c844aea7b9",
-                "reference": "7f8ac4f4abee41215b7f421f0dc491c844aea7b9",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/1c57ab5e375d0a897c22b29e8352453be514131e",
+                "reference": "1c57ab5e375d0a897c22b29e8352453be514131e",
                 "shasum": ""
             },
             "require": {
@@ -1487,7 +1562,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2020-09-15T14:50:30+00:00"
+            "time": "2020-09-16T16:13:13+00:00"
         },
         {
             "name": "laravel/scout",
@@ -1974,16 +2049,16 @@
         },
         {
             "name": "lorisleiva/laravel-deployer",
-            "version": "v0.3.3",
+            "version": "v0.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lorisleiva/laravel-deployer.git",
-                "reference": "7ad11205a1965a04fcd3757c8ef340476a0901a4"
+                "reference": "a8feae35c3ccd46f2ac4b6f1065e81ba35fe0992"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lorisleiva/laravel-deployer/zipball/7ad11205a1965a04fcd3757c8ef340476a0901a4",
-                "reference": "7ad11205a1965a04fcd3757c8ef340476a0901a4",
+                "url": "https://api.github.com/repos/lorisleiva/laravel-deployer/zipball/a8feae35c3ccd46f2ac4b6f1065e81ba35fe0992",
+                "reference": "a8feae35c3ccd46f2ac4b6f1065e81ba35fe0992",
                 "shasum": ""
             },
             "require": {
@@ -2021,7 +2096,7 @@
                 }
             ],
             "description": "Laravel Deployer is a lightweight wrapper of Deployer giving Artisan the power of zero-downtime deployment.",
-            "time": "2020-09-10T20:04:38+00:00"
+            "time": "2020-09-17T12:35:20+00:00"
         },
         {
             "name": "maennchen/zipstream-php",
@@ -3269,6 +3344,63 @@
             "time": "2019-04-02T17:35:40+00:00"
         },
         {
+            "name": "skydiver/blade-icons-remix",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/skydiver/blade-icons-remix.git",
+                "reference": "d259004f095577bc66d7cd691d8d65e06f65bd07"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/skydiver/blade-icons-remix/zipball/d259004f095577bc66d7cd691d8d65e06f65bd07",
+                "reference": "d259004f095577bc66d7cd691d8d65e06f65bd07",
+                "shasum": ""
+            },
+            "require": {
+                "blade-ui-kit/blade-icons": "^0.4.5",
+                "illuminate/support": "^7.14|^8.0",
+                "php": "^7.2"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^5.0|^6.0",
+                "phpunit/phpunit": "^8.0|^9.0",
+                "squizlabs/php_codesniffer": "^3.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Skydiver\\BladeIconsRemix\\BladeIconsRemixServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Skydiver\\BladeIconsRemix\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Martín M.",
+                    "email": "skydiver@users.noreply.github.com"
+                }
+            ],
+            "description": "Use Remix Icon with Blade Icons.",
+            "homepage": "https://github.com/skydiver/blade-icons-remix",
+            "keywords": [
+                "blade",
+                "icons",
+                "laravel",
+                "remix"
+            ],
+            "time": "2020-09-18T13:25:44+00:00"
+        },
+        {
             "name": "spatie/image",
             "version": "1.7.6",
             "source": {
@@ -3560,16 +3692,16 @@
         },
         {
             "name": "spatie/laravel-permission",
-            "version": "3.16.0",
+            "version": "3.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-permission.git",
-                "reference": "c5082ee84e0d128896b4a6864a8502d8c5f1df08"
+                "reference": "35d40a45e49f5713f477823b571e05ef6a3a0394"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/c5082ee84e0d128896b4a6864a8502d8c5f1df08",
-                "reference": "c5082ee84e0d128896b4a6864a8502d8c5f1df08",
+                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/35d40a45e49f5713f477823b571e05ef6a3a0394",
+                "reference": "35d40a45e49f5713f477823b571e05ef6a3a0394",
                 "shasum": ""
             },
             "require": {
@@ -3630,7 +3762,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2020-08-18T17:14:06+00:00"
+            "time": "2020-09-16T16:47:18+00:00"
         },
         {
             "name": "spatie/temporary-directory",

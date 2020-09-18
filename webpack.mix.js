@@ -61,4 +61,6 @@ mix.js('resources/assets/js/app.js', 'public/assets')
             { removeDimensions: true },
         ],
     })
+    .copyDirectory('resources/assets/svg', 'public/assets/svg')
+    .copyDirectory('resources/assets/images', 'public/assets/images')
     .extract();
