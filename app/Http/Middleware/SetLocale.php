@@ -18,7 +18,13 @@ class SetLocale
      */
     public function handle($request, Closure $next)
     {
-        $section = explode('.', $request->route()->getName())[0];
+        $routeName = $request->route()->getName();
+
+        if (! $routeName) {
+            return $next($request);
+        }
+
+        $section = explode('.', $routeName)[0];
 
         if ($section === 'public') {
             $locale = $request->segment(1);

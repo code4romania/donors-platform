@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
@@ -34,25 +32,16 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->configureRateLimiting();
-
         $this->routes(function () {
             Route::prefix('dashboard')
-                ->middleware(['web', 'auth', 'dashboard'])
+                ->domain(config('dashboard.url'))
+                ->prefix(config('dashboard.path'))
+                ->middleware(['web', 'dashboard'])
                 ->group(base_path('routes/dashboard.php'));
 
             Route::middleware('web')
+                ->domain(str_replace(['http://', 'https://'], '', config('app.url')))
                 ->group(base_path('routes/web.php'));
         });
-    }
-
-    /**
-     * Configure the rate limiters for the application.
-     *
-     * @return void
-     */
-    protected function configureRateLimiting()
-    {
-        RateLimiter::for('api', fn (Request $request) => Limit::perMinute(60));
     }
 }
