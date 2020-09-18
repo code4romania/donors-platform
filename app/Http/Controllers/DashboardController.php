@@ -19,7 +19,6 @@ class DashboardController extends Controller
     {
         $domains = Domain::query()
             ->withTranslation()
-            ->withGrantStats()
             ->get();
 
         $donors = Donor::all();

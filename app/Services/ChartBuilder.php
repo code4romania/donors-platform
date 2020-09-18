@@ -12,7 +12,7 @@ class ChartBuilder
     public function dashboard(Collection $domains)
     {
         $collection = $domains->map(function ($domain) {
-            $domain->grants = $domain->grants
+            $domain->stats = $domain->grant_stats
                 ->groupBy('year')
                 ->sortKeys()
                 ->map(fn ($grants) => $domain->sumForCurrency($grants));
@@ -21,7 +21,7 @@ class ChartBuilder
         });
 
         $years = $collection
-            ->pluck('grants')
+            ->pluck('stats')
             ->reject(fn ($grant) => $grant->isEmpty())
             ->map(fn ($grant) => $grant->keys()->first())
             ->unique()
@@ -33,20 +33,21 @@ class ChartBuilder
             'labels'   => $years->toArray(),
             'datasets' => $collection
                 ->map(function ($domain) use ($years) {
+                    $stats = $domain->stats;
+
                     return [
                         'label' => $domain->name,
-                        'data'  => $years->map(function ($year) use ($domain) {
-                            if (! $domain->grants->has($year)) {
+                        'data'  => $years->map(function ($year) use ($stats) {
+                            if (! $stats->has($year)) {
                                 return 0;
                             }
 
-                            return $domain->grants[$year]->toInteger();
+                            return $stats[$year]->toInteger();
                         })->toArray(),
                     ];
                 })
                 ->filter(fn ($dataset) => collect($dataset['data'])->contains(fn ($value) => $value > 0))
                 ->values()
-            // ->dd(),
                 ->toArray(),
         ];
     }

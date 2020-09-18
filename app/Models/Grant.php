@@ -15,6 +15,7 @@ use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 use Cknow\Money\Money;
 use Cknow\Money\MoneyCast;
+use Illuminate\Database\Eloquent\Builder;
 use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
 class Grant extends Model implements TranslatableContract

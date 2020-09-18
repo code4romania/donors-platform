@@ -89,6 +89,7 @@
                         yAxes: [
                             {
                                 ticks: {
+                                    beginAtZero: true,
                                     callback(value, index, values) {
                                         return formatNumber(
                                             value,

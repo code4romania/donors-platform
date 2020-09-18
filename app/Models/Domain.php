@@ -9,7 +9,6 @@ use App\Traits\HasExchangeRates;
 use App\Traits\Sortable;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Domain extends Model implements TranslatableContract
@@ -92,10 +91,8 @@ class Domain extends Model implements TranslatableContract
         return $this->relatedTo(Grant::class);
     }
 
-    public function scopeWithGrantStats(Builder $query)
+    public function getGrantStatsAttribute()
     {
-        return $query->with([
-            'grants' => fn ($query) => $query->aggregateByMonth(),
-        ]);
+        return $this->grants()->aggregateByMonth()->get();
     }
 }
