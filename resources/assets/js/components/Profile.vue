@@ -1,6 +1,6 @@
 <template>
     <dropdown
-        button-class="flex items-center max-w-xs p-2 overflow-hidden text-sm text-gray-100 rounded-full hover:bg-gray-800 focus:bg-blue-900 focus:outline-none"
+        button-class="flex items-center max-w-xs p-2 overflow-hidden text-sm text-gray-900 rounded-full hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
     >
         <svg-vue
             icon="User/user-line"

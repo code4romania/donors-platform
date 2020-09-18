@@ -17,7 +17,7 @@
         <portal to="menu-mobile-button">
             <button
                 @click="open = true"
-                class="px-4 text-gray-100 focus:outline-none focus:bg-blue-900 hover:bg-gray-800 lg:hidden"
+                class="px-4 text-gray-900 focus:outline-none focus:bg-gray-200 hover:bg-gray-200 lg:hidden"
                 aria-label="Open sidebar"
             >
                 <svg-vue icon="System/menu-fill" class="w-6 h-6 fill-current" />
@@ -37,11 +37,12 @@
                     />
                 </button>
             </div>
+
             <inertia-link
                 :href="$route('dashboard')"
-                class="flex items-center flex-shrink-0 h-16 px-4 transition-colors duration-150 bg-gray-900 hover:bg-gray-700 focus:bg-gray-700 focus:outline-none"
+                class="flex items-center flex-shrink-0 h-16 px-4 transition-colors duration-150 bg-white"
             >
-                <Logo class="w-full h-8 text-gray-200" />
+                <Logo class="w-full h-10" />
             </inertia-link>
 
             <div
@@ -63,7 +64,7 @@
 
                     <menu-item
                         icon="System/logout-box-line"
-                        :href="$route('home')"
+                        :href="$route('public.page')"
                         :label="$t('dashboard.menu.back_to_site')"
                         :external="true"
                     />
