@@ -92,6 +92,8 @@
 
                 <form-button
                     type="button"
+                    color="blue"
+                    shade="light"
                     @click="changeVisibility"
                     :disabled="sending"
                 >
@@ -128,7 +130,7 @@
                     _method: 'PUT', // html form method spoofing
                     _publish: this.donor.published_status === 'published',
                     ...this.prepareFields(
-                        ['name', 'type', 'hq', 'contact', 'email', 'phone', 'logo'],
+                        ['name', 'type', 'hq', 'contact', 'email', 'phone'],
                         this.donor
                     ),
                     domains: this.donor.domains.map((domain) => domain.id),

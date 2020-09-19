@@ -27,8 +27,6 @@ class CreateGrantsTable extends Migration
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
 
-            $table->foreignId('grant_manager_id')->nullable()->constrained()->onDelete('cascade');
-
             $table->timestamps();
             $table->timestamp('published_at')->nullable();
         });

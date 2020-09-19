@@ -20,7 +20,7 @@
                         <div
                             class="absolute inset-0 flex items-center justify-center"
                         >
-                            <img class="w-full" :src="donor.logo_url" alt="" />
+                            <img class="w-full" :src="donor.logo" alt="" />
                         </div>
                     </div>
                 </div>
@@ -103,6 +103,7 @@
                     :title="card.title"
                     :number="card.number"
                     :with-panel="false"
+                    :size="card.size"
                 />
             </grid>
         </panel>
@@ -143,6 +144,10 @@
                     <template v-slot:amount="{ amount }">
                         <div class="text-right" v-text="amount" />
                     </template>
+
+                    <template v-slot:published_status="{ published_status }">
+                        <published-badge :status="published_status" />
+                    </template>
                 </model-table>
             </template>
         </data-block>
@@ -159,7 +164,6 @@
             donor: Object,
             domains: Object,
             grants: Object,
-            stats: Object,
         },
         metaInfo() {
             return {
@@ -192,15 +196,20 @@
                 cards: [
                     {
                         title: this.$t('dashboard.stats.total.grants'),
+                        size: 'lg',
                         number: this.donor.total_funding,
                     },
                     {
                         title: this.$t('dashboard.stats.total.grantees'),
-                        number: this.stats.grantees,
+                        size: 'lg',
+                        number: this.donor.grantee_count,
                     },
                     {
                         title: this.$t('dashboard.stats.total.domains'),
-                        number: this.stats.domains,
+                        size: 'sm',
+                        number: this.donor.grant_domains
+                            .map((domain) => domain.name)
+                            .join(', '),
                     },
                 ],
             };

@@ -68,7 +68,7 @@ class Grant extends Model implements TranslatableContract
      * @var string[]
      */
     protected $sortable = [
-        'name', 'amount', 'start_date', 'end_date',
+        'name', 'amount', 'regranting_amount', 'start_date', 'end_date',
     ];
 
     /**
@@ -157,11 +157,15 @@ class Grant extends Model implements TranslatableContract
         return $this->grantable_amount->subtract($this->granted_amount);
     }
 
-    public function scopeAggregateByMonth(Builder $query)
+    public function scopeAggregateByMonth(Builder $query, string $column = 'amount')
     {
+        if (! in_array($column, ['amount', 'regranting_amount'])) {
+            return $query;
+        }
+
         return $query
             ->addSelect('currency')
-            ->selectRaw('SUM(amount) as amount')
+            ->selectRaw('SUM(' . $column . ') as amount')
             ->selectRaw('LAST_DAY(start_date) as date')
             ->selectRaw('YEAR(start_date) as year')
             ->groupBy('date', 'currency');

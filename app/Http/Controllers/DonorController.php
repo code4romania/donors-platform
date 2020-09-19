@@ -11,7 +11,6 @@ use App\Http\Resources\NameResource;
 use App\Models\Domain;
 use App\Models\Donor;
 use App\Models\Grant;
-use App\Models\Grantee;
 use App\Services\OrganizationType;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
@@ -68,7 +67,7 @@ class DonorController extends Controller
     {
         return Inertia::render('Donors/Show', [
             'columns' => $this->getIndexColumns(Grant::class, [
-                'name', 'amount',
+                'name', 'amount', 'start_date', 'end_date', 'published_status',
             ]),
             'donor'  => DonorResource::make($donor),
             'domains' => NameResource::collection(
@@ -80,17 +79,6 @@ class DonorController extends Controller
                     ->sort()
                     ->paginate()
             ),
-            'stats'  => [
-                'grantees' => Grantee::query()->count(),
-                'domains'  => $donor->grants()
-                    ->with('domains')
-                    ->get()
-                    ->pluck('domains')
-                    ->flatten()
-                    ->pluck('id')
-                    ->unique()
-                    ->count(),
-            ],
         ]);
     }
 

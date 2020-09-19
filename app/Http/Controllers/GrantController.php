@@ -69,7 +69,7 @@ class GrantController extends Controller
 
         $grant->domains()->sync($request->input('domains'));
         $grant->donors()->sync($request->input('donors'));
-        $grant->manager()->associate($request->input('manager'));
+        $grant->manager()->sync($request->input('manager'));
 
         $grant->save();
 
@@ -122,7 +122,7 @@ class GrantController extends Controller
 
         $grant->domains()->sync($request->input('domains'));
         $grant->donors()->sync($request->input('donors'));
-        $grant->manager()->associate($request->input('manager'));
+        $grant->manager()->sync($request->input('manager'));
 
         $grant->save();
 

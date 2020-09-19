@@ -43,12 +43,15 @@ class GrantResource extends JsonResource
     public function getIndexAttributes($request): array
     {
         return [
-            'id'               => $this->id,
-            'name'             => $this->name,
-            'donors'           => $this->donors->pluck('name'),
-            'domains'          => $this->domains->pluck('name'),
-            'amount'           => $this->amount->formatWithoutDecimals(),
-            'published_status' => $this->published_status,
+            'id'                => $this->id,
+            'name'              => $this->name,
+            'donors'            => $this->donors->pluck('name'),
+            'domains'           => $this->domains->pluck('name'),
+            'amount'            => $this->amount->formatWithoutDecimals(),
+            'regranting_amount' => $this->regranting_amount->formatWithoutDecimals(),
+            'start_date'        => $this->formatted_start_date,
+            'end_date'          => $this->formatted_end_date,
+            'published_status'  => $this->published_status,
         ];
     }
 

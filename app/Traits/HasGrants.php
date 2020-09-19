@@ -28,7 +28,7 @@ trait HasGrants
 
     public function getGranteeCountAttribute()
     {
-        return $this->grants->map->grantees->flatten()->count();
+        return $this->grants->load('grantees')->map->grantees->flatten()->count();
     }
 
     public function getGrantDomainsAttribute()
@@ -45,7 +45,16 @@ trait HasGrants
     {
         return $this->sumForCurrency(
             $this->grants()
-                ->aggregateByMonth()
+                ->aggregateByMonth('amount')
+                ->get('amount', 'date', 'currency', 'rate_*')
+        );
+    }
+
+    public function getTotalRegrantingAttribute()
+    {
+        return $this->sumForCurrency(
+            $this->grants()
+                ->aggregateByMonth('regranting_amount')
                 ->get('amount', 'date', 'currency', 'rate_*')
         );
     }
