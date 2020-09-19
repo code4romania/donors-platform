@@ -2,8 +2,8 @@
     <layout :breadcrumbs="breadcrumbs">
         <form @submit.prevent="submit" method="post" class="grid gap-y-8">
             <form-panel
-                :title="$t('model.project.section.title')"
-                :description="$t('model.project.section.description')"
+                :title="$t('model.project.section.info.title')"
+                :description="$t('model.project.section.info.description')"
             >
                 <form-input
                     type="text"
@@ -14,26 +14,25 @@
                     autofocus
                 />
 
-                <form-select
-                    id="grantee"
-                    :label="$t('model.grantee.singular')"
-                    :options="grantees.data"
-                    v-model="form.grantee"
-                    option-value-key="id"
-                    option-label-key="name"
-                    class="lg:col-span-2"
-                    required
-                />
-
                 <form-input
                     type="number"
                     id="amount"
                     :label="$t('field.amount')"
                     v-model="form.amount"
-                    class="lg:col-span-2"
                     :suffix="grant.currency"
                     min="0"
                     required
+                />
+
+                <form-input
+                    type="number"
+                    id="grantee_count"
+                    :label="$t('field.grantee_count')"
+                    v-model.number="grantee_count"
+                    ref="grantee_count"
+                    required
+                    min="1"
+                    max="10"
                 />
 
                 <form-date-picker
@@ -49,6 +48,25 @@
                     v-model="form.end_date"
                     required
                 />
+            </form-panel>
+
+            <form-panel
+                :title="$t('model.project.section.grantees.title')"
+                :description="$t('model.project.section.grantees.description')"
+            >
+                <grid class="gap-y-4 lg:col-span-2">
+                    <form-select
+                        v-for="(_, index) in form.grantees"
+                        :key="index"
+                        id="grantees"
+                        :label="$t('model.grantee.singular') + ` #${index + 1}`"
+                        :options="grantees.data"
+                        v-model="form.grantees[index]"
+                        option-value-key="id"
+                        option-label-key="name"
+                        required
+                    />
+                </grid>
             </form-panel>
 
             <div class="flex justify-end space-x-3">
@@ -71,9 +89,14 @@
 
 <script>
     import FormMixin from '@/mixins/form';
+    import GranteeCountMixin from '@/mixins/granteeCount';
 
     export default {
-        mixins: [FormMixin],
+        mixins: [
+            //
+            FormMixin,
+            GranteeCountMixin,
+        ],
         props: {
             project: Object,
             grant: Object,
@@ -91,11 +114,14 @@
             };
 
             return {
+                grantee_count: Object.keys(this.project.grantees).length || 1,
+
                 deleteAction: this.$route('projects.destroy', routeParams),
                 formAction: this.$route('projects.update', routeParams),
                 form: {
                     _method: 'PUT', // html form method spoofing
-                    grantee: this.project.grantee.id,
+
+                    grantees: Object.keys(this.project.grantees),
                     ...this.prepareFields(
                         ['title', 'start_date', 'end_date', 'amount'],
                         this.project

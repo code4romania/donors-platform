@@ -86,6 +86,8 @@
 
                 <form-button
                     type="button"
+                    color="blue"
+                    shade="light"
                     @click="changeVisibility"
                     :disabled="sending"
                 >
@@ -122,7 +124,7 @@
                     _method: 'PUT', // html form method spoofing
                     _publish: this.manager.published_status === 'published',
                     ...this.prepareFields(
-                        ['name', 'hq', 'contact', 'email', 'phone', 'logo'],
+                        ['name', 'hq', 'contact', 'email', 'phone'],
                         this.manager
                     ),
                     domains: this.manager.domains.map((area) => area.id),

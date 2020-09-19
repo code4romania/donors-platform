@@ -45,7 +45,6 @@ class GrantResource extends JsonResource
         return [
             'id'                => $this->id,
             'name'              => $this->name,
-            'donors'            => $this->donors->pluck('name'),
             'domains'           => $this->domains->pluck('name'),
             'amount'            => $this->amount->formatWithoutDecimals(),
             'regranting_amount' => $this->regranting_amount->formatWithoutDecimals(),

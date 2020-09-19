@@ -28,7 +28,6 @@
                 <form-checkbox-group
                     id="domains"
                     :label="$t('field.domains')"
-                    :other-label="$t('field.other')"
                     v-model="form.domains"
                     class="lg:col-span-2"
                     :options="domains.data"

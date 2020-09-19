@@ -23,11 +23,19 @@ class GrantManagerResource extends JsonResource
      */
     public function toArray($request)
     {
-        if ($request->route()->getName() === 'managers.index') {
-            return $this->getIndexAttributes($request);
-        }
+        switch ($request->route()->getName()) {
+            case 'managers.index':
+                return $this->getIndexAttributes($request);
+                break;
 
-        return $this->getShowAttributes($request);
+            case 'managers.edit':
+                return $this->getEditAttributes($request);
+                break;
+
+            default:
+                return $this->getShowAttributes($request);
+                break;
+        }
     }
 
     public function getIndexAttributes($request): array
@@ -53,11 +61,27 @@ class GrantManagerResource extends JsonResource
             'email'            => $this->email,
             'phone'            => $this->phone,
             'domains'          => $this->domains->map->only('id', 'name'),
-            'logo_url'         => $this->logo_url,
+            'logo'             => $this->logo,
             'published_status' => $this->published_status,
-            'total_funding'    => $this->total_funding->formatWithoutDecimals(),
+            'total_funding'    => $this->total_regranting->formatWithoutDecimals(),
             'grant_count'      => $this->grant_count,
+            'grant_domains'    => DomainResource::collection($this->grant_domains),
             'grantee_count'    => $this->grantee_count,
+        ];
+    }
+
+    public function getEditAttributes($request): array
+    {
+        return [
+            'id'               => $this->id,
+            'name'             => $this->name,
+            'hq'               => $this->hq,
+            'contact'          => $this->contact,
+            'email'            => $this->email,
+            'phone'            => $this->phone,
+            'domains'          => $this->domains->map->only('id', 'name'),
+            'logo'             => $this->logo,
+            'published_status' => $this->published_status,
         ];
     }
 }

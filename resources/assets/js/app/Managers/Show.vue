@@ -20,11 +20,7 @@
                         <div
                             class="absolute inset-0 flex items-center justify-center"
                         >
-                            <img
-                                class="w-full"
-                                :src="manager.logo_url"
-                                alt=""
-                            />
+                            <img class="w-full" :src="manager.logo" alt="" />
                         </div>
                     </div>
                 </div>
@@ -107,6 +103,7 @@
                     :title="card.title"
                     :number="card.number"
                     :with-panel="false"
+                    :size="card.size"
                 />
             </grid>
         </panel>
@@ -123,28 +120,33 @@
             />
         </search-filter>
 
-        <data-block>
-            <template slot="table">
-                <model-table
-                    :collection="grants"
-                    :columns="columns"
-                    route-name="grants.show"
-                    :route-args="routeArgs"
-                    :route-fill="{ grant: 'id' }"
-                    :paginate="true"
-                >
-                    <template v-slot:domains="{ row }">
-                        {{
-                            row.domains.map((domain) => domain.name).join(', ')
-                        }}
-                    </template>
+        <model-table
+            :collection="grants"
+            :columns="columns"
+            route-name="grants.show"
+            :route-args="routeArgs"
+            :route-fill="{ grant: 'id' }"
+            :paginate="true"
+        >
+            <template v-slot:name="{ name, row }">
+                {{ name }}
 
-                    <template v-slot:funding_value="{ funding_value }">
-                        {{ funding_value.formatted }}
-                    </template>
-                </model-table>
+                <div
+                    v-if="row.domains.length"
+                    class="flex items-center mt-2 text-sm text-gray-500"
+                    :aria-label="$t('model.domain.plural')"
+                    v-text="row.domains.join(', ')"
+                />
             </template>
-        </data-block>
+
+            <template v-slot:regranting_amount="{ regranting_amount }">
+                <div class="text-right" v-text="regranting_amount" />
+            </template>
+
+            <template v-slot:published_status="{ published_status }">
+                <published-badge :status="published_status" />
+            </template>
+        </model-table>
     </layout>
 </template>
 
@@ -158,7 +160,6 @@
             manager: Object,
             domains: Object,
             grants: Object,
-            stats: Object,
         },
         metaInfo() {
             return {
@@ -167,9 +168,7 @@
         },
         computed: {
             pageTitle() {
-                return this.$t('dashboard.action.viewModel', {
-                    model: this.$t('model.manager.singular').toLowerCase(),
-                });
+                return this.manager.name;
             },
             editLabel() {
                 return this.$t('dashboard.action.edit');
@@ -193,18 +192,20 @@
                 cards: [
                     {
                         title: this.$t('dashboard.stats.total.grants'),
-                        number:
-                            this.stats.total !== null
-                                ? this.stats.total.formatted
-                                : 0,
+                        size: 'lg',
+                        number: this.manager.total_funding,
                     },
                     {
                         title: this.$t('dashboard.stats.total.grantees'),
-                        number: this.stats.grantees,
+                        size: 'lg',
+                        number: this.manager.grantee_count,
                     },
                     {
                         title: this.$t('dashboard.stats.total.domains'),
-                        number: this.stats.domains,
+                        size: 'sm',
+                        number: this.manager.grant_domains
+                            .map((domain) => domain.name)
+                            .join(', '),
                     },
                 ],
             };

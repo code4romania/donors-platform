@@ -10,7 +10,6 @@ use App\Http\Resources\GrantManagerResource;
 use App\Http\Resources\GrantResource;
 use App\Models\Domain;
 use App\Models\Grant;
-use App\Models\Grantee;
 use App\Models\GrantManager;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
@@ -61,30 +60,20 @@ class GrantManagerController extends Controller
     {
         return Inertia::render('Managers/Show', [
             'columns' => $this->getIndexColumns(Grant::class, [
-                'name', 'domains', 'funding_value',
+                'name', 'regranting_amount', 'start_date', 'end_date', 'published_status',
             ]),
             'manager' => GrantManagerResource::make($manager),
             'domains' => DomainResource::collection(
                 Domain::orderByTranslation('name', 'asc')->get()
             ),
             'grants' => GrantResource::collection(
-                $manager->grants()->with('projects')
+                $manager->grants()
+                    ->with('domains')
+                    ->withTranslation()
                     ->filter()
                     ->sort()
                     ->paginate()
             ),
-            'stats'  => [
-                'grantees' => Grantee::query()->count(),
-                'total'    => $manager->funding_value,
-                'domains'  => $manager->grants()
-                    ->with('domains')
-                    ->get()
-                    ->pluck('domains')
-                    ->flatten()
-                    ->pluck('id')
-                    ->unique()
-                    ->count(),
-            ],
         ]);
     }
 

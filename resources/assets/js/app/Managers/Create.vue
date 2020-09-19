@@ -78,6 +78,8 @@
             <div class="flex justify-end space-x-3">
                 <form-button
                     type="button"
+                    color="blue"
+                    shade="light"
                     @click.prevent="changeVisibility"
                     :disabled="sending"
                 >

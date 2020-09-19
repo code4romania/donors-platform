@@ -11,8 +11,18 @@
                     :label="$t('field.name')"
                     v-model="form.name"
                     class="lg:col-span-2"
+                    translated
                     required
                     autofocus
+                />
+
+                <form-input
+                    type="textarea"
+                    id="description"
+                    :label="$t('field.description')"
+                    v-model="form.description"
+                    class="lg:col-span-2"
+                    translated
                 />
 
                 <form-checkbox-group
@@ -177,6 +187,7 @@
                     domains: [],
                     ...this.prepareFields([
                         'name',
+                        'description',
                         'amount',
                         'currency',
                         'start_date',

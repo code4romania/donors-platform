@@ -120,37 +120,33 @@
             />
         </search-filter>
 
-        <data-block>
-            <template slot="table">
-                <model-table
-                    :collection="grants"
-                    :columns="columns"
-                    route-name="grants.show"
-                    :sort-args="routeArgs"
-                    :route-fill="{ grant: 'id' }"
-                    :paginate="true"
-                >
-                    <template v-slot:name="{ name, row }">
-                        {{ name }}
+        <model-table
+            :collection="grants"
+            :columns="columns"
+            route-name="grants.show"
+            :sort-args="routeArgs"
+            :route-fill="{ grant: 'id' }"
+            :paginate="true"
+        >
+            <template v-slot:name="{ name, row }">
+                {{ name }}
 
-                        <div
-                            v-if="row.domains.length"
-                            class="flex items-center mt-2 text-sm text-gray-500"
-                            :aria-label="$t('model.domain.plural')"
-                            v-text="row.domains.join(', ')"
-                        />
-                    </template>
-
-                    <template v-slot:amount="{ amount }">
-                        <div class="text-right" v-text="amount" />
-                    </template>
-
-                    <template v-slot:published_status="{ published_status }">
-                        <published-badge :status="published_status" />
-                    </template>
-                </model-table>
+                <div
+                    v-if="row.domains.length"
+                    class="flex items-center mt-2 text-sm text-gray-500"
+                    :aria-label="$t('model.domain.plural')"
+                    v-text="row.domains.join(', ')"
+                />
             </template>
-        </data-block>
+
+            <template v-slot:amount="{ amount }">
+                <div class="text-right" v-text="amount" />
+            </template>
+
+            <template v-slot:published_status="{ published_status }">
+                <published-badge :status="published_status" />
+            </template>
+        </model-table>
     </layout>
 </template>
 

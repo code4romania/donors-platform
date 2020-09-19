@@ -31,7 +31,7 @@ class DonorController extends Controller
             ),
             'donors' => DonorResource::collection(
                 Donor::query()
-                    ->with('domains.translation')
+                    ->with('domains')
                     ->filter()
                     ->sort()
                     ->paginate(),
@@ -75,6 +75,8 @@ class DonorController extends Controller
             ),
             'grants' => GrantResource::collection(
                 $donor->grants()
+                    ->with('domains')
+                    ->withTranslation()
                     ->filter()
                     ->sort()
                     ->paginate()
