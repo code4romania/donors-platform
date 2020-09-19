@@ -15,7 +15,7 @@ use Inertia\Response;
 
 class DashboardController extends Controller
 {
-    public function __invoke(Request $request, ChartBuilder $chartBuilder): Response
+    public function __invoke(Request $request): Response
     {
         $domains = Domain::query()
             ->withTranslation()
@@ -30,7 +30,7 @@ class DashboardController extends Controller
                 'grantees' => Grantee::count(),
                 'funding'  => Money::sum(...$donors->map->total_funding)->formatWithoutDecimals(),
             ],
-            'chart' => $chartBuilder->dashboard($domains),
+            'chart' => ChartBuilder::data($domains),
         ]);
     }
 }

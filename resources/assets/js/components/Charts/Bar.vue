@@ -86,8 +86,22 @@
                         },
                     },
                     scales: {
+                        xAxes: [
+                            {
+                                display: true,
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: this.$t('field.year'),
+                                },
+                            },
+                        ],
                         yAxes: [
                             {
+                                display: true,
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: this.$t('field.amount'),
+                                },
                                 ticks: {
                                     beginAtZero: true,
                                     callback(value, index, values) {

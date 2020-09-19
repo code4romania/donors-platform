@@ -9,15 +9,15 @@ use Illuminate\Support\Facades\Request;
 
 class ChartBuilder
 {
-    public function dashboard(Collection $domains)
+    public static function data(Collection $collection): array
     {
-        $collection = $domains->map(function ($domain) {
-            $domain->stats = $domain->grant_stats
+        $collection = $collection->map(function ($item) {
+            $item->stats = $item->grant_stats
                 ->groupBy('year')
                 ->sortKeys()
-                ->map(fn ($grants) => $domain->sumForCurrency($grants));
+                ->map(fn ($grants) => $item->sumForCurrency($grants));
 
-            return $domain;
+            return $item;
         });
 
         $years = $collection
@@ -32,11 +32,11 @@ class ChartBuilder
             'currency' => Request::input('currency', config('money.defaultCurrency')),
             'labels'   => $years->toArray(),
             'datasets' => $collection
-                ->map(function ($domain) use ($years) {
-                    $stats = $domain->stats;
+                ->map(function ($item) use ($years) {
+                    $stats = $item->stats;
 
                     return [
-                        'label' => $domain->name,
+                        'label' => $item->name,
                         'data'  => $years->map(function ($year) use ($stats) {
                             if (! $stats->has($year)) {
                                 return 0;
