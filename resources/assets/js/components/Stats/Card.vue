@@ -4,7 +4,8 @@
             <dt class="mb-1 text-sm text-gray-500" v-text="title" />
 
             <dd
-                class="text-2xl font-semibold text-gray-900"
+                class="font-semibold text-gray-900"
+                :class="sizeClass"
                 v-text="formattedNumber"
             />
         </dl>
@@ -39,12 +40,19 @@
                 type: Boolean,
                 default: true,
             },
+            size: {
+                type: String,
+                default: 'lg',
+            },
         },
         computed: {
             formattedNumber() {
                 return this.isNumeric(this.number)
                     ? this.$n(+this.number)
                     : this.number;
+            },
+            sizeClass() {
+                return this.size === 'lg' ? 'text-2xl' : 'text-base';
             },
         },
         methods: {

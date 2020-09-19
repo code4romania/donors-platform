@@ -28,10 +28,6 @@
                 items: [
                     {
                         href: this.$route('logout'),
-                        label: this.$t('dashboard.menu.settings'),
-                    },
-                    {
-                        href: this.$route('logout'),
                         label: this.$t('auth.logout'),
                         method: 'post',
                     },

@@ -15,16 +15,14 @@
                 type: String,
                 required: true,
             },
-            translated: {
-                type: Boolean,
-                required: false,
+            locale: {
+                type: [String, null],
+                default: null,
             },
         },
         computed: {
             errorKey() {
-                return this.translated
-                    ? `${this.$page.locale}.${this.id}`
-                    : this.id;
+                return this.locale ? `${this.locale}.${this.id}` : this.id;
             },
             hasErrors() {
                 return this.$page.errors.hasOwnProperty(this.errorKey);

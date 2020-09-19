@@ -1,57 +1,68 @@
 <template>
-    <div>
-        <div class="flex">
+    <div class="space-y-4">
+        <template v-if="translated && locales">
+            <div v-for="(_, locale) in locales" :key="locale">
+                <div class="flex">
+                    <form-label
+                        v-if="label"
+                        :label="label"
+                        :id="`${id}_${locale}`"
+                        :required="$attrs.required"
+                        class="flex-1"
+                    />
+
+                    <span
+                        class="px-1.5 mb-1 ml-2 text-xs text-white uppercase bg-gray-400 rounded-sm"
+                        v-text="locale"
+                    />
+                </div>
+
+                <div class="relative">
+                    <form-text
+                        :type="type"
+                        :id="`${id}_${locale}`"
+                        :autofocus="$attrs.autofocus && isCurrentLocale(locale)"
+                        v-bind="$attrs"
+                        v-model="dataValue[locale]"
+                        @input="update(locale, ...arguments)"
+                        :class="{ 'pr-13': suffix }"
+                    />
+
+                    <div
+                        class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 pointer-events-none sm:text-sm sm:leading-5"
+                        v-if="suffix"
+                        v-text="suffix"
+                    />
+                </div>
+
+                <form-input-error :id="id" :locale="locale" />
+            </div>
+        </template>
+
+        <div v-else class="relative">
             <form-label
                 v-if="label"
                 :label="label"
-                :id="translated && locales ? `${id}_${locale}` : id"
+                :id="id"
                 :required="$attrs.required"
                 class="flex-1"
             />
-
-            <button
-                v-if="translated && locales"
-                type="button"
-                class="px-1.5 mb-1 ml-2 text-xs text-white uppercase bg-gray-400 rounded-sm hover:bg-gray-500 focus:outline-none"
-                @click="nextLocale"
-                v-text="locale"
+            <form-text
+                :type="type"
+                :id="id"
+                v-bind="$attrs"
+                v-model="dataValue"
+                @input="update(false, ...arguments)"
+                :class="{ 'pr-13': suffix }"
             />
-        </div>
-
-        <div class="relative">
-            <template v-if="translated && locales">
-                <form-text
-                    v-for="(_, locale) in locales"
-                    v-show="isCurrentLocale(locale)"
-                    :key="locale"
-                    :type="type"
-                    :id="`${id}_${locale}`"
-                    :autofocus="$attrs.autofocus && isCurrentLocale(locale)"
-                    v-bind="$attrs"
-                    v-model="dataValue[locale]"
-                    @input="update(locale, ...arguments)"
-                    :class="{ 'pr-13': suffix }"
-                />
-            </template>
-            <template v-else>
-                <form-text
-                    :type="type"
-                    :id="id"
-                    v-bind="$attrs"
-                    v-model="dataValue"
-                    @input="update(false, ...arguments)"
-                    :class="{ 'pr-13': suffix }"
-                />
-            </template>
 
             <div
                 class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 pointer-events-none sm:text-sm sm:leading-5"
                 v-if="suffix"
                 v-text="suffix"
             />
+            <form-input-error :id="id" />
         </div>
-
-        <form-input-error :id="id" :translated="translated" />
     </div>
 </template>
 
