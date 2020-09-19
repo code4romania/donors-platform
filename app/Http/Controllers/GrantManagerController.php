@@ -45,16 +45,11 @@ class GrantManagerController extends Controller
 
     public function store(GrantManagerRequest $request): RedirectResponse
     {
-        $manager = GrantManager::create($request->except('logo'));
+        $manager = GrantManager::create($request->validated());
 
         $manager->publish($request->boolean('_publish'));
 
         $manager->domains()->sync($request->input('domains'));
-
-        if ($request->file('logo')) {
-            $manager->addMedia($request->file('logo'))
-                ->toMediaCollection('logo');
-        }
 
         return Redirect::route('managers.show', $manager)
             ->with('success', __('dashboard.event.created', [
@@ -105,19 +100,13 @@ class GrantManagerController extends Controller
 
     public function update(GrantManagerRequest $request, GrantManager $manager): RedirectResponse
     {
-        $manager->update($request->except('logo'));
+        $manager->update($request->validated());
 
         if ($request->boolean('_publish') !== $manager->isPublished()) {
             $manager->publish($request->boolean('_publish'));
         }
 
         $manager->domains()->sync($request->input('domains'));
-
-        if ($request->file('logo')) {
-            $manager->clearMediaCollection('logo');
-            $manager->addMedia($request->file('logo'))
-                ->toMediaCollection('logo');
-        }
 
         return Redirect::back()
             ->with('success', __('dashboard.event.updated', [

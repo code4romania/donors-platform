@@ -8,9 +8,9 @@ use App\Traits\Draftable;
 use App\Traits\Filterable;
 use App\Traits\HasDomains;
 use App\Traits\HasExchangeRates;
+use App\Traits\HasLogo;
 use App\Traits\Sortable;
 use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Donor extends Model implements HasMedia
 {
@@ -18,7 +18,7 @@ class Donor extends Model implements HasMedia
         Filterable,
         HasDomains,
         HasExchangeRates,
-        InteractsWithMedia,
+        HasLogo,
         Sortable;
 
     /**
@@ -27,7 +27,7 @@ class Donor extends Model implements HasMedia
      * @var string[]
      */
     protected $fillable = [
-        'name', 'type', 'hq', 'contact', 'email', 'phone',
+        'name', 'type', 'hq', 'contact', 'email', 'phone', 'logo',
     ];
 
     /**
@@ -64,9 +64,9 @@ class Donor extends Model implements HasMedia
         // 'media',
     ];
 
-    public function getLogoUrlAttribute(): ?string
+    public function grants()
     {
-        return $this->getFirstMediaUrl('logo') ?: null;
+        return $this->belongsToMany(Grant::class);
     }
 
     public function getGrantCountAttribute()
@@ -76,12 +76,17 @@ class Donor extends Model implements HasMedia
 
     public function getGranteeCountAttribute()
     {
-        return Grantee::query()->count();
+        return $this->grants->map->grantees->flatten()->count();
     }
 
-    public function grants()
+    public function getGrantDomainsAttribute()
     {
-        return $this->belongsToMany(Grant::class);
+        return $this->grants()
+            ->with('domains')
+            ->get()
+            ->pluck('domains')
+            ->flatten()
+            ->unique('id');
     }
 
     public function getTotalFundingAttribute()

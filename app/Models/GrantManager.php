@@ -7,16 +7,18 @@ namespace App\Models;
 use App\Traits\Draftable;
 use App\Traits\Filterable;
 use App\Traits\HasDomains;
+use App\Traits\HasExchangeRates;
+use App\Traits\HasLogo;
 use App\Traits\Sortable;
 use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
 
 class GrantManager extends Model implements HasMedia
 {
     use Draftable,
         Filterable,
         HasDomains,
-        InteractsWithMedia,
+        HasExchangeRates,
+        HasLogo,
         Sortable;
 
     /**
@@ -25,7 +27,7 @@ class GrantManager extends Model implements HasMedia
      * @var string[]
      */
     protected $fillable = [
-        'name', 'hq', 'contact', 'email', 'phone',
+        'name', 'hq', 'contact', 'email', 'phone', 'logo',
     ];
 
     /**
@@ -62,13 +64,17 @@ class GrantManager extends Model implements HasMedia
         // 'domains', 'grants', 'media',
     ];
 
-    public function getLogoUrlAttribute(): ?string
-    {
-        return $this->getFirstMediaUrl('logo') ?: null;
-    }
-
     public function grants()
     {
         return $this->hasMany(Grant::class);
+    }
+
+    public function getTotalFundingAttribute()
+    {
+        return $this->sumForCurrency(
+            $this->grants()
+                ->aggregateByMonth()
+                ->get('amount', 'date', 'currency', 'rate_*')
+        );
     }
 }

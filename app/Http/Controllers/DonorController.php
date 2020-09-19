@@ -52,14 +52,11 @@ class DonorController extends Controller
 
     public function store(DonorRequest $request): RedirectResponse
     {
-        $donor = Donor::create($request->except('logo'));
+        $donor = Donor::create($request->validated());
 
         $donor->publish($request->boolean('_publish'));
 
         $donor->domains()->sync($request->input('domains'));
-
-        $donor->addMedia($request->file('logo'))
-            ->toMediaCollection('logo');
 
         return Redirect::route('donors.show', $donor)
             ->with('success', __('dashboard.event.created', [
@@ -110,19 +107,13 @@ class DonorController extends Controller
 
     public function update(DonorRequest $request, Donor $donor): RedirectResponse
     {
-        $donor->update($request->except('logo'));
+        $donor->update($request->validated());
 
         if ($request->boolean('_publish') !== $donor->isPublished()) {
             $donor->publish($request->boolean('_publish'));
         }
 
         $donor->domains()->sync($request->input('domains'));
-
-        if ($request->file('logo')) {
-            $donor->clearMediaCollection('logo');
-            $donor->addMedia($request->file('logo'))
-                ->toMediaCollection('logo');
-        }
 
         return Redirect::back()
             ->with('success', __('dashboard.event.updated', [
