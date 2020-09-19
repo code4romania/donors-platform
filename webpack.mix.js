@@ -16,7 +16,7 @@ mix.extend(
 
 mix.options({
     hmrOptions: {
-        host: 'donors.test',
+        host: 'dashboard.donors.test',
         port: '8080',
     },
 });

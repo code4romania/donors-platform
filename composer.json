@@ -20,7 +20,7 @@
         "laravel/framework": "^8.0",
         "laravel/scout": "^8.2",
         "laravel/tinker": "^2.0",
-        "laravel/ui": "^2.1",
+        "laravel/ui": "^3.0",
         "lorisleiva/laravel-deployer": "^0.3.3",
         "reinink/remember-query-strings": "^0.1.0",
         "skydiver/blade-icons-remix": "^1.2",
