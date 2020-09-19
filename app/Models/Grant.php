@@ -16,6 +16,9 @@ use Astrotomic\Translatable\Translatable;
 use Cknow\Money\Money;
 use Cknow\Money\MoneyCast;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Staudenmeir\EloquentHasManyDeep\HasManyDeep;
 use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
 class Grant extends Model implements TranslatableContract
@@ -94,22 +97,39 @@ class Grant extends Model implements TranslatableContract
         static::addGlobalScope(new WithExchangeRatesScope);
     }
 
-    public function donors()
+    /**
+     * morphedByMany template.
+     *
+     * @param  string      $related
+     * @return MorphToMany
+     */
+    private function relatedTo(string $related): MorphToMany
     {
-        return $this->belongsToMany(Donor::class);
+        return $this->morphedByMany(
+            $related,
+            'model',
+            'model_has_grants',
+            'grant_id',
+            'model_id'
+        );
     }
 
-    public function manager()
+    public function donors(): MorphToMany
     {
-        return $this->belongsTo(GrantManager::class, 'grant_manager_id');
+        return $this->relatedTo(Donor::class);
     }
 
-    public function projects()
+    public function manager(): MorphToMany
+    {
+        return $this->relatedTo(GrantManager::class);
+    }
+
+    public function projects(): HasMany
     {
         return $this->hasMany(Project::class);
     }
 
-    public function grantees()
+    public function grantees(): HasManyDeep
     {
         return $this->hasManyDeep(
             Grantee::class,

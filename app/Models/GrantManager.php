@@ -7,7 +7,7 @@ namespace App\Models;
 use App\Traits\Draftable;
 use App\Traits\Filterable;
 use App\Traits\HasDomains;
-use App\Traits\HasExchangeRates;
+use App\Traits\HasGrants;
 use App\Traits\HasLogo;
 use App\Traits\Sortable;
 use Spatie\MediaLibrary\HasMedia;
@@ -16,8 +16,8 @@ class GrantManager extends Model implements HasMedia
 {
     use Draftable,
         Filterable,
+        HasGrants,
         HasDomains,
-        HasExchangeRates,
         HasLogo,
         Sortable;
 
@@ -63,18 +63,4 @@ class GrantManager extends Model implements HasMedia
     protected $with = [
         // 'domains', 'grants', 'media',
     ];
-
-    public function grants()
-    {
-        return $this->hasMany(Grant::class);
-    }
-
-    public function getTotalFundingAttribute()
-    {
-        return $this->sumForCurrency(
-            $this->grants()
-                ->aggregateByMonth()
-                ->get('amount', 'date', 'currency', 'rate_*')
-        );
-    }
 }

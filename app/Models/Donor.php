@@ -7,7 +7,7 @@ namespace App\Models;
 use App\Traits\Draftable;
 use App\Traits\Filterable;
 use App\Traits\HasDomains;
-use App\Traits\HasExchangeRates;
+use App\Traits\HasGrants;
 use App\Traits\HasLogo;
 use App\Traits\Sortable;
 use Spatie\MediaLibrary\HasMedia;
@@ -17,7 +17,7 @@ class Donor extends Model implements HasMedia
     use Draftable,
         Filterable,
         HasDomains,
-        HasExchangeRates,
+        HasGrants,
         HasLogo,
         Sortable;
 
@@ -63,38 +63,4 @@ class Donor extends Model implements HasMedia
     protected $with = [
         // 'media',
     ];
-
-    public function grants()
-    {
-        return $this->belongsToMany(Grant::class);
-    }
-
-    public function getGrantCountAttribute()
-    {
-        return $this->grants()->count();
-    }
-
-    public function getGranteeCountAttribute()
-    {
-        return $this->grants->map->grantees->flatten()->count();
-    }
-
-    public function getGrantDomainsAttribute()
-    {
-        return $this->grants()
-            ->with('domains')
-            ->get()
-            ->pluck('domains')
-            ->flatten()
-            ->unique('id');
-    }
-
-    public function getTotalFundingAttribute()
-    {
-        return $this->sumForCurrency(
-            $this->grants()
-                ->aggregateByMonth()
-                ->get('amount', 'date', 'currency', 'rate_*')
-        );
-    }
 }

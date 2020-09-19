@@ -180,7 +180,7 @@ class RafSeeder extends Seeder
                 );
 
                 if ($projects->first()->get('grant_manager') === true) {
-                    $grant->manager()->associate(
+                    $grant->manager()->sync(
                         $managers->firstWhere('name', $projects->first()->get('grant_beneficiary'))->id
                     );
                 }

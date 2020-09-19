@@ -49,9 +49,13 @@ class CreateGrantsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('donor_grant', function (Blueprint $table) {
+        Schema::create('model_has_grants', function (Blueprint $table) {
             $table->foreignId('grant_id')->constrained()->onDelete('cascade');
-            $table->foreignId('donor_id')->constrained()->onDelete('cascade');
+            $table->string('model_type')->nullable();
+            $table->unsignedBigInteger('model_id')->nullable();
+
+            $table->primary(['grant_id', 'model_id', 'model_type']);
+            $table->index(['model_id', 'model_type']);
         });
     }
 
@@ -62,7 +66,7 @@ class CreateGrantsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('donor_grant');
+        Schema::dropIfExists('model_has_grants');
         Schema::dropIfExists('grantees');
         Schema::dropIfExists('grant_translations');
         Schema::dropIfExists('grants');
