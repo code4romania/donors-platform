@@ -75,7 +75,7 @@ class UserController extends Controller
 
         $user->syncRoles($request->input('role'));
 
-        return Redirect::back()
+        return Redirect::route('users.index')
             ->with('success', __('dashboard.event.updated', [
                 'model' => __('model.user.singular'),
             ]));

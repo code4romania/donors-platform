@@ -126,7 +126,7 @@ class GrantController extends Controller
 
         $grant->save();
 
-        return Redirect::back()
+        return Redirect::route('grants.show', $grant)
             ->with('success', __('dashboard.event.updated', [
                 'model' => __('model.grant.singular'),
             ]));

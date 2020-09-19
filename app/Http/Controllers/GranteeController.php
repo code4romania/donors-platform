@@ -60,7 +60,7 @@ class GranteeController extends Controller
     {
         $grantee->update($request->all());
 
-        return Redirect::back()
+        return Redirect::route('grantees.index')
             ->with('success', __('dashboard.event.updated', [
                 'model' => __('model.grantee.singular'),
             ]));

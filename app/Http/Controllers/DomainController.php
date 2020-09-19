@@ -63,7 +63,7 @@ class DomainController extends Controller
     {
         $domain->update($request->all());
 
-        return Redirect::back()
+        return Redirect::route('domains.index')
             ->with('success', __('dashboard.event.updated', [
                 'model' => __('model.domain.singular'),
             ]));

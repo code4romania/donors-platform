@@ -108,7 +108,7 @@ class GrantManagerController extends Controller
 
         $manager->domains()->sync($request->input('domains'));
 
-        return Redirect::back()
+        return Redirect::route('managers.show', $manager)
             ->with('success', __('dashboard.event.updated', [
                 'model' => __('model.manager.singular'),
             ]));

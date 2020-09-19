@@ -102,7 +102,7 @@ class ProjectController extends Controller
 
         $project->save();
 
-        return Redirect::back()
+        return Redirect::route('grants.show', ['grant' => $grant])
             ->with('success', __('dashboard.event.updated', [
                 'model' => __('model.project.singular'),
             ]));

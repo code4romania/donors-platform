@@ -115,7 +115,7 @@ class DonorController extends Controller
 
         $donor->domains()->sync($request->input('domains'));
 
-        return Redirect::back()
+        return Redirect::route('donors.show', $donor)
             ->with('success', __('dashboard.event.updated', [
                 'model' => __('model.donor.singular'),
             ]));
