@@ -13,13 +13,13 @@ return [
     |
     */
     'locales' => [
-        'en',
         'ro',
+        'en',
     ],
 
     'locale_names' => [
-        'en' => 'English',
         'ro' => 'Română',
+        'en' => 'English',
     ],
 
     /*

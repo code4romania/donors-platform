@@ -50,9 +50,9 @@ class ProjectController extends Controller
         ]);
 
         $project->grant()->associate($grant);
-        $project->grantee()->associate($request->input('grantee'));
-
         $project->save();
+
+        $project->grantees()->sync($request->input('grantees'));
 
         return Redirect::route('grants.show', $grant)
             ->with('success', __('dashboard.event.created', [

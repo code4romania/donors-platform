@@ -30,11 +30,13 @@ class GrantRequest extends FormRequest
         $this->merge([
             'amount'            => floatval($this->amount),
             'regranting_amount' => floatval($this->regranting_amount),
+        ]);
 
+        $this->merge(
             collect(config('translatable.locales'))
                 ->mapwithKeys(fn ($locale) => [$locale => json_decode($this->$locale, true)])
                 ->toArray(),
-        ]);
+        );
     }
 
     /**
@@ -49,7 +51,7 @@ class GrantRequest extends FormRequest
             '%description%'     => ['nullable', 'string'],
             'domains.*'         => ['required', 'exists:domains,id'],
             'project_count'     => ['required', 'numeric'],
-            'start_date'        => ['required', 'date_format:Y-m-d', 'before:end_date'],
+            'start_date'        => ['required', 'date_format:Y-m-d', 'before:end_date', 'after_or_equal:2007-01-01'],
             'end_date'          => ['required', 'date_format:Y-m-d', 'after:start_date'],
             'amount'            => ['required', 'numeric'],
             'donors.*'          => ['required', 'exists:donors,id'],

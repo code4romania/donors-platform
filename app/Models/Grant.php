@@ -65,7 +65,7 @@ class Grant extends Model implements TranslatableContract
      * @var string[]
      */
     protected $sortable = [
-        'name', 'amount',
+        'name', 'amount', 'start_date', 'end_date',
     ];
 
     /**
@@ -81,7 +81,7 @@ class Grant extends Model implements TranslatableContract
      * @var string[]
      */
     protected $with = [
-        'donors', 'domains.translation', 'projects', 'translations',
+        // 'donors', 'domains.translation', 'projects', 'translations',
     ];
 
     /**

@@ -39,7 +39,7 @@ class ProjectRequest extends FormRequest
     {
         return [
             'title'      => ['required', 'string'],
-            'grantee'    => ['required', 'exists:grantees,id'],
+            'grantees.*' => ['required', 'exists:grantees,id'],
             'amount'     => ['required', 'numeric'],
             'start_date' => ['required', 'date_format:Y-m-d', 'before:end_date'],
             'end_date'   => ['required', 'date_format:Y-m-d', 'after:start_date'],
