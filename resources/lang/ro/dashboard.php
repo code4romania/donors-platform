@@ -30,8 +30,8 @@ return [
         'save'          => 'Salvează',
         'search'        => 'Caută',
         'unpublish'     => 'Unublish',
-        'view'          => 'View',
-        'viewModel'     => 'View :model',
+        'view'          => 'Vizualizează',
+        'viewModel'     => 'Vizualizează :model',
     ],
 
     'event' => [
@@ -61,6 +61,13 @@ return [
     'view' => [
         'chart' => 'Grafic',
         'table' => 'Tabel',
+    ],
+
+    'permission' => [
+        'view'   => 'Vizualizare',
+        'create' => 'Creare',
+        'edit'   => 'Editare',
+        'delete' => 'Ștergere',
     ],
 
     'role' => [

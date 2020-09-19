@@ -32,6 +32,7 @@ return [
     'other'                 => 'Other',
     'password_confirmation' => 'Password confirmation',
     'password'              => 'Password',
+    'permissions'           => 'Permissions',
     'phone'                 => 'Phone',
     'primary_domain'        => 'Primary domain',
     'project_count'         => 'Number of projects',

@@ -9,13 +9,19 @@ use Illuminate\Foundation\Http\FormRequest;
 class UserRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * Prepare the data for validation.
      *
-     * @return bool
+     * @return void
      */
-    public function authorize()
+    protected function prepareForValidation()
     {
-        return $this->user()->can('manage users');
+        $permissions = collect(json_decode($this->permissions, true));
+
+        dd($permissions);
+
+        $this->merge([
+            'permissions' => $permissions,
+        ]);
     }
 
     /**
@@ -26,9 +32,10 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'    => ['required', 'string'],
-            'email'   => ['required', 'email'],
-            'role'    => ['required', 'string', 'exists:roles,name'],
+            'name'          => ['required', 'string'],
+            'email'         => ['required', 'email'],
+            'role'          => ['required', 'string', 'exists:roles,name'],
+            'permissions.*' => ['exists:permissions,name'],
         ];
     }
 }

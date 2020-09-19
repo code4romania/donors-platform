@@ -6,12 +6,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
+use App\Models\Permission;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
-use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -38,13 +39,14 @@ class UserController extends Controller
     public function create(): Response
     {
         return Inertia::render('Users/Create', [
-            'roles' => Role::all()->pluck('name'),
+            'roles'       => Role::all()->pluck('name'),
+            'permissions' => Permission::grouped(),
         ]);
     }
 
     public function store(UserRequest $request): RedirectResponse
     {
-        $user = User::create($request->all());
+        $user = User::create($request->validated());
 
         $user->syncRoles($request->input('role'));
 
@@ -64,8 +66,9 @@ class UserController extends Controller
     public function edit(User $user): Response
     {
         return Inertia::render('Users/Edit', [
-            'user' => UserResource::make($user),
-            'roles' => Role::all()->pluck('name'),
+            'user'        => UserResource::make($user),
+            'roles'       => Role::all()->pluck('name'),
+            'permissions' => Permission::grouped(),
         ]);
     }
 

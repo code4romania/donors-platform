@@ -89,8 +89,14 @@ return [
         'plural'   => 'Users',
 
         'section' => [
-            'title' => 'Lorem ipsum',
-            'description' => 'Iste et quisquam enim aut error aut. A quidem quas. Ex tenetur id nesciunt eligendi tenetur ut. Porro esse vero adipisci qui est. Ipsam ab non aut. Suscipit nulla est sed et enim illo eos.',
+            'info' => [
+                'title' => 'Lorem ipsum',
+                'description' => 'Iste et quisquam enim aut error aut. A quidem quas. Ex tenetur id nesciunt eligendi tenetur ut. Porro esse vero adipisci qui est. Ipsam ab non aut. Suscipit nulla est sed et enim illo eos.',
+            ],
+            'permissions' => [
+                'title' => 'Lorem ipsum',
+                'description' => 'Iste et quisquam enim aut error aut. A quidem quas. Ex tenetur id nesciunt eligendi tenetur ut. Porro esse vero adipisci qui est. Ipsam ab non aut. Suscipit nulla est sed et enim illo eos.',
+            ],
         ],
     ],
 

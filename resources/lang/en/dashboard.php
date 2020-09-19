@@ -63,6 +63,13 @@ return [
         'table' => 'Table view',
     ],
 
+    'permission' => [
+        'view'   => 'View',
+        'create' => 'Create',
+        'edit'   => 'Edit',
+        'delete' => 'Delete',
+    ],
+
     'role' => [
         'admin'   => 'Administrator',
         'user'    => 'User',

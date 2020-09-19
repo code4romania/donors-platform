@@ -24,11 +24,11 @@ class UserResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'id'        => $this->id,
-            'name'      => $this->name,
-            'email'     => $this->email,
-            'role'      => $this->role_name,
-            'roleLabel' => __("dashboard.role.{$this->role_name}"),
+            'id'          => $this->id,
+            'name'        => $this->name,
+            'email'       => $this->email,
+            'role'        => $this->role_name,
+            'permissions' => $this->all_permissions,
         ];
     }
 }

@@ -48,7 +48,7 @@ class UserPolicy
      */
     public function create(User $currentUser)
     {
-        if ($currentUser->can('manage users')) {
+        if ($currentUser->can('users.create')) {
             return true;
         }
     }
@@ -62,7 +62,7 @@ class UserPolicy
      */
     public function update(User $currentUser, User $user)
     {
-        if ($currentUser->can('manage users')) {
+        if ($currentUser->can('users.edit')) {
             return true;
         }
 
@@ -80,7 +80,7 @@ class UserPolicy
      */
     public function delete(User $currentUser, User $user)
     {
-        if ($currentUser->can('manage users')) {
+        if ($currentUser->can('users.delete')) {
             return true;
         }
 
@@ -98,7 +98,7 @@ class UserPolicy
      */
     public function restore(User $currentUser, User $user)
     {
-        if ($currentUser->can('manage users')) {
+        if ($currentUser->can('users.delete')) {
             return true;
         }
     }
@@ -112,7 +112,7 @@ class UserPolicy
      */
     public function forceDelete(User $currentUser, User $user)
     {
-        if ($currentUser->can('manage users')) {
+        if ($currentUser->can('users.delete')) {
             return true;
         }
     }

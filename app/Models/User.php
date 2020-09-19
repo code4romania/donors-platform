@@ -82,47 +82,16 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getAllPermissionsAttribute(): array
     {
-        return [
-            'domains' => [
-                'create' => $this->can('domains.create'),
-                'edit'   => $this->can('domains.edit'),
-                'delete' => $this->can('domains.delete'),
-            ],
-            'donors' => [
-                'create' => $this->can('donors.create'),
-                'edit'   => $this->can('donors.edit'),
-                'delete' => $this->can('donors.delete'),
-            ],
-            'grants' => [
-                'create' => $this->can('grants.create'),
-                'edit'   => $this->can('grants.edit'),
-                'delete' => $this->can('grants.delete'),
-            ],
-            'grantees' => [
-                'create' => $this->can('grantees.create'),
-                'edit'   => $this->can('grantees.edit'),
-                'delete' => $this->can('grantees.delete'),
-            ],
-            'managers' => [
-                'create' => $this->can('managers.create'),
-                'edit'   => $this->can('managers.edit'),
-                'delete' => $this->can('managers.delete'),
-            ],
-            'projects' => [
-                'create' => $this->can('projects.create'),
-                'edit'   => $this->can('projects.edit'),
-                'delete' => $this->can('projects.delete'),
-            ],
-            'projects' => [
-                'create' => $this->can('projects.create'),
-                'edit'   => $this->can('projects.edit'),
-                'delete' => $this->can('projects.delete'),
-            ],
-            'users' => [
-                'create' => $this->can('users.create'),
-                'edit'   => $this->can('users.edit'),
-                'delete' => $this->can('users.delete'),
-            ],
-        ];
+        $models = collect(config('permission.app.models'));
+        $actions = collect(config('permission.app.actions'));
+
+        return $models
+            ->mapWithKeys(fn ($model) => [
+                $model => $actions
+                    ->mapWithKeys(fn ($action) => [
+                        $action => $this->can("$model.$action"),
+                    ]),
+            ])
+            ->toArray();
     }
 }

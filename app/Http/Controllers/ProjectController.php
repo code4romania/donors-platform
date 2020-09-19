@@ -18,6 +18,11 @@ use Inertia\Response;
 
 class ProjectController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Project::class);
+    }
+
     public function index(Grant $grant): RedirectResponse
     {
         return Redirect::route('grants.show', [

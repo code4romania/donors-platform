@@ -14,6 +14,11 @@ use Inertia\Response;
 
 class DomainController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Domain::class);
+    }
+
     public function index(): Response
     {
         return Inertia::render('Domains/Index', [

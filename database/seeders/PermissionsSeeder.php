@@ -5,20 +5,12 @@ declare(strict_types=1);
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 
 class PermissionsSeeder extends Seeder
 {
-    protected array $permissions = [
-        'admin' => [
-            'view users',
-            'manage users',
-        ],
-        'user' => [
-            //
-        ],
+    protected array $roles = [
+        'admin', 'user',
     ];
 
     /**
@@ -31,17 +23,14 @@ class PermissionsSeeder extends Seeder
         // Reset cached roles and permissions
         app(PermissionRegistrar::class)->forgetCachedPermissions();
 
-        // Create permissions
-        collect($this->permissions)
-            ->flatten()
-            ->unique()
-            ->each(fn ($permission) => Permission::create(['name' => $permission]));
+        // Create roles
+        collect($this->roles)
+            ->each(fn ($role) => app(config('permission.models.role'))->create(['name' => $role]));
 
-        // Create roles and assign existing permissions
-        collect($this->permissions)
-            ->each(function ($permissions, $role) {
-                Role::create(['name' => $role])
-                    ->givePermissionTo($permissions);
-            });
+        // Create permissions
+        collect(config('permission.app.models'))
+            ->crossJoin(config('permission.app.actions'))
+            ->mapSpread(fn ($model, $action) => "$model.$action")
+            ->each(fn ($permission) => app(config('permission.models.permission'))::create(['name' => $permission]));
     }
 }

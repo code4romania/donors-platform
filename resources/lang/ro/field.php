@@ -32,6 +32,7 @@ return [
     'other'                 => 'Altele',
     'password_confirmation' => 'Confirmarea parolei',
     'password'              => 'Parolă',
+    'permissions'           => 'Permisiuni',
     'phone'                 => 'Telefon',
     'primary_domain'        => 'Primary domain',
     'project_count'         => 'Număr de proiecte',
