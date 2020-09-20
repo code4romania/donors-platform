@@ -23,6 +23,18 @@
 
         <slot name="table" v-if="isCurrentView('table')" />
 
+        <div class="mt-6 mb-4">
+            <h2
+                class="mb-1 text-xl font-bold text-gray-900 md:text-2xl"
+                v-text="$t('dashboard.chart.title')"
+            />
+
+            <p
+                class="text-sm text-gray-700"
+                v-text="$t('dashboard.chart.help')"
+            />
+        </div>
+
         <div
             class="relative max-h-screen px-4 py-5 bg-white rounded shadow sm:p-6"
             v-if="isCurrentView('chart')"

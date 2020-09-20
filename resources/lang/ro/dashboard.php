@@ -65,6 +65,11 @@ return [
         'table' => 'Tabel',
     ],
 
+    'chart' => [
+        'title' => 'Date disponibile',
+        'help'  => 'Pentru a compara două sau mai multe domenii între ele, apasă pe denumirile domeniilor din legendă pentru a le activa sau dezactiva.',
+    ],
+
     'permission' => [
         'view'   => 'Vizualizare',
         'create' => 'Creare',

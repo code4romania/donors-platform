@@ -65,6 +65,11 @@ return [
         'table' => 'Table view',
     ],
 
+    'chart' => [
+        'title' => 'Available data',
+        'help'  => 'In order to compare one or more domains, click on the domain names in the legend to activate or deactivate them.',
+    ],
+
     'permission' => [
         'view'   => 'View',
         'create' => 'Create',
