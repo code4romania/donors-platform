@@ -9,11 +9,18 @@
             'href' => localizedRoute('public.page', 'privacy'),
         ],
         [
-            'name' => __('public.menu.contact'),
-            'href' => localizedRoute('public.page', 'contact'),
+            'name' => __('public.menu.about'),
+            'href' => localizedRoute('public.page', 'about'),
         ],
     ];
 @endphp
+
+<div class="container flex items-center justify-end py-8">
+    <p>{{ __('public.poweredby') }}</p>
+    <a href="https://code4.ro" target="_blank" class="inline-block ml-2">
+        <img src="{{ asset('assets/svg/code4.svg') }}" class="w-24" alt="">
+    </a>
+</div>
 
 <footer class="relative bg-gray-800 shadow-xs">
     <div class="container py-12 lg:py-16">

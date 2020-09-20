@@ -4,10 +4,6 @@
             'name' => __('public.menu.about'),
             'href' => localizedRoute('public.page', 'about'),
         ],
-        [
-            'name' => __('public.menu.contact'),
-            'href' => localizedRoute('public.page', 'contact'),
-        ],
     ];
 
 @endphp

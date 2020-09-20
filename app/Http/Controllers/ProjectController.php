@@ -33,7 +33,7 @@ class ProjectController extends Controller
     public function create(Grant $grant): Response
     {
         return Inertia::render('Projects/Create', [
-            'grant'    => $grant->only('id', 'currency'),
+            'grant'    => $grant->only('id', 'name', 'currency'),
             'grantees' => GranteeResource::collection(
                 Grantee::query()
                     ->orderBy('name', 'asc')

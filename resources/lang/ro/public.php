@@ -11,4 +11,6 @@ return [
         'privacy' => 'Politica de confidențialitate',
     ],
 
+    'poweredby' => 'Platformă proiectată, dezvoltată și administrată de',
+
 ];

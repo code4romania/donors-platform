@@ -11,4 +11,6 @@ return [
         'privacy' => 'Privacy policy',
     ],
 
+    'poweredby' => 'This platform has been designed, developed and is administered by',
+
 ];

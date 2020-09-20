@@ -10,7 +10,7 @@ class PageController extends Controller
 {
     public function __invoke(string $locale, string $slug = 'index')
     {
-        $view = "public.pages.$slug";
+        $view = "public.pages.$locale.$slug";
 
         abort_unless(View::exists($view), 404);
 
