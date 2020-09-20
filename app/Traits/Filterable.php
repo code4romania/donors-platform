@@ -24,7 +24,7 @@ trait Filterable
             ->when($filters['search'], fn ($q, string $search) => $q->whereIn($this->getTable() . '.id', $this->search($search)->keys()))
             ->when($filters['domain'], fn ($q, int $domain) => $this->whereHas($q, $domain, 'domains'))
             ->when($filters['donor'], fn ($q, int $donor) => $this->whereHas($q, $donor, 'donors'))
-            ->when($filters['manager'], fn ($q, int $manager) => $this->whereHas($q, $manager, 'manager'))
+            ->when($filters['manager'], fn ($q, int $manager) => $this->whereHas($q, $manager, 'managers'))
             ->when($filters['orgtype'], fn ($q, string $type) => $q->where('type', $type));
     }
 
