@@ -76,6 +76,7 @@
 
             <div class="flex justify-end space-x-3">
                 <form-button
+                    v-if="$userCanOnModel('delete', manager)"
                     type="button"
                     color="red"
                     @click="destroy"

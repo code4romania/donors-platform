@@ -3,6 +3,7 @@
         <template v-slot:actions>
             <div>
                 <form-button
+                    v-if="$userCanOnModel('update', manager)"
                     color="blue"
                     :href="$route('managers.edit', { manager: manager.id })"
                 >

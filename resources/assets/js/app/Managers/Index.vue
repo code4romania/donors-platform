@@ -2,7 +2,11 @@
     <layout :breadcrumbs="breadcrumbs">
         <template v-slot:actions>
             <div>
-                <form-button color="blue" :href="$route('managers.create')">
+                <form-button
+                    v-if="$userCan('create', 'managers')"
+                    color="blue"
+                    :href="$route('managers.create')"
+                >
                     {{ createLabel }}
                 </form-button>
             </div>
