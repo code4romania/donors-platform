@@ -11,6 +11,7 @@
                 </form-button>
 
                 <form-button
+                    v-if="$userCanOnModel('update', donor)"
                     color="blue"
                     :href="$route('donors.edit', { donor: donor.id })"
                 >

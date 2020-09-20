@@ -19,6 +19,11 @@ use Inertia\Response;
 
 class DonorController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Donor::class);
+    }
+
     public function index(): Response
     {
         return Inertia::render('Donors/Index', [
