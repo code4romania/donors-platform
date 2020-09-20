@@ -3,7 +3,10 @@
         <template v-slot:actions>
             <div>
                 <form-button
-                    v-if="grant.project_count > projects.meta.total"
+                    v-if="
+                        $userCanOnModel('update', grant) &&
+                        grant.project_count > projects.meta.total
+                    "
                     color="blue"
                     shade="light"
                     :href="$route('projects.create', { grant: grant.id })"
@@ -12,6 +15,7 @@
                 </form-button>
 
                 <form-button
+                    v-if="$userCanOnModel('update', grant)"
                     color="blue"
                     :href="$route('grants.edit', { grant: grant.id })"
                 >
@@ -51,6 +55,7 @@
             route-name="projects.edit"
             :route-args="routeArgs"
             :route-fill="{ project: 'id' }"
+            :show-row-urls="$userCanOnModel('update', grant)"
             :paginate="true"
         >
             <template v-slot:grantees="{ row }">

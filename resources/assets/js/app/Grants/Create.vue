@@ -28,7 +28,6 @@
                 <form-checkbox-group
                     id="domains"
                     :label="$t('field.domains')"
-                    :other-label="$t('field.other')"
                     v-model="form.domains"
                     class="lg:col-span-2"
                     :options="domains.data"
@@ -149,7 +148,13 @@
             </form-panel>
 
             <div class="flex justify-end space-x-3">
-                <form-button type="button" @click="draft" :disabled="sending">
+                <form-button
+                    type="button"
+                    color="blue"
+                    shade="light"
+                    @click="draft"
+                    :disabled="sending"
+                >
                     {{ draftLabel }}
                 </form-button>
 

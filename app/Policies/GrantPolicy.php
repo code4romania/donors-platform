@@ -55,7 +55,7 @@ class GrantPolicy
      */
     public function update(User $user, Grant $grant)
     {
-        return $user->grants(['donors', 'managers'])->contains($grant);
+        return $user->grants(['donors', 'managers'])->pluck('id')->contains($grant->id);
     }
 
     /**

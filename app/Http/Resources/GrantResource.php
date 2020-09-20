@@ -88,6 +88,8 @@ class GrantResource extends Resource
             'manager'           => $this->managers->first()->id ?? null,
             'regranting_amount' => $this->regranting_amount,
             'matching'          => $this->matching,
+
+            'can'               => $this->getResourcePermissions(),
         ];
     }
 
