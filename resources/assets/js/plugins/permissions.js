@@ -12,6 +12,10 @@ export default {
         };
 
         Vue.prototype.$userCanOnModel = function(action, model) {
+            if (this.$page.auth.role === 'admin') {
+                return true;
+            }
+
             if (
                 !model.hasOwnProperty('can') ||
                 !model.can.hasOwnProperty(action)

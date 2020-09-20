@@ -37,7 +37,7 @@ class AuthServiceProvider extends ServiceProvider
             'name'        => Auth::user()->name,
             'email'       => Auth::user()->email,
             'avatar'      => Auth::user()->avatar,
-            'role'        => Auth::user()->role,
+            'role'        => Auth::user()->role_name,
             'permissions' => Auth::user()->all_permissions,
         ] : null);
     }
