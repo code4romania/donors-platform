@@ -18,6 +18,20 @@
                 scroll-region
             >
                 <div class="grid w-full px-4 py-8 gap-y-6 md:p-8">
+                    <div class="flex -mb-6" v-if="$route('dashboard') !== url">
+                        <button
+                            class="inline-flex items-center text-sm text-gray-600 hover:text-blue-500 focus:outline-none focus:text-blue-600"
+                            @click="goBack"
+                        >
+                            <svg-vue
+                                icon="System/arrow-left-s-line"
+                                class="w-4 h-4 mr-0.5 fill-current"
+                            />
+
+                            <span v-text="$t('dashboard.back')" />
+                        </button>
+                    </div>
+
                     <div
                         class="flex flex-wrap items-center space-y-6 md:flex-no-wrap md:space-y-0"
                     >
@@ -59,6 +73,11 @@
             breadcrumbs: {
                 type: Array,
                 default: () => [],
+            },
+        },
+        methods: {
+            goBack() {
+                history.back();
             },
         },
     };

@@ -25,6 +25,15 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+
+        Schema::create('user_manages_model', function (Blueprint $table) {
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('model_type')->nullable();
+            $table->unsignedBigInteger('model_id')->nullable();
+
+            $table->primary(['user_id', 'model_id', 'model_type']);
+            $table->index(['model_id', 'model_type']);
+        });
     }
 
     /**
@@ -34,6 +43,7 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('user_manages_model');
         Schema::dropIfExists('users');
     }
 }

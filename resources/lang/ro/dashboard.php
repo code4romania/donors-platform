@@ -6,6 +6,7 @@ return [
 
     'all'  => 'Toate',
     'none' => 'Niciunul',
+    'back' => 'Înapoi',
 
     'menu' => [
         'dashboard'    => 'Panoul de control',

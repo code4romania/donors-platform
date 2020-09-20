@@ -6,6 +6,7 @@ return [
 
     'all'  => 'All',
     'none' => 'None',
+    'back' => 'Back',
 
     'menu' => [
         'dashboard'    => 'Dashboard',

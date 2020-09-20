@@ -28,9 +28,9 @@ class PermissionsSeeder extends Seeder
             ->each(fn ($role) => app(config('permission.models.role'))->create(['name' => $role]));
 
         // Create permissions
-        collect(config('permission.app.models'))
-            ->crossJoin(config('permission.app.actions'))
-            ->mapSpread(fn ($model, $action) => "$model.$action")
-            ->each(fn ($permission) => app(config('permission.models.permission'))::create(['name' => $permission]));
+        // collect(config('permission.app.models'))
+        //     ->crossJoin(config('permission.app.actions'))
+        //     ->mapSpread(fn ($model, $action) => "$model.$action")
+        //     ->each(fn ($permission) => app(config('permission.models.permission'))::create(['name' => $permission]));
     }
 }

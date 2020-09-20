@@ -20,9 +20,7 @@ class DomainPolicy
      */
     public function viewAny(User $user)
     {
-        if ($user->can('domains.view')) {
-            return true;
-        }
+        return true;
     }
 
     /**
@@ -34,9 +32,7 @@ class DomainPolicy
      */
     public function view(User $user, Domain $domain)
     {
-        if ($user->can('domains.view')) {
-            return true;
-        }
+        return true;
     }
 
     /**
@@ -47,9 +43,7 @@ class DomainPolicy
      */
     public function create(User $user)
     {
-        if ($user->can('domains.create')) {
-            return true;
-        }
+        return false;
     }
 
     /**
@@ -61,9 +55,7 @@ class DomainPolicy
      */
     public function update(User $user, Domain $domain)
     {
-        if ($user->can('domains.edit')) {
-            return true;
-        }
+        return false;
     }
 
     /**
@@ -75,9 +67,7 @@ class DomainPolicy
      */
     public function delete(User $user, Domain $domain)
     {
-        if ($user->can('domains.delete')) {
-            return true;
-        }
+        return false;
     }
 
     /**
@@ -89,9 +79,7 @@ class DomainPolicy
      */
     public function restore(User $user, Domain $domain)
     {
-        if ($user->can('domains.delete')) {
-            return true;
-        }
+        return false;
     }
 
     /**
@@ -103,8 +91,6 @@ class DomainPolicy
      */
     public function forceDelete(User $user, Domain $domain)
     {
-        if ($user->can('domains.delete')) {
-            return true;
-        }
+        return false;
     }
 }

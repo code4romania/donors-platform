@@ -14,7 +14,12 @@
                 </thead>
                 <tbody>
                     <tr
-                        class="border-t border-gray-100 hover:bg-blue-50 focus-within:bg-blue-50"
+                        class="border-t border-gray-100"
+                        :class="
+                            showRowUrls
+                                ? 'hover:bg-blue-50 focus-within:bg-blue-50'
+                                : ''
+                        "
                         v-for="(row, rowIndex) in collection.data"
                         :key="rowIndex"
                     >
@@ -22,10 +27,14 @@
                             v-for="(column, columnIndex) in columns"
                             :key="columnIndex"
                         >
-                            <inertia-link
+                            <component
+                                :is="showRowUrls ? 'inertia-link' : 'div'"
                                 class="block px-6 py-4 focus:outline-none"
-                                :href="rowUrl(row)"
-                                :tabindex="columnIndex === 0 ? false : -1"
+                                :href="showRowUrls ? rowUrl(row) : false"
+                                :tabindex="
+                                    !showRowUrls ||
+                                    (columnIndex === 0 ? false : -1)
+                                "
                             >
                                 <slot
                                     :name="column.field"
@@ -34,7 +43,7 @@
                                 >
                                     {{ row[column.field] }}
                                 </slot>
-                            </inertia-link>
+                            </component>
                         </td>
                     </tr>
                 </tbody>
@@ -94,6 +103,10 @@
             routeFill: {
                 type: Object,
                 default: () => ({}),
+            },
+            showRowUrls: {
+                type: Boolean,
+                default: true,
             },
         },
         computed: {

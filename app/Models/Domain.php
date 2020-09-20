@@ -56,7 +56,7 @@ class Domain extends Model implements TranslatableContract
      * @var string[]
      */
     protected $with = [
-        // 'translations',
+        'translations',
     ];
 
     /**

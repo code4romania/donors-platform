@@ -2,7 +2,11 @@
     <layout :breadcrumbs="breadcrumbs">
         <template v-slot:actions>
             <div>
-                <form-button color="blue" :href="$route('domains.create')">
+                <form-button
+                    v-if="$userCan('create', 'domains')"
+                    color="blue"
+                    :href="$route('domains.create')"
+                >
                     {{ createLabel }}
                 </form-button>
             </div>
@@ -14,6 +18,7 @@
             :collection="domains"
             :columns="columns"
             route-name="domains.edit"
+            :show-row-urls="$userCan('create', 'domains')"
             :paginate="true"
         />
     </layout>
