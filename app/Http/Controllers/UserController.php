@@ -6,6 +6,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
+use App\Models\Donor;
+use App\Models\GrantManager;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
@@ -41,6 +43,8 @@ class UserController extends Controller
         return Inertia::render('Users/Create', [
             'roles'       => Role::all()->pluck('name'),
             'permissions' => Permission::grouped(),
+            'donors'      => Donor::all('id', 'name'),
+            'managers'    => GrantManager::all('id', 'name'),
         ]);
     }
 
@@ -49,6 +53,8 @@ class UserController extends Controller
         $user = User::create($request->validated());
 
         $user->syncRoles($request->input('role'));
+        $user->donors()->sync($request->input('donors'));
+        $user->managers()->sync($request->input('managers'));
 
         return Redirect::route('users.index')
             ->with('success', __('dashboard.event.created', [
@@ -69,6 +75,8 @@ class UserController extends Controller
             'user'        => UserResource::make($user),
             'roles'       => Role::all()->pluck('name'),
             'permissions' => Permission::grouped(),
+            'donors'      => Donor::all('id', 'name'),
+            'managers'    => GrantManager::all('id', 'name'),
         ]);
     }
 
@@ -77,6 +85,8 @@ class UserController extends Controller
         $user->update($request->validated());
 
         $user->syncRoles($request->input('role'));
+        $user->donors()->sync($request->input('donors'));
+        $user->managers()->sync($request->input('managers'));
 
         return Redirect::route('users.index')
             ->with('success', __('dashboard.event.updated', [

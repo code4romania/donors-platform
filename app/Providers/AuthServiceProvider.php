@@ -32,9 +32,6 @@ class AuthServiceProvider extends ServiceProvider
         // Implicitly grant "admin" role all permissions
         Gate::before(fn ($user) => $user->hasRole('admin') ?: null);
 
-        //
-        Gate::guessPolicyNamesUsing(fn ($model) => str_replace('App\Models', 'App\Policies', $model) . 'Policy');
-
         Inertia::share('auth', fn () => Auth::check() ? [
             'id'          => Auth::user()->id,
             'name'        => Auth::user()->name,

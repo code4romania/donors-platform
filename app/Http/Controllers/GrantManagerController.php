@@ -18,6 +18,11 @@ use Inertia\Response;
 
 class GrantManagerController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(GrantManager::class, 'manager');
+    }
+
     public function index(): Response
     {
         return Inertia::render('Managers/Index', [

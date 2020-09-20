@@ -45,7 +45,7 @@
                 />
             </form-panel>
 
-            <form-panel
+            <!-- <form-panel
                 v-if="form.role === 'user'"
                 :title="$t('model.user.section.permissions.title')"
                 :description="$t('model.user.section.permissions.description')"
@@ -62,6 +62,32 @@
                         option-label-key="label"
                     />
                 </template>
+            </form-panel> -->
+
+            <form-panel
+                v-if="form.role === 'user'"
+                :title="$t('model.user.section.permissions.title')"
+                :description="$t('model.user.section.permissions.description')"
+            >
+                <form-checkbox-group
+                    id="donors"
+                    :label="$t('model.donor.plural')"
+                    v-model="form.donors"
+                    class="lg:col-span-2"
+                    :options="donors"
+                    option-value-key="id"
+                    option-label-key="name"
+                />
+
+                <form-checkbox-group
+                    id="managers"
+                    :label="$t('model.manager.plural')"
+                    v-model="form.managers"
+                    class="lg:col-span-2"
+                    :options="managers"
+                    option-value-key="id"
+                    option-label-key="name"
+                />
             </form-panel>
 
             <div class="flex justify-end space-x-3">
@@ -95,6 +121,8 @@
                     locale: this.$page.locale,
                     role: 'user',
                     permissions: {},
+                    donors: [],
+                    managers: [],
                     ...this.prepareFields(['name', 'email']),
                 },
             };
@@ -102,6 +130,8 @@
         props: {
             roles: Array,
             permissions: Object,
+            donors: Array,
+            managers: Array,
         },
         computed: {
             pageTitle() {

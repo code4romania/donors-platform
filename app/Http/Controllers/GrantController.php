@@ -20,6 +20,11 @@ use Inertia\Response;
 
 class GrantController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Grant::class);
+    }
+
     public function index(): Response
     {
         return Inertia::render('Grants/Index', [
