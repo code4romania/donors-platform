@@ -10,6 +10,7 @@ return [
 
     'menu' => [
         'dashboard'    => 'Panoul de control',
+        'help'         => 'Ghid',
         'users'        => 'Utilizatori',
         'back_to_site' => 'Înapoi la site',
         'settings'     => 'Setări',

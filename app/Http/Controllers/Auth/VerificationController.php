@@ -31,7 +31,7 @@ class VerificationController extends Controller
      */
     protected function redirectTo(): string
     {
-        return route('dashboard');
+        return route('help');
     }
 
     /**

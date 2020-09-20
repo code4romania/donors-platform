@@ -18,7 +18,13 @@
                 scroll-region
             >
                 <div class="grid w-full px-4 py-8 gap-y-6 md:p-8">
-                    <div class="flex -mb-6" v-if="$route('dashboard') !== url">
+                    <div
+                        class="flex -mb-6"
+                        v-if="
+                            $route('dashboard') !== url &&
+                            $route('help') !== url
+                        "
+                    >
                         <button
                             class="inline-flex items-center text-sm text-gray-600 hover:text-blue-500 focus:outline-none focus:text-blue-600"
                             @click="goBack"

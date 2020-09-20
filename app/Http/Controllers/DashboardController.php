@@ -23,7 +23,7 @@ class DashboardController extends Controller
 
         $donors = Donor::all();
 
-        return Inertia::render('Dashboard/Index', [
+        return Inertia::render('Dashboard', [
             'stats' => [
                 'donors'   => $donors->count(),
                 'domains'  => $domains->count(),

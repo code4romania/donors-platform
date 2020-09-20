@@ -10,6 +10,7 @@ return [
 
     'menu' => [
         'dashboard'    => 'Dashboard',
+        'help'         => 'Guide',
         'users'        => 'User management',
         'back_to_site' => 'Back to site',
         'settings'     => 'Settings',

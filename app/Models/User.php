@@ -14,6 +14,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\WelcomeNotification\ReceivesWelcomeNotification;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -21,7 +22,8 @@ class User extends Authenticatable implements MustVerifyEmail
         HasFactory,
         HasRoles,
         Notifiable,
-        Sortable;
+        Sortable,
+        ReceivesWelcomeNotification;
 
     /**
      * The attributes that are mass assignable.

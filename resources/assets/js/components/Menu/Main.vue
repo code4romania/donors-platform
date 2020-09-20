@@ -63,6 +63,12 @@
                     <hr class="my-4 border-gray-700" />
 
                     <menu-item
+                        icon="Editor/question-mark"
+                        :href="$route('help')"
+                        :label="$t('dashboard.menu.help')"
+                    />
+
+                    <menu-item
                         icon="System/logout-box-line"
                         :href="$route('public.page')"
                         :label="$t('dashboard.menu.back_to_site')"
