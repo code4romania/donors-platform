@@ -111,7 +111,7 @@
         },
         computed: {
             pageTitle() {
-                return this.$t('dashboard.action.create', {
+                return this.$t('dashboard.action.createModel', {
                     model: this.$t('model.project.singular').toLowerCase(),
                 });
             },
@@ -126,7 +126,7 @@
                         href: this.$route('grants.show', { grant: this.grant.id }),
                     },
                     {
-                        label: this.$t('dashboard.action.create'),
+                        label: this.pageTitle,
                         href: null,
                     },
                 ];

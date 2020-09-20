@@ -10,12 +10,12 @@ return [
 
         'section' => [
             'organization' => [
-                'title' => 'Organization',
-                'description' => 'Iste et quisquam enim aut error aut. A quidem quas. Ex tenetur id nesciunt eligendi tenetur ut. Porro esse vero adipisci qui est. Ipsam ab non aut. Suscipit nulla est sed et enim illo eos.',
+                'title' => 'Organizație',
+                'description' => '',
             ],
             'contact' => [
-                'title' => 'Contact person',
-                'description' => 'Podit aut debitis et cum exercitationem. Officiis esse impedit est sunt non. Laboriosam reiciendis optio sapiente quaerat illum est mollitia.',
+                'title' => 'Persoană de contact',
+                'description' => '',
             ],
         ],
     ],
@@ -24,8 +24,8 @@ return [
         'plural'   => 'Domenii',
 
         'section' => [
-            'title' => 'Lorem ipsum',
-            'description' => 'Iste et quisquam enim aut error aut. A quidem quas. Ex tenetur id nesciunt eligendi tenetur ut. Porro esse vero adipisci qui est. Ipsam ab non aut. Suscipit nulla est sed et enim illo eos.',
+            'title' => 'Domeniu',
+            'description' => '',
         ],
     ],
     'grant' => [
@@ -35,19 +35,15 @@ return [
         'section' => [
             'info' => [
                 'title' => 'Grant',
-                'description' => 'Iste et quisquam enim aut error aut. A quidem quas. Ex tenetur id nesciunt eligendi tenetur ut. Porro esse vero adipisci qui est. Ipsam ab non aut. Suscipit nulla est sed et enim illo eos.',
+                'description' => 'Un grant este o sumă de bani alocată pentru unul sau mai multe domenii. Un grant poate avea unul sau multe proiecte beneficiare, respectiv unul sau mai multi titulari de grant ca beneficiari. De exemplu dacă ai un grant pe care îl aloci printr-un call de finanțare către mai multe organizații câștigătoare, în acest ecran trebuie să introduci numele grantului, domeniul și valoarea sa totală. Organizațiile și proiectele cu care au câștigat finanțare în cadrul acestui grant le vei adăuga în pasul următor.',
             ],
             'donors' => [
-                'title' => 'Donatori',
-                'description' => 'Iste et quisquam enim aut error aut. A quidem quas. Ex tenetur id nesciunt eligendi tenetur ut. Porro esse vero adipisci qui est. Ipsam ab non aut. Suscipit nulla est sed et enim illo eos.',
+                'title' => 'Finanțatori',
+                'description' => '',
             ],
             'manager' => [
                 'title' => 'Grant manager',
-                'description' => 'Iste et quisquam enim aut error aut. A quidem quas. Ex tenetur id nesciunt eligendi tenetur ut. Porro esse vero adipisci qui est. Ipsam ab non aut. Suscipit nulla est sed et enim illo eos.',
-            ],
-            'grantees' => [
-                'title' => 'Titulari de grant',
-                'description' => 'Iste et quisquam enim aut error aut. A quidem quas. Ex tenetur id nesciunt eligendi tenetur ut. Porro esse vero adipisci qui est. Ipsam ab non aut. Suscipit nulla est sed et enim illo eos.',
+                'description' => '',
             ],
         ],
     ],
@@ -56,8 +52,8 @@ return [
         'plural'   => 'Titulari de grant',
 
         'section' => [
-            'title' => 'Lorem ipsum',
-            'description' => 'Iste et quisquam enim aut error aut. A quidem quas. Ex tenetur id nesciunt eligendi tenetur ut. Porro esse vero adipisci qui est. Ipsam ab non aut. Suscipit nulla est sed et enim illo eos.',
+            'title' => 'Titular de grant',
+            'description' => 'Titularul de grant este o organizație, un grup informal sau o persoană care este beneficiarul finanțării alocate prin intermediul unui grant. Pentru a intorduce granturi în platformă și a le aloca unuia sau mai multpr titulari de grant, trebuie ca titularii să fie adăugați la acest pas în proces. ',
         ],
     ],
     'manager' => [
@@ -67,11 +63,11 @@ return [
         'section' => [
             'organization' => [
                 'title' => 'Organizație',
-                'description' => 'Iste et quisquam enim aut error aut. A quidem quas. Ex tenetur id nesciunt eligendi tenetur ut. Porro esse vero adipisci qui est. Ipsam ab non aut. Suscipit nulla est sed et enim illo eos.',
+                'description' => '',
             ],
             'contact' => [
                 'title' => 'Persoană de contact',
-                'description' => 'Podit aut debitis et cum exercitationem. Officiis esse impedit est sunt non. Laboriosam reiciendis optio sapiente quaerat illum est mollitia.',
+                'description' => '',
             ],
         ],
     ],
@@ -80,8 +76,14 @@ return [
         'plural'   => 'Proiecte',
 
         'section' => [
-            'title' => 'Lorem ipsum',
-            'description' => 'Iste et quisquam enim aut error aut. A quidem quas. Ex tenetur id nesciunt eligendi tenetur ut. Porro esse vero adipisci qui est. Ipsam ab non aut. Suscipit nulla est sed et enim illo eos.',
+            'info' => [
+                'title' => 'Proiecte',
+                'description' => 'Un proiect este o subsecțiune a unui grant. Un grant poate fi acordat unuia sau mai multor proiecte. Exemplu: În cadrul grantului ”Adoptă un proiect” există 10 proiecte câștigătoare. Fiecare proiect câștigător poate avea unul sau mai mulți titulari de grant ca beneficiari.',
+            ],
+            'grantees' => [
+                'title' => 'Titulari de grant',
+                'description' => 'Pentru a putea aloca un proiect unui titular de grant este necesar ca acesta să fie deja adăugat în lista de Titulari de grant. Dacă nu găsești în listă titularul de grant atunci te rog să îl adaugi și să revii în acest ecran.',
+            ],
         ],
     ],
     'user' => [

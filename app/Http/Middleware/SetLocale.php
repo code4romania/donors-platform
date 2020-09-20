@@ -38,7 +38,7 @@ class SetLocale
             }
 
             App::setLocale($locale);
-        } elseif (in_array($section, ['dashboard', 'help'])) {
+        } else {
             App::setLocale(
                 in_array(auth()->user()->locale, config('translatable.locales'))
                     ? auth()->user()->locale

@@ -2,8 +2,8 @@
     <layout :breadcrumbs="breadcrumbs">
         <form @submit.prevent="submit" method="post" class="grid gap-y-8">
             <form-panel
-                :title="$t('model.domain.section.title')"
-                :description="$t('model.domain.section.description')"
+                :title="$t('model.grantee.section.title')"
+                :description="$t('model.grantee.section.description')"
             >
                 <form-input
                     type="text"

@@ -11,11 +11,11 @@ return [
         'section' => [
             'organization' => [
                 'title' => 'Organization',
-                'description' => 'Iste et quisquam enim aut error aut. A quidem quas. Ex tenetur id nesciunt eligendi tenetur ut. Porro esse vero adipisci qui est. Ipsam ab non aut. Suscipit nulla est sed et enim illo eos.',
+                'description' => '',
             ],
             'contact' => [
                 'title' => 'Contact person',
-                'description' => 'Podit aut debitis et cum exercitationem. Officiis esse impedit est sunt non. Laboriosam reiciendis optio sapiente quaerat illum est mollitia.',
+                'description' => '',
             ],
         ],
     ],
@@ -24,8 +24,8 @@ return [
         'plural'   => 'Domains',
 
         'section' => [
-            'title' => 'Lorem ipsum',
-            'description' => 'Iste et quisquam enim aut error aut. A quidem quas. Ex tenetur id nesciunt eligendi tenetur ut. Porro esse vero adipisci qui est. Ipsam ab non aut. Suscipit nulla est sed et enim illo eos.',
+            'title' => 'Domain',
+            'description' => '',
         ],
     ],
     'grant' => [
@@ -35,19 +35,15 @@ return [
         'section' => [
             'info' => [
                 'title' => 'Grant',
-                'description' => 'Iste et quisquam enim aut error aut. A quidem quas. Ex tenetur id nesciunt eligendi tenetur ut. Porro esse vero adipisci qui est. Ipsam ab non aut. Suscipit nulla est sed et enim illo eos.',
+                'description' => 'A grant is a sum of money allocated on one or more domains. A grant may have one or more projects and one or more grantees as beneficiaries. For example, if you have a grant that you will allocate through an open call for proposals to multiple winning organisations, in this screen you will have to input the grant name, the domain and its total value. The organisations and the projects they won the call with will be added in the next screen.',
             ],
             'donors' => [
                 'title' => 'Donors',
-                'description' => 'Iste et quisquam enim aut error aut. A quidem quas. Ex tenetur id nesciunt eligendi tenetur ut. Porro esse vero adipisci qui est. Ipsam ab non aut. Suscipit nulla est sed et enim illo eos.',
+                'description' => '',
             ],
             'manager' => [
                 'title' => 'Grant manager',
-                'description' => 'Iste et quisquam enim aut error aut. A quidem quas. Ex tenetur id nesciunt eligendi tenetur ut. Porro esse vero adipisci qui est. Ipsam ab non aut. Suscipit nulla est sed et enim illo eos.',
-            ],
-            'grantees' => [
-                'title' => 'Grantees',
-                'description' => 'Iste et quisquam enim aut error aut. A quidem quas. Ex tenetur id nesciunt eligendi tenetur ut. Porro esse vero adipisci qui est. Ipsam ab non aut. Suscipit nulla est sed et enim illo eos.',
+                'description' => '',
             ],
         ],
     ],
@@ -56,8 +52,8 @@ return [
         'plural'   => 'Grantees',
 
         'section' => [
-            'title' => 'Lorem ipsum',
-            'description' => 'Iste et quisquam enim aut error aut. A quidem quas. Ex tenetur id nesciunt eligendi tenetur ut. Porro esse vero adipisci qui est. Ipsam ab non aut. Suscipit nulla est sed et enim illo eos.',
+            'title' => 'Grantee',
+            'description' => 'A grantee is an organisation, an informal group or a person who is the beneficiary of the funding allocated through a grant. In order to input grants in the platform and to allocate them to one or more grantees you need to add the grantees here, at this step of the process.',
         ],
     ],
     'manager' => [
@@ -67,11 +63,11 @@ return [
         'section' => [
             'organization' => [
                 'title' => 'Organization',
-                'description' => 'Iste et quisquam enim aut error aut. A quidem quas. Ex tenetur id nesciunt eligendi tenetur ut. Porro esse vero adipisci qui est. Ipsam ab non aut. Suscipit nulla est sed et enim illo eos.',
+                'description' => '',
             ],
             'contact' => [
                 'title' => 'Contact person',
-                'description' => 'Podit aut debitis et cum exercitationem. Officiis esse impedit est sunt non. Laboriosam reiciendis optio sapiente quaerat illum est mollitia.',
+                'description' => '',
             ],
         ],
     ],
@@ -80,8 +76,14 @@ return [
         'plural'   => 'Projects',
 
         'section' => [
-            'title' => 'Lorem ipsum',
-            'description' => 'Iste et quisquam enim aut error aut. A quidem quas. Ex tenetur id nesciunt eligendi tenetur ut. Porro esse vero adipisci qui est. Ipsam ab non aut. Suscipit nulla est sed et enim illo eos.',
+            'info' => [
+                'title' => 'Projects',
+                'description' => 'A project is a subsection of a grant. A grant may be given to one or more projects. Example: In the ”Adopt a project” grant there are ten winning projects. Each winning project may have one or more grantees as beneficiaries. ',
+            ],
+            'grantees' => [
+                'title' => 'Grantee',
+                'description' => 'In order to connect a project to a grantee it is necessary that the grantee is already added in the Grantee list. If you can not find the grantee in the list then please add the grantee and come back to this screen.',
+            ],
         ],
     ],
     'user' => [
