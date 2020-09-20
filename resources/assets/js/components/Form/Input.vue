@@ -39,7 +39,7 @@
             </div>
         </template>
 
-        <div v-else class="relative">
+        <div v-else>
             <form-label
                 v-if="label"
                 :label="label"
@@ -47,20 +47,22 @@
                 :required="$attrs.required"
                 class="flex-1"
             />
-            <form-text
-                :type="type"
-                :id="id"
-                v-bind="$attrs"
-                v-model="dataValue"
-                @input="update(false, ...arguments)"
-                :class="{ 'pr-13': suffix }"
-            />
+            <div class="relative">
+                <form-text
+                    :type="type"
+                    :id="id"
+                    v-bind="$attrs"
+                    v-model="dataValue"
+                    @input="update(false, ...arguments)"
+                    :class="{ 'pr-13': suffix }"
+                />
 
-            <div
-                class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 pointer-events-none sm:text-sm sm:leading-5"
-                v-if="suffix"
-                v-text="suffix"
-            />
+                <div
+                    class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 pointer-events-none sm:text-sm sm:leading-5"
+                    v-if="suffix"
+                    v-text="suffix"
+                />
+            </div>
             <form-input-error :id="id" />
         </div>
     </div>

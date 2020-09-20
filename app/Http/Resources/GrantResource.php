@@ -94,7 +94,7 @@ class GrantResource extends JsonResource
             'start_date'        => $this->formatted_start_date,
             'end_date'          => $this->formatted_end_date,
 
-            'manager'           => $this->manager->id ?? null,
+            'manager'           => $this->managers->first()->id ?? null,
             'regranting_amount' => $this->regranting_amount,
             'matching'          => $this->matching,
         ];

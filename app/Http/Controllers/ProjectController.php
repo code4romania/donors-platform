@@ -35,7 +35,7 @@ class ProjectController extends Controller
         abort_unless($grant->projects->count() < $grant->project_count, 403);
 
         return Inertia::render('Projects/Create', [
-            'grant'    => GrantShowResource::make($grant),
+            'grant'    => $grant->only('id', 'currency'),
             'grantees' => GranteeResource::collection(
                 Grantee::query()
                     ->orderBy('name', 'asc')

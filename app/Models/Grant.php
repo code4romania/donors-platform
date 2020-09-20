@@ -119,7 +119,7 @@ class Grant extends Model implements TranslatableContract
         return $this->relatedTo(Donor::class);
     }
 
-    public function manager(): MorphToMany
+    public function managers(): MorphToMany
     {
         return $this->relatedTo(GrantManager::class);
     }
