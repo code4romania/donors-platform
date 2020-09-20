@@ -27,7 +27,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var string[]
      */
     protected $fillable = [
-        'name', 'email', 'password', 'locale',
+        'name', 'email', 'password', 'locale', 'permissions',
     ];
 
     /**
@@ -93,5 +93,10 @@ class User extends Authenticatable implements MustVerifyEmail
                     ]),
             ])
             ->toArray();
+    }
+
+    public function setPermissionsAttribute($values): void
+    {
+        $this->syncPermissions($values);
     }
 }

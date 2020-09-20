@@ -23,6 +23,29 @@ class UserResource extends JsonResource
      */
     public function toArray($request): array
     {
+        switch ($request->route()->getName()) {
+            case 'users.index':
+                return $this->getIndexAttributes($request);
+                break;
+
+            default:
+                return $this->getShowAttributes($request);
+                break;
+        }
+    }
+
+    public function getIndexAttributes($request): array
+    {
+        return [
+            'id'          => $this->id,
+            'name'        => $this->name,
+            'email'       => $this->email,
+            'role'        => $this->role_name,
+        ];
+    }
+
+    public function getShowAttributes($request): array
+    {
         return [
             'id'          => $this->id,
             'name'        => $this->name,

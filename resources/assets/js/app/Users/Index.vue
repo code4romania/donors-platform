@@ -15,7 +15,11 @@
             :columns="columns"
             route-name="users.edit"
             :paginate="true"
-        />
+        >
+            <template v-slot:role="{ role }">
+                {{ $t(`dashboard.role.${role}`) }}
+            </template>
+        </model-table>
     </layout>
 </template>
 

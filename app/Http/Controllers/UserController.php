@@ -25,7 +25,7 @@ class UserController extends Controller
     {
         return Inertia::render('Users/Index', [
             'columns' => $this->getIndexColumns(User::class, [
-                'name', 'roleLabel',
+                'name', 'role',
             ]),
             'users' => UserResource::collection(
                 User::query()
@@ -72,9 +72,9 @@ class UserController extends Controller
         ]);
     }
 
-    public function update(userRequest $request, User $user): RedirectResponse
+    public function update(UserRequest $request, User $user): RedirectResponse
     {
-        $user->update($request->all());
+        $user->update($request->validated());
 
         $user->syncRoles($request->input('role'));
 

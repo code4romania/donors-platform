@@ -38,7 +38,7 @@
                 <form-select
                     id="role"
                     :label="$t('field.role')"
-                    :options="roles"
+                    :options="translatedRoles"
                     v-model="form.role"
                     class="lg:col-span-2"
                     required
@@ -75,9 +75,14 @@
 
 <script>
     import FormMixin from '@/mixins/form';
+    import UserMixin from '@/mixins/user';
 
     export default {
-        mixins: [FormMixin],
+        mixins: [
+            //
+            FormMixin,
+            UserMixin,
+        ],
         metaInfo() {
             return {
                 title: this.pageTitle,
@@ -88,8 +93,9 @@
                 formAction: this.$route('users.store'),
                 form: {
                     locale: this.$page.locale,
+                    role: 'user',
                     permissions: {},
-                    ...this.prepareFields(['name', 'email', 'role']),
+                    ...this.prepareFields(['name', 'email']),
                 },
             };
         },
@@ -114,16 +120,6 @@
                         href: null,
                     },
                 ];
-            },
-            permissionsByGroup() {
-                return Object.keys(this.permissions).map((model) => ({
-                    model: model,
-                    label: this.$t(`model.${model}.plural`),
-                    permissions: this.permissions[model].map((action) => ({
-                        action: action,
-                        label: this.$t(`dashboard.permission.${action}`),
-                    })),
-                }));
             },
         },
     };

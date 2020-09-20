@@ -2,8 +2,8 @@
     <layout :breadcrumbs="breadcrumbs">
         <form @submit.prevent="submit" method="post" class="grid gap-y-8">
             <form-panel
-                :title="$t('model.user.section.title')"
-                :description="$t('model.user.section.description')"
+                :title="$t('model.user.section.info.title')"
+                :description="$t('model.user.section.info.description')"
             >
                 <form-input
                     type="text"
@@ -27,7 +27,7 @@
                 <form-select
                     id="role"
                     :label="$t('field.role')"
-                    :options="roles"
+                    :options="translatedRoles"
                     v-model="form.role"
                     class="lg:col-span-2"
                 />
@@ -72,9 +72,14 @@
 
 <script>
     import FormMixin from '@/mixins/form';
+    import UserMixin from '@/mixins/user';
 
     export default {
-        mixins: [FormMixin],
+        mixins: [
+            //
+            FormMixin,
+            UserMixin,
+        ],
         metaInfo() {
             return {
                 title: this.pageTitle,
@@ -84,12 +89,13 @@
             let routeParams = {
                 user: this.user.id,
             };
+
             return {
                 deleteAction: this.$route('users.destroy', routeParams),
                 formAction: this.$route('users.update', routeParams),
                 form: {
                     _method: 'PUT', // html form method spoofing
-                    permissions: {},
+                    permissions: this.permissionValues(),
                     ...this.prepareFields(['name', 'email', 'role'], this.user),
                 },
             };
@@ -117,15 +123,24 @@
                     },
                 ];
             },
-            permissionsByGroup() {
-                return Object.keys(this.permissions).map((model) => ({
-                    model: model,
-                    label: this.$t(`model.${model}.plural`),
-                    permissions: this.permissions[model].map((action) => ({
-                        action: action,
-                        label: this.$t(`dashboard.permission.${action}`),
-                    })),
-                }));
+        },
+        methods: {
+            permissionValues() {
+                let permissions = {};
+
+                Object.keys(this.permissions).map((model) => {
+                    if (!permissions.hasOwnProperty(model)) {
+                        permissions[model] = [];
+                    }
+
+                    let capabilities = this.user.permissions[model + 's'];
+
+                    permissions[model] = Object.keys(capabilities).filter(
+                        (action) => capabilities[action] === true
+                    );
+                });
+
+                return permissions;
             },
         },
     };
