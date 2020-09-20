@@ -183,7 +183,7 @@
 
                 formAction: this.$route('grants.store'),
                 form: {
-                    donors: [],
+                    donors: this.prefillDonor(),
                     domains: [],
                     ...this.prepareFields([
                         'name',
@@ -222,6 +222,18 @@
                         href: null,
                     },
                 ];
+            },
+        },
+        methods: {
+            prefillDonor() {
+                let search = new URLSearchParams(location.search),
+                    donor = search.get('donor');
+
+                if (!donor) {
+                    return [];
+                }
+
+                return [parseInt(donor)];
             },
         },
     };

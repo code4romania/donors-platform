@@ -4,6 +4,14 @@
             <div>
                 <form-button
                     color="blue"
+                    shade="light"
+                    :href="$route('grants.create', { donor: donor.id })"
+                >
+                    {{ newGrantLabel }}
+                </form-button>
+
+                <form-button
+                    color="blue"
                     :href="$route('donors.edit', { donor: donor.id })"
                 >
                     {{ editLabel }}
@@ -167,6 +175,11 @@
             };
         },
         computed: {
+            newGrantLabel() {
+                return this.$t('dashboard.action.createModel', {
+                    model: this.$t('model.grant.singular').toLowerCase(),
+                });
+            },
             pageTitle() {
                 return this.donor.name;
             },
