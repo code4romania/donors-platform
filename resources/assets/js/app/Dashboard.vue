@@ -9,7 +9,7 @@
             />
         </grid>
 
-        <data-block :chart-data="chart" :chart-options="chartOptions" />
+        <data-block :chart-data="chart" />
     </layout>
 </template>
 
@@ -56,31 +56,6 @@
                         href: null,
                     },
                 ];
-            },
-            chartOptions() {
-                return {
-                    scales: {
-                        xAxes: [
-                            {
-                                display: true,
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: this.$t('field.year'),
-                                },
-                            },
-                        ],
-                        yAxes: [
-                            {
-                                display: true,
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: this.$t('field.amount'),
-                                },
-                                ticks: {},
-                            },
-                        ],
-                    },
-                };
             },
         },
     };

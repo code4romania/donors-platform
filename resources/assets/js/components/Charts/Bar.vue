@@ -70,7 +70,13 @@
                     responsive: true,
                     legend: {
                         display: true,
-                        align: 'end',
+                        align: 'start',
+                        position: 'bottom',
+                        fullWidth: false,
+                        labels: {
+                            padding: 20,
+                            boxWidth: 20,
+                        },
                     },
                     tooltips: {
                         callbacks: {
