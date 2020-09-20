@@ -78,6 +78,7 @@ module.exports = {
         content: [
             //
             'resources/views/**/*.blade.php',
+            'resources/assets/js/**/*.js',
             'resources/assets/js/**/*.vue',
         ],
         options: {

@@ -94,8 +94,8 @@ class User extends Authenticatable implements MustVerifyEmail
             $related,
             'model',
             'user_manages_model',
-            'model_id',
             'user_id',
+            'model_id',
         );
     }
 
