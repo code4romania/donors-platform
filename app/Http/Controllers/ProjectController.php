@@ -32,8 +32,6 @@ class ProjectController extends Controller
 
     public function create(Grant $grant): Response
     {
-        abort_unless($grant->projects->count() < $grant->project_count, 403);
-
         return Inertia::render('Projects/Create', [
             'grant'    => $grant->only('id', 'currency'),
             'grantees' => GranteeResource::collection(
@@ -72,14 +70,8 @@ class ProjectController extends Controller
         ]);
     }
 
-    public function edit(Grant $grant, int $project): Response
+    public function edit(Grant $grant, Project $project): Response
     {
-        $project = $grant->projects->firstWhere('id', $project);
-
-        abort_unless($project, 404);
-
-        $project->setRelation('grant', $grant);
-
         return Inertia::render('Projects/Edit', [
             'project'  => ProjectResource::make($project),
             'grant'    => GrantShowResource::make($grant),
@@ -93,8 +85,6 @@ class ProjectController extends Controller
 
     public function update(ProjectRequest $request, Grant $grant, Project $project): RedirectResponse
     {
-        abort_unless($grant->is($project->grant), 403);
-
         $project->fill([
             'title'      => $request->input('title'),
             'amount'     => $request->input('amount'),
@@ -115,8 +105,6 @@ class ProjectController extends Controller
 
     public function destroy(Grant $grant, Project $project): RedirectResponse
     {
-        abort_unless($grant->is($project->grant), 403);
-
         $project->delete();
 
         return Redirect::route('grants.show', ['grant' => $grant])

@@ -67,7 +67,8 @@ class GrantPolicy
      */
     public function delete(User $user, Grant $grant)
     {
-        return $user->grants('donors')->contains($grant);
+        return $user->grants('donors')->pluck('id')
+            ->contains($grant->id);
     }
 
     /**

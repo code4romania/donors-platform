@@ -4,12 +4,19 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
+use App\Models\Project;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Http\Request;
 
 class ProjectPolicy
 {
     use HandlesAuthorization;
+
+    public function __construct(Request $request)
+    {
+        $this->grant = $request->route('grant');
+    }
 
     /**
      * Determine whether the user can view any models.
@@ -19,9 +26,7 @@ class ProjectPolicy
      */
     public function viewAny(User $user)
     {
-        if ($user->can('projects.view')) {
-            return true;
-        }
+        return true;
     }
 
     /**
@@ -31,11 +36,9 @@ class ProjectPolicy
      * @param  \App\Models\Project $project
      * @return mixed
      */
-    public function view(User $user, Domain $project)
+    public function view(User $user, Project $project)
     {
-        if ($user->can('projects.view')) {
-            return true;
-        }
+        return true;
     }
 
     /**
@@ -46,7 +49,11 @@ class ProjectPolicy
      */
     public function create(User $user)
     {
-        if ($user->can('projects.create')) {
+        if ($user->donors->isNotEmpty()) {
+            return true;
+        }
+
+        if ($this->grant->projects->count() < $this->grant->project_count) {
             return true;
         }
     }
@@ -58,9 +65,14 @@ class ProjectPolicy
      * @param  \App\Models\Project $project
      * @return mixed
      */
-    public function update(User $user, Domain $project)
+    public function update(User $user, Project $project)
     {
-        if ($user->can('projects.edit')) {
+        if (
+            $this->grant->projects->pluck('id')->contains($project->id) &&
+            $user->grants(['donors', 'managers'])
+                ->pluck('id')
+                ->contains($this->grant->id)
+        ) {
             return true;
         }
     }
@@ -72,9 +84,14 @@ class ProjectPolicy
      * @param  \App\Models\Project $project
      * @return mixed
      */
-    public function delete(User $user, Domain $project)
+    public function delete(User $user, Project $project)
     {
-        if ($user->can('projects.delete')) {
+        if (
+            $this->grant->projects->pluck('id')->contains($project->id) &&
+            $user->grants(['donors', 'managers'])
+                ->pluck('id')
+                ->contains($this->grant->id)
+        ) {
             return true;
         }
     }
@@ -86,11 +103,9 @@ class ProjectPolicy
      * @param  \App\Models\Project $project
      * @return mixed
      */
-    public function restore(User $user, Domain $project)
+    public function restore(User $user, Project $project)
     {
-        if ($user->can('projects.delete')) {
-            return true;
-        }
+        return false;
     }
 
     /**
@@ -100,10 +115,8 @@ class ProjectPolicy
      * @param  \App\Models\Project $project
      * @return mixed
      */
-    public function forceDelete(User $user, Domain $project)
+    public function forceDelete(User $user, Project $project)
     {
-        if ($user->can('projects.delete')) {
-            return true;
-        }
+        return false;
     }
 }
