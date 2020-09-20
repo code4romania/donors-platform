@@ -53,7 +53,10 @@ class ProjectPolicy
             return true;
         }
 
-        if ($this->grant->projects->count() < $this->grant->project_count) {
+        if (
+            $this->grant !== null &&
+            $this->grant->projects->count() < $this->grant->project_count
+        ) {
             return true;
         }
     }
@@ -68,6 +71,7 @@ class ProjectPolicy
     public function update(User $user, Project $project)
     {
         if (
+            $this->grant !== null &&
             $this->grant->projects->pluck('id')->contains($project->id) &&
             $user->grants(['donors', 'managers'])
                 ->pluck('id')
@@ -87,6 +91,7 @@ class ProjectPolicy
     public function delete(User $user, Project $project)
     {
         if (
+            $this->grant !== null &&
             $this->grant->projects->pluck('id')->contains($project->id) &&
             $user->grants(['donors', 'managers'])
                 ->pluck('id')
