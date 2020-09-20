@@ -25,9 +25,12 @@ class GrantResource extends JsonResource
     {
         switch ($request->route()->getName()) {
             case 'grants.index':
+                return $this->getIndexAttributes($request);
+                break;
+
             case 'donors.show':
             case 'managers.show':
-                return $this->getIndexAttributes($request);
+                return $this->getListingAttributes($request);
                 break;
 
             case 'grants.edit':
@@ -41,6 +44,21 @@ class GrantResource extends JsonResource
     }
 
     public function getIndexAttributes($request): array
+    {
+        return [
+            'id'                => $this->id,
+            'name'              => $this->name,
+            'donors'            => $this->donors->pluck('name'),
+            'domains'           => $this->domains->pluck('name'),
+            'amount'            => $this->amount->formatWithoutDecimals(),
+            'regranting_amount' => $this->regranting_amount->formatWithoutDecimals(),
+            'start_date'        => $this->formatted_start_date,
+            'end_date'          => $this->formatted_end_date,
+            'published_status'  => $this->published_status,
+        ];
+    }
+
+    public function getListingAttributes($request): array
     {
         return [
             'id'                => $this->id,
