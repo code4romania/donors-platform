@@ -61,8 +61,16 @@
                 />
             </template>
 
-            <template v-slot:donors="{ donors }">
+            <template v-slot:donors="{ donors, row }">
                 {{ donors.join(', ') }}
+
+                <div
+                    class="flex items-center mt-2 text-sm text-gray-500"
+                    v-if="row.managers.length"
+                >
+                    {{ $t('model.manager.singular') }}:
+                    {{ row.managers[0] }}
+                </div>
             </template>
 
             <template v-slot:amount="{ amount }">

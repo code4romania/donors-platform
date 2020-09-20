@@ -15,8 +15,9 @@ class GranteeResource extends Resource
     public function toArray($request): array
     {
         return [
-            'id'   => $this->id,
-            'name' => $this->name,
+            'id'            => $this->id,
+            'name'          => $this->name,
+            'project_count' => $this->projects->count(),
         ];
     }
 }

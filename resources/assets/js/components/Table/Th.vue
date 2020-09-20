@@ -117,6 +117,8 @@
                     'amount',
                     'regranting_amount',
                     'total_funding',
+
+                    'project_count',
                 ];
 
                 return shrinkableColumns.includes(this.column.field)
