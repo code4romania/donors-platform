@@ -4,17 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\JsonResource;
-
-class GrantResource extends JsonResource
+class GrantResource extends Resource
 {
-    /**
-     * The "data" wrapper that should be applied.
-     *
-     * @var string
-     */
-    public static $wrap = null;
-
     /**
      * Transform the resource into an array.
      *
@@ -118,6 +109,8 @@ class GrantResource extends JsonResource
 
             'start_date'        => $this->formatted_start_date,
             'end_date'          => $this->formatted_end_date,
+
+            'can'               => $this->getResourcePermissions(),
         ];
     }
 }

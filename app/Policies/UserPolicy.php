@@ -19,7 +19,7 @@ class UserPolicy
      */
     public function viewAny(User $currentUser)
     {
-        //
+        return false;
     }
 
     /**
@@ -31,10 +31,6 @@ class UserPolicy
      */
     public function view(User $currentUser, User $user)
     {
-        if ($currentUser->can('manage users')) {
-            return true;
-        }
-
         if ($currentUser->is($user)) {
             return true;
         }
@@ -48,9 +44,7 @@ class UserPolicy
      */
     public function create(User $currentUser)
     {
-        if ($currentUser->can('users.create')) {
-            return true;
-        }
+        return false;
     }
 
     /**
@@ -62,13 +56,11 @@ class UserPolicy
      */
     public function update(User $currentUser, User $user)
     {
-        if ($currentUser->can('users.edit')) {
-            return true;
-        }
-
         if ($currentUser->is($user)) {
             return true;
         }
+
+        return false;
     }
 
     /**
@@ -80,13 +72,7 @@ class UserPolicy
      */
     public function delete(User $currentUser, User $user)
     {
-        if ($currentUser->can('users.delete')) {
-            return true;
-        }
-
-        if ($currentUser->is($user)) {
-            return true;
-        }
+        return false;
     }
 
     /**
@@ -98,9 +84,7 @@ class UserPolicy
      */
     public function restore(User $currentUser, User $user)
     {
-        if ($currentUser->can('users.delete')) {
-            return true;
-        }
+        return false;
     }
 
     /**
@@ -112,8 +96,6 @@ class UserPolicy
      */
     public function forceDelete(User $currentUser, User $user)
     {
-        if ($currentUser->can('users.delete')) {
-            return true;
-        }
+        return false;
     }
 }

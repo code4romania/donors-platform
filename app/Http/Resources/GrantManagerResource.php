@@ -4,17 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\JsonResource;
-
-class GrantManagerResource extends JsonResource
+class GrantManagerResource extends Resource
 {
-    /**
-     * The "data" wrapper that should be applied.
-     *
-     * @var string
-     */
-    public static $wrap = null;
-
     /**
      * Transform the resource into an array.
      *
@@ -67,6 +58,8 @@ class GrantManagerResource extends JsonResource
             'grant_count'      => $this->grant_count,
             'grant_domains'    => DomainResource::collection($this->grant_domains),
             'grantee_count'    => $this->grantee_count,
+
+            'can'              => $this->getResourcePermissions(),
         ];
     }
 

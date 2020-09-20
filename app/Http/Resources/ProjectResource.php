@@ -5,17 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Resources;
 
 use Cknow\Money\Money;
-use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProjectResource extends JsonResource
+class ProjectResource extends Resource
 {
-    /**
-     * The "data" wrapper that should be applied.
-     *
-     * @var string
-     */
-    public static $wrap = null;
-
     /**
      * Transform the resource into an array.
      *
@@ -58,6 +50,8 @@ class ProjectResource extends JsonResource
                 $this->grant->remaining_amount->subtract($this->amount),
                 Money::parseByDecimal('0.00', $this->currency)
             ),
+
+            'can'        => $this->getResourcePermissions(),
         ];
     }
 }
