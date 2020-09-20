@@ -55,7 +55,7 @@ class DonorPolicy
      */
     public function update(User $user, Donor $donor)
     {
-        return $user->donors->contains($donor);
+        return $user->donors->pluck('id')->contains($donor->id);
     }
 
     /**

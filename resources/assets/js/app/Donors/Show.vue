@@ -3,7 +3,10 @@
         <template v-slot:actions>
             <div>
                 <form-button
-                    v-if="$userCan('create', 'grants')"
+                    v-if="
+                        $userCan('create', 'grants') &&
+                        $userCanOnModel('update', donor)
+                    "
                     color="blue"
                     shade="light"
                     :href="$route('grants.create', { donor: donor.id })"
