@@ -24,7 +24,7 @@
                         <li>
                             <strong>Grant manager:</strong> orice entitate
                             juridică alocată de către un finanțator unuia sau
-                            mai multpr granturi proprii, care are dreptul de a
+                            mai multor granturi proprii, care are dreptul de a
                             administra granturile, titularii de granturi și
                             proiectele alocate lui.
                         </li>
@@ -32,7 +32,7 @@
                             <strong>Grant:</strong> sumă de bani alocată de un
                             finanțator pe unul sau mai multe domenii. Un grant
                             poate avea unul sau multe proiecte beneficiare,
-                            respectiv unul sau mai multi titulari de grant ca
+                            respectiv unul sau mai mulți titulari de grant ca
                             beneficiari
                         </li>
                         <li>
@@ -55,9 +55,9 @@
                 <div class="prose max-w-none">
                     <ul>
                         <li>
-                            In secțiunea <strong>Panou de control</strong> vei
+                            În secțiunea <strong>Panou de control</strong> vei
                             putea vedea un overview al datelor prezente în
-                            platformă. Suma totală a granturilor introduse,
+                            platformă: suma totală a granturilor introduse,
                             numărul total de finanțatori precum și un grafic cu
                             ajutorul căruia vei putea compara datele agregate.
                             <strong>Important</strong> suma agregată este
@@ -82,15 +82,15 @@
                         <li>
                             În secțiunea <strong>Domenii</strong> vei vedea o
                             listă a domeniilor active în acest moment în
-                            platformă. Dacă, împreună cu ceilalți finanțori
+                            platformă. Dacă, împreună cu ceilalți finanțatori
                             ajungeți la concluzia că această listă trebuie
-                            completată sau modificată atunci te rugăm să ne
-                            transmiți o solicitare pe e-mail.
+                            completată sau modificată, te rugăm să ne transmiți
+                            o solicitare pe e-mail.
                         </li>
                         <li>
                             În secțiunea <strong>Granturi</strong> vei putea
                             vedea toate granturile tuturor finanțatorilor din
-                            platformă, înclusiv ale tale și vei putea filtra
+                            platformă, inclusiv ale tale și vei putea filtra
                             prin domenii, finanțatori sau grant managers.
                         </li>
                         <li>
@@ -108,23 +108,23 @@
                     <ul>
                         <li>
                             Fiecare grant pe care îl adaugi în platformă poate
-                            fi alocat pe unul sau mai multe domenii, cu toate
+                            fi alocat pe unul sau mai multe domenii. Cu toate
                             acestea, în datele agregate el poate fi numărat doar
                             la
                             <strong>o singură categorie principală</strong>
                             pentru a evita duplicarea unor sume. Așadar dacă
                             adaugi un grant pe care îl încadrezi la
                             <em>Educație universitară</em> și <em>STEM</em>,
-                            atunci el va fi adăugat, ca sumă doar la unul dintre
+                            atunci el va fi adăugat ca sumă doar la unul dintre
                             cele două domenii.
                         </li>
                         <li>
-                            Pentru a putea adauga proiecte este necesar ca
+                            Pentru a putea adăuga proiecte este necesar ca
                             titularii de grant (organizațiile non-profit) să fie
                             deja
                             <strong
                                 >adăugați în lista de Titulari de grant</strong
-                            >, nu vei putea, la acest moment adăuga un nou
+                            >. Nu vei putea, la acest moment adăuga un nou
                             titular de grant direct în pagina în care adaugi
                             beneficiarii grantului.
                         </li>
@@ -134,9 +134,9 @@
                                 >Grant Manager și administrezi inclusiv fonduri
                                 proprii</strong
                             >, vei avea, la acest moment, două conturi separate
-                            - unul de Finanțator și unul de Grant Manager pentru
-                            a putea păstra separarea completă între cele două
-                            roluri.
+                            - unul de Finanțator și unul de Grant Manager,
+                            pentru a putea păstra separarea completă între cele
+                            două roluri.
                         </li>
                     </ul>
                 </div>
@@ -160,7 +160,7 @@
                             funding. In this platform, a donor has the right to
                             see all the data that has been uploaded in the
                             platform by all donors, can manage its own donor
-                            account, can add, edit or delete grants and cal
+                            account, can add, edit or delete grants and can
                             allocate its own grants to grant managers.
                         </li>
                         <li>
@@ -197,14 +197,13 @@
                             In the <strong>Dashboard</strong> section you will
                             be able to see an overview of the data in the
                             platform. The total sum of the grant, total number
-                            of donors as well as a graphic that helps you
-                            compare the aggregated data.
-                            <strong>Important</strong> the aggregated sum is
-                            expressed in euros. The allocated grants may be
-                            added in the platform in lei, dollars or euros, and
-                            the aggregated data is calculated considering the
-                            median exchange rate of the month when the grant
-                            started.
+                            of donors as well as a chart that helps you compare
+                            the aggregated data. <strong>Important</strong> the
+                            aggregated sum is expressed in euros. The allocated
+                            grants may be added in the platform in lei, dollars
+                            or euros, and the aggregated data is calculated
+                            considering the median exchange rate of the month
+                            when the grant started.
                         </li>
                         <li>
                             In the <strong>Donors</strong> section you will be
@@ -246,7 +245,7 @@
                     <ul>
                         <li>
                             Each grant you add in the platform can be allocated
-                            on one or more domains, however, in the aggregated
+                            on one or more domains. However, in the aggregated
                             data, the grant can be added only under
                             <strong>one single main category</strong> in order
                             to avoid duplicating the sums. Therefore, if you add
@@ -270,8 +269,9 @@
                                 funds</strong
                             >
                             you will have, at this moment, two separate accounts
-                            - a Donor account and Grant Manager account in order
-                            to keep a complete separation between the two roles.
+                            - a Donor account and Grant Manager account, in
+                            order to keep a complete separation between the two
+                            roles.
                         </li>
                     </ul>
                 </div>
