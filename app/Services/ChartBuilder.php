@@ -23,10 +23,11 @@ class ChartBuilder
         $years = $collection
             ->pluck('stats')
             ->reject(fn ($grant) => $grant->isEmpty())
-            ->map(fn ($grant) => $grant->keys()->first())
+            ->map(fn ($grant) => $grant->keys())
+            ->flatten()
             ->unique()
-            ->values()
-            ->sort();
+            ->sort()
+            ->values();
 
         return [
             'currency' => Request::input('currency', config('money.defaultCurrency')),
