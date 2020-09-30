@@ -43,8 +43,8 @@ class UserController extends Controller
         return Inertia::render('Users/Create', [
             'roles'       => Role::all()->pluck('name'),
             'permissions' => Permission::grouped(),
-            'donors'      => Donor::all('id', 'name'),
-            'managers'    => GrantManager::all('id', 'name'),
+            'donors'      => Donor::orderBy('name', 'asc')->get(['id', 'name']),
+            'managers'    => GrantManager::orderBy('name', 'asc')->get(['id', 'name']),
         ]);
     }
 
@@ -75,8 +75,8 @@ class UserController extends Controller
             'user'        => UserResource::make($user),
             'roles'       => Role::all()->pluck('name'),
             'permissions' => Permission::grouped(),
-            'donors'      => Donor::all('id', 'name'),
-            'managers'    => GrantManager::all('id', 'name'),
+            'donors'      => Donor::orderBy('name', 'asc')->get(['id', 'name']),
+            'managers'    => GrantManager::orderBy('name', 'asc')->get(['id', 'name']),
         ]);
     }
 
