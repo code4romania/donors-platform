@@ -17,6 +17,8 @@ class DomainController extends Controller
     public function __construct()
     {
         $this->authorizeResource(Domain::class);
+
+        $this->middleware('remember')->only('index');
     }
 
     public function index(): Response

@@ -17,6 +17,8 @@ class GranteeController extends Controller
     public function __construct()
     {
         $this->authorizeResource(Grantee::class);
+
+        $this->middleware('remember')->only('index');
     }
 
     public function index(): Response

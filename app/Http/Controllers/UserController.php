@@ -21,6 +21,8 @@ class UserController extends Controller
     public function __construct()
     {
         $this->authorizeResource(User::class);
+
+        $this->middleware('remember')->only('index');
     }
 
     public function index(): Response

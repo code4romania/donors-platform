@@ -15,6 +15,11 @@ use Inertia\Response;
 
 class DashboardController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('remember');
+    }
+
     public function __invoke(Request $request): Response
     {
         $domains = Domain::query()

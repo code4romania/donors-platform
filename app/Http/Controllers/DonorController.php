@@ -22,6 +22,8 @@ class DonorController extends Controller
     public function __construct()
     {
         $this->authorizeResource(Donor::class);
+
+        $this->middleware('remember')->only('index');
     }
 
     public function index(): Response

@@ -21,6 +21,8 @@ class ProjectController extends Controller
     public function __construct()
     {
         $this->authorizeResource(Project::class);
+
+        $this->middleware('remember')->only('index');
     }
 
     public function index(Grant $grant): RedirectResponse

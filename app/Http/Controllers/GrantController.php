@@ -23,6 +23,8 @@ class GrantController extends Controller
     public function __construct()
     {
         $this->authorizeResource(Grant::class);
+
+        $this->middleware('remember')->only('index');
     }
 
     public function index(): Response
