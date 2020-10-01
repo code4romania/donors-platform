@@ -1,5 +1,7 @@
 <template>
     <div class="min-w-0 leading-tight text-gray-900">
+        <pagination v-if="paginate" class="mb-4" :meta="collection.meta" />
+
         <div class="overflow-x-auto bg-white rounded shadow">
             <table class="w-full">
                 <thead>

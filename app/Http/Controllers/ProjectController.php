@@ -95,7 +95,7 @@ class ProjectController extends Controller
             'end_date'   => $request->input('end_date'),
         ]);
 
-        $project->grantee()->associate($request->input('grantee'));
+        $project->grantees()->sync($request->input('grantees'));
 
         $project->save();
 

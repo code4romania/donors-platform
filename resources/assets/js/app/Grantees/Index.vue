@@ -17,8 +17,7 @@
         <model-table
             :collection="grantees"
             :columns="columns"
-            route-name="grantees.edit"
-            :show-row-urls="$userCan('create', 'grantees')"
+            route-name="grantees.show"
             :paginate="true"
         />
     </layout>

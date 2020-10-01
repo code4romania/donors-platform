@@ -16,11 +16,19 @@ class ProjectResource extends Resource
      */
     public function toArray($request): array
     {
-        if ($request->route()->getName() === 'grants.show') {
-            return $this->getIndexAttributes($request);
-        }
+        switch ($request->route()->getName()) {
+            case 'grants.show':
+                return $this->getIndexAttributes($request);
+                break;
 
-        return $this->getShowAttributes($request);
+            case 'grantees.show':
+                return $this->getGranteeAttributes($request);
+                break;
+
+            default:
+            return $this->getShowAttributes($request);
+                break;
+        }
     }
 
     public function getIndexAttributes($request): array
@@ -29,6 +37,18 @@ class ProjectResource extends Resource
             'id'         => $this->id,
             'grantees'   => $this->grantees->pluck('name'),
             'title'      => $this->title,
+            'start_date' => $this->formatted_start_date,
+            'end_date'   => $this->formatted_end_date,
+            'amount'     => $this->amount->formatWithoutDecimals(),
+        ];
+    }
+
+    public function getGranteeAttributes($request): array
+    {
+        return [
+            'id'         => $this->id,
+            'title'      => $this->title,
+            'grant'      => $this->grant->only('id', 'name'),
             'start_date' => $this->formatted_start_date,
             'end_date'   => $this->formatted_end_date,
             'amount'     => $this->amount->formatWithoutDecimals(),

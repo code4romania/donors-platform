@@ -17,6 +17,7 @@ return [
     'funding_value'         => 'Valoare finanțare',
     'grant_count'           => 'Număr de granturi',
     'grant_value'           => 'Valoare grant',
+    'grant'                 => 'Grant',
     'grantee_count'         => 'Număr de titulari de granturi',
     'grantee.name'          => 'Titular de granturi',
     'grantees'              => 'Titulari de granturi',

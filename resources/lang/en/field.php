@@ -17,6 +17,7 @@ return [
     'funding_value'         => 'Funding value',
     'grant_count'           => 'Number of grants',
     'grant_value'           => 'Grant value',
+    'grant'                 => 'Grant',
     'grantee_count'         => 'Number of grantees',
     'grantee.name'          => 'Grantee',
     'grantees'              => 'Grantees',

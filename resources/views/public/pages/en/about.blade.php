@@ -10,7 +10,8 @@
     </x-section>
 
     <x-section>
-        <x-h1 text="Project founders" class="mb-6 text-center" />
+        <x-h1 text="Project founders" class="text-center" />
+        <h2 class="mb-6 text-lg text-center md:text-xl">(in alphabetical order)</h2>
 
         <div class="grid grid-cols-3 lg:grid-cols-5">
             @for ($i = 1; $i <= 15; $i++)

@@ -6,7 +6,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\GranteeRequest;
 use App\Http\Resources\GranteeResource;
+use App\Http\Resources\ProjectResource;
 use App\Models\Grantee;
+use App\Models\Project;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -52,9 +54,23 @@ class GranteeController extends Controller
             ]));
     }
 
-    public function show(Grantee $grantee): RedirectResponse
+    public function show(Grantee $grantee): Response
     {
-        return Redirect::route('grantees.index');
+        return Inertia::render('Grantees/Show', [
+            'columns'  => $this->getIndexColumns(Project::class, [
+                'title', 'grant', 'amount', 'start_date', 'end_date',
+            ]),
+            'grantee' => GranteeResource::make($grantee),
+            'donors'  => $grantee->donors()->count(),
+            'projects' => ProjectResource::collection(
+                $grantee->projects()
+                    ->without('grantees')
+                    ->with('grant.translations')
+                    ->filter()
+                    ->sort()
+                    ->paginate()
+            ),
+        ]);
     }
 
     public function edit(Grantee $grantee): Response

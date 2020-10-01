@@ -5,6 +5,7 @@
             :href="href"
             class="flex items-center px-2 py-2 transition duration-150 ease-in-out rounded-sm group focus:outline-none"
             :class="style(this)"
+            :data="{ remember: 'forget' }"
         >
             <svg-vue
                 v-if="icon"
@@ -22,6 +23,7 @@
                 :href="item.href"
                 class="flex items-center py-2 pl-12 pr-2 transition duration-150 ease-in-out rounded-sm group focus:outline-none"
                 :class="style(item)"
+                :data="{ remember: 'forget' }"
             >
                 {{ item.label }}
             </component>

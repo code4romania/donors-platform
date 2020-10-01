@@ -31,7 +31,7 @@ class DomainController extends Controller
                 Domain::query()
                     ->filter()
                     ->sort()
-                    ->paginate()
+                    ->get()
             ),
         ]);
     }
