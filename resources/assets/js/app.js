@@ -1,4 +1,6 @@
 import { InertiaApp } from '@inertiajs/inertia-vue';
+import { InertiaProgress } from '@inertiajs/progress';
+
 import languageBundle from '~/lang/index.js';
 
 import Vue from 'vue';
@@ -28,6 +30,21 @@ Vue.use(RoutePlugin);
 Vue.use(PatternPlugin);
 
 Vue.directive('click-away', VueClickOutside);
+
+InertiaProgress.init({
+    // The delay after which the progress bar will
+    // appear during navigation, in milliseconds.
+    delay: 250,
+
+    // The color of the progress bar.
+    color: '#3F83F8',
+
+    // Whether to include the default NProgress styles.
+    includeCSS: true,
+
+    // Whether the NProgress spinner will be shown.
+    showSpinner: false,
+});
 
 const app = document.getElementById('app');
 

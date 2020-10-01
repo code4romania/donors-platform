@@ -23,7 +23,7 @@
         "laravel/ui": "^3.0",
         "lorisleiva/laravel-deployer": "^0.3.3",
         "reinink/remember-query-strings": "^0.1.0",
-        "sentry/sentry-laravel": "^1.9",
+        "sentry/sentry-laravel": "^2.0",
         "skydiver/blade-icons-remix": "^1.2",
         "spatie/laravel-activitylog": "^3.14",
         "spatie/laravel-medialibrary": "^8.3",

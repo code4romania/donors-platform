@@ -46,9 +46,6 @@ mix.js('resources/assets/js/app.js', 'public/assets')
     .postCss('resources/assets/css/app.pcss', 'public/assets', [
         require('postcss-import'),
         require('tailwindcss')('./tailwind.config.js'),
-        require('postcss-nested')({
-            bubble: ['screen'],
-        }),
     ])
     .translations()
     .svgVue({
