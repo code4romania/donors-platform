@@ -109,6 +109,23 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->relatedTo(Donor::class);
     }
 
+    public function getOrganizationNameAttribute(): ?string
+    {
+        if ($this->hasRole('admin')) {
+            return 'Administrator';
+        }
+
+        if (! $this->donors->isEmpty()) {
+            return $this->donors->first()->name;
+        }
+
+        if (! $this->managers->isEmpty()) {
+            return $this->managers->first()->name;
+        }
+
+        return null;
+    }
+
     public function getRoleNameAttribute(): ?string
     {
         $role = $this->roles->first();

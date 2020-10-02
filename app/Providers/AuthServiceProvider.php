@@ -33,12 +33,13 @@ class AuthServiceProvider extends ServiceProvider
         Gate::before(fn ($user) => $user->hasRole('admin') ?: null);
 
         Inertia::share('auth', fn () => Auth::check() ? [
-            'id'          => Auth::user()->id,
-            'name'        => Auth::user()->name,
-            'email'       => Auth::user()->email,
-            'avatar'      => Auth::user()->avatar,
-            'role'        => Auth::user()->role_name,
-            'permissions' => Auth::user()->all_permissions,
+            'id'           => Auth::user()->id,
+            'name'         => Auth::user()->name,
+            'email'        => Auth::user()->email,
+            'avatar'       => Auth::user()->avatar,
+            'role'         => Auth::user()->role_name,
+            'permissions'  => Auth::user()->all_permissions,
+            'organization' => Auth::user()->organization_name,
         ] : null);
     }
 }
