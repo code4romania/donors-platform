@@ -28,7 +28,7 @@ return [
         'editModel'     => 'Edit :model',
         'filter'        => 'Filter',
         'publish'       => 'Publish',
-        'reset'         => 'Reset',
+        'reset'         => 'Reset filters',
         'save'          => 'Save',
         'search'        => 'Search',
         'unpublish'     => 'Unublish',

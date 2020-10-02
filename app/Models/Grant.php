@@ -63,6 +63,15 @@ class Grant extends Model implements TranslatableContract
     ];
 
     /**
+     * The attributes that are filterable.
+     *
+     * @var string[]
+     */
+    protected $filterable = [
+        'donors', 'domains', 'managers',
+    ];
+
+    /**
      * The attributes that are sortable.
      *
      * @var string[]

@@ -12,7 +12,11 @@
             </div>
         </template>
 
-        <search-filter v-model="search" @reset="reset">
+        <search-filter
+            v-model="search"
+            @reset="reset"
+            filter-class="sm:grid-cols-3"
+        >
             <form-select
                 id="domain"
                 :label="$t('model.domain.plural')"
@@ -99,6 +103,11 @@
         metaInfo() {
             return {
                 title: this.$t('model.grant.plural'),
+            };
+        },
+        data() {
+            return {
+                filters: this.prepareFilters(['domain', 'donor', 'manager']),
             };
         },
         computed: {

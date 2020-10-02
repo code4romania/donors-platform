@@ -6,7 +6,7 @@ namespace App\Traits;
 
 use App\Services\Normalize;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
 use Laravel\Scout\Searchable;
@@ -17,25 +17,58 @@ trait Filterable
 
     public function scopeFilter(Builder $query): Builder
     {
-        $filters = collect(Request::all('search', 'domain', 'donor', 'manager', 'orgtype'))
-            ->map(fn ($filter) => Normalize::string($filter));
-
         return $query
-            ->when($filters['search'], fn ($q, string $search) => $q->whereIn($this->getTable() . '.id', $this->search($search)->keys()))
-            ->when($filters['domain'], fn ($q, int $domain) => $this->whereHas($q, $domain, 'domains'))
-            ->when($filters['donor'], fn ($q, int $donor) => $this->whereHas($q, $donor, 'donors'))
-            ->when($filters['manager'], fn ($q, int $manager) => $this->whereHas($q, $manager, 'managers'))
-            ->when($filters['orgtype'], fn ($q, string $type) => $q->where('type', $type));
+            ->when(Request::input('search'), function (Builder $query, string $term) {
+                $query->whereIn('id', $this->search(Normalize::string($term))->keys());
+            })
+            ->when(Request::input('filters'), function (Builder $query, $filters) {
+                $this->filter($query, $filters);
+            });
+    }
+
+    /**
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param  mixed                                 $filters
+     * @return void
+     */
+    private function filter(Builder $query, $filters): void
+    {
+        if (! isset($this->filterable)) {
+            return;
+        }
+
+        if (is_string($filters)) {
+            $filters = json_decode($filters, true);
+        }
+
+        collect($filters)->each(function ($value, $key) use ($query) {
+            switch ($key) {
+                case 'domain':
+                case 'donor':
+                case 'manager':
+                    $relationship = Str::plural($key);
+
+                    if (! in_array($relationship, $this->filterable)) {
+                        return;
+                    }
+
+                    $query->whereHas($relationship, fn ($q) => $q->where('id', (int) $value));
+                    break;
+
+                default:
+                    if (! in_array($key, $this->filterable)) {
+                        return;
+                    }
+
+                    $query->where('type', Normalize::string($value));
+                    break;
+            }
+        });
     }
 
     public function scopeGetColumn(Builder $query, string $column): Collection
     {
         return $query->select($this->getTable() . '.id', $column)->get();
-    }
-
-    protected function whereHas(Builder $query, int $id, string $relationship): Builder
-    {
-        return $query->whereHas($relationship, fn ($q) => $q->where('id', $id));
     }
 
     public function toSearchableArray(): array

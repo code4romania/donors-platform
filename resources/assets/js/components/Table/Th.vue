@@ -28,6 +28,7 @@
 <script>
     import merge from 'lodash/merge';
     import pickBy from 'lodash/pickBy';
+    import identity from 'lodash/identity';
 
     export default {
         name: 'TableHead',
@@ -69,7 +70,11 @@
                 }
 
                 const filters = pickBy(
-                    merge({ search: this.$page.search }, this.$page.filters)
+                    {
+                        search: this.$page.search,
+                        filters: this.$page.filters,
+                    },
+                    identity
                 );
 
                 if (!this.isActive) {

@@ -47,6 +47,15 @@ class Donor extends Model implements HasMedia
     ];
 
     /**
+     * The attributes that are filterable.
+     *
+     * @var string[]
+     */
+    protected $filterable = [
+        'domains', 'orgtype',
+    ];
+
+    /**
      * The attributes that are sortable.
      *
      * @var string[]

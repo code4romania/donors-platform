@@ -28,7 +28,7 @@ return [
         'editModel'     => 'Editează :model',
         'filter'        => 'Filtrează',
         'publish'       => 'Publică',
-        'reset'         => 'Resetează',
+        'reset'         => 'Resetează filtrele',
         'save'          => 'Salvează',
         'search'        => 'Caută',
         'unpublish'     => 'Unublish',

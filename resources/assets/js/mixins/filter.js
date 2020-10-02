@@ -6,7 +6,7 @@ import throttle from 'lodash/throttle';
 export default {
     data() {
         return {
-            filters: this.$page.filters,
+            filters: this.$page.filters || {},
             search: this.$page.search,
             sort: this.$page.sort,
         };
@@ -16,7 +16,7 @@ export default {
             return pickBy(
                 merge(
                     {},
-                    this.filters,
+                    { filters: this.filters },
                     this.sort,
                     { search: this.search },
                     this.routeArgs
@@ -26,14 +26,31 @@ export default {
     },
     methods: {
         reset() {
-            this.filters = mapValues(this.filters, () => null);
-            this.search = null;
-            this.sort = mapValues(this.sort, () => null);
+            this.$inertia.replace(
+                this.$route(this.$page.route, {
+                    remember: 'forget',
+                    ...this.routeArgs,
+                })
+            );
         },
         submit() {
             this.$inertia.replace(
                 this.$route(this.$page.route, this.routeData)
             );
+        },
+        prepareFilters(filters) {
+            return filters.reduce((obj, filter) => {
+                if (
+                    !this.$page.filters ||
+                    !this.$page.filters.hasOwnProperty(filter)
+                ) {
+                    obj[filter] = null;
+                } else {
+                    obj[filter] = this.$page.filters[filter];
+                }
+
+                return obj;
+            }, {});
         },
     },
     watch: {

@@ -8,6 +8,7 @@ use App\Http\Requests\GrantManagerRequest;
 use App\Http\Resources\DomainResource;
 use App\Http\Resources\GrantManagerResource;
 use App\Http\Resources\GrantResource;
+use App\Http\Resources\NameResource;
 use App\Models\Domain;
 use App\Models\Grant;
 use App\Models\GrantManager;
@@ -31,6 +32,9 @@ class GrantManagerController extends Controller
             'columns' => $this->getIndexColumns(GrantManager::class, [
                 'name', 'grantee_count', 'grant_count', 'total_funding', 'published_status',
             ]),
+            'domains' => NameResource::collection(
+                Domain::orderByTranslation('name', 'asc')->getColumn('name')
+            ),
             'managers' => GrantManagerResource::collection(
                 GrantManager::query()
                     ->filter()

@@ -1,41 +1,14 @@
 <template>
-    <div class="flex items-center max-w-lg">
-        <div class="flex w-full bg-white rounded shadow">
-            <dropdown
-                v-if="hasFilters"
-                button-class="flex items-center px-3 py-3 border-r md:px-6 focus:outline-none hover:bg-gray-100 focus:bg-blue-100"
-                placement="bottom-start"
-                aria-labelledby="filter-dropdown"
+    <grid class="items-center grid-cols-1 md:grid-cols-3">
+        <div>
+            <form-label id="search" :label="$t('dashboard.action.search')" />
+
+            <div
+                class="relative overflow-hidden bg-white border border-gray-300 form-input"
             >
-                <span
-                    id="filter-dropdown"
-                    class="sr-only md:inline-block md:not-sr-only md:mr-2"
-                    v-text="$t('dashboard.action.filter')"
-                />
-
-                <svg-vue
-                    icon="System/filter-3-line"
-                    class="w-5 h-6 text-gray-700 rounded-full fill-current"
-                />
-
-                <div
-                    slot="dropdown"
-                    class="grid w-screen max-w-xs px-4 py-6 gap-y-4"
-                >
-                    <slot />
-                </div>
-            </dropdown>
-
-            <div class="relative flex-1 w-full">
-                <label
-                    for="search"
-                    class="sr-only"
-                    v-text="$t('dashboard.action.search')"
-                />
-
                 <input
                     id="search"
-                    class="w-full px-6 py-3 pr-10 rounded-r focus:outline-none"
+                    class="w-full pr-10 rounded-r focus:outline-none"
                     autocomplete="off"
                     type="text"
                     name="search"
@@ -55,13 +28,23 @@
             </div>
         </div>
 
-        <button
-            type="button"
-            class="ml-3 text-sm text-gray-500 hover:text-gray-700 focus:text-blue-500 focus:outline-none"
-            @click="$emit('reset')"
-            v-text="$t('dashboard.action.reset')"
-        />
-    </div>
+        <div v-if="hasFilters" class="md:col-span-2">
+            <grid :class="filterClass">
+                <slot />
+            </grid>
+        </div>
+
+        <div v-if="hasFilters" class="flex md:col-span-3">
+            <form-button
+                type="button"
+                color="blue"
+                shade="light"
+                class="text-sm"
+                @click="$emit('reset')"
+                v-text="$t('dashboard.action.reset')"
+            />
+        </div>
+    </grid>
 </template>
 
 <script>
@@ -69,6 +52,10 @@
         name: 'SearchFilter',
         props: {
             value: {
+                type: [String, null],
+                default: null,
+            },
+            filterClass: {
                 type: [String, null],
                 default: null,
             },
@@ -82,6 +69,7 @@
             hasFilters() {
                 return Boolean(this.$slots.default);
             },
+
             hasSearchTerm() {
                 return Boolean(this.search);
             },
