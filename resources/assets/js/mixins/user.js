@@ -1,20 +1,31 @@
 export default {
     computed: {
-        permissionsByGroup() {
-            return Object.keys(this.permissions).map(model => ({
-                model: model,
-                label: this.$t(`model.${model}.plural`),
-                permissions: this.permissions[model].map(action => ({
-                    action: action,
-                    label: this.$t(`dashboard.permission.${action}`),
-                })),
-            }));
+        organizationLabel() {
+            if (this.form.role === 'donor') {
+                return this.$t('model.donor.singular');
+            }
+
+            if (this.form.role === 'manager') {
+                return this.$t('model.manager.singular');
+            }
+
+            return null;
         },
-        translatedRoles() {
-            return this.roles.map(role => ({
-                value: role,
-                label: this.$t(`dashboard.role.${role}`),
-            }));
+        organizationsForRole() {
+            if (this.form.role === 'donor') {
+                return this.donors;
+            }
+
+            if (this.form.role === 'manager') {
+                return this.managers;
+            }
+
+            return [];
+        },
+    },
+    watch: {
+        'form.role': function(newValue) {
+            this.form.organization_id = null;
         },
     },
 };

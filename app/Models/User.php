@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\UserRole;
 use App\Traits\Filterable;
 use App\Traits\Sortable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -31,7 +32,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var string[]
      */
     protected $fillable = [
-        'name', 'email', 'password', 'locale', 'permissions',
+        'name', 'email', 'password', 'locale', 'role', 'organization_id',
     ];
 
     /**
@@ -60,6 +61,15 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
+     * The attributes that are filterable.
+     *
+     * @var string[]
+     */
+    protected $filterable = [
+        'role',
+    ];
+
+    /**
      * The attributes that are sortable.
      *
      * @var string[]
@@ -82,31 +92,28 @@ class User extends Authenticatable implements MustVerifyEmail
         return $query->whereHas('roles', fn ($q) => $q->where('name', $role));
     }
 
-    /**
-     * morphedByMany template.
-     *
-     * @param  string      $related
-     * @return MorphToMany
-     */
-    private function relatedTo(string $related): MorphToMany
+    public function isAdmin(): bool
     {
-        return $this->morphedByMany(
-            $related,
-            'model',
-            'user_manages_model',
-            'user_id',
-            'model_id',
-        );
+        return (new UserRole($this->role))->equals(UserRole::admin());
     }
 
-    public function managers()
+    public function isDonor(): bool
     {
-        return $this->relatedTo(GrantManager::class);
+        return (new UserRole($this->role))->equals(UserRole::donor());
     }
 
-    public function donors()
+    public function isManager(): bool
     {
-        return $this->relatedTo(Donor::class);
+        return (new UserRole($this->role))->equals(UserRole::manager());
+    }
+
+    public function organization()
+    {
+        if ($this->isAdmin()) {
+            return $this->newMorphTo($this->newQuery(), $this, '', '', '', '');
+        }
+
+        return $this->morphTo(__FUNCTION__, 'role');
     }
 
     public function getOrganizationNameAttribute(): ?string
@@ -194,5 +201,34 @@ class User extends Authenticatable implements MustVerifyEmail
             )
             ->flatten()
             ->unique('id');
+    }
+
+    ////////
+
+    /**
+     * morphedByMany template.
+     *
+     * @param  string      $related
+     * @return MorphToMany
+     */
+    private function relatedTo(string $related): MorphToMany
+    {
+        return $this->morphedByMany(
+            $related,
+            'model',
+            'user_manages_model',
+            'user_id',
+            'model_id',
+        );
+    }
+
+    public function managers()
+    {
+        return $this->relatedTo(GrantManager::class);
+    }
+
+    public function donors()
+    {
+        return $this->relatedTo(Donor::class);
     }
 }

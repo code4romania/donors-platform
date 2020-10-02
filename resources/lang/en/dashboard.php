@@ -79,6 +79,8 @@ return [
 
     'role' => [
         'admin'   => 'Administrator',
+        'donor'   => 'Donor',
+        'manager' => 'Grant manager',
         'user'    => 'User',
     ],
 
@@ -86,7 +88,7 @@ return [
         'empty' => 'No matching records found.',
     ],
 
-    'org_types' => [
+    'org_type' => [
         'foundation' => 'Foundation',
         'federation' => 'Federation',
         'company'    => 'Company',

@@ -31,20 +31,21 @@ class UserResource extends Resource
             'id'          => $this->id,
             'name'        => $this->name,
             'email'       => $this->email,
-            'role'        => $this->role_name,
+            'role'        => $this->role,
         ];
     }
 
     public function getShowAttributes($request): array
     {
         return [
-            'id'          => $this->id,
-            'name'        => $this->name,
-            'email'       => $this->email,
-            'role'        => $this->role_name,
-            'permissions' => $this->all_permissions,
-            'donors'      => $this->donors->pluck('id'),
-            'managers'    => $this->managers->pluck('id'),
+            'id'              => $this->id,
+            'name'            => $this->name,
+            'email'           => $this->email,
+            'role'            => $this->role,
+            'permissions'     => $this->all_permissions,
+            'organization_id' => optional($this->organization)->id,
+            'donors'          => $this->donors->pluck('id'),
+            'managers'        => $this->managers->pluck('id'),
         ];
     }
 }

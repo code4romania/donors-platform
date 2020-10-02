@@ -26,6 +26,7 @@
         "sentry/sentry-laravel": "^2.0",
         "skydiver/blade-icons-remix": "^1.2",
         "spatie/laravel-activitylog": "^3.14",
+        "spatie/laravel-enum": "^2.0",
         "spatie/laravel-medialibrary": "^8.3",
         "spatie/laravel-permission": "^3.13",
         "spatie/laravel-welcome-notification": "^2.0",

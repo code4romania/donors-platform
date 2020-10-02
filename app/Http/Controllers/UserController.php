@@ -4,12 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserRole;
 use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
-use App\Models\Donor;
-use App\Models\GrantManager;
-use App\Models\Permission;
-use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
@@ -31,6 +28,7 @@ class UserController extends Controller
             'columns' => $this->getIndexColumns(User::class, [
                 'name', 'role',
             ]),
+            'roles' => UserRole::asOptions(),
             'users' => UserResource::collection(
                 User::query()
                     ->filter()
@@ -43,10 +41,9 @@ class UserController extends Controller
     public function create(): Response
     {
         return Inertia::render('Users/Create', [
-            'roles'       => Role::all()->pluck('name'),
-            'permissions' => Permission::grouped(),
-            'donors'      => Donor::orderBy('name', 'asc')->get(['id', 'name']),
-            'managers'    => GrantManager::orderBy('name', 'asc')->get(['id', 'name']),
+            'roles'       => UserRole::asOptions(),
+            'donors'      => $this->getSortedDonors(),
+            'managers'    => $this->getSortedManagers(),
         ]);
     }
 
@@ -75,10 +72,9 @@ class UserController extends Controller
     {
         return Inertia::render('Users/Edit', [
             'user'        => UserResource::make($user),
-            'roles'       => Role::all()->pluck('name'),
-            'permissions' => Permission::grouped(),
-            'donors'      => Donor::orderBy('name', 'asc')->get(['id', 'name']),
-            'managers'    => GrantManager::orderBy('name', 'asc')->get(['id', 'name']),
+            'roles'       => UserRole::asOptions(),
+            'donors'      => $this->getSortedDonors(),
+            'managers'    => $this->getSortedManagers(),
         ]);
     }
 

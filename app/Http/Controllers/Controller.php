@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Models\Domain;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class Controller extends BaseController
 {
@@ -28,5 +30,26 @@ class Controller extends BaseController
                     'translatable' => in_array($column, $translatable),
                 ];
             });
+    }
+
+    public function getSortedDonors(array $columns = ['id', 'name']): Collection
+    {
+        return DB::table('donors')
+            ->orderBy('name', 'asc')
+            ->get($columns);
+    }
+
+    public function getSortedManagers(array $columns = ['id', 'name']): Collection
+    {
+        return DB::table('grant_managers')
+            ->orderBy('name', 'asc')
+            ->get($columns);
+    }
+
+    public function getSortedDomains(array $columns = ['id', 'name']): Collection
+    {
+        return Domain::orderByTranslation('name', 'asc')
+            ->get($columns)
+            ->map->only(...$columns);
     }
 }

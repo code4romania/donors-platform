@@ -27,54 +27,21 @@
                 <form-select
                     id="role"
                     :label="$t('field.role')"
-                    :options="translatedRoles"
+                    :options="roles"
                     v-model="form.role"
                     class="lg:col-span-2"
                 />
-            </form-panel>
 
-            <!-- <form-panel
-                v-if="form.role === 'user'"
-                :title="$t('model.user.section.permissions.title')"
-                :description="$t('model.user.section.permissions.description')"
-            >
-                <template v-for="(group, index) in permissionsByGroup">
-                    <form-checkbox-group
-                        id="permissions"
-                        :key="index"
-                        :label="group.label"
-                        v-model="form.permissions[group.model]"
-                        class="lg:col-span-2"
-                        :options="group.permissions"
-                        option-value-key="action"
-                        option-label-key="label"
-                    />
-                </template>
-            </form-panel> -->
-
-            <form-panel
-                v-if="form.role === 'user'"
-                :title="$t('model.user.section.permissions.title')"
-                :description="$t('model.user.section.permissions.description')"
-            >
-                <form-checkbox-group
-                    id="donors"
-                    :label="$t('model.donor.plural')"
-                    v-model="form.donors"
-                    class="lg:col-span-2"
-                    :options="donors"
+                <form-select
+                    v-if="['donor', 'manager'].includes(form.role)"
+                    id="organization_id"
+                    :label="organizationLabel"
+                    :options="organizationsForRole"
                     option-value-key="id"
                     option-label-key="name"
-                />
-
-                <form-checkbox-group
-                    id="managers"
-                    :label="$t('model.manager.plural')"
-                    v-model="form.managers"
+                    v-model="form.organization_id"
                     class="lg:col-span-2"
-                    :options="managers"
-                    option-value-key="id"
-                    option-label-key="name"
+                    required
                 />
             </form-panel>
 
@@ -122,17 +89,19 @@
                 formAction: this.$route('users.update', routeParams),
                 form: {
                     _method: 'PUT', // html form method spoofing
-                    permissions: this.permissionValues(),
                     donors: this.user.donors,
                     managers: this.user.managers,
-                    ...this.prepareFields(['name', 'email', 'role'], this.user),
+
+                    ...this.prepareFields(
+                        ['name', 'email', 'role', 'organization_id'],
+                        this.user
+                    ),
                 },
             };
         },
         props: {
             user: Object,
             roles: Array,
-            permissions: Object,
             donors: Array,
             managers: Array,
         },
@@ -153,25 +122,6 @@
                         href: null,
                     },
                 ];
-            },
-        },
-        methods: {
-            permissionValues() {
-                let permissions = {};
-
-                Object.keys(this.permissions).map((model) => {
-                    if (!permissions.hasOwnProperty(model)) {
-                        permissions[model] = [];
-                    }
-
-                    let capabilities = this.user.permissions[model + 's'];
-
-                    permissions[model] = Object.keys(capabilities).filter(
-                        (action) => capabilities[action] === true
-                    );
-                });
-
-                return permissions;
             },
         },
     };

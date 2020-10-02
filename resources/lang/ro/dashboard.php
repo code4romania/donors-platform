@@ -79,6 +79,8 @@ return [
 
     'role' => [
         'admin'   => 'Administrator',
+        'donor'   => 'Finanțator',
+        'manager' => 'Grant manager',
         'user'    => 'Utilizator',
     ],
 

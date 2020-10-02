@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Enums\UserRole;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -31,15 +32,27 @@ class AuthServiceProvider extends ServiceProvider
 
         // Implicitly grant "admin" role all permissions
         Gate::before(fn ($user) => $user->hasRole('admin') ?: null);
+        // Gate::before(fn ($user) => $user->role->equals(UserRole::admin()) ?: null);
 
-        Inertia::share('auth', fn () => Auth::check() ? [
-            'id'           => Auth::user()->id,
-            'name'         => Auth::user()->name,
-            'email'        => Auth::user()->email,
-            'avatar'       => Auth::user()->avatar,
-            'role'         => Auth::user()->role_name,
-            'permissions'  => Auth::user()->all_permissions,
-            'organization' => Auth::user()->organization_name,
-        ] : null);
+        Inertia::share('auth', function () {
+            if (! Auth::check()) {
+                return null;
+            }
+
+            $user = Auth::user();
+
+            return [
+                'id'           => $user->id,
+                'name'         => $user->name,
+                'email'        => $user->email,
+                'avatar'       => $user->avatar,
+                'role'         => $user->role ?? $user->role_name,
+                'permissions'  => $user->all_permissions,
+                'organization' => $user->isAdmin()
+                    ? __('dashboard.role.admin')
+                    : optional($user->organization)->name,
+
+            ];
+        });
     }
 }
