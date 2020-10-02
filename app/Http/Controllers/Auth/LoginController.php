@@ -6,6 +6,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class LoginController extends Controller
@@ -24,13 +26,15 @@ class LoginController extends Controller
     use AuthenticatesUsers;
 
     /**
-     * Where to redirect users after login.
+     * The user has been authenticated.
      *
-     * @return string
+     * @param  \Illuminate\Http\Request $request
+     * @param  mixed                    $user
+     * @return mixed
      */
-    protected function redirectTo(): string
+    protected function authenticated(Request $request, $user)
     {
-        return route('help');
+        return Redirect::route('help');
     }
 
     /**
@@ -51,5 +55,10 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         return Inertia::render('Auth/Login');
+    }
+
+    protected function loggedOut(Request $request)
+    {
+        return Redirect::route('login');
     }
 }
