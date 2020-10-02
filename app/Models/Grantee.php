@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Traits\Filterable;
+use App\Traits\HasExchangeRates;
 use App\Traits\Sortable;
 use Staudenmeir\EloquentHasManyDeep\HasManyDeep;
 use Staudenmeir\EloquentHasManyDeep\HasRelationships;
@@ -12,6 +13,7 @@ use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 class Grantee extends Model
 {
     use Filterable,
+        HasExchangeRates,
         HasRelationships,
         Sortable;
 
@@ -37,7 +39,16 @@ class Grantee extends Model
      * @var string[]
      */
     protected $sortable = [
-        'name',
+        'name', 'donors_count', 'projects_count',
+    ];
+
+    /**
+     * The relationship counts that should be eager loaded on every query.
+     *
+     * @var array
+     */
+    protected $withCount = [
+        'donors', 'projects',
     ];
 
     public function projects()
@@ -63,6 +74,11 @@ class Grantee extends Model
 
     public function getTotalFundingAttribute()
     {
-        //
+        return $this->sumForCurrency(
+            $this->projects()
+                ->withGrantCurrency()
+                ->withExchangeRates()
+                ->get()
+        );
     }
 }

@@ -27,11 +27,11 @@ class GranteeController extends Controller
     {
         return Inertia::render('Grantees/Index', [
             'columns' => $this->getIndexColumns(Grantee::class, [
-                'name', 'project_count',
+                'name', 'projects_count', 'donors_count',
             ]),
             'grantees'  => GranteeResource::collection(
                 Grantee::query()
-                    ->with('projects')
+                    ->with('projects', 'donors')
                     ->filter()
                     ->sort()
                     ->paginate(),

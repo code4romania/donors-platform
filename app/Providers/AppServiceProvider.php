@@ -7,7 +7,9 @@ namespace App\Providers;
 use App\Observers\ActivityObserver;
 use App\Services\MoneyWithoutDecimalsFormatter;
 use Cknow\Money\Money;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Database\Eloquent\Scope;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -50,6 +52,8 @@ class AppServiceProvider extends ServiceProvider
             ->each(fn ($model) => app($model)::observe(ActivityObserver::class));
 
         $this->registerMoneyMacros();
+
+        $this->registerBuilderMacros();
     }
 
     private function registerInertia(): void
@@ -84,6 +88,26 @@ class AppServiceProvider extends ServiceProvider
 
         Money::macro('toInteger', function (): int {
             return (int) $this->format(null, null, null);
+        });
+    }
+
+    private function registerBuilderMacros(): void
+    {
+        Builder::macro('scoped', function ($scope, ...$parameters) {
+            /** @var Builder $query */
+            $query = $this;
+
+            if (is_string($scope) && class_exists($scope)) {
+                $scope = new $scope(...$parameters);
+            }
+
+            if (! $scope instanceof Scope) {
+                throw new InvalidArgumentException('$scope must be an instance of Scope');
+            }
+
+            $scope->apply($query, $query->getModel());
+
+            return $query;
         });
     }
 }

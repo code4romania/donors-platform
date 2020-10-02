@@ -1,5 +1,5 @@
 <template>
-    <th :class="maybeShrinkColumn">
+    <th :class="thStyles">
         <component
             :is="thComponent"
             class="flex justify-between px-6 py-4 group"
@@ -107,23 +107,19 @@
                     (this.isActive ? 'text-gray-900' : 'text-gray-300')
                 );
             },
-            maybeShrinkColumn() {
-                let shrinkableColumns = [
-                    'published_status',
+            isShrinkableColumn() {
+                if (
+                    this.column.field.match(
+                        /(amount|_(date|funding|count|status))/i
+                    )
+                ) {
+                    return true;
+                }
 
-                    'start_date',
-                    'end_date',
-
-                    'amount',
-                    'regranting_amount',
-                    'total_funding',
-
-                    'project_count',
-                ];
-
-                return shrinkableColumns.includes(this.column.field)
-                    ? 'w-1 whitespace-no-wrap'
-                    : false;
+                return false;
+            },
+            thStyles() {
+                return this.isShrinkableColumn ? 'w-1 whitespace-no-wrap' : false;
             },
         },
     };

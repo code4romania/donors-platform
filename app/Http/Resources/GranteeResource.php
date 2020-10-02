@@ -32,9 +32,10 @@ class GranteeResource extends Resource
     public function getIndexAttributes($request): array
     {
         return [
-            'id'            => $this->id,
-            'name'          => $this->name,
-            'project_count' => $this->projects->count(),
+            'id'             => $this->id,
+            'name'           => $this->name,
+            'projects_count' => $this->projects_count,
+            'donors_count'   => $this->donors_count,
         ];
     }
 
@@ -43,17 +44,17 @@ class GranteeResource extends Resource
         return [
             'id'            => $this->id,
             'name'          => $this->name,
-            'project_count' => $this->projects->count(),
         ];
     }
 
     public function getShowAttributes($request): array
     {
         return [
-            'id'            => $this->id,
-            'name'          => $this->name,
-            'project_count' => $this->projects->count(),
-            'donor_count'   => $this->donors->count(),
+            'id'             => $this->id,
+            'name'           => $this->name,
+            'projects_count' => $this->projects_count,
+            'donors_count'   => $this->donors_count,
+            'total_funding'  => $this->total_funding->formatWithoutDecimals(),
         ];
     }
 }

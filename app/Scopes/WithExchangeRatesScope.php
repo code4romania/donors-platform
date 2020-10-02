@@ -32,8 +32,8 @@ class WithExchangeRatesScope implements Scope
     {
         return [
             "rate_$currency" => ExchangeRate::select('rate')
-                ->whereColumn('date', '<=', DB::raw("LAST_DAY(`$table`.`start_date`)"))
-                ->whereColumn('currency_from', "$table.currency")
+                ->whereColumn('date', '<=', DB::raw('LAST_DAY(`start_date`)'))
+                ->whereColumn('currency_from', 'currency')
                 ->where('currency_to', $currency)
                 ->latest('date')
                 ->take(1),

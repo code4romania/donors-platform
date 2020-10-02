@@ -27,14 +27,7 @@ class Project extends Model
     protected static function booted(): void
     {
         static::addGlobalScope('withGrantCurrency', function (Builder $query) {
-            return $query->addSelect([
-                'currency' => Grant::query()
-                    ->withoutGlobalScope(WithExchangeRatesScope::class)
-                    ->select('currency')
-                    ->whereColumn('grant_id', 'grants.id')
-                    ->latest()
-                    ->take(1),
-            ]);
+            return $query->withGrantCurrency();
         });
     }
 
@@ -95,5 +88,22 @@ class Project extends Model
     public function grantees()
     {
         return $this->belongsToMany(Grantee::class);
+    }
+
+    public function scopeWithGrantCurrency(Builder $query): Builder
+    {
+        return $query->addSelect([
+            'currency' => Grant::query()
+                ->withoutGlobalScope(WithExchangeRatesScope::class)
+                ->select('currency')
+                ->whereColumn('grant_id', 'grants.id')
+                ->latest()
+                ->take(1),
+        ]);
+    }
+
+    public function scopeWithExchangeRates(Builder $query): Builder
+    {
+        return $query->scoped(WithExchangeRatesScope::class);
     }
 }

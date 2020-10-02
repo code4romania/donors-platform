@@ -96,14 +96,14 @@
                 routeArgs: { grantee: this.grantee.id },
                 cards: [
                     {
-                        title: 'Total finanțare',
+                        title: this.$t('field.total_funding'),
                         size: 'lg',
-                        number: 0,
+                        number: this.grantee.total_funding,
                     },
                     {
-                        title: this.$t('field.donor_count'),
+                        title: this.$t('field.donors_count'),
                         size: 'lg',
-                        number: this.grantee.donor_count,
+                        number: this.grantee.donors_count,
                     },
                 ],
             };
