@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\OrganizationType;
 use App\Http\Requests\DonorRequest;
 use App\Http\Resources\DonorResource;
 use App\Http\Resources\GrantResource;
-use App\Http\Resources\NameResource;
-use App\Models\Domain;
 use App\Models\Donor;
 use App\Models\Grant;
-use App\Services\OrganizationType;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -32,11 +30,9 @@ class DonorController extends Controller
             'columns' => $this->getIndexColumns(Donor::class, [
                 'name', 'type', 'grantee_count', 'grant_count', 'total_funding', 'published_status',
             ]),
-            'types'  => OrganizationType::all(),
-            'domains' => NameResource::collection(
-                Domain::orderByTranslation('name', 'asc')->getColumn('name')
-            ),
-            'donors' => DonorResource::collection(
+            'types'   => OrganizationType::asOptions(),
+            'domains' => $this->getSortedDomains(),
+            'donors'  => DonorResource::collection(
                 Donor::query()
                     ->with('domains')
                     ->filter()
@@ -49,10 +45,8 @@ class DonorController extends Controller
     public function create(): Response
     {
         return Inertia::render('Donors/Create', [
-            'types'   => OrganizationType::all(),
-            'domains' => NameResource::collection(
-                Domain::orderByTranslation('name', 'asc')->getColumn('name')
-            ),
+            'types'   => OrganizationType::asOptions(),
+            'domains' => $this->getSortedDomains(),
         ]);
     }
 
@@ -76,11 +70,9 @@ class DonorController extends Controller
             'columns' => $this->getIndexColumns(Grant::class, [
                 'name', 'amount', 'start_date', 'end_date', 'published_status',
             ]),
-            'donor'  => DonorResource::make($donor),
-            'domains' => NameResource::collection(
-                Domain::orderByTranslation('name', 'asc')->getColumn('name')
-            ),
-            'grants' => GrantResource::collection(
+            'donor'   => DonorResource::make($donor),
+            'domains' => $this->getSortedDomains(),
+            'grants'  => GrantResource::collection(
                 $donor->grants()
                     ->with('domains')
                     ->withTranslation()
@@ -94,11 +86,9 @@ class DonorController extends Controller
     public function edit(Donor $donor): Response
     {
         return Inertia::render('Donors/Edit', [
-            'types'   => OrganizationType::all(),
+            'types'   => OrganizationType::asOptions(),
             'donor'   => DonorResource::make($donor),
-            'domains' => NameResource::collection(
-                Domain::orderByTranslation('name', 'asc')->getColumn('name')
-            ),
+            'domains' => $this->getSortedDomains(),
         ]);
     }
 

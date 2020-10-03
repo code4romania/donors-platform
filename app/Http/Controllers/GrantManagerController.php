@@ -5,11 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\GrantManagerRequest;
-use App\Http\Resources\DomainResource;
 use App\Http\Resources\GrantManagerResource;
 use App\Http\Resources\GrantResource;
-use App\Http\Resources\NameResource;
-use App\Models\Domain;
 use App\Models\Grant;
 use App\Models\GrantManager;
 use Illuminate\Http\RedirectResponse;
@@ -32,9 +29,7 @@ class GrantManagerController extends Controller
             'columns' => $this->getIndexColumns(GrantManager::class, [
                 'name', 'grantee_count', 'grant_count', 'total_funding', 'published_status',
             ]),
-            'domains' => NameResource::collection(
-                Domain::orderByTranslation('name', 'asc')->getColumn('name')
-            ),
+            'domains'  => $this->getSortedDomains(),
             'managers' => GrantManagerResource::collection(
                 GrantManager::query()
                     ->filter()
@@ -47,9 +42,7 @@ class GrantManagerController extends Controller
     public function create(): Response
     {
         return Inertia::render('Managers/Create', [
-            'domains' => DomainResource::collection(
-                Domain::all()
-            ),
+            'domains' => $this->getSortedDomains(),
         ]);
     }
 
@@ -74,10 +67,8 @@ class GrantManagerController extends Controller
                 'name', 'regranting_amount', 'start_date', 'end_date', 'published_status',
             ]),
             'manager' => GrantManagerResource::make($manager),
-            'domains' => DomainResource::collection(
-                Domain::orderByTranslation('name', 'asc')->get()
-            ),
-            'grants' => GrantResource::collection(
+            'domains' => $this->getSortedDomains(),
+            'grants'  => GrantResource::collection(
                 $manager->grants()
                     ->with('domains')
                     ->withTranslation()
@@ -92,9 +83,7 @@ class GrantManagerController extends Controller
     {
         return Inertia::render('Managers/Edit', [
             'manager' => GrantManagerResource::make($manager),
-            'domains' => DomainResource::collection(
-                Domain::all()
-            ),
+            'domains' => $this->getSortedDomains(),
         ]);
     }
 

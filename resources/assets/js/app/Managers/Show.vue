@@ -113,7 +113,7 @@
             <form-select
                 id="domain"
                 :label="$t('model.domain.plural')"
-                :options="domains.data"
+                :options="domains"
                 :option-placeholder="$t('dashboard.all')"
                 option-value-key="id"
                 option-label-key="name"
@@ -159,7 +159,7 @@
         props: {
             columns: Array,
             manager: Object,
-            domains: Object,
+            domains: Array,
             grants: Object,
         },
         metaInfo() {
@@ -189,6 +189,7 @@
         },
         data() {
             return {
+                filters: this.prepareFilters(['domain']),
                 routeArgs: { manager: this.manager.id },
                 cards: [
                     {

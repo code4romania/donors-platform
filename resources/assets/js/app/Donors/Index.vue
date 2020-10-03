@@ -20,7 +20,7 @@
             <form-select
                 id="domain"
                 :label="$t('model.domain.plural')"
-                :options="domains.data"
+                :options="domains"
                 :option-placeholder="$t('dashboard.all')"
                 option-value-key="id"
                 option-label-key="name"
@@ -54,7 +54,7 @@
             </template>
 
             <template v-slot:type="{ type }">
-                {{ $t(`dashboard.org_types.${type}`) }}
+                {{ $t(`dashboard.org_type.${type}`) }}
             </template>
 
             <template v-slot:total_funding="{ total_funding }">
@@ -76,7 +76,7 @@
         props: {
             columns: Array,
             donors: Object,
-            domains: Object,
+            domains: Array,
             types: Array,
         },
         metaInfo() {

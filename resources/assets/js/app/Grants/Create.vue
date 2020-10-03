@@ -30,7 +30,7 @@
                     :label="$t('field.domains')"
                     v-model="form.domains"
                     class="lg:col-span-2"
-                    :options="domains.data"
+                    :options="domains"
                     option-value-key="id"
                     option-label-key="name"
                 />
@@ -104,7 +104,7 @@
                         :key="index"
                         id="donors"
                         :label="$t('model.donor.singular') + ` #${index + 1}`"
-                        :options="donors.data"
+                        :options="donors"
                         v-model="form.donors[index]"
                         option-value-key="id"
                         option-label-key="name"
@@ -121,7 +121,7 @@
                 <form-select
                     id="manager"
                     :label="$t('model.manager.singular')"
-                    :options="managers.data"
+                    :options="managers"
                     v-model="form.manager"
                     option-value-key="id"
                     option-label-key="name"
@@ -206,9 +206,9 @@
             };
         },
         props: {
-            domains: Object,
-            donors: Object,
-            managers: Object,
+            domains: Array,
+            donors: Array,
+            managers: Array,
         },
         computed: {
             pageTitle() {

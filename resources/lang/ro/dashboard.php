@@ -88,7 +88,7 @@ return [
         'empty' => 'Nu au fost găsite înregistrări corespunzătoare.',
     ],
 
-    'org_types' => [
+    'org_type' => [
         'foundation' => 'Fundație',
         'federation' => 'Federație',
         'company'    => 'Companie',

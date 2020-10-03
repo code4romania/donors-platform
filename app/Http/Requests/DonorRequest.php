@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
-use App\Services\OrganizationType;
+use App\Enums\OrganizationType;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
+use Spatie\Enum\Laravel\Rules\EnumRule;
 
 class DonorRequest extends FormRequest
 {
@@ -19,7 +19,7 @@ class DonorRequest extends FormRequest
     {
         return [
             'name'      => ['required', 'string'],
-            'type'      => ['required', 'string', Rule::in(OrganizationType::types())],
+            'type'      => ['required', new EnumRule(OrganizationType::class)],
             'hq'        => ['nullable', 'string'],
             'contact'   => ['required', 'string'],
             'email'     => ['required', 'email'],

@@ -44,7 +44,7 @@
                     :other-label="$t('field.other')"
                     v-model="form.domains"
                     class="lg:col-span-2"
-                    :options="domains.data"
+                    :options="domains"
                     option-value-key="id"
                     option-label-key="name"
                     :other="true"
@@ -140,7 +140,7 @@
         },
         props: {
             donor: Object,
-            domains: Object,
+            domains: Array,
             types: Array,
         },
         computed: {

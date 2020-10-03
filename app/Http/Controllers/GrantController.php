@@ -6,12 +6,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\GrantRequest;
 use App\Http\Resources\GrantResource;
-use App\Http\Resources\NameResource;
 use App\Http\Resources\ProjectResource;
-use App\Models\Domain;
-use App\Models\Donor;
 use App\Models\Grant;
-use App\Models\GrantManager;
 use App\Models\Project;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
@@ -24,7 +20,7 @@ class GrantController extends Controller
     {
         $this->authorizeResource(Grant::class);
 
-        $this->middleware('remember')->only('index');
+        $this->middleware('remember')->only('index', 'show');
     }
 
     public function index(): Response
@@ -41,30 +37,18 @@ class GrantController extends Controller
                     ->sort()
                     ->paginate(),
             ),
-            'donors' => NameResource::collection(
-                Donor::orderBy('name', 'asc')->getColumn('name')
-            ),
-            'domains' => NameResource::collection(
-                Domain::orderByTranslation('name', 'asc')->getColumn('name')
-            ),
-            'managers' => NameResource::collection(
-                GrantManager::getColumn('name'),
-            ),
+            'donors'   => $this->getSortedDonors(),
+            'domains'  => $this->getSortedDomains(),
+            'managers' => $this->getSortedManagers(),
         ]);
     }
 
     public function create(): Response
     {
         return Inertia::render('Grants/Create', [
-            'donors' => NameResource::collection(
-                Donor::orderBy('name', 'asc')->getColumn('name')
-            ),
-            'domains' => NameResource::collection(
-                Domain::orderByTranslation('name', 'asc')->getColumn('name')
-            ),
-            'managers' => NameResource::collection(
-                GrantManager::getColumn('name'),
-            ),
+            'donors'   => $this->getSortedDonors(),
+            'domains'  => $this->getSortedDomains(),
+            'managers' => $this->getSortedManagers(),
             'translatable' => app(Grant::class)->translatable,
         ]);
     }
@@ -107,15 +91,9 @@ class GrantController extends Controller
     {
         return Inertia::render('Grants/Edit', [
             'grant' => GrantResource::make($grant),
-            'donors' => NameResource::collection(
-                Donor::without('media')->orderBy('name', 'asc')->getColumn('name')
-            ),
-            'domains' => NameResource::collection(
-                Domain::orderByTranslation('name', 'asc')->getColumn('name')
-            ),
-            'managers' => NameResource::collection(
-                GrantManager::getColumn('name'),
-            ),
+            'donors'   => $this->getSortedDonors(),
+            'domains'  => $this->getSortedDomains(),
+            'managers' => $this->getSortedManagers(),
             'translatable' => $grant->translatable,
         ]);
     }

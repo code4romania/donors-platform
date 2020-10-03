@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\OrganizationType;
 use App\Traits\Draftable;
 use App\Traits\Filterable;
 use App\Traits\HasDomains;
@@ -37,6 +38,7 @@ class Donor extends Model implements HasMedia
      */
     protected $casts = [
         'published_at' => 'datetime',
+        'type'         => OrganizationType::class,
     ];
 
     /**

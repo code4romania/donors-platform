@@ -20,7 +20,7 @@
             <form-select
                 id="domain"
                 :label="$t('model.domain.plural')"
-                :options="domains.data"
+                :options="domains"
                 :option-placeholder="$t('dashboard.all')"
                 option-value-key="id"
                 option-label-key="name"
@@ -30,7 +30,7 @@
             <form-select
                 id="donor"
                 :label="$t('model.donor.plural')"
-                :options="donors.data"
+                :options="donors"
                 :option-placeholder="$t('dashboard.all')"
                 option-value-key="id"
                 option-label-key="name"
@@ -40,7 +40,7 @@
             <form-select
                 id="manager"
                 :label="$t('model.manager.plural')"
-                :options="managers.data"
+                :options="managers"
                 :option-placeholder="$t('dashboard.all')"
                 option-value-key="id"
                 option-label-key="name"
@@ -96,9 +96,9 @@
         props: {
             columns: Array,
             grants: Object,
-            donors: Object,
-            domains: Object,
-            managers: Object,
+            donors: Array,
+            domains: Array,
+            managers: Array,
         },
         metaInfo() {
             return {

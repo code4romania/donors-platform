@@ -31,7 +31,7 @@
         mixins: [FilterMixin],
         props: {
             columns: Array,
-            domains: Object,
+            domains: Array,
         },
         metaInfo() {
             return {
