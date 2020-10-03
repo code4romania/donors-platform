@@ -12,14 +12,12 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Spatie\Permission\Traits\HasRoles;
 use Spatie\WelcomeNotification\ReceivesWelcomeNotification;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Filterable,
         HasFactory,
-        HasRoles,
         Notifiable,
         Sortable,
         ReceivesWelcomeNotification;
@@ -165,34 +163,5 @@ class User extends Authenticatable implements MustVerifyEmail
                 'create' => $this->can('create', self::class),
             ],
         ];
-    }
-
-    ////////
-
-    /**
-     * morphedByMany template.
-     *
-     * @param  string      $related
-     * @return MorphToMany
-     */
-    private function relatedTo(string $related)
-    {
-        return $this->morphedByMany(
-            $related,
-            'model',
-            'user_manages_model',
-            'user_id',
-            'model_id',
-        );
-    }
-
-    public function managers()
-    {
-        return $this->relatedTo(GrantManager::class);
-    }
-
-    public function donors()
-    {
-        return $this->relatedTo(Donor::class);
     }
 }

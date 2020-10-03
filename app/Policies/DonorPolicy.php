@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
+use App\Enums\UserRole;
 use App\Models\Donor;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -59,7 +60,7 @@ class DonorPolicy
             return false;
         }
 
-        if ($user->role !== 'donor') {
+        if (! $user->role->equals(UserRole::donor())) {
             return false;
         }
 

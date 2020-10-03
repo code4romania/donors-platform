@@ -40,7 +40,7 @@ class GrantResource extends Resource
             'id'                => $this->id,
             'name'              => $this->name,
             'donors'            => $this->donors->pluck('name'),
-            'managers'          => $this->managers->pluck('name'),
+            'manager'           => optional($this->manager)->name,
             'domains'           => $this->domains->pluck('name'),
             'grantees'          => $this->grantees->pluck('name')->join(', '),
             'amount'            => $this->amount->formatWithoutDecimals(),

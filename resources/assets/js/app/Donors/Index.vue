@@ -97,7 +97,7 @@
         },
         data() {
             return {
-                filters: this.prepareFilters(['domain', 'orgtype']),
+                filters: this.prepareFilters(['domain', 'orgtype', 'manager']),
             };
         },
         computed: {

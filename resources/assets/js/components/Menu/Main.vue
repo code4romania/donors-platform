@@ -197,7 +197,6 @@
                     : urls.filter((url) => this.url.startsWith(url)).length > 0;
             },
             showMenuItem(item) {
-                console.log(item);
                 if (!item.hasOwnProperty('guard')) {
                     return true;
                 }

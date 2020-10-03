@@ -30,6 +30,7 @@ class GrantManagerController extends Controller
                 'name', 'grantee_count', 'grants_count', 'total_funding', 'published_status',
             ]),
             'domains'  => $this->getSortedDomains(),
+            'donors'  => $this->getSortedDonors(),
             'managers' => GrantManagerResource::collection(
                 GrantManager::query()
                     ->filter()

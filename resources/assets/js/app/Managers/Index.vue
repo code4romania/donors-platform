@@ -26,6 +26,16 @@
                 option-label-key="name"
                 v-model="filters.domain"
             />
+
+            <form-select
+                id="donor"
+                :label="$t('model.donor.plural')"
+                :options="donors"
+                :option-placeholder="$t('dashboard.all')"
+                option-value-key="id"
+                option-label-key="name"
+                v-model="filters.donor"
+            />
         </search-filter>
 
         <model-table
@@ -61,6 +71,7 @@
             columns: Array,
             domains: Array,
             managers: Object,
+            donors: Object,
         },
         metaInfo() {
             return {
@@ -69,7 +80,7 @@
         },
         data() {
             return {
-                filters: this.prepareFilters(['domain']),
+                filters: this.prepareFilters(['domain', 'donor']),
             };
         },
         computed: {

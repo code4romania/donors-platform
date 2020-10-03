@@ -80,10 +80,10 @@
 
                 <div
                     class="flex items-center mt-2 text-sm text-gray-500"
-                    v-if="row.managers.length"
+                    v-if="row.manager"
                 >
                     {{ $t('model.manager.singular') }}:
-                    {{ row.managers[0] }}
+                    {{ row.manager }}
                 </div>
             </template>
 
