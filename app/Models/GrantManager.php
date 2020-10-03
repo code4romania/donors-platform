@@ -52,7 +52,7 @@ class GrantManager extends Model implements HasMedia
      * @var string[]
      */
     protected $filterable = [
-        'domains', 'donors',
+        'domains', //'donors',
     ];
 
     /**
