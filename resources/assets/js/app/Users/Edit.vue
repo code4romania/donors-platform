@@ -89,9 +89,6 @@
                 formAction: this.$route('users.update', routeParams),
                 form: {
                     _method: 'PUT', // html form method spoofing
-                    donors: this.user.donors,
-                    managers: this.user.managers,
-
                     ...this.prepareFields(
                         ['name', 'email', 'role', 'organization_id'],
                         this.user

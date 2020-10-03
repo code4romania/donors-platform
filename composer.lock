@@ -1652,16 +1652,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.7.1",
+            "version": "v8.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "3fb29e904a152b3e1fe49581f66ba5e02fe991f2"
+                "reference": "0bdd5c6f12cb7cb6644e484169656245af417735"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/3fb29e904a152b3e1fe49581f66ba5e02fe991f2",
-                "reference": "3fb29e904a152b3e1fe49581f66ba5e02fe991f2",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/0bdd5c6f12cb7cb6644e484169656245af417735",
+                "reference": "0bdd5c6f12cb7cb6644e484169656245af417735",
                 "shasum": ""
             },
             "require": {
@@ -1811,7 +1811,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2020-09-29T15:39:07+00:00"
+            "time": "2020-10-02T14:33:08+00:00"
         },
         {
             "name": "laravel/scout",
@@ -4562,16 +4562,16 @@
         },
         {
             "name": "spatie/laravel-enum",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-enum.git",
-                "reference": "f3ab0e695d5a9daa5c76b722e9434dae513136eb"
+                "reference": "e290a4b16931226148c925118f01ef35d7bccd68"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-enum/zipball/f3ab0e695d5a9daa5c76b722e9434dae513136eb",
-                "reference": "f3ab0e695d5a9daa5c76b722e9434dae513136eb",
+                "url": "https://api.github.com/repos/spatie/laravel-enum/zipball/e290a4b16931226148c925118f01ef35d7bccd68",
+                "reference": "e290a4b16931226148c925118f01ef35d7bccd68",
                 "shasum": ""
             },
             "require": {
@@ -4646,20 +4646,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-09-21T10:48:23+00:00"
+            "time": "2020-10-03T19:00:33+00:00"
         },
         {
             "name": "spatie/laravel-medialibrary",
-            "version": "8.9.1",
+            "version": "8.9.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-medialibrary.git",
-                "reference": "fca3f6ca7b847d389ffe4fedeec14a0c64588122"
+                "reference": "101bb63d411db177037ef71b55c9f325c6149efd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/fca3f6ca7b847d389ffe4fedeec14a0c64588122",
-                "reference": "fca3f6ca7b847d389ffe4fedeec14a0c64588122",
+                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/101bb63d411db177037ef71b55c9f325c6149efd",
+                "reference": "101bb63d411db177037ef71b55c9f325c6149efd",
                 "shasum": ""
             },
             "require": {
@@ -4746,7 +4746,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-10-01T22:58:43+00:00"
+            "time": "2020-10-03T00:03:18+00:00"
         },
         {
             "name": "spatie/laravel-permission",
@@ -9551,16 +9551,16 @@
         },
         {
             "name": "sebastian/code-unit",
-            "version": "1.0.6",
+            "version": "1.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/code-unit.git",
-                "reference": "d3a241b6028ff9d8e97d2b6ebd4090d01f92fad8"
+                "reference": "59236be62b1bb9919e6d7f60b0b832dc05cef9ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/code-unit/zipball/d3a241b6028ff9d8e97d2b6ebd4090d01f92fad8",
-                "reference": "d3a241b6028ff9d8e97d2b6ebd4090d01f92fad8",
+                "url": "https://api.github.com/repos/sebastianbergmann/code-unit/zipball/59236be62b1bb9919e6d7f60b0b832dc05cef9ab",
+                "reference": "59236be62b1bb9919e6d7f60b0b832dc05cef9ab",
                 "shasum": ""
             },
             "require": {
@@ -9599,7 +9599,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-09-28T05:28:46+00:00"
+            "time": "2020-10-02T14:47:54+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",

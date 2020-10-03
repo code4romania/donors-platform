@@ -12,6 +12,7 @@ use App\Traits\HasGrants;
 use App\Traits\HasLogo;
 use App\Traits\Sortable;
 use Spatie\MediaLibrary\HasMedia;
+use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
 class Donor extends Model implements HasMedia
 {
@@ -20,6 +21,7 @@ class Donor extends Model implements HasMedia
         HasDomains,
         HasGrants,
         HasLogo,
+        HasRelationships,
         Sortable;
 
     /**
@@ -54,7 +56,7 @@ class Donor extends Model implements HasMedia
      * @var string[]
      */
     protected $filterable = [
-        'domains', 'orgtype',
+        'domains', 'managers', 'orgtype',
     ];
 
     /**
@@ -63,7 +65,7 @@ class Donor extends Model implements HasMedia
      * @var string[]
      */
     protected $sortable = [
-        'name', 'type',
+        'name', 'type', 'grants_count',
     ];
 
     /**
@@ -74,4 +76,26 @@ class Donor extends Model implements HasMedia
     protected $with = [
         // 'media',
     ];
+
+    /**
+     * The relationship counts that should be eager loaded on every query.
+     *
+     * @var array
+     */
+    protected $withCount = [
+        'grants',
+    ];
+
+    public function managers()
+    {
+        return $this->hasManyDeepFromRelations(
+            $this->grants(),
+            (new Grant)->manager()
+        );
+    }
+
+    public function users()
+    {
+        return $this->morphMany(User::class, 'organization');
+    }
 }

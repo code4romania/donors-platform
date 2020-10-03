@@ -34,6 +34,15 @@ class Grantee extends Model
     ];
 
     /**
+     * The attributes that are filterable.
+     *
+     * @var string[]
+     */
+    protected $filterable = [
+        'donors', 'managers',
+    ];
+
+    /**
      * The attributes that are sortable.
      *
      * @var string[]
@@ -68,6 +77,17 @@ class Grantee extends Model
                 $this->projects(),
                 (new Project)->grant(),
                 (new Grant)->donors(),
+            )
+            ->distinct();
+    }
+
+    public function managers(): HasManyDeep
+    {
+        return $this
+            ->hasManyDeepFromRelations(
+                $this->projects(),
+                (new Project)->grant(),
+                (new Grant)->manager(),
             )
             ->distinct();
     }

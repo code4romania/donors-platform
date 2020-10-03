@@ -43,7 +43,7 @@ class GrantManagerPolicy
      */
     public function create(User $user)
     {
-        return $user->donors->isNotEmpty();
+        return $user->role === 'donor';
     }
 
     /**
@@ -55,7 +55,16 @@ class GrantManagerPolicy
      */
     public function update(User $user, GrantManager $manager)
     {
-        return $user->managers->contains($manager);
+        // dd($manager, $user->organization);
+        if (! $user->organization) {
+            return false;
+        }
+
+        // if ($user->role !== 'manager') {
+        //     return false;
+        // }
+
+        return $user->organization->id == $manager->id;
     }
 
     /**

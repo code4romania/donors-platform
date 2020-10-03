@@ -31,8 +31,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         // Implicitly grant "admin" role all permissions
-        Gate::before(fn ($user) => $user->hasRole('admin') ?: null);
-        // Gate::before(fn ($user) => $user->role->equals(UserRole::admin()) ?: null);
+        Gate::before(fn ($user) => $user->role->equals(UserRole::admin()) ?: null);
 
         Inertia::share('auth', function () {
             if (! Auth::check()) {
@@ -46,11 +45,11 @@ class AuthServiceProvider extends ServiceProvider
                 'name'         => $user->name,
                 'email'        => $user->email,
                 'avatar'       => $user->avatar,
-                'role'         => $user->role ?? $user->role_name,
+                'role'         => $user->role,
                 'permissions'  => $user->all_permissions,
                 'organization' => $user->isAdmin()
-                    ? __('dashboard.role.admin')
-                    : optional($user->organization)->name,
+                    ? ['id' => null, 'name' => __('dashboard.role.admin')]
+                    : $user->organization->only('id', 'name'),
 
             ];
         });

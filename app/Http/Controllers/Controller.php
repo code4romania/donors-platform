@@ -32,9 +32,23 @@ class Controller extends BaseController
             });
     }
 
+    public function getSortedDomains(array $columns = ['id', 'name']): Collection
+    {
+        return Domain::orderByTranslation('name', 'asc')
+            ->get($columns)
+            ->map->only(...$columns);
+    }
+
     public function getSortedDonors(array $columns = ['id', 'name']): Collection
     {
         return DB::table('donors')
+            ->orderBy('name', 'asc')
+            ->get($columns);
+    }
+
+    public function getSortedGrantees(array $columns = ['id', 'name']): Collection
+    {
+        return DB::table('grantees')
             ->orderBy('name', 'asc')
             ->get($columns);
     }
@@ -44,12 +58,5 @@ class Controller extends BaseController
         return DB::table('grant_managers')
             ->orderBy('name', 'asc')
             ->get($columns);
-    }
-
-    public function getSortedDomains(array $columns = ['id', 'name']): Collection
-    {
-        return Domain::orderByTranslation('name', 'asc')
-            ->get($columns)
-            ->map->only(...$columns);
     }
 }

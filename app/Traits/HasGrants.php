@@ -21,11 +21,6 @@ trait HasGrants
         );
     }
 
-    public function getGrantCountAttribute()
-    {
-        return $this->grants()->count();
-    }
-
     public function getGranteeCountAttribute()
     {
         return $this->grants->load('grantees')->map->grantees->flatten()->count();

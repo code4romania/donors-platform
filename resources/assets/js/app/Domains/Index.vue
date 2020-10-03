@@ -19,7 +19,7 @@
             :columns="columns"
             route-name="domains.edit"
             :show-row-urls="$userCan('create', 'domains')"
-            :paginate="true"
+            :paginate="false"
         />
     </layout>
 </template>
@@ -31,7 +31,7 @@
         mixins: [FilterMixin],
         props: {
             columns: Array,
-            domains: Array,
+            domains: Object,
         },
         metaInfo() {
             return {

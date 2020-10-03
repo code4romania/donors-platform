@@ -6,7 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddOrganizationColumnToUsersTable extends Migration
+class AddManagerColumnToGrantsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,8 +15,8 @@ class AddOrganizationColumnToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->nullableMorphs('organization');
+        Schema::table('grants', function (Blueprint $table) {
+            $table->foreignId('grant_manager_id')->nullable()->constrained()->onDelete('cascade');
         });
     }
 
@@ -27,8 +27,8 @@ class AddOrganizationColumnToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropMorphs('organization');
+        Schema::table('grants', function (Blueprint $table) {
+            $table->dropColumn('grant_manager_id');
         });
     }
 }

@@ -8,6 +8,8 @@ return [
     'none' => 'Niciunul',
     'back' => 'Înapoi',
 
+    'own_profile' => 'Profilul meu',
+
     'menu' => [
         'dashboard'    => 'Panoul de control',
         'help'         => 'Ghid',

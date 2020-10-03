@@ -87,6 +87,17 @@
             url: String,
         },
         data() {
+            let own = {
+                id: this.$page.auth.organization.id,
+                type: this.$page.auth.role,
+            };
+
+            let ownArgs = {
+                filters: {
+                    [own.type]: own.id,
+                },
+            };
+
             return {
                 open: false,
                 items: [
@@ -100,30 +111,75 @@
                         href: this.$route('donors.index'),
                         label: this.$t('model.donor.plural'),
                         guard: this.$userCan('view', 'donors'),
+                        children: [
+                            {
+                                href: this.$route('donors.index', ownArgs),
+                                label: this.$t('model.donor.own'),
+                                guard: this.$userHasRole('manager'),
+                            },
+                            {
+                                href: this.routeIfId('donors.show', own.id),
+                                label: this.$t('dashboard.own_profile'),
+                                guard: this.$userHasRole('donor'),
+                            },
+                        ],
                     },
                     {
                         icon: 'Finance/money-euro-circle-line',
                         href: this.$route('managers.index'),
                         label: this.$t('model.manager.plural'),
                         guard: this.$userCan('view', 'managers'),
+                        children: [
+                            {
+                                href: this.$route('managers.index', ownArgs),
+                                label: this.$t('model.manager.own'),
+                                guard: this.$userHasRole('donor'),
+                            },
+                            {
+                                href: this.routeIfId('managers.show', own.id),
+                                label: this.$t('dashboard.own_profile'),
+                                guard: this.$userHasRole('manager'),
+                            },
+                        ],
                     },
                     {
                         icon: 'Design/focus-3-line',
                         href: this.$route('domains.index'),
                         label: this.$t('model.domain.plural'),
                         guard: this.$userCan('view', 'domains'),
+                        // children: [
+                        //     {
+                        //         href: this.$route('domains.index', ownArgs),
+                        //         label: this.$t('model.domain.own'),
+                        //         guard: !this.$userHasRole('admin'),
+                        //     },
+                        // ],
                     },
                     {
                         icon: 'Finance/funds-line',
                         href: this.$route('grants.index'),
                         label: this.$t('model.grant.plural'),
                         guard: this.$userCan('view', 'grants'),
+                        children: [
+                            {
+                                href: this.$route('grants.index', ownArgs),
+                                label: this.$t('model.grant.own'),
+                                guard: !this.$userHasRole('admin'),
+                            },
+                        ],
                     },
                     {
                         icon: 'Editor/organization-chart',
                         href: this.$route('grantees.index'),
                         label: this.$t('model.grantee.plural'),
                         guard: this.$userCan('view', 'grantees'),
+                        children: [
+                            {
+                                href: this.$route('grantees.index', ownArgs),
+                                label: this.$t('model.grantee.own'),
+                                guard: !this.$userHasRole('admin'),
+                            },
+                        ],
                     },
                     {
                         icon: 'User/user-settings-line',
@@ -141,11 +197,19 @@
                     : urls.filter((url) => this.url.startsWith(url)).length > 0;
             },
             showMenuItem(item) {
+                console.log(item);
                 if (!item.hasOwnProperty('guard')) {
                     return true;
                 }
 
                 return item.guard;
+            },
+            routeIfId(name, id) {
+                if (!id) {
+                    return '';
+                }
+
+                return this.$route(name, id);
             },
         },
     };

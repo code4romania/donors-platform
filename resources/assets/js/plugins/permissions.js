@@ -12,7 +12,7 @@ export default {
         };
 
         Vue.prototype.$userCanOnModel = function(action, model) {
-            if (this.$page.auth.role === 'admin') {
+            if (this.$userHasRole('admin')) {
                 return true;
             }
 
@@ -24,6 +24,10 @@ export default {
             }
 
             return model.can[action];
+        };
+
+        Vue.prototype.$userHasRole = function(role) {
+            return this.$page.auth.role === role;
         };
     },
 };

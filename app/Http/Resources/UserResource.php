@@ -28,10 +28,11 @@ class UserResource extends Resource
     public function getIndexAttributes($request): array
     {
         return [
-            'id'          => $this->id,
-            'name'        => $this->name,
-            'email'       => $this->email,
-            'role'        => $this->role,
+            'id'           => $this->id,
+            'name'         => $this->name,
+            'email'        => $this->email,
+            'role'         => $this->role,
+            'organization' => NameResource::make($this->organization),
         ];
     }
 
@@ -44,8 +45,6 @@ class UserResource extends Resource
             'role'            => $this->role,
             'permissions'     => $this->all_permissions,
             'organization_id' => optional($this->organization)->id,
-            'donors'          => $this->donors->pluck('id'),
-            'managers'        => $this->managers->pluck('id'),
         ];
     }
 }

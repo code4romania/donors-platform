@@ -6,9 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\GranteeRequest;
 use App\Http\Resources\GranteeResource;
-use App\Http\Resources\NameResource;
 use App\Http\Resources\ProjectResource;
-use App\Models\Donor;
 use App\Models\Grantee;
 use App\Models\Project;
 use Illuminate\Http\RedirectResponse;
@@ -31,9 +29,8 @@ class GranteeController extends Controller
             'columns' => $this->getIndexColumns(Grantee::class, [
                 'name', 'projects_count', 'donors_count',
             ]),
-            'donors' => NameResource::collection(
-                Donor::orderBy('name', 'asc')->getColumn('name')
-            ),
+            'donors'   => $this->getSortedDonors(),
+            'managers' => $this->getSortedManagers(),
             'grantees'  => GranteeResource::collection(
                 Grantee::query()
                     ->with('projects', 'donors')

@@ -8,6 +8,8 @@ return [
     'none' => 'None',
     'back' => 'Back',
 
+    'own_profile' => 'My profile',
+
     'menu' => [
         'dashboard'    => 'Dashboard',
         'help'         => 'Guide',

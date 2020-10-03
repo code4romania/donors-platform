@@ -15,7 +15,7 @@
         <search-filter
             v-model="search"
             @reset="reset"
-            filter-class="sm:grid-cols-2"
+            filter-class="sm:grid-cols-3"
         >
             <form-select
                 id="domain"
@@ -33,6 +33,16 @@
                 :options="types"
                 :option-placeholder="$t('dashboard.all')"
                 v-model="filters.orgtype"
+            />
+
+            <form-select
+                id="manager"
+                :label="$t('model.manager.plural')"
+                :options="managers"
+                :option-placeholder="$t('dashboard.all')"
+                option-value-key="id"
+                option-label-key="name"
+                v-model="filters.manager"
             />
         </search-filter>
 
@@ -77,6 +87,7 @@
             columns: Array,
             donors: Object,
             domains: Array,
+            managers: Array,
             types: Array,
         },
         metaInfo() {

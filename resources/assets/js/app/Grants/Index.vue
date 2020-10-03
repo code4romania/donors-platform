@@ -15,7 +15,7 @@
         <search-filter
             v-model="search"
             @reset="reset"
-            filter-class="sm:grid-cols-3"
+            filter-class="sm:grid-cols-4"
         >
             <form-select
                 id="domain"
@@ -45,6 +45,16 @@
                 option-value-key="id"
                 option-label-key="name"
                 v-model="filters.manager"
+            />
+
+            <form-select
+                id="grantee"
+                :label="$t('model.grantee.plural')"
+                :options="grantees"
+                :option-placeholder="$t('dashboard.all')"
+                option-value-key="id"
+                option-label-key="name"
+                v-model="filters.grantee"
             />
         </search-filter>
 
@@ -99,6 +109,7 @@
             donors: Array,
             domains: Array,
             managers: Array,
+            grantees: Array,
         },
         metaInfo() {
             return {
@@ -107,7 +118,12 @@
         },
         data() {
             return {
-                filters: this.prepareFilters(['domain', 'donor', 'manager']),
+                filters: this.prepareFilters([
+                    'domain',
+                    'donor',
+                    'manager',
+                    'grantee',
+                ]),
             };
         },
         computed: {

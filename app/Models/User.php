@@ -10,10 +10,8 @@ use App\Traits\Sortable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Collection;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\WelcomeNotification\ReceivesWelcomeNotification;
 
@@ -32,7 +30,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var string[]
      */
     protected $fillable = [
-        'name', 'email', 'password', 'locale', 'role', 'organization_id',
+        'name', 'email', 'password', 'locale', 'role',
     ];
 
     /**
@@ -51,6 +49,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'role'              => UserRole::class,
     ];
 
     /**
@@ -84,64 +83,54 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var string[]
      */
     protected $with = [
-        'donors', 'managers',
+        //
     ];
 
     public function scopeWithRole(Builder $query, string $role): Builder
     {
-        return $query->whereHas('roles', fn ($q) => $q->where('name', $role));
+        return $query->where('role', $role);
     }
 
     public function isAdmin(): bool
     {
-        return (new UserRole($this->role))->equals(UserRole::admin());
+        return $this->role->equals(UserRole::admin());
     }
 
     public function isDonor(): bool
     {
-        return (new UserRole($this->role))->equals(UserRole::donor());
+        return $this->role->equals(UserRole::donor());
     }
 
     public function isManager(): bool
     {
-        return (new UserRole($this->role))->equals(UserRole::manager());
+        return $this->role->equals(UserRole::manager());
     }
 
     public function organization()
     {
-        if ($this->isAdmin()) {
-            return $this->newMorphTo($this->newQuery(), $this, '', '', '', '');
-        }
-
-        return $this->morphTo(__FUNCTION__, 'role');
+        return $this->morphTo();
     }
 
-    public function getOrganizationNameAttribute(): ?string
+    public function grants()
     {
-        if ($this->hasRole('admin')) {
-            return 'Administrator';
-        }
-
-        if (! $this->donors->isEmpty()) {
-            return $this->donors->first()->name;
-        }
-
-        if (! $this->managers->isEmpty()) {
-            return $this->managers->first()->name;
-        }
-
-        return null;
+        return $this->organization->grants();
     }
 
-    public function getRoleNameAttribute(): ?string
+    public function associateOrganization(?string $organization_id)
     {
-        $role = $this->roles->first();
-
-        if (is_null($role)) {
-            return null;
+        if ($this->role->equals(UserRole::admin()) || ! $organization_id) {
+            $this->organization()->dissociate();
+        } elseif ($this->role->equals(UserRole::donor())) {
+            $this->organization()->associate(
+                Donor::find($organization_id)
+            );
+        } elseif ($this->role->equals(UserRole::manager())) {
+            $this->organization()->associate(
+                GrantManager::find($organization_id)
+            );
         }
 
-        return $role->name;
+        $this->save();
     }
 
     public function getAllPermissionsAttribute(): array
@@ -178,31 +167,6 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
-    public function setPermissionsAttribute($values): void
-    {
-        $this->syncPermissions($values);
-    }
-
-    /**
-     * Fetch a list of grants associated with the user's $relationships.
-     *
-     * @param  mixed                          $relationships
-     * @return \Illuminate\Support\Collection
-     */
-    public function grants($relationships): Collection
-    {
-        return collect($relationships)
-            ->map(
-                fn (string $relationship) => $this->$relationship()
-                    ->with(['grants' => fn ($q) => $q->withoutGlobalScopes()])
-                    ->get()
-                    ->pluck('grants')
-                    ->flatten()
-            )
-            ->flatten()
-            ->unique('id');
-    }
-
     ////////
 
     /**
@@ -211,7 +175,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @param  string      $related
      * @return MorphToMany
      */
-    private function relatedTo(string $related): MorphToMany
+    private function relatedTo(string $related)
     {
         return $this->morphedByMany(
             $related,

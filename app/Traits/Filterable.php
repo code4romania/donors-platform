@@ -23,6 +23,8 @@ trait Filterable
             })
             ->when(Request::input('filters'), function (Builder $query, $filters) {
                 $this->filter($query, $filters);
+
+                // $query->dd();
             });
     }
 
@@ -45,6 +47,7 @@ trait Filterable
             switch ($key) {
                 case 'domain':
                 case 'donor':
+                case 'grantee':
                 case 'manager':
                     $relationship = Str::plural($key);
 
@@ -52,8 +55,18 @@ trait Filterable
                         return;
                     }
 
-                    $query->whereHas($relationship, fn ($q) => $q->where('id', (int) $value));
+                    $table = $relationship === 'managers' ? 'grant_managers' : $relationship;
+
+                    $query->whereHas($relationship, fn ($q) => $q->where("{$table}.id", (int) $value));
                     break;
+
+                // case 'manager':
+                //     if (! in_array($key, $this->filterable)) {
+                //         return;
+                //     }
+
+                //     $query->whereHas($key, fn ($q) => $q->where('grant_manager_id', (int) $value)->dd());
+                //     break;
 
                 default:
                     if (! in_array($key, $this->filterable)) {

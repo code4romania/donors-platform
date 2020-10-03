@@ -55,7 +55,15 @@ class DonorPolicy
      */
     public function update(User $user, Donor $donor)
     {
-        return $user->donors->pluck('id')->contains($donor->id);
+        if (! $user->organization) {
+            return false;
+        }
+
+        if ($user->role !== 'donor') {
+            return false;
+        }
+
+        return $user->organization->id == $donor->id;
     }
 
     /**

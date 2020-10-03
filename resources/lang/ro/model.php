@@ -8,6 +8,8 @@ return [
         'singular' => 'Finanțator',
         'plural'   => 'Finanțatori',
 
+        'own' => 'Finanțatorii mei',
+
         'section' => [
             'organization' => [
                 'title' => 'Organizație',
@@ -23,6 +25,8 @@ return [
         'singular' => 'Domeniu',
         'plural'   => 'Domenii',
 
+        'own' => 'Domeniile mele',
+
         'section' => [
             'title' => 'Domeniu',
             'description' => '',
@@ -31,6 +35,8 @@ return [
     'grant' => [
         'singular' => 'Grant',
         'plural'   => 'Granturi',
+
+        'own' => 'Granturile mele',
 
         'section' => [
             'info' => [
@@ -51,6 +57,8 @@ return [
         'singular' => 'Titular de grant',
         'plural'   => 'Titulari de grant',
 
+        'own' => 'Titulari mei de grant',
+
         'section' => [
             'title' => 'Titular de grant',
             'description' => 'Titularul de grant este o organizație, un grup informal sau o persoană care este beneficiarul finanțării alocate prin intermediul unui grant. Pentru a introduce granturi în platformă și a le aloca unuia sau mai multor titulari de grant, trebuie ca titularii să fie adăugați la acest pas în proces. ',
@@ -59,6 +67,8 @@ return [
     'manager' => [
         'singular' => 'Grant manager',
         'plural'   => 'Grant managers',
+
+        'own' => 'Grant managerii mei',
 
         'section' => [
             'organization' => [
@@ -75,6 +85,8 @@ return [
         'singular' => 'Proiect',
         'plural'   => 'Proiecte',
 
+        'own' => 'Proiectele mele',
+
         'section' => [
             'info' => [
                 'title' => 'Proiecte',
@@ -89,6 +101,8 @@ return [
     'user' => [
         'singular' => 'Utilizator',
         'plural'   => 'Utilizatori',
+
+        'own' => 'Utilizatoriii mei',
 
         'section' => [
             'info' => [

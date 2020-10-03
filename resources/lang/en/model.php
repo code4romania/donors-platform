@@ -8,6 +8,8 @@ return [
         'singular' => 'Donor',
         'plural'   => 'Donors',
 
+        'own' => 'My donors',
+
         'section' => [
             'organization' => [
                 'title' => 'Organization',
@@ -23,6 +25,8 @@ return [
         'singular' => 'Domain',
         'plural'   => 'Domains',
 
+        'own' => 'My domains',
+
         'section' => [
             'title' => 'Domain',
             'description' => '',
@@ -31,6 +35,8 @@ return [
     'grant' => [
         'singular' => 'Grant',
         'plural'   => 'Grants',
+
+        'own' => 'My grants',
 
         'section' => [
             'info' => [
@@ -51,6 +57,8 @@ return [
         'singular' => 'Grantee',
         'plural'   => 'Grantees',
 
+        'own' => 'My grantees',
+
         'section' => [
             'title' => 'Grantee',
             'description' => 'A grantee is an organisation, an informal group or a person who is the beneficiary of the funding allocated through a grant. In order to input grants in the platform and to allocate them to one or more grantees you need to add the grantees here, at this step of the process.',
@@ -59,6 +67,8 @@ return [
     'manager' => [
         'singular' => 'Grant manager',
         'plural'   => 'Grant managers',
+
+        'own' => 'My grant managers',
 
         'section' => [
             'organization' => [
@@ -75,6 +85,8 @@ return [
         'singular' => 'Project',
         'plural'   => 'Projects',
 
+        'own' => 'My projects',
+
         'section' => [
             'info' => [
                 'title' => 'Projects',
@@ -89,6 +101,8 @@ return [
     'user' => [
         'singular' => 'User',
         'plural'   => 'Users',
+
+        'own' => 'My users',
 
         'section' => [
             'info' => [

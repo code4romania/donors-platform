@@ -37,7 +37,7 @@ class GrantManagerResource extends Resource
             'domains'          => $this->domains->pluck('name'),
             'published_status' => $this->published_status,
             'total_funding'    => $this->total_funding->formatWithoutDecimals(),
-            'grant_count'      => $this->grant_count,
+            'grants_count'     => $this->grants_count,
             'grantee_count'    => $this->grantee_count,
         ];
     }
@@ -55,7 +55,7 @@ class GrantManagerResource extends Resource
             'logo'             => $this->logo,
             'published_status' => $this->published_status,
             'total_funding'    => $this->total_regranting->formatWithoutDecimals(),
-            'grant_count'      => $this->grant_count,
+            'grants_count'     => $this->grants_count,
             'grant_domains'    => DomainResource::collection($this->grant_domains),
             'grantee_count'    => $this->grantee_count,
 

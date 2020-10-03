@@ -7,7 +7,7 @@
                 <div class="text-sm font-semibold" v-text="$page.auth.name" />
                 <div
                     class="w-48 text-xs text-gray-600 truncate"
-                    v-text="$page.auth.organization"
+                    v-text="$page.auth.organization.name"
                 />
             </div>
 

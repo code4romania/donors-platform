@@ -23,6 +23,10 @@
             <template v-slot:role="{ role }">
                 {{ $t(`dashboard.role.${role}`) }}
             </template>
+
+            <template v-slot:organization="{ organization }">
+                {{ organization ? organization.name : '' }}
+            </template>
         </model-table>
     </layout>
 </template>

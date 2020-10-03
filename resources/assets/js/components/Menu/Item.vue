@@ -15,15 +15,14 @@
             {{ label }}
         </component>
 
-        <div v-if="children.length" class="mt-1 mb-3">
+        <div v-if="visibleChildren.length" class="mt-1 mb-3">
             <component
-                v-for="(item, index) in children"
+                v-for="(item, index) in visibleChildren"
                 :key="index"
                 :is="item.external ? 'a' : 'inertia-link'"
                 :href="item.href"
                 class="flex items-center py-2 pl-12 pr-2 transition duration-150 ease-in-out rounded-sm group focus:outline-none"
                 :class="style(item)"
-                :data="{ remember: 'forget' }"
             >
                 {{ item.label }}
             </component>
@@ -56,6 +55,11 @@
                 default: () => [],
             },
         },
+        computed: {
+            visibleChildren() {
+                return this.children.filter((item) => this.showMenuItem(item));
+            },
+        },
         methods: {
             isCurrentUrl(href) {
                 let currentUrl = location.origin + location.pathname;
@@ -72,6 +76,13 @@
                 } else {
                     return 'text-gray-300 hover:text-white hover:bg-gray-700 focus:text-white focus:bg-gray-700';
                 }
+            },
+            showMenuItem(item) {
+                if (!item.hasOwnProperty('guard')) {
+                    return true;
+                }
+
+                return item.guard;
             },
         },
     };

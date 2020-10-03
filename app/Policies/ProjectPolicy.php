@@ -49,7 +49,7 @@ class ProjectPolicy
      */
     public function create(User $user)
     {
-        if ($user->donors->isNotEmpty()) {
+        if ($user->role === 'donor') {
             return true;
         }
 
@@ -73,9 +73,7 @@ class ProjectPolicy
         if (
             $this->grant !== null &&
             $this->grant->projects->pluck('id')->contains($project->id) &&
-            $user->grants(['donors', 'managers'])
-                ->pluck('id')
-                ->contains($this->grant->id)
+            $user->grants->pluck('id')->contains($this->grant->id)
         ) {
             return true;
         }
@@ -93,9 +91,7 @@ class ProjectPolicy
         if (
             $this->grant !== null &&
             $this->grant->projects->pluck('id')->contains($project->id) &&
-            $user->grants(['donors', 'managers'])
-                ->pluck('id')
-                ->contains($this->grant->id)
+            $user->grants->pluck('id')->contains($this->grant->id)
         ) {
             return true;
         }

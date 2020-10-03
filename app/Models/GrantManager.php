@@ -61,7 +61,7 @@ class GrantManager extends Model implements HasMedia
      * @var string[]
      */
     protected $sortable = [
-        'name',
+        'name', 'grants_count',
     ];
 
     /**
@@ -72,4 +72,23 @@ class GrantManager extends Model implements HasMedia
     protected $with = [
         // 'domains', 'grants', 'media',
     ];
+
+    /**
+     * The relationship counts that should be eager loaded on every query.
+     *
+     * @var array
+     */
+    protected $withCount = [
+        'grants',
+    ];
+
+    public function users()
+    {
+        return $this->morphMany(User::class, 'organization');
+    }
+
+    public function grants()
+    {
+        return $this->hasMany(Grant::class);
+    }
 }

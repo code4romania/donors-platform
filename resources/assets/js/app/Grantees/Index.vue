@@ -12,7 +12,31 @@
             </div>
         </template>
 
-        <search-filter v-model="search" @reset="reset" />
+        <search-filter
+            v-model="search"
+            @reset="reset"
+            filter-class="sm:grid-cols-2"
+        >
+            <form-select
+                id="donor"
+                :label="$t('model.donor.plural')"
+                :options="donors"
+                :option-placeholder="$t('dashboard.all')"
+                option-value-key="id"
+                option-label-key="name"
+                v-model="filters.donor"
+            />
+
+            <form-select
+                id="manager"
+                :label="$t('model.manager.plural')"
+                :options="managers"
+                :option-placeholder="$t('dashboard.all')"
+                option-value-key="id"
+                option-label-key="name"
+                v-model="filters.manager"
+            />
+        </search-filter>
 
         <model-table
             :collection="grantees"
@@ -31,10 +55,17 @@
         props: {
             columns: Array,
             grantees: Object,
+            donors: Array,
+            managers: Array,
         },
         metaInfo() {
             return {
                 title: this.$t('model.grantee.plural'),
+            };
+        },
+        data() {
+            return {
+                filters: this.prepareFilters(['donor', 'manager']),
             };
         },
         computed: {

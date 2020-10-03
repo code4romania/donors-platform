@@ -85,11 +85,7 @@
                 formAction: this.$route('users.store'),
                 form: {
                     locale: this.$page.locale,
-                    role: 'user',
-                    permissions: {},
-                    donors: [],
-                    managers: [],
-                    ...this.prepareFields(['name', 'email']),
+                    ...this.prepareFields(['name', 'email', 'role']),
                 },
             };
         },

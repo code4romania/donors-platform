@@ -24,7 +24,7 @@ export default {
         },
     },
     watch: {
-        'form.role': function(newValue) {
+        'form.role': function() {
             this.form.organization_id = null;
         },
     },

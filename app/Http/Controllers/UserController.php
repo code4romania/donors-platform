@@ -26,7 +26,7 @@ class UserController extends Controller
     {
         return Inertia::render('Users/Index', [
             'columns' => $this->getIndexColumns(User::class, [
-                'name', 'role',
+                'name', 'role', 'organization',
             ]),
             'roles' => UserRole::asOptions(),
             'users' => UserResource::collection(
@@ -49,11 +49,11 @@ class UserController extends Controller
 
     public function store(UserRequest $request): RedirectResponse
     {
-        $user = User::create($request->validated());
+        $user = User::make($request->validated());
 
-        $user->syncRoles($request->input('role'));
-        $user->donors()->sync($request->input('donors'));
-        $user->managers()->sync($request->input('managers'));
+        $user->associateOrganization($request->input('organization_id'));
+
+        $user->save();
 
         return Redirect::route('users.index')
             ->with('success', __('dashboard.event.created', [
@@ -82,9 +82,7 @@ class UserController extends Controller
     {
         $user->update($request->validated());
 
-        $user->syncRoles($request->input('role'));
-        $user->donors()->sync($request->input('donors'));
-        $user->managers()->sync($request->input('managers'));
+        $user->associateOrganization($request->input('organization_id'));
 
         return Redirect::route('users.index')
             ->with('success', __('dashboard.event.updated', [

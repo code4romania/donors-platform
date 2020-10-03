@@ -68,7 +68,7 @@ class Grant extends Model implements TranslatableContract
      * @var string[]
      */
     protected $filterable = [
-        'donors', 'domains', 'managers',
+        'donors', 'domains', 'managers', 'grantees',
     ];
 
     /**
@@ -123,14 +123,27 @@ class Grant extends Model implements TranslatableContract
         );
     }
 
+    public function users()
+    {
+        return $this->morphMany(User::class, 'owner');
+    }
+
     public function donors(): MorphToMany
     {
         return $this->relatedTo(Donor::class);
     }
 
-    public function managers(): MorphToMany
+    /**
+     * Alias needed for filtering.
+     */
+    public function managers()
     {
-        return $this->relatedTo(GrantManager::class);
+        return $this->manager();
+    }
+
+    public function manager()
+    {
+        return $this->belongsTo(GrantManager::class, 'grant_manager_id');
     }
 
     public function projects(): HasMany
@@ -140,12 +153,11 @@ class Grant extends Model implements TranslatableContract
 
     public function grantees(): HasManyDeep
     {
-        return $this->hasManyDeep(
-            Grantee::class,
-            [Project::class, 'grantee_project'],
-            [null, 'project_id', 'id'],
-            [null, 'id', 'grantee_id']
-        )->groupBy('id');
+        return $this->hasManyDeepFromRelations(
+            $this->projects(),
+            (new Project)->grantees(),
+        )
+            ->distinct();
     }
 
     public function getGrantableAmountAttribute(): Money

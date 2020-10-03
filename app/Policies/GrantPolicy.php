@@ -43,7 +43,11 @@ class GrantPolicy
      */
     public function create(User $user)
     {
-        return $user->donors->isNotEmpty();
+        if (! $user->organization) {
+            return false;
+        }
+
+        return $user->role === 'donor';
     }
 
     /**
@@ -55,7 +59,7 @@ class GrantPolicy
      */
     public function update(User $user, Grant $grant)
     {
-        return $user->grants(['donors', 'managers'])->pluck('id')->contains($grant->id);
+        return $user->grants->pluck('id')->contains($grant->id);
     }
 
     /**
@@ -67,8 +71,11 @@ class GrantPolicy
      */
     public function delete(User $user, Grant $grant)
     {
-        return $user->grants('donors')->pluck('id')
-            ->contains($grant->id);
+        if ($user->role !== 'donor') {
+            return false;
+        }
+
+        return $user->grants->pluck('id')->contains($grant->id);
     }
 
     /**
