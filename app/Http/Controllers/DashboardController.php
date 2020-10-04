@@ -35,7 +35,10 @@ class DashboardController extends Controller
                 'grantees' => Grantee::count(),
                 'funding'  => Money::sum(...$donors->map->total_funding)->formatWithoutDecimals(),
             ],
-            'chart' => ChartBuilder::data($domains),
+            'years'   => $this->getSortedYears(),
+            'domains' => $this->getSortedDomains(),
+            'donors'  => $this->getSortedDonors(),
+            'chart'   => ChartBuilder::data($domains),
         ]);
     }
 }

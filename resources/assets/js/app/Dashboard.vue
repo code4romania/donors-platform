@@ -9,6 +9,30 @@
             />
         </grid>
 
+        <chart-filter>
+            <form-select-multiple
+                id="year"
+                :label="$t('dashboard.filter.year')"
+                :options="years"
+            />
+
+            <form-select-multiple
+                id="domains"
+                :label="$t('dashboard.filter.domain')"
+                :options="domains"
+                option-value-key="id"
+                option-label-key="name"
+            />
+
+            <form-select-multiple
+                id="donors"
+                :label="$t('dashboard.filter.donor')"
+                :options="donors"
+                option-value-key="id"
+                option-label-key="name"
+            />
+        </chart-filter>
+
         <data-block :chart-data="chart" />
     </layout>
 </template>
@@ -22,8 +46,10 @@
         },
         props: {
             chart: Object,
-            donors: Object,
             stats: Object,
+            domains: Array,
+            donors: Array,
+            years: Array,
         },
         data() {
             return {

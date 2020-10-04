@@ -21,10 +21,12 @@
                 v-if="open"
                 ref="dropdown"
                 class="rounded shadow-xl"
-                style="z-index: 99999;"
+                style="z-index: 99999"
             >
-                <div class="mt-2 bg-white rounded shadow-xs">
-                    <slot name="dropdown" slim />
+                <div
+                    class="mt-2 overflow-auto bg-white rounded shadow-xs max-h-60"
+                >
+                    <slot name="dropdown" />
                 </div>
             </div>
         </transition>
@@ -79,6 +81,8 @@
         },
         watch: {
             open(open) {
+                this.$emit(open ? 'open' : 'close');
+
                 if (open) {
                     this.$nextTick(() => {
                         this.popper = createPopper(

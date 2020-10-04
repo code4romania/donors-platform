@@ -59,4 +59,13 @@ class Controller extends BaseController
             ->orderBy('name', 'asc')
             ->get($columns);
     }
+
+    public function getSortedYears(string $order = 'desc'): Collection
+    {
+        return DB::table('grants')
+            ->selectRaw('YEAR(start_date) as year')
+            ->orderBy('year', $order)
+            ->distinct()
+            ->pluck('year');
+    }
 }

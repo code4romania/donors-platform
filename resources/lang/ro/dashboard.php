@@ -72,6 +72,12 @@ return [
         'help'  => 'Pentru a compara două sau mai multe domenii între ele, apasă pe denumirile domeniilor din legendă pentru a le activa sau dezactiva.',
     ],
 
+    'filter' => [
+        'year'   => 'Filtrează după an',
+        'domain' => 'Filtrează după domeniu',
+        'donor'  => 'Filtrează după finanțator',
+    ],
+
     'permission' => [
         'view'   => 'Vizualizare',
         'create' => 'Creare',

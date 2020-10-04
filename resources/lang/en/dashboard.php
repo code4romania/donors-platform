@@ -72,6 +72,12 @@ return [
         'help'  => 'In order to compare one or more domains, click on the domain names in the legend to activate or deactivate them.',
     ],
 
+    'filter' => [
+        'year'   => 'Filter by year',
+        'domain' => 'Filter by domain',
+        'donor'  => 'Filter by donor',
+    ],
+
     'permission' => [
         'view'   => 'View',
         'create' => 'Create',
