@@ -87,7 +87,7 @@ class GrantResource extends Resource
             'start_date'        => $this->formatted_start_date,
             'end_date'          => $this->formatted_end_date,
 
-            'manager'           => $this->managers->first()->id ?? null,
+            'manager'           => optional($this->manager)->id,
             'regranting_amount' => $this->regranting_amount,
             'matching'          => $this->matching,
 
