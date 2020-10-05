@@ -19,6 +19,9 @@ module.exports = {
                 ],
                 mono: ['Courier', 'monospace'],
             },
+            minWidth: theme => ({
+                ...theme('spacing'),
+            }),
         },
         textStyles: theme => ({
             embed: {

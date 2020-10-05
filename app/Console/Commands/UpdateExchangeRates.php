@@ -104,12 +104,8 @@ class UpdateExchangeRates extends Command
             return null;
         }
 
-        $response = ExchangeRateApi::exchangeRateBetweenDateRange(
-            $currency_from,
-            $currency_to,
-            $start_at,
-            $end_at
-        );
+        $response = ExchangeRateApi::shouldCache(false)
+            ->exchangeRateBetweenDateRange($currency_from, $currency_to, $start_at, $end_at);
 
         return [
             'from'  => $currency_from,
@@ -148,7 +144,7 @@ class UpdateExchangeRates extends Command
         }
 
         return $this->latestExchangeRates["{$currency_from}-{$currency_to}"]
-            ->addMonth()
+            ->addMonthWithoutOverflow()
             ->startOfMonth();
     }
 
