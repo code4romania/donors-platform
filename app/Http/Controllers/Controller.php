@@ -36,7 +36,8 @@ class Controller extends BaseController
     {
         return Domain::orderByTranslation('name', 'asc')
             ->get($columns)
-            ->map->only(...$columns);
+            ->map
+            ->only(...$columns);
     }
 
     public function getSortedDonors(array $columns = ['id', 'name']): Collection

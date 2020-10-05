@@ -32,7 +32,7 @@ class GrantController extends Controller
             'grants' => GrantResource::collection(
                 Grant::query()
                     ->withTranslation()
-                    ->with('domains', 'donors', 'managers', 'projects.grantees')
+                    ->with('domains', 'donors', 'manager', 'projects', 'grantees')
                     ->filter()
                     ->sort()
                     ->paginate(),
@@ -62,7 +62,7 @@ class GrantController extends Controller
 
         $grant->domains()->sync($request->input('domains'));
         $grant->donors()->sync($request->input('donors'));
-        $grant->managers()->sync($request->input('manager'));
+        $grant->manager()->associate($request->input('manager'));
 
         $grant->save();
 
@@ -109,7 +109,7 @@ class GrantController extends Controller
 
         $grant->domains()->sync($request->input('domains'));
         $grant->donors()->sync($request->input('donors'));
-        $grant->managers()->sync($request->input('manager'));
+        $grant->manager()->associate($request->input('manager'));
 
         $grant->save();
 
