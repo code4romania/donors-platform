@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
+use App\Enums\UserRole;
 use App\Models\Grant;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -47,7 +48,7 @@ class GrantPolicy
             return false;
         }
 
-        return $user->role === 'donor';
+        return $user->role->equals(UserRole::donor());
     }
 
     /**
@@ -71,7 +72,7 @@ class GrantPolicy
      */
     public function delete(User $user, Grant $grant)
     {
-        if ($user->role !== 'donor') {
+        if (! $user->role->equals(UserRole::donor())) {
             return false;
         }
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
+use App\Enums\UserRole;
 use App\Models\GrantManager;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -43,7 +44,7 @@ class GrantManagerPolicy
      */
     public function create(User $user)
     {
-        return $user->role === 'donor';
+        return $user->role->equals(UserRole::donor());
     }
 
     /**
@@ -55,14 +56,9 @@ class GrantManagerPolicy
      */
     public function update(User $user, GrantManager $manager)
     {
-        // dd($manager, $user->organization);
         if (! $user->organization) {
             return false;
         }
-
-        // if ($user->role !== 'manager') {
-        //     return false;
-        // }
 
         return $user->organization->id == $manager->id;
     }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
+use App\Enums\UserRole;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -49,7 +50,7 @@ class ProjectPolicy
      */
     public function create(User $user)
     {
-        if ($user->role === 'donor') {
+        if ($user->role->equals(UserRole::donor())) {
             return true;
         }
 
