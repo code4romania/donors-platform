@@ -72,7 +72,7 @@ class Project extends Model
      * @var string[]
      */
     protected $with = [
-        'grantees',
+        // 'grantees',
     ];
 
     public function donors()

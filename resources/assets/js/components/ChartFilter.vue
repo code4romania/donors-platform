@@ -1,6 +1,6 @@
 <template>
-    <grid class="md:grid-cols-4 xl:grid-cols-2">
-        <div class="w-full md:w-auto">
+    <grid class="sm:grid-cols-3 xl:grid-cols-2">
+        <div class="w-full sm:w-auto">
             <form-button
                 type="button"
                 color="blue"
@@ -11,7 +11,7 @@
             />
         </div>
 
-        <grid class="md:col-span-3 md:grid-cols-3 xl:col-span-1">
+        <grid class="sm:col-span-2 sm:grid-cols-2 xl:col-span-1">
             <slot />
         </grid>
     </grid>

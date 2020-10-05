@@ -22,6 +22,14 @@ module.exports = {
             minWidth: theme => ({
                 ...theme('spacing'),
             }),
+            minHeight: theme => ({
+                ...theme('spacing'),
+                '75vh': '75vh',
+            }),
+            maxHeight: theme => ({
+                ...theme('spacing'),
+                '75vh': '75vh',
+            }),
         },
         textStyles: theme => ({
             embed: {

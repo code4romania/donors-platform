@@ -1,6 +1,10 @@
+<template>
+    <chart type="bar" height="600" :options="mergedOptions" :series="series" />
+</template>
+
 <script>
+    import ApexCharts from 'vue-apexcharts';
     import defaultsDeep from 'lodash/defaultsDeep';
-    import { Bar, mixins } from 'vue-chartjs';
 
     function formatNumber(value, currency) {
         return new Intl.NumberFormat(document.documentElement.lang, {
@@ -13,120 +17,68 @@
 
     export default {
         name: 'BarChart',
-        extends: Bar,
-        mixins: [mixins.reactiveProp],
+        components: {
+            chart: ApexCharts,
+        },
         props: {
-            width: {
-                default: null,
-            },
-            height: {
-                default: null,
-            },
-            chartOptions: {
+            options: {
                 type: Object,
                 default: () => ({}),
             },
+            series: {
+                type: Array,
+                default: () => [],
+            },
         },
-
         computed: {
-            theme() {
-                let colors = [
-                    'red',
-                    'green',
-                    'indigo',
-                    'orange',
-                    'teal',
-                    'purple',
-                    'yellow',
-                    'blue',
-                    'pink',
-                ];
+            mergedOptions() {
+                let currency = this.options.currency || this.$page.currency;
 
-                return [
-                    ...colors.map(
-                        (color) => this.$theme.colors[color][500] || null
-                    ),
-                    ...colors.map(
-                        (color) => this.$theme.colors[color][300] || null
-                    ),
-                    ...colors.map(
-                        (color) => this.$theme.colors[color][700] || null
-                    ),
-                ];
-            },
-            data() {
-                let data = this.chartData;
-
-                data.datasets = data.datasets.map((dataset, index) => {
-                    dataset.backgroundColor = this.theme[index];
-
-                    return dataset;
-                });
-
-                return data;
-            },
-            options() {
-                let defaults = {
-                    responsive: true,
-                    legend: {
-                        display: true,
-                        align: 'start',
-                        position: 'bottom',
-                        fullWidth: false,
+                return defaultsDeep({}, this.options, {
+                    chart: {
+                        type: 'bar',
+                    },
+                    plotOptions: {
+                        bar: {
+                            horizontal: false,
+                            columnWidth: '90%',
+                            distributed: false,
+                        },
+                    },
+                    dataLabels: {
+                        enabled: false,
+                    },
+                    stroke: {
+                        show: true,
+                        width: 5,
+                        colors: ['transparent'],
+                    },
+                    yaxis: {
                         labels: {
-                            padding: 20,
-                            boxWidth: 20,
+                            formatter: (value) => formatNumber(value, currency),
                         },
                     },
-                    tooltips: {
-                        callbacks: {
-                            label(tooltip, data) {
-                                let dataset = data.datasets[tooltip.datasetIndex];
+                    legend: {
+                        fontSize: '14px',
+                        fontFamily: `'Titillium Web', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'`,
 
-                                return (
-                                    dataset.label +
-                                    ': ' +
-                                    formatNumber(tooltip.yLabel, data.currency)
-                                );
-                            },
+                        horizontalAlign: 'left',
+                        itemMargin: {
+                            horizontal: 8,
+                            vertical: 8,
+                        },
+
+                        onItemClick: {
+                            toggleDataSeries: false,
                         },
                     },
-                    scales: {
-                        xAxes: [
-                            {
-                                display: true,
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: this.$t('field.year'),
-                                },
-                            },
-                        ],
-                        yAxes: [
-                            {
-                                display: true,
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: this.$t('field.amount'),
-                                },
-                                ticks: {
-                                    beginAtZero: true,
-                                    callback(value, index, values) {
-                                        return formatNumber(
-                                            value,
-                                            this.chart.data.currency
-                                        );
-                                    },
-                                },
-                            },
-                        ],
+                    tooltip: {
+                        onDatasetHover: {
+                            highlightDataSeries: true,
+                        },
                     },
-                };
-
-                return defaultsDeep({}, this.chartOptions, defaults);
+                });
             },
-        },
-        mounted() {
-            this.renderChart(this.data, this.options);
         },
     };
 </script>

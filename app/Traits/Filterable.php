@@ -23,8 +23,6 @@ trait Filterable
             })
             ->when(Request::input('filters'), function (Builder $query, $filters) {
                 $this->filter($query, $filters);
-
-                // $query->dd();
             });
     }
 
@@ -59,14 +57,6 @@ trait Filterable
 
                     $query->whereHas($relationship, fn ($q) => $q->where("{$table}.id", (int) $value));
                     break;
-
-                // case 'manager':
-                //     if (! in_array($key, $this->filterable)) {
-                //         return;
-                //     }
-
-                //     $query->whereHas($key, fn ($q) => $q->where('grant_manager_id', (int) $value)->dd());
-                //     break;
 
                 default:
                     if (! in_array($key, $this->filterable)) {

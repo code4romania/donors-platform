@@ -57,7 +57,7 @@ return [
         'singular' => 'Titular de grant',
         'plural'   => 'Titulari de grant',
 
-        'own' => 'Titulari mei de grant',
+        'own' => 'Titularii mei de grant',
 
         'section' => [
             'title' => 'Titular de grant',

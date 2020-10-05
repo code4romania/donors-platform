@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Request;
 
 class WithExchangeRatesScope implements Scope
 {
@@ -21,22 +22,13 @@ class WithExchangeRatesScope implements Scope
      */
     public function apply(Builder $query, Model $model)
     {
-        $query->addSelect(
-            collect(config('money.currencies.iso'))
-                ->mapWithKeys(fn ($currency) => $this->exchangeRateSubquery($currency, $model->getTable()))
-                ->toArray()
-        );
-    }
-
-    protected function exchangeRateSubQuery(string $currency, string $table): array
-    {
-        return [
-            "rate_$currency" => ExchangeRate::select('rate')
+        $query->addSelect([
+            'rate' => ExchangeRate::select('rate')
                 ->whereColumn('date', '<=', DB::raw('LAST_DAY(`start_date`)'))
                 ->whereColumn('currency_from', 'currency')
-                ->where('currency_to', $currency)
+                ->where('currency_to', Request::input('currency', config('money.defaultCurrency')))
                 ->latest('date')
                 ->take(1),
-        ];
+        ]);
     }
 }

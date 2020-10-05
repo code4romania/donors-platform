@@ -191,4 +191,11 @@ class Grant extends Model implements TranslatableContract
             ->selectRaw('YEAR(start_date) as year')
             ->groupBy('date', 'currency');
     }
+
+    public function scopeWithYear(Builder $query): Builder
+    {
+        return $query
+            ->scoped(new WithExchangeRatesScope)
+            ->selectRaw('YEAR(start_date) as year');
+    }
 }

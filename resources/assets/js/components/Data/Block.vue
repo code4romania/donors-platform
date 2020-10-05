@@ -23,54 +23,30 @@
 
         <slot name="table" v-if="isCurrentView('table')" />
 
-        <div
-            class="relative max-h-screen px-4 py-5 bg-white rounded shadow sm:p-6"
-            v-if="isCurrentView('chart')"
-        >
-            <slot name="chart">
-                <bar-chart
-                    v-if="chartData && isCurrentView('chart')"
-                    :chart-data="chartData"
-                    :chart-options="chartOptions"
-                />
-            </slot>
+        <div v-if="isCurrentView('chart')" class="space-y-6">
+            <slot name="filters" />
+
+            <div class="relative px-4 py-5 bg-white rounded shadow sm:p-6">
+                <slot name="chart">
+                    <bar-chart :options="options" :series="series" />
+                </slot>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
     import isEmpty from 'lodash/isEmpty';
+    import merge from 'lodash/merge';
 
     export default {
         name: 'DataBlock',
         props: {
-            chartData: {
-                type: Object,
-                default: () => ({
-                    labels: [
-                        'Category 1',
-                        'Category 2',
-                        'Category 3',
-                        'Category 4',
-                        'Category 5',
-                    ],
-                    datasets: [
-                        {
-                            label: 'Dataset 1',
-                            data: [12, 19, 3, 5, 2],
-                        },
-                        {
-                            label: 'Dataset 2',
-                            data: [1, 4, 15, 32, 23],
-                        },
-                        {
-                            label: 'Dataset 3',
-                            data: [12, 3, 5, 2, 3],
-                        },
-                    ],
-                }),
+            series: {
+                type: Array,
+                default: () => [],
             },
-            chartOptions: {
+            options: {
                 type: Object,
                 default: () => ({}),
             },

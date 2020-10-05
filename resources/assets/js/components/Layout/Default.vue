@@ -39,7 +39,7 @@
                     </div>
 
                     <div
-                        class="flex flex-wrap items-center space-y-6 md:flex-no-wrap md:space-y-0"
+                        class="flex flex-wrap items-center space-y-6 md:flex-no-wrap md:space-y-0 md:space-x-6"
                     >
                         <h1
                             class="flex-1 w-full text-2xl font-bold text-gray-900 md:text-3xl md:w-auto"
@@ -51,6 +51,11 @@
                                 />
                             </slot>
                         </h1>
+
+                        <currency-select
+                            class="w-full md:w-auto"
+                            v-if="currencySelect"
+                        />
 
                         <div
                             v-if="$slots.actions"
@@ -79,6 +84,10 @@
             breadcrumbs: {
                 type: Array,
                 default: () => [],
+            },
+            currencySelect: {
+                type: Boolean,
+                default: false,
             },
         },
         methods: {

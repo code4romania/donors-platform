@@ -1,5 +1,8 @@
 <template>
-    <dropdown button-class="w-full text-left form-select">
+    <dropdown
+        button-class="w-full text-left form-select"
+        @close="$emit('input', checked)"
+    >
         <div class="flex justify-between">
             <span class="flex-1 truncate" v-text="label" />
             <span
@@ -84,7 +87,7 @@
                 },
             },
             checked(cv) {
-                this.$emit('input', cv);
+                // this.$emit('input', cv);
             },
         },
     };

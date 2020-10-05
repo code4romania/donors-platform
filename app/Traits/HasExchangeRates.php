@@ -18,7 +18,7 @@ trait HasExchangeRates
         $currency_to ??= Request::input('currency', config('money.defaultCurrency'));
 
         return collect($amounts)
-            ->map(fn ($item) => $this->convert($item->amount, $currency_to, $item->{"rate_$currency_to"}))
+            ->map(fn ($item) => $this->convert($item->amount, $currency_to, $item->rate))
             ->whenNotEmpty(
                 fn ($amounts) => Money::sum(...$amounts),
                 fn () => Money::parse(0, $currency_to),

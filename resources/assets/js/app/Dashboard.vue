@@ -1,5 +1,5 @@
 <template>
-    <layout :breadcrumbs="breadcrumbs">
+    <layout :breadcrumbs="breadcrumbs" currency-select>
         <grid class="md:grid-cols-3">
             <stats-card
                 v-for="(card, index) in cards"
@@ -9,50 +9,60 @@
             />
         </grid>
 
-        <chart-filter>
-            <form-select-multiple
-                id="year"
-                :label="$t('dashboard.filter.year')"
-                :options="years"
-            />
+        <data-block :options="chart.options" :series="chart.series">
+            <template #filters>
+                <chart-filter @reset="reset">
+                    <form-select-multiple
+                        id="years"
+                        :label="$t('dashboard.filter.year')"
+                        :options="years"
+                        v-model="filters.years"
+                    />
 
-            <form-select-multiple
-                id="domains"
-                :label="$t('dashboard.filter.domain')"
-                :options="domains"
-                option-value-key="id"
-                option-label-key="name"
-            />
+                    <form-select-multiple
+                        id="domains"
+                        :label="$t('dashboard.filter.domain')"
+                        :options="domains"
+                        option-value-key="id"
+                        option-label-key="name"
+                        v-model="filters.domains"
+                    />
 
-            <form-select-multiple
-                id="donors"
-                :label="$t('dashboard.filter.donor')"
-                :options="donors"
-                option-value-key="id"
-                option-label-key="name"
-            />
-        </chart-filter>
-
-        <data-block :chart-data="chart" />
+                    <!-- <form-select-multiple
+                        id="donors"
+                        :label="$t('dashboard.filter.donor')"
+                        :options="donors"
+                        option-value-key="id"
+                        option-label-key="name"
+                        v-model="filters.donors"
+                    /> -->
+                </chart-filter>
+            </template>
+        </data-block>
     </layout>
 </template>
 
 <script>
+    import ChartFilterMixin from '@/mixins/chartFilter';
+
     export default {
-        metaInfo() {
-            return {
-                title: this.pageTitle,
-            };
-        },
+        mixins: [ChartFilterMixin],
         props: {
             chart: Object,
+            apex: Object,
             stats: Object,
             domains: Array,
             donors: Array,
             years: Array,
         },
+        metaInfo() {
+            return {
+                title: this.pageTitle,
+            };
+        },
         data() {
             return {
+                filters: this.prepareFilters(['years', 'domains', 'donors'], []),
                 cards: [
                     {
                         title: this.$t('dashboard.stats.donors'),

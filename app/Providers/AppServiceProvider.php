@@ -78,6 +78,7 @@ class AppServiceProvider extends ServiceProvider
             },
 
             'currencies' => fn () => config('money.currencies.iso', []),
+            'currency'   => fn () => Request::input('currency', config('money.defaultCurrency')),
 
             'flash' => function () {
                 return [
