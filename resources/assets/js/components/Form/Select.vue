@@ -23,13 +23,22 @@
                 :value="null"
                 v-text="optionPlaceholder"
             />
-            <option
-                v-for="(option, index) in options"
-                :key="index"
-                :checked="dataSelected === option"
-                :value="option[optionValueKey] || option"
-                v-text="option[optionLabelKey] || option"
-            />
+
+            <template v-for="(option, index) in options">
+                <option
+                    :key="index"
+                    :checked="dataSelected === option"
+                    :value="optionValue(option)"
+                    v-html="optionLabel(option)"
+                />
+
+                <option
+                    v-for="(option, l1Index) in option.children"
+                    :key="index + '-' + l1Index"
+                    :value="optionValue(option)"
+                    v-html="optionLabel(option)"
+                />
+            </template>
         </select>
 
         <form-input-error :id="id" />
@@ -79,6 +88,21 @@
             return {
                 dataSelected: [],
             };
+        },
+        methods: {
+            padOption(depth) {
+                return '&nbsp;'.repeat(depth);
+            },
+            optionValue(option) {
+                return option[this.optionValueKey] || option;
+            },
+            optionLabel(option) {
+                let prefix = option.depth
+                    ? '&nbsp;'.repeat(4 * option.depth) + ' '
+                    : '';
+
+                return prefix + (option[this.optionLabelKey] || option);
+            },
         },
         watch: {
             value: {

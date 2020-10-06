@@ -70,8 +70,8 @@
         props: {
             columns: Array,
             domains: Array,
+            donors: Array,
             managers: Object,
-            donors: Object,
         },
         metaInfo() {
             return {
