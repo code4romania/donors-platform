@@ -10,11 +10,15 @@ use App\Traits\Sortable;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Support\Collection;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Domain extends Model implements TranslatableContract
 {
     use Filterable,
         HasExchangeRates,
+        HasRecursiveRelationships,
+        LogsActivity,
         Sortable,
         Translatable;
 

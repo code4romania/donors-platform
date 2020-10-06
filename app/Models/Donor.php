@@ -11,6 +11,7 @@ use App\Traits\HasDomains;
 use App\Traits\HasGrants;
 use App\Traits\HasLogo;
 use App\Traits\Sortable;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\MediaLibrary\HasMedia;
 use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
@@ -22,6 +23,7 @@ class Donor extends Model implements HasMedia
         HasGrants,
         HasLogo,
         HasRelationships,
+        LogsActivity,
         Sortable;
 
     /**
@@ -83,7 +85,7 @@ class Donor extends Model implements HasMedia
      * @var array
      */
     protected $withCount = [
-        'grants',
+        'grants', 'grantees',
     ];
 
     public function managers()

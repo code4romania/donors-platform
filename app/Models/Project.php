@@ -11,12 +11,14 @@ use App\Traits\HasDomains;
 use App\Traits\Sortable;
 use Cknow\Money\MoneyCast;
 use Illuminate\Database\Eloquent\Builder;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Project extends Model
 {
     use Filterable,
         HasDates,
         HasDomains,
+        LogsActivity,
         Sortable;
 
     /**

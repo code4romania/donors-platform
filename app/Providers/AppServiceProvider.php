@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\Observers\ActivityObserver;
 use App\Services\MoneyWithoutDecimalsFormatter;
 use Cknow\Money\Money;
 use Illuminate\Database\Eloquent\Builder;
@@ -47,9 +46,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Relation::morphMap($this->morphMap);
-
-        collect($this->morphMap)
-            ->each(fn ($model) => app($model)::observe(ActivityObserver::class));
 
         $this->registerMoneyMacros();
 

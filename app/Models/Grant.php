@@ -18,6 +18,7 @@ use Cknow\Money\MoneyCast;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Staudenmeir\EloquentHasManyDeep\HasManyDeep;
 use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
@@ -29,6 +30,7 @@ class Grant extends Model implements TranslatableContract
         HasDomains,
         HasExchangeRates,
         HasRelationships,
+        LogsActivity,
         Sortable,
         Translatable;
 

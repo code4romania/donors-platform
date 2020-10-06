@@ -12,15 +12,17 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\WelcomeNotification\ReceivesWelcomeNotification;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Filterable,
         HasFactory,
+        LogsActivity,
         Notifiable,
-        Sortable,
-        ReceivesWelcomeNotification;
+        ReceivesWelcomeNotification,
+        Sortable;
 
     /**
      * The attributes that are mass assignable.
