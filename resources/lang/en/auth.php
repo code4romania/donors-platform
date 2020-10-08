@@ -26,6 +26,8 @@ return [
     'forgot'    => 'Forgot your password?',
     'send_link' => 'Send password reset link',
 
+    'already_registered' => 'Already registered?',
+
     'verify' => [
         'title'   => 'Verify your email address',
         'content' => 'Before proceeding, please check your email for a verification link. If you did not receive the email',
@@ -33,4 +35,11 @@ return [
         'resent'  => 'A fresh verification link has been sent to your email address.',
     ],
 
+    'welcome' => [
+        'title'   => 'Welcome',
+        'why'     => 'You are receiving this email because an account was created for you.',
+        'action'  => 'Set initial password',
+        'expires' => 'This link will expire in :count days.',
+        'submit'  => 'Save password and login',
+    ],
 ];

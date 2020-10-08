@@ -26,4 +26,20 @@ return [
     'forgot'    => 'Ți-ai uitat parola?',
     'send_link' => 'Trimite link-ul de resetare a parolei',
 
+    'already_registered' => 'Ești deja înregistrat?',
+
+    'verify' => [
+        'title'   => 'Verify your email address',
+        'content' => 'Before proceeding, please check your email for a verification link. If you did not receive the email',
+        'another' => 'Request another',
+        'resent'  => 'A fresh verification link has been sent to your email address.',
+    ],
+
+    'welcome' => [
+        'title'   => 'Welcome',
+        'why'     => 'You are receiving this email because an account was created for you.',
+        'action'  => 'Set initial password',
+        'expires' => 'This link will expire in :count days.',
+        'submit'  => 'Save password and login',
+    ],
 ];

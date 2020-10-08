@@ -55,6 +55,8 @@ class UserController extends Controller
 
         $user->save();
 
+        $user->sendInitialPasswordSetupNotification();
+
         return Redirect::route('users.index')
             ->with('success', __('dashboard.event.created', [
                 'model' => __('model.user.singular'),
