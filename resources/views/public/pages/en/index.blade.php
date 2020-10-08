@@ -55,7 +55,7 @@
                     If you want to join the donor community that opens its data and you want to benefit from an account in the platform then please contact us via e-mail to start a conversation. Press the buton below and send us a message.
                 </p>
 
-                <x-button :link="$mailto">Request account</x-button>
+                <x-button-link :link="$mailto">Request account</x-button-link>
             </div>
 
             <div class="max-w-lg mx-auto lg:max-w-none">

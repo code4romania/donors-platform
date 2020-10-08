@@ -55,7 +55,7 @@
                     Dacă vrei să te alături comunității de donatori care își deschid datele și vrei să beneficiezi de un cont în platformă atunci te rugăm să ne contactezi via e-mail pentru a porni o discuție. Apasă pe butonul de mai jos și trimite-ne un mesaj.
                 </p>
 
-                <x-button :link="$mailto">Solicită cont</x-button>
+                <x-button-link :link="$mailto">Solicită cont</x-button-link>
             </div>
 
             <div class="max-w-lg mx-auto lg:max-w-none">

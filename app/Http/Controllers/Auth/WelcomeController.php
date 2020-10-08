@@ -10,7 +10,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
-use Inertia\Inertia;
 use Spatie\WelcomeNotification\WelcomesNewUsers;
 
 class WelcomeController extends Controller
@@ -27,7 +26,7 @@ class WelcomeController extends Controller
 
     public function showWelcomeForm(Request $request, User $user)
     {
-        return Inertia::render('Auth/Welcome', [
+        return view('auth.welcome')->with([
             'user'  => $user,
         ]);
     }

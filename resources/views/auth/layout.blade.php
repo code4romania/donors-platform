@@ -4,17 +4,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <title>@yield('title')</title>
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="stylesheet" href="{{ asset(mix('assets/app.css')) }}">
 </head>
 <body class="flex flex-col min-h-screen antialiased">
-    <x-header />
-
     <main class="flex-1">
         @yield('content')
     </main>
-
-    <x-footer />
 </body>
 </html>
