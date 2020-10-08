@@ -216,7 +216,6 @@
                     _method: 'PUT', // html form method spoofing
                     _publish: this.grant.published_status === 'published',
                     donors: Object.keys(this.grant.donors),
-                    domains: this.grant.domains.map((domain) => domain.id),
                     ...this.prepareFields(
                         [
                             'name',
