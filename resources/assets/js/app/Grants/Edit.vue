@@ -25,14 +25,24 @@
                     translated
                 />
 
-                <form-checkbox-group
-                    id="domains"
-                    :label="$t('field.domains')"
-                    v-model="form.domains"
-                    class="lg:col-span-2"
+                <form-select
+                    id="primary_domain"
+                    :label="$t('model.domain.primary')"
                     :options="domains"
                     option-value-key="id"
                     option-label-key="name"
+                    v-model="form.primary_domain"
+                    required
+                />
+
+                <form-select-multiple
+                    id="secondary_domains"
+                    :label="$t('model.domain.secondary')"
+                    :options="domains"
+                    option-value-key="id"
+                    option-label-key="name"
+                    :show-selected="true"
+                    v-model="form.secondary_domains"
                 />
 
                 <form-date-picker
@@ -207,10 +217,6 @@
                     _publish: this.grant.published_status === 'published',
                     donors: Object.keys(this.grant.donors),
                     domains: this.grant.domains.map((domain) => domain.id),
-                    amount: this.formatAmount(this.grant.amount),
-                    regranting_amount: this.formatAmount(
-                        this.grant.regranting_amount
-                    ),
                     ...this.prepareFields(
                         [
                             'name',
@@ -221,6 +227,10 @@
                             'project_count',
                             'manager',
                             'matching',
+                            'amount',
+                            'regranting_amount',
+                            'primary_domain',
+                            'secondary_domains',
                         ],
                         this.grant
                     ),

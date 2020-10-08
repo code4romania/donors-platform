@@ -73,8 +73,10 @@ class GrantResource extends Resource
             'description'       => $this->description,
             'translations'      => $this->translations,
 
-            'domains'           => DomainResource::collection($this->domains),
-            'amount'            => $this->amount,
+            'primary_domain'    => optional($this->primaryDomain->first())->id,
+            'secondary_domains' => $this->secondaryDomains->pluck('id'),
+
+            'amount'            => $this->amount->toInteger(),
             'currency'          => $this->currency,
 
             'donors'            => $this->donors->pluck('name', 'id'),
@@ -88,7 +90,7 @@ class GrantResource extends Resource
             'end_date'          => $this->formatted_end_date,
 
             'manager'           => optional($this->manager)->id,
-            'regranting_amount' => $this->regranting_amount,
+            'regranting_amount' => $this->regranting_amount->toInteger(),
             'matching'          => $this->matching,
 
             'can'               => $this->getResourcePermissions(),
@@ -102,8 +104,12 @@ class GrantResource extends Resource
             'name'              => $this->name,
             'description'       => $this->description,
 
-            'domains'           => $this->domains->pluck('name'),
+            'primary_domain'    => optional($this->primaryDomain->first())->name,
+            'secondary_domains' => $this->secondaryDomains->pluck('name'),
+
             'amount'            => $this->amount->formatWithoutDecimals(),
+            'regranting_amount' => $this->regranting_amount->formatWithoutDecimals(),
+            'operational_costs' => $this->operational_costs->formatWithoutDecimals(),
 
             'donors'            => $this->donors->pluck('name', 'id'),
             'project_count'     => $this->project_count,

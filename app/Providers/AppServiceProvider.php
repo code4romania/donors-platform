@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Models\Domain;
+use App\Observers\DomainObserver;
 use App\Services\MoneyWithoutDecimalsFormatter;
 use Cknow\Money\Money;
 use Illuminate\Database\Eloquent\Builder;
@@ -50,6 +52,8 @@ class AppServiceProvider extends ServiceProvider
         $this->registerMoneyMacros();
 
         $this->registerBuilderMacros();
+
+        Domain::observe(DomainObserver::class);
     }
 
     private function registerInertia(): void

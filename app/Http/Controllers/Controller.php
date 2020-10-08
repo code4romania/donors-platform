@@ -32,12 +32,14 @@ class Controller extends BaseController
             });
     }
 
-    public function getSortedDomains(array $columns = ['id', 'name']): Collection
+    public function getSortedDomainsTree(): Collection
     {
-        return Domain::orderByTranslation('name', 'asc')
-            ->get($columns)
-            ->map
-            ->only(...$columns);
+        return Domain::cachedWalkTree();
+    }
+
+    public function getSortedDomains(): Collection
+    {
+        return Domain::cachedFlatTree();
     }
 
     public function getSortedDonors(array $columns = ['id', 'name']): Collection

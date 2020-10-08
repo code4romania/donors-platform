@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Services\Exchange;
 use App\Traits\Filterable;
-use App\Traits\HasExchangeRates;
 use App\Traits\Sortable;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Staudenmeir\EloquentHasManyDeep\HasManyDeep;
@@ -14,7 +14,6 @@ use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 class Grantee extends Model
 {
     use Filterable,
-        HasExchangeRates,
         HasRelationships,
         LogsActivity,
         Sortable;
@@ -96,7 +95,7 @@ class Grantee extends Model
 
     public function getTotalFundingAttribute()
     {
-        return $this->sumForCurrency(
+        return Exchange::sumForCurrency(
             $this->projects()
                 ->withGrantCurrency()
                 ->withExchangeRates()

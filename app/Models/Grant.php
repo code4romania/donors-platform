@@ -9,7 +9,6 @@ use App\Traits\Draftable;
 use App\Traits\Filterable;
 use App\Traits\HasDates;
 use App\Traits\HasDomains;
-use App\Traits\HasExchangeRates;
 use App\Traits\Sortable;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
@@ -28,7 +27,6 @@ class Grant extends Model implements TranslatableContract
         Filterable,
         HasDates,
         HasDomains,
-        HasExchangeRates,
         HasRelationships,
         LogsActivity,
         Sortable,
@@ -95,7 +93,7 @@ class Grant extends Model implements TranslatableContract
      * @var string[]
      */
     protected $with = [
-        // 'donors', 'domains.translation', 'projects', 'translations',
+        //
     ];
 
     /**
@@ -106,6 +104,10 @@ class Grant extends Model implements TranslatableContract
     protected static function booted(): void
     {
         static::addGlobalScope(new WithExchangeRatesScope);
+
+        static::addGlobalScope('withYear', function ($query) {
+            return $query->withYear();
+        });
     }
 
     /**
@@ -162,6 +164,44 @@ class Grant extends Model implements TranslatableContract
             ->distinct();
     }
 
+    public function primaryDomain()
+    {
+        return $this->domains()->wherePivot('primary', true)->take(1);
+    }
+
+    public function secondaryDomains()
+    {
+        return $this->domains()->wherePivot('primary', false);
+    }
+
+    /**
+     * @param  string|int $primary   Primary domain id
+     * @param  array      $secondary Array of secondary domain ids
+     * @return array
+     */
+    public function syncDomains($primary, array $secondary = ['']): array
+    {
+        $domains = array_map('intval', $secondary);
+
+        if ($primary) {
+            $domains = array_diff($domains, [$primary]);
+            $domains[$primary] = ['primary' => true];
+        }
+
+        return $this->domains()->sync($domains);
+    }
+
+    public function getOperationalCostsAttribute(): Money
+    {
+        if (! $this->regranting_amount) {
+            return Money::parse(0, $this->currency);
+        }
+
+        return $this->amount->subtract(
+            $this->regranting_amount
+        );
+    }
+
     public function getGrantableAmountAttribute(): Money
     {
         return $this->regranting_amount ?? $this->amount;
@@ -197,7 +237,6 @@ class Grant extends Model implements TranslatableContract
     public function scopeWithYear(Builder $query): Builder
     {
         return $query
-            ->scoped(new WithExchangeRatesScope)
-            ->selectRaw('YEAR(start_date) as year');
+            ->selectRaw('YEAR(`start_date`) as `year`');
     }
 }

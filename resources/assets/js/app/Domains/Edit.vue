@@ -15,6 +15,17 @@
                     required
                     autofocus
                 />
+
+                <form-select
+                    id="parent_id"
+                    :label="$t('field.parent_domain')"
+                    :options="domains"
+                    option-placeholder="-"
+                    option-value-key="id"
+                    option-label-key="name"
+                    v-model="form.parent_id"
+                    class="lg:col-span-2"
+                />
             </form-panel>
 
             <div class="flex justify-end space-x-3">
@@ -56,12 +67,13 @@
                 formAction: this.$route('domains.update', routeParams),
                 form: {
                     _method: 'PUT', // html form method spoofing
-                    ...this.prepareFields(['name'], this.domain),
+                    ...this.prepareFields(['name', 'parent_id'], this.domain),
                 },
             };
         },
         props: {
             domain: Object,
+            domains: Array,
         },
         computed: {
             pageTitle() {

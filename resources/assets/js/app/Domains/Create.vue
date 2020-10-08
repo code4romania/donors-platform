@@ -15,6 +15,17 @@
                     required
                     autofocus
                 />
+
+                <form-select
+                    id="parent_id"
+                    :label="$t('field.parent_domain')"
+                    :options="domains"
+                    option-placeholder="-"
+                    option-value-key="id"
+                    option-label-key="name"
+                    v-model="form.parent_id"
+                    class="lg:col-span-2"
+                />
             </form-panel>
 
             <div class="flex justify-end space-x-3">
@@ -31,6 +42,9 @@
 
     export default {
         mixins: [FormMixin],
+        props: {
+            domains: Array,
+        },
         metaInfo() {
             return {
                 title: this.pageTitle,
@@ -39,7 +53,7 @@
         data() {
             return {
                 formAction: this.$route('domains.store'),
-                form: this.prepareFields(['name']),
+                form: this.prepareFields(['name', 'parent_id']),
             };
         },
         computed: {

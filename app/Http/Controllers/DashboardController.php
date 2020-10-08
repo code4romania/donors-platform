@@ -9,20 +9,13 @@ use App\Models\Donor;
 use App\Models\Grant;
 use App\Models\Grantee;
 use App\Services\ChartBuilder;
-use App\Traits\HasExchangeRates;
+use App\Services\Exchange;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class DashboardController extends Controller
 {
-    use HasExchangeRates;
-
-    public function __construct()
-    {
-        $this->middleware('remember');
-    }
-
     public function __invoke(Request $request): Response
     {
         return Inertia::render('Dashboard', [
@@ -30,18 +23,13 @@ class DashboardController extends Controller
                 'donors'   => Donor::count(),
                 'domains'  => Domain::count(),
                 'grantees' => Grantee::count(),
-                'funding'  => $this->sumForCurrency(Grant::all())
+                'funding'  => Exchange::sumForCurrency(Grant::all())
                     ->formatWithoutDecimals(),
             ],
             'years'   => $this->getSortedYears(),
             'domains' => $this->getSortedDomains(),
             'donors'  => $this->getSortedDonors(),
-            'chart'   => ChartBuilder::dashboard(
-                Domain::query()
-                    ->withTranslation()
-                    ->with(['grants' => fn ($q) => $q->withYear()])
-                    ->get()
-            ),
+            'chart'   => ChartBuilder::dashboard(),
         ]);
     }
 }

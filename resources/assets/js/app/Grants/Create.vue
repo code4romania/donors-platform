@@ -25,14 +25,24 @@
                     translated
                 />
 
-                <form-checkbox-group
-                    id="domains"
-                    :label="$t('field.domains')"
-                    v-model="form.domains"
-                    class="lg:col-span-2"
+                <form-select
+                    id="primary_domain"
+                    :label="$t('model.domain.primary')"
                     :options="domains"
                     option-value-key="id"
                     option-label-key="name"
+                    v-model="form.primary_domain"
+                    required
+                />
+
+                <form-select-multiple
+                    id="secondary_domains"
+                    :label="$t('model.domain.secondary')"
+                    :options="domains"
+                    option-value-key="id"
+                    option-label-key="name"
+                    :show-selected="true"
+                    v-model="form.secondary_domains"
                 />
 
                 <form-date-picker
@@ -189,7 +199,8 @@
                 formAction: this.$route('grants.store'),
                 form: {
                     donors: this.prefillDonor(),
-                    domains: [],
+                    primary_domain: null,
+                    secondary_domains: [],
                     ...this.prepareFields([
                         'name',
                         'description',

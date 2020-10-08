@@ -17,6 +17,7 @@ class DomainResource extends Resource
         return [
             'id'           => $this->id,
             'name'         => $this->name,
+            'parent_id'    => $this->parent_id,
             'translations' => $this->translations->map->only('name', 'locale'),
         ];
     }

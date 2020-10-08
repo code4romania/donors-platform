@@ -30,6 +30,7 @@
         "spatie/laravel-medialibrary": "^8.3",
         "spatie/laravel-welcome-notification": "^2.0",
         "staudenmeir/eloquent-has-many-deep": "^1.13",
+        "staudenmeir/laravel-adjacency-list": "^1.6",
         "teamtnt/laravel-scout-tntsearch-driver": "^10.0",
         "tightenco/ziggy": "^0.9.4"
     },

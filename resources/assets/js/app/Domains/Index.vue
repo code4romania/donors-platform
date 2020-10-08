@@ -12,26 +12,24 @@
             </div>
         </template>
 
-        <search-filter v-model="search" @reset="reset" />
-
-        <model-table
-            :collection="domains"
+        <base-table
+            :data="domains"
             :columns="columns"
             route-name="domains.edit"
             :show-row-urls="$userCan('create', 'domains')"
-            :paginate="false"
-        />
+        >
+            <template #name="{ name, row }">
+                <div :class="indentWithDepth(row)" v-text="name" />
+            </template>
+        </base-table>
     </layout>
 </template>
 
 <script>
-    import FilterMixin from '@/mixins/filter';
-
     export default {
-        mixins: [FilterMixin],
         props: {
             columns: Array,
-            domains: Object,
+            domains: Array,
         },
         metaInfo() {
             return {
@@ -54,6 +52,11 @@
                         href: null,
                     },
                 ];
+            },
+        },
+        methods: {
+            indentWithDepth(domain) {
+                return ['', 'pl-8', 'pl-16', 'pl-24'][domain.depth];
             },
         },
     };

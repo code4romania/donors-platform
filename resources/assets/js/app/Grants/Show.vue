@@ -43,6 +43,7 @@
                     :title="card.title"
                     :number="card.number"
                     :with-panel="false"
+                    :size="card.size"
                 />
             </grid>
         </panel>
@@ -117,16 +118,29 @@
                         number: Object.values(this.grant.donors).join(', ') || null,
                     },
                     {
-                        title: this.$t('dashboard.stats.total.grant'),
-                        number: this.grant.amount,
-                    },
-                    {
                         title: this.$t('dashboard.stats.total.grantees'),
                         number: this.grant.project_count,
                     },
                     {
-                        title: this.$t('dashboard.stats.total.domains'),
-                        number: this.grant.domains.join(','),
+                        title: this.$t('model.domain.primary'),
+                        number: this.grant.primary_domain || '–',
+                    },
+                    {
+                        title: this.$t('model.domain.secondary'),
+                        number: this.grant.secondary_domains.join(', '),
+                        size: 'sm',
+                    },
+                    {
+                        title: this.$t('dashboard.stats.total.grant'),
+                        number: this.grant.amount,
+                    },
+                    {
+                        title: this.$t('dashboard.stats.total.regranting'),
+                        number: this.grant.regranting_amount,
+                    },
+                    {
+                        title: this.$t('dashboard.stats.total.operational'),
+                        number: this.grant.operational_costs,
                     },
                 ],
             };

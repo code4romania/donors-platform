@@ -32,12 +32,20 @@
                     v-html="optionLabel(option)"
                 />
 
-                <option
-                    v-for="(option, l1Index) in option.children"
-                    :key="index + '-' + l1Index"
-                    :value="optionValue(option)"
-                    v-html="optionLabel(option)"
-                />
+                <template v-for="(option, l1Index) in option.children">
+                    <option
+                        :key="index + '-' + l1Index"
+                        :value="optionValue(option)"
+                        v-html="optionLabel(option)"
+                    />
+
+                    <option
+                        v-for="(option, l2Index) in option.children"
+                        :key="index + '-' + l1Index + '-' + l2Index"
+                        :value="optionValue(option)"
+                        v-html="optionLabel(option)"
+                    />
+                </template>
             </template>
         </select>
 

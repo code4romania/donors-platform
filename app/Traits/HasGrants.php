@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace App\Traits;
 
 use App\Models\Grant;
+use App\Models\Project;
+use App\Services\Exchange;
+use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
 trait HasGrants
 {
-    use HasExchangeRates;
+    use HasRelationships;
 
     public function grants()
     {
@@ -18,19 +21,21 @@ trait HasGrants
             'model_has_grants',
             'model_id',
             'grant_id',
-        );
+        )->with('domains');
     }
 
-    public function getGranteeCountAttribute()
+    public function grantees()
     {
-        return $this->grants->load('grantees')->map->grantees->flatten()->count();
+        return $this->hasManyDeepFromRelations(
+            $this->grants(),
+            (new Grant)->projects(),
+            (new Project)->grantees(),
+        )->distinct();
     }
 
     public function getGrantDomainsAttribute()
     {
-        return $this->grants()
-            ->with('domains')
-            ->get()
+        return $this->grants
             ->pluck('domains')
             ->flatten()
             ->unique('id');
@@ -38,19 +43,11 @@ trait HasGrants
 
     public function getTotalFundingAttribute()
     {
-        return $this->sumForCurrency(
-            $this->grants()
-                ->aggregateByMonth('amount')
-                ->get('amount', 'date', 'currency', 'rate_*')
-        );
+        return Exchange::sumForCurrency($this->grants);
     }
 
     public function getTotalRegrantingAttribute()
     {
-        return $this->sumForCurrency(
-            $this->grants()
-                ->aggregateByMonth('regranting_amount')
-                ->get('amount', 'date', 'currency', 'rate_*')
-        );
+        return Exchange::sumForCurrency($this->grants, null, 'regranting_amount');
     }
 }
