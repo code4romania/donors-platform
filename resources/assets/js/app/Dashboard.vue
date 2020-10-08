@@ -9,22 +9,28 @@
             />
         </grid>
 
-        <data-block :options="chart.options" :series="chart.series">
+        <data-block
+            :options="chart.options"
+            :series="chart.series"
+            id="dashboard"
+        >
             <template #filters>
                 <chart-filter @reset="reset">
                     <form-select-multiple
                         id="years"
-                        :label="$t('dashboard.filter.year')"
+                        :placeholder="$t('dashboard.filter.year')"
                         :options="years"
+                        :show-count="true"
                         v-model="filters.years"
                     />
 
                     <form-select-multiple
                         id="domains"
-                        :label="$t('dashboard.filter.domain')"
+                        :placeholder="$t('dashboard.filter.domain')"
                         :options="domains"
                         option-value-key="id"
                         option-label-key="name"
+                        :show-count="true"
                         v-model="filters.domains"
                     />
 
@@ -49,7 +55,6 @@
         mixins: [ChartFilterMixin],
         props: {
             chart: Object,
-            apex: Object,
             stats: Object,
             domains: Array,
             donors: Array,

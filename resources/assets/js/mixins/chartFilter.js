@@ -13,7 +13,7 @@ export default {
             return pickBy(
                 merge(
                     //
-                    {},
+                    { currency: this.$page.currency },
                     { filters: this.filters },
                     this.routeArgs
                 )

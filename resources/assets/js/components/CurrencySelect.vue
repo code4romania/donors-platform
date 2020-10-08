@@ -1,4 +1,4 @@
-<template>
+    <template>
     <div>
         <form-select id="currency" :options="currencies" v-model="currency" />
     </div>
@@ -23,7 +23,7 @@
 
                 url.searchParams.set('currency', this.currency);
 
-                this.$inertia.get(url.toString());
+                this.$inertia.get(decodeURI(url.toString()));
             },
         },
 

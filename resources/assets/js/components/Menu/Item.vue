@@ -5,7 +5,7 @@
             :href="href"
             class="flex items-center px-2 py-2 transition duration-150 ease-in-out rounded-sm group focus:outline-none"
             :class="style(this)"
-            :data="{ remember: 'forget' }"
+            :data="componentData"
         >
             <svg-vue
                 v-if="icon"
@@ -58,6 +58,13 @@
         computed: {
             visibleChildren() {
                 return this.children.filter((item) => this.showMenuItem(item));
+            },
+            componentData() {
+                if (this.href === this.$route('dashboard')) {
+                    return;
+                }
+
+                return { remember: 'forget' };
             },
         },
         methods: {

@@ -6,21 +6,16 @@
     import ApexCharts from 'vue-apexcharts';
     import defaultsDeep from 'lodash/defaultsDeep';
 
-    function formatNumber(value, currency) {
-        return new Intl.NumberFormat(document.documentElement.lang, {
-            style: 'currency',
-            currency: currency,
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0,
-        }).format(value);
-    }
-
     export default {
         name: 'BarChart',
         components: {
             chart: ApexCharts,
         },
         props: {
+            id: {
+                type: [String, null],
+                default: null,
+            },
             options: {
                 type: Object,
                 default: () => ({}),
@@ -32,11 +27,13 @@
         },
         computed: {
             mergedOptions() {
-                let currency = this.options.currency || this.$page.currency;
+                let currency = this.options.currency || this.$page.currency,
+                    categories = this.options.xaxis.categories.join('-');
 
                 return defaultsDeep({}, this.options, {
                     chart: {
                         type: 'bar',
+                        id: `${this.id}-${categories}-${currency}`,
                     },
                     plotOptions: {
                         bar: {
@@ -55,7 +52,15 @@
                     },
                     yaxis: {
                         labels: {
-                            formatter: (value) => formatNumber(value, currency),
+                            formatter(value) {
+                                return (
+                                    value.toLocaleString(
+                                        document.documentElement.lang
+                                    ) +
+                                    ' ' +
+                                    currency
+                                );
+                            },
                         },
                     },
                     legend: {
@@ -63,6 +68,7 @@
                         fontFamily: `'Titillium Web', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'`,
 
                         horizontalAlign: 'left',
+                        showForSingleSeries: true,
                         itemMargin: {
                             horizontal: 8,
                             vertical: 8,

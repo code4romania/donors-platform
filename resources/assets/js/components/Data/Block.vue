@@ -28,7 +28,7 @@
 
             <div class="relative px-4 py-5 bg-white rounded shadow sm:p-6">
                 <slot name="chart">
-                    <bar-chart :options="options" :series="series" />
+                    <bar-chart :id="id" :options="options" :series="series" />
                 </slot>
             </div>
         </div>
@@ -42,6 +42,10 @@
     export default {
         name: 'DataBlock',
         props: {
+            id: {
+                type: [String, null],
+                default: null,
+            },
             series: {
                 type: Array,
                 default: () => [],
