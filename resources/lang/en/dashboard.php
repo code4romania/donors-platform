@@ -59,6 +59,8 @@ return [
             'grants' => 'Total value of grants',
             'grantees' => 'Total number of grantees',
             'domains' => 'Domains covered',
+            'regranting' => 'Regranting value',
+            'operational' => 'Operational costs',
         ],
     ],
 

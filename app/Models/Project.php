@@ -96,7 +96,7 @@ class Project extends Model
     {
         return $query->addSelect([
             'currency' => Grant::query()
-                ->withoutGlobalScope(WithExchangeRatesScope::class)
+                ->withoutGlobalScopes()
                 ->select('currency')
                 ->whereColumn('grant_id', 'grants.id')
                 ->latest()

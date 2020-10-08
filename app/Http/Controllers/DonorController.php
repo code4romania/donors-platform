@@ -28,14 +28,14 @@ class DonorController extends Controller
     {
         return Inertia::render('Donors/Index', [
             'columns' => $this->getIndexColumns(Donor::class, [
-                'name', 'type', 'grantee_count', 'grants_count', 'total_funding', 'published_status',
+                'name', 'type', 'grantees_count', 'grants_count', 'total_funding', 'published_status',
             ]),
             'types'   => OrganizationType::asOptions(),
             'domains' => $this->getSortedDomains(),
             'managers' => $this->getSortedManagers(),
             'donors'  => DonorResource::collection(
                 Donor::query()
-                    ->with('domains')
+                    ->with('domains', 'grants')
                     ->filter()
                     ->sort()
                     ->paginate(),

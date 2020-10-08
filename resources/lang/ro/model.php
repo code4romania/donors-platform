@@ -27,6 +27,9 @@ return [
 
         'own' => 'Domeniile mele',
 
+        'primary'   => 'Domeniu principal',
+        'secondary' => 'Domenii secundare',
+
         'section' => [
             'title' => 'Domeniu',
             'description' => '',

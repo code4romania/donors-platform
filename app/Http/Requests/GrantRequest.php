@@ -37,18 +37,19 @@ class GrantRequest extends FormRequest
     public function rules()
     {
         return RuleFactory::make([
-            '%name%'            => ['required', 'string'],
-            '%description%'     => ['nullable', 'string'],
-            'domains.*'         => ['required', 'exists:domains,id'],
-            'project_count'     => ['required', 'numeric'],
-            'start_date'        => ['required', 'date_format:Y-m-d', 'before:end_date', 'after_or_equal:2007-01-01'],
-            'end_date'          => ['required', 'date_format:Y-m-d', 'after:start_date'],
-            'amount'            => ['required', 'numeric'],
-            'donors.*'          => ['required', 'exists:donors,id'],
-            'currency'          => ['required', Rule::in(config('money.currencies.iso'))],
-            'manager'           => ['nullable', 'exists:grant_managers,id'],
-            'regranting_amount' => ['nullable', 'lte:amount'],
-            'matching'          => ['nullable', 'boolean'],
+            '%name%'              => ['required', 'string'],
+            '%description%'       => ['nullable', 'string'],
+            'primary_domain'      => ['required', 'exists:domains,id'],
+            'secondary_domains.*' => ['required', 'exists:domains,id'],
+            'project_count'       => ['required', 'numeric'],
+            'start_date'          => ['required', 'date_format:Y-m-d', 'before:end_date', 'after_or_equal:2007-01-01'],
+            'end_date'            => ['required', 'date_format:Y-m-d', 'after:start_date'],
+            'amount'              => ['required', 'numeric'],
+            'donors.*'            => ['required', 'exists:donors,id'],
+            'currency'            => ['required', Rule::in(config('money.currencies.iso'))],
+            'manager'             => ['nullable', 'exists:grant_managers,id'],
+            'regranting_amount'   => ['nullable', 'lte:amount'],
+            'matching'            => ['nullable', 'boolean'],
         ]);
     }
 }

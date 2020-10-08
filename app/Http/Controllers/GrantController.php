@@ -37,7 +37,7 @@ class GrantController extends Controller
                     ->sort()
                     ->paginate(),
             ),
-            'domains'  => $this->getSortedDomains(),
+            'domains'  => $this->getSortedDomainsTree(),
             'donors'   => $this->getSortedDonors(),
             'grantees' => $this->getSortedGrantees(),
             'managers' => $this->getSortedManagers(),
@@ -60,7 +60,11 @@ class GrantController extends Controller
 
         $grant->setPublished($request->boolean('_publish'));
 
-        $grant->domains()->sync($request->input('domains'));
+        $grant->syncDomains(
+            $request->input('primary_domain'),
+            $request->input('secondary_domains')
+        );
+
         $grant->donors()->sync($request->input('donors'));
         $grant->manager()->associate($request->input('manager'));
 
@@ -81,6 +85,7 @@ class GrantController extends Controller
             ]),
             'projects' => ProjectResource::collection(
                 $grant->projects()
+                    ->with('grantees')
                     ->filter()
                     ->sort()
                     ->paginate()
@@ -107,7 +112,11 @@ class GrantController extends Controller
             $grant->publish($request->boolean('_publish'));
         }
 
-        $grant->domains()->sync($request->input('domains'));
+        $grant->syncDomains(
+            $request->input('primary_domain'),
+            $request->input('secondary_domains')
+        );
+
         $grant->donors()->sync($request->input('donors'));
         $grant->manager()->associate($request->input('manager'));
 

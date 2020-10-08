@@ -63,7 +63,7 @@ class GrantManager extends Model implements HasMedia
      * @var string[]
      */
     protected $sortable = [
-        'name', 'grants_count',
+        'name', 'grants_count', 'grantees_count',
     ];
 
     /**
@@ -81,7 +81,7 @@ class GrantManager extends Model implements HasMedia
      * @var array
      */
     protected $withCount = [
-        'grants',
+        'grants', 'grantees',
     ];
 
     public function users()

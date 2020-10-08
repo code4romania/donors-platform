@@ -39,7 +39,7 @@ class DonorResource extends Resource
             'published_status' => $this->published_status,
             'total_funding'    => $this->total_funding->formatWithoutDecimals(),
             'grants_count'     => $this->grants_count,
-            'grantee_count'    => $this->grantee_count,
+            'grantees_count'   => $this->grantees_count,
         ];
     }
 
@@ -59,7 +59,7 @@ class DonorResource extends Resource
             'total_funding'    => $this->total_funding->formatWithoutDecimals(),
             'grants_count'     => $this->grants_count,
             'grant_domains'    => DomainResource::collection($this->grant_domains),
-            'grantee_count'    => $this->grantee_count,
+            'grantees_count'   => $this->grantees_count,
 
             'can'              => $this->getResourcePermissions(),
         ];

@@ -27,6 +27,9 @@ return [
 
         'own' => 'My domains',
 
+        'primary'   => 'Primary domain',
+        'secondary' => 'Secondary domains',
+
         'section' => [
             'title' => 'Domain',
             'description' => '',

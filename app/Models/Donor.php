@@ -67,7 +67,7 @@ class Donor extends Model implements HasMedia
      * @var string[]
      */
     protected $sortable = [
-        'name', 'type', 'grants_count',
+        'name', 'type', 'grants_count', 'grantees_count',
     ];
 
     /**

@@ -59,6 +59,8 @@ return [
             'grants' => 'Valoarea totală a granturilor',
             'grantees' => 'Numărul total al beneficiarilor',
             'domains' => 'Domenii acoperite',
+            'regranting' => 'Valoarea de regranting',
+            'operational' => 'Costuri operaționale',
         ],
     ],
 
