@@ -34,4 +34,6 @@ return [
         'another' => 'Request another',
         'resent'  => 'A fresh verification link has been sent to your email address.',
     ],
+
+    'welcome' => 'Set password',
 ];

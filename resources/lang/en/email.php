@@ -14,6 +14,5 @@ return [
         'why'        => 'You are receiving this email because your Donors Platform account has been activated. Please configure your password by clicking the button below:',
         'action'     => 'Set initial password',
         'expires'    => 'This link will expire in :count days.',
-        'submit'     => 'Save password and login',
     ],
 ];

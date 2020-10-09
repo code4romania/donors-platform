@@ -1,6 +1,6 @@
 @extends('auth.layout')
 
-@section('title', __('auth.welcome.title'))
+@section('title', __('auth.welcome'))
 
 @section('content')
     <x-authentication-card>
@@ -22,7 +22,7 @@
 
             <div class="flex items-center justify-end mt-4">
                 <x-button>
-                    {{ __('auth.welcome.submit') }}
+                    {{ __('auth.welcome') }}
                 </x-button>
             </div>
         </form>

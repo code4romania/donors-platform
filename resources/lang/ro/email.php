@@ -14,6 +14,5 @@ return [
         'why'        => 'Primești acest e-mail ca urmare a activării contului tău în Platforma Donatorilor. Te rugăm să îți configurezi parola dând click pe butonul de mai jos:',
         'action'     => 'Setează parola inițială',
         'expires'    => 'Acest link va expira în termen de :count zile.',
-        'submit'     => 'Save password and login',
     ],
 ];
