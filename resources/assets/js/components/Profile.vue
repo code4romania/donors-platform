@@ -26,6 +26,13 @@
                 :href="item.href"
                 :key="index"
             />
+
+            <form method="POST" @submit.prevent="logout">
+                <button
+                    class="block w-full px-4 py-2 text-sm text-left text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+                    v-text="$t('auth.logout')"
+                />
+            </form>
         </nav>
     </dropdown>
 </template>
@@ -36,13 +43,18 @@
         data() {
             return {
                 items: [
-                    {
-                        href: this.$route('logout'),
-                        label: this.$t('auth.logout'),
-                        method: 'post',
-                    },
+                    // {
+                    //     href: this.$route('logout'),
+                    //     label: this.$t('auth.logout'),
+                    //     method: 'post',
+                    // },
                 ],
             };
+        },
+        methods: {
+            logout() {
+                this.$inertia.post(this.$route('logout'));
+            },
         },
     };
 </script>
