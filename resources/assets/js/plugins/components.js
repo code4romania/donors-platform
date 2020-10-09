@@ -12,6 +12,12 @@ export default {
         requireComponent.keys().forEach(fileName => {
             let component = requireComponent(fileName);
 
+            if (!component.default.hasOwnProperty('name')) {
+                return console.error(
+                    `Component ${fileName} missing 'name' property. Skipping...`
+                );
+            }
+
             Vue.component(component.default.name, component.default);
         });
     },

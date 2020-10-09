@@ -25,14 +25,14 @@
                 return this.locale ? `${this.locale}.${this.id}` : this.id;
             },
             hasErrors() {
-                return this.$page.errors.hasOwnProperty(this.errorKey);
+                return this.$page.props.errors.hasOwnProperty(this.errorKey);
             },
             message() {
                 if (!this.hasErrors) {
                     return null;
                 }
 
-                return this.$page.errors[this.errorKey];
+                return this.$page.props.errors[this.errorKey];
             },
         },
         methods: {},

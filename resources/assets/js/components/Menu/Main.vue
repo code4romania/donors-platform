@@ -88,8 +88,8 @@
         },
         data() {
             let own = {
-                id: this.$page.auth.organization.id,
-                type: this.$page.auth.role,
+                id: this.$page.props.auth.organization.id,
+                type: this.$page.props.auth.role,
             };
 
             let ownArgs = {

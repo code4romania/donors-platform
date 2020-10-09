@@ -4,10 +4,13 @@
     >
         <div class="flex items-center">
             <div class="text-right">
-                <div class="text-sm font-semibold" v-text="$page.auth.name" />
+                <div
+                    class="text-sm font-semibold"
+                    v-text="$page.props.auth.name"
+                />
                 <div
                     class="w-48 text-xs text-gray-600 truncate"
-                    v-text="$page.auth.organization.name"
+                    v-text="$page.props.auth.organization.name"
                 />
             </div>
 

@@ -72,7 +72,7 @@
                 <form-select
                     id="currency"
                     :label="$t('field.currency')"
-                    :options="$page.currencies"
+                    :options="$page.props.currencies"
                     v-model="form.currency"
                     required
                 />

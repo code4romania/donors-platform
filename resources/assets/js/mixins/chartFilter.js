@@ -5,7 +5,7 @@ import throttle from 'lodash/throttle';
 export default {
     data() {
         return {
-            filters: this.$page.filters || {},
+            filters: this.$page.props.filters || {},
         };
     },
     computed: {
@@ -13,7 +13,7 @@ export default {
             return pickBy(
                 merge(
                     //
-                    { currency: this.$page.currency },
+                    { currency: this.$page.props.currency },
                     { filters: this.filters },
                     this.routeArgs
                 )
@@ -23,7 +23,7 @@ export default {
     methods: {
         reset() {
             this.$inertia.get(
-                this.$route(this.$page.route, {
+                this.$route(this.$page.props.route, {
                     remember: 'forget',
                     ...this.routeArgs,
                 })
@@ -31,7 +31,7 @@ export default {
         },
         submit() {
             this.$inertia.get(
-                this.$route(this.$page.route, this.routeData),
+                this.$route(this.$page.props.route, this.routeData),
                 {},
                 {
                     preserveScroll: true,
@@ -41,12 +41,12 @@ export default {
         prepareFilters(filters, defaultValue = null) {
             return filters.reduce((obj, filter) => {
                 if (
-                    !this.$page.filters ||
-                    !this.$page.filters.hasOwnProperty(filter)
+                    !this.$page.props.filters ||
+                    !this.$page.props.filters.hasOwnProperty(filter)
                 ) {
                     obj[filter] = defaultValue;
                 } else {
-                    obj[filter] = this.$page.filters[filter];
+                    obj[filter] = this.$page.props.filters[filter];
                 }
 
                 return obj;

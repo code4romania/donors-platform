@@ -27,7 +27,7 @@
         },
         computed: {
             mergedOptions() {
-                let currency = this.options.currency || this.$page.currency,
+                let currency = this.$page.props.currency,
                     categories = this.options.xaxis.categories.join('-');
 
                 return defaultsDeep({}, this.options, {

@@ -1,10 +1,10 @@
 export default {
     computed: {
         locale() {
-            return this.$page.locale;
+            return this.$page.props.locale;
         },
         locales() {
-            return this.$page.locales;
+            return this.$page.props.locales;
         },
         localeOptions() {
             return Object.keys(this.locales).map(locale => ({
@@ -13,28 +13,28 @@ export default {
             }));
         },
         translatable() {
-            return this.$page.translatable || [];
+            return this.$page.props.translatable || [];
         },
     },
     methods: {
         isValidLocale(locale) {
-            return this.$page.locales.hasOwnProperty(locale);
+            return this.$page.props.locales.hasOwnProperty(locale);
         },
         isCurrentLocale(locale) {
-            return this.$page.locale === locale;
+            return this.$page.props.locale === locale;
         },
         isTranslatableField(field) {
-            return (this.$page.translatable || []).indexOf(field) >= 0;
+            return (this.$page.props.translatable || []).indexOf(field) >= 0;
         },
         changeLocale(locale) {
             if (!this.isValidLocale(locale)) {
                 return;
             }
 
-            this.$page.locale = locale;
+            this.$page.props.locale = locale;
         },
         nextLocale() {
-            let keys = Object.keys(this.$page.locales),
+            let keys = Object.keys(this.$page.props.locales),
                 nextLocale = keys[keys.indexOf(this.locale) + 1] || keys[0];
 
             this.changeLocale(nextLocale);

@@ -48,24 +48,24 @@
                 return this.isSuccess || this.isError;
             },
             isSuccess() {
-                return this.$page.flash.success !== null;
+                return this.$page.props.flash.success !== null;
             },
             isError() {
                 return (
-                    this.$page.flash.error !== null ||
-                    Object.keys(this.$page.errors).length > 0
+                    this.$page.props.flash.error !== null ||
+                    Object.keys(this.$page.props.errors).length > 0
                 );
             },
             message() {
                 if (this.isSuccess) {
-                    return this.$page.flash.success;
+                    return this.$page.props.flash.success;
                 }
 
                 if (this.isError) {
-                    if (this.$page.flash.error !== null) {
-                        return this.$page.flash.error;
+                    if (this.$page.props.flash.error !== null) {
+                        return this.$page.props.flash.error;
                     } else {
-                        let count = Object.keys(this.$page.errors).length;
+                        let count = Object.keys(this.$page.props.errors).length;
                         return this.$tc('dashboard.event.errors', count, { count });
                     }
                 }

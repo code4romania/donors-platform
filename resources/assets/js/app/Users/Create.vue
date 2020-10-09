@@ -84,7 +84,7 @@
             return {
                 formAction: this.$route('users.store'),
                 form: {
-                    locale: this.$page.locale,
+                    locale: this.$page.props.locale,
                     ...this.prepareFields(['name', 'email', 'role']),
                 },
             };

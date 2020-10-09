@@ -10,7 +10,7 @@
 
             <template v-if="column.sortable">
                 <svg-vue
-                    v-if="isOrderAsc || !$page.sort.order"
+                    v-if="isOrderAsc || !$page.props.sort.order"
                     icon="Editor/sort-asc"
                     :class="iconClass"
                 />
@@ -59,7 +59,7 @@
                 }
 
                 if (!this.route) {
-                    return this.$route(this.$page.route);
+                    return this.$route(this.$page.props.route);
                 }
 
                 return this.route;
@@ -71,8 +71,8 @@
 
                 const filters = pickBy(
                     {
-                        search: this.$page.search,
-                        filters: this.$page.filters,
+                        search: this.$page.props.search,
+                        filters: this.$page.props.filters,
                     },
                     identity
                 );
@@ -98,13 +98,13 @@
                 }
             },
             isActive() {
-                return this.$page.sort.order === this.field;
+                return this.$page.props.sort.order === this.field;
             },
             isOrderAsc() {
-                return this.$page.sort.direction === 'asc';
+                return this.$page.props.sort.direction === 'asc';
             },
             isOrderDesc() {
-                return this.$page.sort.direction === 'desc';
+                return this.$page.props.sort.direction === 'desc';
             },
             iconClass() {
                 return (

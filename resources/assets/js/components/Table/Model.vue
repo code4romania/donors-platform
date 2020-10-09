@@ -68,7 +68,7 @@
         computed: {
             thRoute() {
                 return this.$route(
-                    this.$page.route,
+                    this.$page.props.route,
                     !isEmpty(this.sortArgs) ? this.sortArgs : this.routeArgs
                 );
             },

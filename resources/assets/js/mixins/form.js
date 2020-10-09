@@ -46,7 +46,7 @@ export default {
             fields.forEach(field => {
                 if (this.isTranslatableField(field)) {
                     prepared[field] = {};
-                    Object.keys(this.$page.locales).forEach(locale => {
+                    Object.keys(this.$page.props.locales).forEach(locale => {
                         if (!this.isObject(model)) {
                             prepared[field][locale] = null;
                             return;
@@ -74,7 +74,7 @@ export default {
                 locales = {};
 
             this.translatable.forEach(field => {
-                Object.keys(this.$page.locales).forEach(locale => {
+                Object.keys(this.$page.props.locales).forEach(locale => {
                     if (!locales.hasOwnProperty(locale)) {
                         locales[locale] = {};
                     }

@@ -9,12 +9,12 @@
         name: 'CurrencySelect',
         computed: {
             currencies() {
-                return this.$page.currencies;
+                return this.$page.props.currencies;
             },
         },
         data() {
             return {
-                currency: this.$page.currency,
+                currency: this.$page.props.currency,
             };
         },
         methods: {

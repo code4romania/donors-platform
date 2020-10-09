@@ -1,4 +1,4 @@
-import { InertiaApp } from '@inertiajs/inertia-vue';
+import { app, plugin } from '@inertiajs/inertia-vue';
 import { InertiaProgress } from '@inertiajs/progress';
 
 import languageBundle from '~/lang/index.js';
@@ -18,7 +18,7 @@ import PatternPlugin from '@/plugins/pattern';
 
 Vue.config.productionTip = false;
 
-Vue.use(InertiaApp);
+Vue.use(plugin);
 Vue.use(VueI18n);
 Vue.use(VueMeta);
 Vue.use(VuePortal);
@@ -46,28 +46,26 @@ InertiaProgress.init({
     showSpinner: false,
 });
 
-const app = document.getElementById('app');
+const el = document.getElementById('app');
 
-if (app !== null) {
-    let initialPage = JSON.parse(app.dataset.page);
+let initialPage = JSON.parse(el.dataset.page);
 
-    const i18n = new VueI18n({
-        locale: initialPage.props.locale,
-        messages: languageBundle,
-    });
+const i18n = new VueI18n({
+    locale: initialPage.props.locale,
+    messages: languageBundle,
+});
 
-    new Vue({
-        metaInfo: {
-            // prettier-ignore
-            titleTemplate: title => (title ? `${title} - ` : '') + 'Donors Platform'
-        },
+new Vue({
+    metaInfo: {
         // prettier-ignore
-        render: h => h(InertiaApp, {
+        titleTemplate: title => (title ? `${title} - ` : '') + 'Donors Platform'
+    },
+    // prettier-ignore
+    render: h => h(app, {
             props: {
                 initialPage,
                 resolveComponent: name => require(`@/app/${name}`).default,
             },
         }),
-        i18n,
-    }).$mount(app);
-}
+    i18n,
+}).$mount(el);
