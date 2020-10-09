@@ -15,9 +15,9 @@ class InitialPasswordSetup extends WelcomeNotification
     protected function buildWelcomeNotificationMessage(): MailMessage
     {
         return (new MailMessage)
-            ->subject(__('auth.welcome.title'))
-            ->line(__('auth.welcome.why'))
-            ->action(__('auth.welcome.action'), $this->showWelcomeFormUrl)
-            ->line(__('auth.welcome.expires', ['count' => $this->validUntil->diffInDays()]));
+            ->subject(__('email.welcome.title'))
+            ->line(__('email.welcome.why'))
+            ->action(__('email.welcome.action'), $this->showWelcomeFormUrl)
+            ->line(__('email.welcome.expires', ['count' => $this->validUntil->diffInDays()]));
     }
 }
