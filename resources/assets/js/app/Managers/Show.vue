@@ -132,12 +132,17 @@
             <template v-slot:name="{ name, row }">
                 {{ name }}
 
-                <div
-                    v-if="row.domains.length"
-                    class="flex items-center mt-2 text-sm text-gray-500"
-                    :aria-label="$t('model.domain.plural')"
-                    v-text="row.domains.join(', ')"
-                />
+                <div class="mt-2 text-sm text-gray-500">
+                    <p v-if="row.primary_domain">
+                        {{ $t('model.domain.primary') }}:
+                        {{ row.primary_domain }}
+                    </p>
+
+                    <p v-if="row.secondary_domains.length">
+                        {{ $t('model.domain.secondary') }}:
+                        {{ row.secondary_domains.join(', ') }}
+                    </p>
+                </div>
             </template>
 
             <template v-slot:regranting_amount="{ regranting_amount }">

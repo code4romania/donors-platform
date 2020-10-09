@@ -31,16 +31,15 @@
                     @fileChange="form.logo = $event"
                 />
 
-                <form-checkbox-group
+                <form-select-multiple
                     id="domains"
                     :label="$t('field.domains')"
-                    :other-label="$t('field.other')"
                     v-model="form.domains"
                     class="lg:col-span-2"
                     :options="domains"
                     option-value-key="id"
                     option-label-key="name"
-                    :other="true"
+                    :show-selected="true"
                 />
             </form-panel>
 

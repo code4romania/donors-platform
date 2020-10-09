@@ -3,17 +3,17 @@
         <template v-if="translated && locales">
             <div v-for="(_, locale) in locales" :key="locale">
                 <div class="flex">
+                    <span
+                        class="px-1.5 mb-1 mr-2 text-xs text-white uppercase bg-gray-400 rounded-sm"
+                        v-text="locale"
+                    />
+
                     <form-label
                         v-if="label"
                         :label="label"
                         :id="`${id}_${locale}`"
                         :required="$attrs.required"
                         class="flex-1"
-                    />
-
-                    <span
-                        class="px-1.5 mb-1 ml-2 text-xs text-white uppercase bg-gray-400 rounded-sm"
-                        v-text="locale"
                     />
                 </div>
 

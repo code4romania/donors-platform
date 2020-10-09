@@ -75,7 +75,7 @@ class DonorController extends Controller
             'domains' => $this->getSortedDomains(),
             'grants'  => GrantResource::collection(
                 $donor->grants()
-                    ->with('domains')
+                    ->with('primaryDomain', 'secondaryDomains')
                     ->withTranslation()
                     ->filter()
                     ->sort()

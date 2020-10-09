@@ -114,23 +114,6 @@
                 routeArgs: { grant: this.grant.id },
                 cards: [
                     {
-                        title: this.$t('model.donor.plural'),
-                        number: Object.values(this.grant.donors).join(', ') || null,
-                    },
-                    {
-                        title: this.$t('dashboard.stats.total.grantees'),
-                        number: this.grant.project_count,
-                    },
-                    {
-                        title: this.$t('model.domain.primary'),
-                        number: this.grant.primary_domain || '–',
-                    },
-                    {
-                        title: this.$t('model.domain.secondary'),
-                        number: this.grant.secondary_domains.join(', '),
-                        size: 'sm',
-                    },
-                    {
                         title: this.$t('dashboard.stats.total.grant'),
                         number: this.grant.amount,
                     },
@@ -141,6 +124,23 @@
                     {
                         title: this.$t('dashboard.stats.total.operational'),
                         number: this.grant.operational_costs,
+                    },
+                    {
+                        title: this.$t('dashboard.stats.total.grantees'),
+                        number: this.grant.project_count,
+                    },
+                    {
+                        title: this.$t('model.donor.plural'),
+                        number: Object.values(this.grant.donors).join(', ') || null,
+                    },
+
+                    {
+                        title: this.$t('model.domain.primary'),
+                        number: this.grant.primary_domain || '–',
+                    },
+                    {
+                        title: this.$t('model.domain.secondary'),
+                        number: this.grant.secondary_domains.join(', '),
                     },
                 ],
             };
