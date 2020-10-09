@@ -127,9 +127,13 @@ export default {
 
             this.sending = true;
 
-            this.$inertia
-                .post(this.formAction, this.prepareFormData(this.form))
-                .then(() => (this.sending = false));
+            this.$inertia.post(
+                this.formAction,
+                this.prepareFormData(this.form),
+                {
+                    onFinish: () => (this.sending = false),
+                }
+            );
         },
         publish() {
             this.form._publish = true;
@@ -158,9 +162,9 @@ export default {
 
             this.sending = true;
 
-            this.$inertia
-                .delete(this.deleteAction)
-                .then(() => (this.sending = false));
+            this.$inertia.delete(this.deleteAction, {
+                onFinish: () => (this.sending = false),
+            });
         },
     },
 };
