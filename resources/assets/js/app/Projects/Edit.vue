@@ -26,10 +26,9 @@
 
                 <form-input
                     type="number"
-                    id="grantee_count"
-                    :label="$t('field.grantee_count')"
-                    v-model.number="grantee_count"
-                    ref="grantee_count"
+                    id="grantees_count"
+                    :label="$t('field.grantees_count')"
+                    v-model.number="grantees_count"
                     required
                     min="1"
                     max="10"
@@ -115,7 +114,7 @@
             };
 
             return {
-                grantee_count: Object.keys(this.project.grantees).length || 1,
+                grantees_count: Object.keys(this.project.grantees).length || 1,
 
                 deleteAction: this.$route('projects.destroy', routeParams),
                 formAction: this.$route('projects.update', routeParams),

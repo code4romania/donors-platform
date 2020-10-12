@@ -1,6 +1,6 @@
 export default {
     watch: {
-        grantee_count: {
+        grantees_count: {
             handler(newValue, oldValue) {
                 newValue = this.clamp(newValue, 1, 10);
 

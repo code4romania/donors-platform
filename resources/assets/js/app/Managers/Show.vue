@@ -205,7 +205,7 @@
                     {
                         title: this.$t('dashboard.stats.total.grantees'),
                         size: 'lg',
-                        number: this.manager.grantee_count,
+                        number: this.manager.grantees_count,
                     },
                     {
                         title: this.$t('dashboard.stats.total.domains'),
