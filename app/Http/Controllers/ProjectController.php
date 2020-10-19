@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProjectRequest;
-use App\Http\Resources\GranteeResource;
 use App\Http\Resources\GrantShowResource;
+use App\Http\Resources\NameResource;
 use App\Http\Resources\ProjectResource;
 use App\Models\Grant;
 use App\Models\Grantee;
@@ -36,7 +36,7 @@ class ProjectController extends Controller
     {
         return Inertia::render('Projects/Create', [
             'grant'    => $grant->only('id', 'name', 'currency'),
-            'grantees' => GranteeResource::collection(
+            'grantees' => NameResource::collection(
                 Grantee::query()
                     ->orderBy('name', 'asc')
                     ->get()
@@ -77,7 +77,7 @@ class ProjectController extends Controller
         return Inertia::render('Projects/Edit', [
             'project'  => ProjectResource::make($project),
             'grant'    => GrantShowResource::make($grant),
-            'grantees' => GranteeResource::collection(
+            'grantees' => NameResource::collection(
                 Grantee::query()
                     ->orderBy('name', 'asc')
                     ->get()

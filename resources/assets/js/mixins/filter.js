@@ -1,4 +1,3 @@
-import mapValues from 'lodash/mapValues';
 import merge from 'lodash/merge';
 import pickBy from 'lodash/pickBy';
 import throttle from 'lodash/throttle';
