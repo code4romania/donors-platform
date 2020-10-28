@@ -58,7 +58,7 @@ class Domain extends Model implements TranslatableContract
             'model_has_domains',
             'domain_id',
             'model_id'
-        );
+        )->withPivot('primary');
     }
 
     public function donors(): MorphToMany
@@ -73,7 +73,7 @@ class Domain extends Model implements TranslatableContract
 
     public function grants(): MorphToMany
     {
-        return $this->relatedTo(Grant::class);
+        return $this->relatedTo(Grant::class)->wherePivot('primary', true);
     }
 
     public function getGrantStatsAttribute()

@@ -31,7 +31,7 @@ trait Draftable
      */
     public function scopeOnlyDrafts(Builder $query)
     {
-        $query->withDrafts()->where(function (Builder $query) {
+        $query->where(function (Builder $query) {
             $query
                 ->whereNull('published_at')
                 ->orWhere('published_at', '>', Carbon::now());
