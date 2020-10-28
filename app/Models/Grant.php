@@ -166,7 +166,7 @@ class Grant extends Model implements TranslatableContract
 
     public function primaryDomain()
     {
-        return $this->domains()->wherePivot('primary', true)->take(1);
+        return $this->domains()->wherePivot('primary', true);
     }
 
     public function secondaryDomains()
