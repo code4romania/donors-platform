@@ -25,7 +25,7 @@ export default {
     },
     methods: {
         reset() {
-            this.$inertia.replace(
+            this.$inertia.get(
                 this.$route(this.$page.props.route, {
                     remember: 'forget',
                     ...this.routeArgs,
@@ -33,7 +33,7 @@ export default {
             );
         },
         submit() {
-            this.$inertia.replace(
+            this.$inertia.get(
                 this.$route(this.$page.props.route, this.routeData)
             );
         },
