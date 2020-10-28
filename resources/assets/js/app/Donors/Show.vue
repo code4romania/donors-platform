@@ -1,27 +1,25 @@
 <template>
     <layout :breadcrumbs="breadcrumbs">
-        <template v-slot:actions>
-            <div>
-                <form-button
-                    v-if="
-                        $userCan('create', 'grants') &&
-                        $userCanOnModel('update', donor)
-                    "
-                    color="blue"
-                    shade="light"
-                    :href="$route('grants.create', { donor: donor.id })"
-                >
-                    {{ newGrantLabel }}
-                </form-button>
+        <template #actions>
+            <form-button
+                v-if="
+                    $userCan('create', 'grants') &&
+                    $userCanOnModel('update', donor)
+                "
+                color="blue"
+                shade="light"
+                :href="$route('grants.create', { donor: donor.id })"
+            >
+                {{ newGrantLabel }}
+            </form-button>
 
-                <form-button
-                    v-if="$userCanOnModel('update', donor)"
-                    color="blue"
-                    :href="$route('donors.edit', { donor: donor.id })"
-                >
-                    {{ editLabel }}
-                </form-button>
-            </div>
+            <form-button
+                v-if="$userCanOnModel('update', donor)"
+                color="blue"
+                :href="$route('donors.edit', { donor: donor.id })"
+            >
+                {{ editLabel }}
+            </form-button>
         </template>
 
         <panel>
@@ -141,7 +139,7 @@
             :route-fill="{ grant: 'id' }"
             :paginate="true"
         >
-            <template v-slot:name="{ name, row }">
+            <template #name="{ name, row }">
                 {{ name }}
 
                 <div class="mt-2 text-sm text-gray-500">
@@ -157,11 +155,11 @@
                 </div>
             </template>
 
-            <template v-slot:amount="{ amount }">
+            <template #amount="{ amount }">
                 <div class="text-right" v-text="amount" />
             </template>
 
-            <template v-slot:published_status="{ published_status }">
+            <template #published_status="{ published_status }">
                 <published-badge :status="published_status" />
             </template>
         </model-table>

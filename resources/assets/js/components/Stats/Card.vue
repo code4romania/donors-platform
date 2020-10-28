@@ -10,7 +10,7 @@
             />
         </dl>
 
-        <template v-slot:footer v-if="readMoreLink">
+        <template #footer v-if="readMoreLink">
             <inertia-link :href="readMoreLink" v-text="readMoreLabel" />
         </template>
     </component>

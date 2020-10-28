@@ -1,15 +1,13 @@
 <template>
     <layout :breadcrumbs="breadcrumbs">
-        <template v-slot:actions>
-            <div>
-                <form-button
-                    v-if="$userCan('create', 'managers')"
-                    color="blue"
-                    :href="$route('managers.create')"
-                >
-                    {{ createLabel }}
-                </form-button>
-            </div>
+        <template #actions>
+            <form-button
+                v-if="$userCan('create', 'managers')"
+                color="blue"
+                :href="$route('managers.create')"
+            >
+                {{ createLabel }}
+            </form-button>
         </template>
 
         <search-filter
@@ -44,7 +42,7 @@
             route-name="managers.show"
             :paginate="true"
         >
-            <template v-slot:name="{ name, row }">
+            <template #name="{ name, row }">
                 {{ name }}
 
                 <div
@@ -55,7 +53,7 @@
                 />
             </template>
 
-            <template v-slot:published_status="{ published_status }">
+            <template #published_status="{ published_status }">
                 <published-badge :status="published_status" />
             </template>
         </model-table>

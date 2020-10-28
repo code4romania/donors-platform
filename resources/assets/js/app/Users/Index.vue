@@ -1,15 +1,13 @@
 <template>
     <layout :breadcrumbs="breadcrumbs">
-        <template v-slot:actions>
-            <div>
-                <form-button
-                    v-if="$userCan('create', 'users')"
-                    color="blue"
-                    :href="$route('users.create')"
-                >
-                    {{ createLabel }}
-                </form-button>
-            </div>
+        <template #actions>
+            <form-button
+                v-if="$userCan('create', 'users')"
+                color="blue"
+                :href="$route('users.create')"
+            >
+                {{ createLabel }}
+            </form-button>
         </template>
 
         <search-filter v-model="search" @reset="reset" />
@@ -20,11 +18,11 @@
             route-name="users.edit"
             :paginate="true"
         >
-            <template v-slot:role="{ role }">
+            <template #role="{ role }">
                 {{ $t(`dashboard.role.${role}`) }}
             </template>
 
-            <template v-slot:organization="{ organization }">
+            <template #organization="{ organization }">
                 {{ organization ? organization.name : '' }}
             </template>
         </model-table>

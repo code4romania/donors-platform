@@ -1,27 +1,25 @@
 <template>
     <layout :breadcrumbs="breadcrumbs">
-        <template v-slot:actions>
-            <div>
-                <form-button
-                    v-if="
-                        $userCanOnModel('update', grant) &&
-                        grant.project_count > projects.meta.total
-                    "
-                    color="blue"
-                    shade="light"
-                    :href="$route('projects.create', { grant: grant.id })"
-                >
-                    {{ newProjectLabel }}
-                </form-button>
+        <template #actions>
+            <form-button
+                v-if="
+                    $userCanOnModel('update', grant) &&
+                    grant.project_count > projects.meta.total
+                "
+                color="blue"
+                shade="light"
+                :href="$route('projects.create', { grant: grant.id })"
+            >
+                {{ newProjectLabel }}
+            </form-button>
 
-                <form-button
-                    v-if="$userCanOnModel('update', grant)"
-                    color="blue"
-                    :href="$route('grants.edit', { grant: grant.id })"
-                >
-                    {{ submitLabel }}
-                </form-button>
-            </div>
+            <form-button
+                v-if="$userCanOnModel('update', grant)"
+                color="blue"
+                :href="$route('grants.edit', { grant: grant.id })"
+            >
+                {{ submitLabel }}
+            </form-button>
         </template>
 
         <panel>
@@ -59,11 +57,11 @@
             :show-row-urls="$userCanOnModel('update', grant)"
             :paginate="true"
         >
-            <template v-slot:grantees="{ row }">
+            <template #grantees="{ row }">
                 {{ row.grantees.join(', ') }}
             </template>
 
-            <template v-slot:amount="{ amount }">
+            <template #amount="{ amount }">
                 <div class="text-right" v-text="amount" />
             </template>
         </model-table>

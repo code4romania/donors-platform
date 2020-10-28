@@ -1,15 +1,13 @@
 <template>
     <layout :breadcrumbs="breadcrumbs">
-        <template v-slot:actions>
-            <div>
-                <form-button
-                    v-if="$userCanOnModel('update', grantee)"
-                    color="blue"
-                    :href="$route('grantees.edit', { grantee: grantee.id })"
-                >
-                    {{ editLabel }}
-                </form-button>
-            </div>
+        <template #actions>
+            <form-button
+                v-if="$userCanOnModel('update', grantee)"
+                color="blue"
+                :href="$route('grantees.edit', { grantee: grantee.id })"
+            >
+                {{ editLabel }}
+            </form-button>
         </template>
 
         <panel>
@@ -40,11 +38,11 @@
             :show-row-urls="false"
             :paginate="true"
         >
-            <template v-slot:grant="{ grant }">
+            <template #grant="{ grant }">
                 {{ grant.name }}
             </template>
 
-            <template v-slot:amount="{ amount }">
+            <template #amount="{ amount }">
                 <div class="text-right" v-text="amount" />
             </template>
         </model-table>

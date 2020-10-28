@@ -1,15 +1,13 @@
 <template>
     <layout :breadcrumbs="breadcrumbs">
-        <template v-slot:actions>
-            <div>
-                <form-button
-                    v-if="$userCan('create', 'donors')"
-                    color="blue"
-                    :href="$route('donors.create')"
-                >
-                    {{ createLabel }}
-                </form-button>
-            </div>
+        <template #actions>
+            <form-button
+                v-if="$userCan('create', 'donors')"
+                color="blue"
+                :href="$route('donors.create')"
+            >
+                {{ createLabel }}
+            </form-button>
         </template>
 
         <search-filter
@@ -52,7 +50,7 @@
             route-name="donors.show"
             :paginate="true"
         >
-            <template v-slot:name="{ name, row }">
+            <template #name="{ name, row }">
                 {{ name }}
 
                 <div
@@ -63,15 +61,15 @@
                 />
             </template>
 
-            <template v-slot:type="{ type }">
+            <template #type="{ type }">
                 {{ $t(`dashboard.org_type.${type}`) }}
             </template>
 
-            <template v-slot:total_funding="{ total_funding }">
+            <template #total_funding="{ total_funding }">
                 <div class="text-right" v-text="total_funding" />
             </template>
 
-            <template v-slot:published_status="{ published_status }">
+            <template #published_status="{ published_status }">
                 <published-badge :status="published_status" />
             </template>
         </model-table>

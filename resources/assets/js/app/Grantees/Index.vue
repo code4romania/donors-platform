@@ -1,15 +1,13 @@
 <template>
     <layout :breadcrumbs="breadcrumbs">
-        <template v-slot:actions>
-            <div>
-                <form-button
-                    v-if="$userCan('create', 'grantees')"
-                    color="blue"
-                    :href="$route('grantees.create')"
-                >
-                    {{ createLabel }}
-                </form-button>
-            </div>
+        <template #actions>
+            <form-button
+                v-if="$userCan('create', 'grantees')"
+                color="blue"
+                :href="$route('grantees.create')"
+            >
+                {{ createLabel }}
+            </form-button>
         </template>
 
         <search-filter
