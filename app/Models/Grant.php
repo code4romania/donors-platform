@@ -181,12 +181,13 @@ class Grant extends Model implements TranslatableContract
      */
     public function syncDomains($primary, array $secondary = []): array
     {
-        $domains = array_map('intval', $secondary);
+        $domains = [];
 
-        if ($primary) {
-            $domains = array_diff($domains, [$primary]);
-            $domains[$primary] = ['primary' => true];
+        foreach ($secondary as $domain) {
+            $domains[$domain] = ['primary' => false];
         }
+
+        $domains[$primary] = ['primary' => true];
 
         return $this->domains()->sync($domains);
     }
