@@ -1,6 +1,7 @@
 import merge from 'lodash/merge';
 import pickBy from 'lodash/pickBy';
 import debounce from 'lodash/debounce';
+import isEmpty from 'lodash/isEmpty';
 
 export default {
     data() {
@@ -12,15 +13,17 @@ export default {
     },
     computed: {
         routeData() {
-            return pickBy(
-                merge(
-                    {},
-                    { filters: this.filters },
-                    this.sort,
-                    { search: this.search },
-                    this.routeArgs
-                )
+            let data = pickBy(
+                merge({ search: this.search }, this.sort, this.routeArgs)
             );
+
+            let filters = pickBy(this.filters);
+
+            if (!isEmpty(filters)) {
+                data.filters = filters;
+            }
+
+            return !isEmpty(data) ? data : { remember: 'forget' };
         },
     },
     methods: {
