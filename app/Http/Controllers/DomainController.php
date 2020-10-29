@@ -6,7 +6,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\DomainRequest;
 use App\Http\Resources\DomainResource;
+use App\Http\Resources\GrantResource;
 use App\Models\Domain;
+use App\Models\Grant;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -49,9 +51,25 @@ class DomainController extends Controller
             ]));
     }
 
-    public function show(Domain $domain): RedirectResponse
+    public function show(Domain $domain): Response
     {
-        return Redirect::route('domains.index');
+        $domain->load('donors');
+
+        return Inertia::render('Domains/Show', [
+            'columns'  => $this->getIndexColumns(Grant::class, [
+                'name', 'donors', 'grantees', 'amount', 'start_date', 'end_date', 'published_status',
+            ]),
+            'domain' => DomainResource::make($domain),
+            'donors' => $domain->donors()->count(),
+            'grants' => GrantResource::collection(
+                $domain->grants()
+
+                    ->with('grantees')
+                    ->filter()
+                    ->sort()
+                    ->paginate()
+            ),
+        ]);
     }
 
     public function edit(Domain $domain): Response

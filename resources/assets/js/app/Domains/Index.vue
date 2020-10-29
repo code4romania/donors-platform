@@ -13,8 +13,7 @@
         <base-table
             :data="domains"
             :columns="columns"
-            route-name="domains.edit"
-            :show-row-urls="$userCan('create', 'domains')"
+            route-name="domains.show"
         >
             <template #name="{ name, row }">
                 <div :class="indentWithDepth(row)" v-text="name" />

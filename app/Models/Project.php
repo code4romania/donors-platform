@@ -7,7 +7,6 @@ namespace App\Models;
 use App\Scopes\WithExchangeRatesScope;
 use App\Traits\Filterable;
 use App\Traits\HasDates;
-use App\Traits\HasDomains;
 use App\Traits\Sortable;
 use Cknow\Money\MoneyCast;
 use Illuminate\Database\Eloquent\Builder;
@@ -17,7 +16,6 @@ class Project extends Model
 {
     use Filterable,
         HasDates,
-        HasDomains,
         LogsActivity,
         Sortable;
 

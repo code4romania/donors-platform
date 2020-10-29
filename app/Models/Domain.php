@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Services\Exchange;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
@@ -11,11 +12,14 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Staudenmeir\EloquentHasManyDeep\HasManyDeep;
+use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
 
 class Domain extends Model implements TranslatableContract
 {
     use HasRecursiveRelationships,
+        HasRelationships,
         LogsActivity,
         Translatable;
 
@@ -61,9 +65,14 @@ class Domain extends Model implements TranslatableContract
         )->withPivot('primary');
     }
 
-    public function donors(): MorphToMany
+    public function donors(): HasManyDeep
     {
-        return $this->relatedTo(Donor::class);
+        return $this
+            ->hasManyDeepFromRelations(
+                $this->grants(),
+                (new Grant)->donors(),
+            )
+            ->distinct();
     }
 
     public function managers(): MorphToMany
@@ -76,9 +85,36 @@ class Domain extends Model implements TranslatableContract
         return $this->relatedTo(Grant::class)->wherePivot('primary', true);
     }
 
+    public function projects(): HasManyDeep
+    {
+        return $this->hasManyDeepFromRelations(
+            $this->grants(),
+            (new Grant)->projects()
+        );
+
+        return $this->relatedTo(project::class)->wherePivot('primary', true);
+    }
+
     public function getGrantStatsAttribute()
     {
         return $this->grants()->aggregateByMonth()->get();
+    }
+
+    public function getTotalFundingAttribute()
+    {
+        return Exchange::sumForCurrency(
+            $this->grants
+        );
+    }
+
+    public function getParentDomainsAttribute()
+    {
+        return $this->ancestors()
+            ->withTranslation()
+            ->orderBy('depth')
+            ->get()
+            ->map(fn ($domain) => $domain->name)
+            ->join(' > ');
     }
 
     public static function walkTree(?Collection $domains = null, ?int $parent = null): Collection

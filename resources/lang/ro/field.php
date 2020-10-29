@@ -34,6 +34,7 @@ return [
     'organization'          => 'Organizație',
     'other'                 => 'Altele',
     'parent_domain'         => 'Domeniu părinte',
+    'parent_domains'        => 'Domenii părinte',
     'password_confirmation' => 'Confirmarea parolei',
     'password'              => 'Parolă',
     'permissions'           => 'Permisiuni',

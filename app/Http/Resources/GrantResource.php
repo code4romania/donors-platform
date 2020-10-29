@@ -16,6 +16,7 @@ class GrantResource extends Resource
     {
         switch ($request->route()->getName()) {
             case 'grants.index':
+            case 'domains.show':
                 return $this->getIndexAttributes($request);
                 break;
 

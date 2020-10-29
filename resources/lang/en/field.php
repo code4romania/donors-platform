@@ -34,6 +34,7 @@ return [
     'organization'          => 'Organization',
     'other'                 => 'Other',
     'parent_domain'         => 'Parent domain',
+    'parent_domains'        => 'Parent domains',
     'password_confirmation' => 'Password confirmation',
     'password'              => 'Password',
     'permissions'           => 'Permissions',
