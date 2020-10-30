@@ -29,7 +29,7 @@ class DomainResource extends Resource
         }
     }
 
-    public function getIndexAttribute($request): array
+    public function getIndexAttributes($request): array
     {
         return [
             'id'           => $this->id,
