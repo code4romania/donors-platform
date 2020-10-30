@@ -93,7 +93,7 @@ class Grant extends Model implements TranslatableContract
      * @var string[]
      */
     protected $with = [
-        'primaryDomain', 'secondaryDomains',
+        // 'primaryDomain', 'secondaryDomains',
     ];
 
     /**

@@ -67,6 +67,34 @@ module.exports = {
             '1/2': [1, 2],
             '1/3': [1, 3],
         },
+        columnCount: [1, 2, 3, 4],
+        columnGap: {
+            // will fallback to 'gap' || 'gridGap' values
+            // sm: '1rem',
+            // md: '1.5rem',
+            // lg: '2rem',
+        },
+        columnWidth: {
+            // sm: '120px',
+            // md: '240px',
+            // lg: '360px',
+        },
+        columnRuleColor: false, // will fallback to `borderColor` values
+        columnRuleWidth: false, // will fallback to `borderWidth` values
+        columnRuleStyle: [
+            'none',
+            'hidden',
+            'dotted',
+            'dashed',
+            'solid',
+            'double',
+            'groove',
+            'ridge',
+            'inset',
+            'outset',
+        ],
+        columnFill: ['auto', 'balance', 'balance-all'],
+        columnSpan: ['none', 'all'],
     },
     variants: {
         aspectRatio: ['responsive'],
@@ -84,6 +112,7 @@ module.exports = {
         require('tailwindcss-aspect-ratio'),
         require('@tailwindcss/ui'),
         require('@tailwindcss/typography'),
+        require('tailwindcss-multi-column')(),
     ],
     purge: {
         content: [

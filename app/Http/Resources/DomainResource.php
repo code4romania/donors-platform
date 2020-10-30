@@ -58,7 +58,25 @@ class DomainResource extends Resource
             'donors_count'  => $this->donors->count(),
             'total_funding' => $this->total_funding->formatWithoutDecimals(),
 
-            'parent_domains' => $this->parent_domains,
+            'donors_count'  => $this->descendantsAndSelf
+                ->pluck('donors')
+                ->flatten()
+                ->unique('id')
+                ->count(),
+
+            'grants_count'  => $this->descendantsAndSelf
+                ->pluck('grants')
+                ->flatten()
+                ->unique('id')
+                ->count(),
+
+            'projects_count'  => $this->descendantsAndSelf
+                ->pluck('projects')
+                ->flatten()
+                ->unique('id')
+                ->count(),
+
+            'subdomains' => $this->subdomains,
 
             'can'       => $this->getResourcePermissions(),
         ];

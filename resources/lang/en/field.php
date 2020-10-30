@@ -23,6 +23,7 @@ return [
     'grantees'              => 'Grantees',
     'grants_count'          => 'Number of grants',
     'hq'                    => 'HQ',
+    'included_subdomains'   => 'Subdomains included in stats',
     'language'              => 'Language',
     'last_name'             => 'Last name',
     'logo'                  => 'Logo',

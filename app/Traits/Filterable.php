@@ -83,6 +83,14 @@ trait Filterable
         );
     }
 
+    public function scopeFilterByPrimaryDomains(Builder $query, iterable $domains): Builder
+    {
+        return $query->whereHas(
+            'primaryDomain',
+            fn ($query) => $query->whereIn('domains.id', $domains)
+        );
+    }
+
     public function scopeFilterByRelationshipId(Builder $query, string $relationship, int $id, ?string $tableName = null): Builder
     {
         $tableName ??= $relationship;

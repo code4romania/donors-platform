@@ -23,6 +23,7 @@ return [
     'grantees'              => 'Titulari de granturi',
     'grants_count'          => 'Număr de granturi',
     'hq'                    => 'Sediu',
+    'included_subdomains'   => 'Subdomenii incluse în statistici',
     'language'              => 'Limbă',
     'last_name'             => 'Nume',
     'logo'                  => 'Logo',

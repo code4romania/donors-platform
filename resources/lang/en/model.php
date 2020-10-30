@@ -25,6 +25,7 @@ return [
         'singular' => 'Domain',
         'plural'   => 'Domains',
 
+        'count' => '{1} :count domain|{0,*} :count domains',
         'own' => 'My domains',
 
         'primary'   => 'Primary domain',

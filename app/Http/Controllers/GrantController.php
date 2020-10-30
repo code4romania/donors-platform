@@ -32,7 +32,7 @@ class GrantController extends Controller
             'grants' => GrantResource::collection(
                 Grant::query()
                     ->withTranslation()
-                    ->with('domains', 'donors', 'manager', 'projects', 'grantees')
+                    ->with('primaryDomain', 'secondaryDomains', 'donors', 'manager', 'projects', 'grantees')
                     ->filter()
                     ->sort()
                     ->paginate(),

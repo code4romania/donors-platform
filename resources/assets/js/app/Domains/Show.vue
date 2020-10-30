@@ -24,8 +24,60 @@
                     :key="index"
                     :title="card.title"
                     :number="card.number"
+                    :class="card.class || false"
+                    :size="card.size"
                     :with-panel="false"
                 />
+
+                <aside
+                    class="leading-tight md:col-span-2 xl:col-span-4"
+                    v-if="domain.subdomains.length"
+                >
+                    <div
+                        class="mb-1 text-sm text-gray-500"
+                        v-text="$t('field.included_subdomains')"
+                    />
+
+                    <details class="text-base text-gray-900 font-">
+                        <summary
+                            class="inline-block text-2xl font-semibold text-blue-500 cursor-pointer focus:outline-none hover:text-blue-600"
+                            v-text="
+                                $tc(
+                                    'model.domain.count',
+                                    domain.subdomains.length
+                                )
+                            "
+                        />
+
+                        <ul
+                            class="block"
+                            :class="{
+                                'sm:col-count-2 lg:col-count-3  xl:col-count-3':
+                                    domain.subdomains.length > 10,
+                            }"
+                        >
+                            <li
+                                class="block"
+                                v-for="subdomain in domain.subdomains"
+                                :class="
+                                    [
+                                        'mt-4 font-semibold',
+                                        'mt-0.5 pl-6',
+                                        'mt-0.5 pl-12',
+                                        'mt-0.5 pl-18',
+                                    ][subdomain.depth - 1]
+                                "
+                                :key="subdomain.id"
+                            >
+                                <inertia-link
+                                    :href="$route('domains.show', subdomain.id)"
+                                    class="focus:outline-none focus:text-blue-500 hover:text-blue-600"
+                                    v-text="subdomain.name"
+                                />
+                            </li>
+                        </ul>
+                    </details>
+                </aside>
             </grid>
         </panel>
 
@@ -122,11 +174,6 @@
                 routeArgs: { domain: this.domain.id },
                 cards: [
                     {
-                        title: this.$t('field.parent_domains'),
-                        size: 'lg',
-                        number: this.domain.parent_domains || '–',
-                    },
-                    {
                         title: this.$t('field.total_funding'),
                         size: 'lg',
                         number: this.domain.total_funding,
@@ -135,6 +182,16 @@
                         title: this.$t('field.donors_count'),
                         size: 'lg',
                         number: this.domain.donors_count,
+                    },
+                    {
+                        title: this.$t('field.grants_count'),
+                        size: 'lg',
+                        number: this.domain.grants_count,
+                    },
+                    {
+                        title: this.$t('field.projects_count'),
+                        size: 'lg',
+                        number: this.domain.projects_count,
                     },
                 ],
             };

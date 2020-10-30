@@ -27,7 +27,7 @@ class DomainController extends Controller
     {
         return Inertia::render('Domains/Index', [
             'columns' => $this->getIndexColumns(Domain::class, [
-                'name',
+                'name', 'total_funding', 'donors_count', 'grants_count', 'projects_count',
             ]),
             'domains' => Domain::flatTree(),
         ]);
@@ -53,7 +53,11 @@ class DomainController extends Controller
 
     public function show(Domain $domain): Response
     {
-        $domain->load('donors');
+        $domain->load(
+            'descendantsAndSelf.donors',
+            'descendantsAndSelf.grants.grantees',
+            'descendantsAndSelf.projects',
+        );
 
         return Inertia::render('Domains/Show', [
             'columns'  => $this->getIndexColumns(Grant::class, [
@@ -62,9 +66,10 @@ class DomainController extends Controller
             'domain' => DomainResource::make($domain),
             'donors' => $domain->donors()->count(),
             'grants' => GrantResource::collection(
-                $domain->grants()
-
-                    ->with('grantees')
+                Grant::query()
+                    ->withTranslation()
+                    ->with('primaryDomain', 'secondaryDomains', 'donors', 'manager', 'projects', 'grantees')
+                    ->filterByPrimaryDomains($domain->descendantsAndSelf()->pluck('id'))
                     ->filter()
                     ->sort()
                     ->paginate()

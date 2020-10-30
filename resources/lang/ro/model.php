@@ -25,6 +25,7 @@ return [
         'singular' => 'Domeniu',
         'plural'   => 'Domenii',
 
+        'count' => '{1} :count domeniu|{0,*} :count domenii',
         'own' => 'Domeniile mele',
 
         'primary'   => 'Domeniu principal',

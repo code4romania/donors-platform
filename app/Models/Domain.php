@@ -35,6 +35,13 @@ class Domain extends Model implements TranslatableContract
     /**
      * @var string[]
      */
+    public $searchable = [
+        'id', 'translations.name',
+    ];
+
+    /**
+     * @var string[]
+     */
     public $translatedAttributes = [
         'name',
     ];
@@ -95,42 +102,61 @@ class Domain extends Model implements TranslatableContract
         return $this->relatedTo(project::class)->wherePivot('primary', true);
     }
 
-    public function getGrantStatsAttribute()
-    {
-        return $this->grants()->aggregateByMonth()->get();
-    }
-
     public function getTotalFundingAttribute()
     {
         return Exchange::sumForCurrency(
-            $this->grants
+            $this->descendantsAndSelf
+                ->pluck('grants')
+                ->flatten()
         );
     }
 
-    public function getParentDomainsAttribute()
+    public function getSubdomainsAttribute(): array
     {
-        return $this->ancestors()
-            ->withTranslation()
-            ->orderBy('depth')
-            ->get()
-            ->map(fn ($domain) => $domain->name)
-            ->join(' > ');
+        return self::flatTree(
+            self::walkTree($this->descendants, $this->id, false)
+        )->toArray();
     }
 
-    public static function walkTree(?Collection $domains = null, ?int $parent = null): Collection
+    public static function walkTree(?Collection $domains = null, ?int $parent = null, bool $stats = true): Collection
     {
-        $domains ??= self::tree()->get();
+        $domains ??= self::tree()
+            ->without('translations')
+            ->withTranslation()
+            ->with('descendantsAndSelf.donors', 'descendantsAndSelf.grants', 'descendantsAndSelf.projects')
+            ->get();
 
         return $domains
             ->reject(fn ($domain) => $domain->parent_id !== $parent)
-            ->map(function ($domain) use ($domains) {
+            ->map(function ($domain) use ($domains, $stats) {
                 $item = [
-                    'id'    => $domain->id,
-                    'name'  => $domain->name,
-                    'depth' => $domain->depth,
+                    'id'            => $domain->id,
+                    'name'          => $domain->name,
+                    'depth'         => $domain->depth,
                 ];
 
-                $children = self::walkTree($domains, $domain->id);
+                if ($stats) {
+                    $item = array_merge($item, [
+                        'total_funding' => $domain->total_funding->formatWithoutDecimals(),
+                        'donors_count'  => $domain->descendantsAndSelf
+                            ->pluck('donors')
+                            ->flatten()
+                            ->unique('id')
+                            ->count(),
+                        'grants_count'  => $domain->descendantsAndSelf
+                            ->pluck('grants')
+                            ->flatten()
+                            ->unique('id')
+                            ->count(),
+                        'projects_count'  => $domain->descendantsAndSelf
+                            ->pluck('projects')
+                            ->flatten()
+                            ->unique('id')
+                            ->count(),
+                    ]);
+                }
+
+                $children = self::walkTree($domains, $domain->id, $stats);
 
                 if ($children) {
                     $item['children'] = $children;
@@ -163,7 +189,7 @@ class Domain extends Model implements TranslatableContract
         return $flattened->flatten();
     }
 
-    public static function cachedWalkTree(?Collection $domains = null)
+    public static function cachedWalkTree()
     {
         return Cache::tags(['domains'])->rememberForever(
             'domain_tree_' . App::getLocale(),
@@ -171,7 +197,7 @@ class Domain extends Model implements TranslatableContract
         );
     }
 
-    public static function cachedFlatTree(?Collection $domains = null)
+    public static function cachedFlatTree()
     {
         return Cache::tags(['domains'])->rememberForever(
             'domain_tree_flat_' . App::getLocale(),

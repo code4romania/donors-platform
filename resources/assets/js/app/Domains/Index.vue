@@ -18,6 +18,10 @@
             <template #name="{ name, row }">
                 <div :class="indentWithDepth(row)" v-text="name" />
             </template>
+
+            <template #total_funding="{ total_funding }">
+                <div class="text-right" v-text="total_funding" />
+            </template>
         </base-table>
     </layout>
 </template>
