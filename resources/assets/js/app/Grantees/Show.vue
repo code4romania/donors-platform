@@ -34,14 +34,10 @@
             :columns="columns"
             route-name="grants.show"
             :route-args="routeArgs"
-            :route-fill="{ grant: 'id' }"
+            :route-fill="{ grant: 'grant_id' }"
             :show-row-urls="false"
             :paginate="true"
         >
-            <template #grant="{ grant }">
-                {{ grant.name }}
-            </template>
-
             <template #amount="{ amount }">
                 <div class="text-right" v-text="amount" />
             </template>

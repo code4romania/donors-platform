@@ -58,7 +58,7 @@ class Grantee extends Model
      * @var array
      */
     protected $withCount = [
-        // 'donors', 'projects',
+        'donors', 'projects',
     ];
 
     public function projects()

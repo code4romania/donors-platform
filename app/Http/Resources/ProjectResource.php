@@ -26,7 +26,7 @@ class ProjectResource extends Resource
                 break;
 
             default:
-            return $this->getShowAttributes($request);
+                return $this->getShowAttributes($request);
                 break;
         }
     }
@@ -48,7 +48,8 @@ class ProjectResource extends Resource
         return [
             'id'         => $this->id,
             'title'      => $this->title,
-            'grant'      => $this->grant->only('id', 'name'),
+            'grant_id'   => $this->grant->id,
+            'grant'      => $this->grant->name,
             'start_date' => $this->formatted_start_date,
             'end_date'   => $this->formatted_end_date,
             'amount'     => $this->amount->formatWithoutDecimals(),
