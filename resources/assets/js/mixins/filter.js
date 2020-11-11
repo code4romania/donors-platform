@@ -1,6 +1,6 @@
 import merge from 'lodash/merge';
 import pickBy from 'lodash/pickBy';
-import throttle from 'lodash/throttle';
+import debounce from 'lodash/debounce';
 import isEmpty from 'lodash/isEmpty';
 
 export default {
@@ -13,9 +13,7 @@ export default {
     },
     computed: {
         routeData() {
-            let data = pickBy(
-                merge({ search: this.search }, this.sort, this.routeArgs)
-            );
+            let data = pickBy(merge({ search: this.search }, this.sort));
 
             let filters = pickBy(this.filters);
 
@@ -37,7 +35,9 @@ export default {
         },
         submit() {
             this.$inertia.get(
-                this.$route(this.$page.props.route, this.routeData)
+                this.$route(this.$page.props.route, this.routeArgs),
+                this.routeData,
+                { preserveState: true }
             );
         },
         prepareFilters(filters, defaultValue = null) {
@@ -57,7 +57,7 @@ export default {
     },
     watch: {
         search: {
-            handler: throttle(function() {
+            handler: debounce(function() {
                 this.submit();
             }, 250),
         },
