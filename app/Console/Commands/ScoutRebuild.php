@@ -24,7 +24,7 @@ class ScoutRebuild extends Command
 
     /** @var string[] */
     protected $models = [
-        \App\Models\Domain::class,
+        // \App\Models\Domain::class,
         \App\Models\Donor::class,
         \App\Models\Grant::class,
         \App\Models\Grantee::class,
