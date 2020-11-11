@@ -19,6 +19,7 @@ class DashboardController extends Controller
     public function __invoke(Request $request): Response
     {
         $grants = Grant::query()
+            ->with('primaryDomain')
             ->published()
             ->get();
 
