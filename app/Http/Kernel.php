@@ -43,7 +43,7 @@ class Kernel extends HttpKernel
         ],
 
         'dashboard' => [
-            //
+            \App\Http\Middleware\HandleInertiaRequests::class,
         ],
 
         'api' => [

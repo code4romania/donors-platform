@@ -11,11 +11,7 @@ use Cknow\Money\Money;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\Scope;
-use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ServiceProvider;
-use Inertia\Inertia;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -37,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerInertia();
+        //
     }
 
     /**
@@ -54,39 +50,6 @@ class AppServiceProvider extends ServiceProvider
         $this->registerBuilderMacros();
 
         Domain::observe(DomainObserver::class);
-    }
-
-    private function registerInertia(): void
-    {
-        Inertia::version(fn () => md5_file(public_path('mix-manifest.json')));
-
-        Inertia::share([
-            'locale'  => fn () => app()->getLocale(),
-            'locales' => fn () => config('translatable.locale_names'),
-            'route'   => fn () => Route::currentRouteName(),
-
-            'sort'    => fn () => Request::all('order', 'direction'),
-            'search'  => fn () => Request::input('search'),
-            'filters' => function () {
-                $filters = Request::input('filters');
-
-                if (is_string($filters)) {
-                    $filters = json_decode($filters, true);
-                }
-
-                return $filters;
-            },
-
-            'currencies' => fn () => config('money.currencies.iso', []),
-            'currency'   => fn () => Request::input('currency', config('money.defaultCurrency')),
-
-            'flash' => function () {
-                return [
-                    'success' => Session::get('success'),
-                    'error'   => Session::get('error'),
-                ];
-            },
-        ]);
     }
 
     private function registerMoneyMacros(): void
