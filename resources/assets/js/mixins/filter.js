@@ -1,6 +1,6 @@
 import merge from 'lodash/merge';
 import pickBy from 'lodash/pickBy';
-import debounce from 'lodash/debounce';
+import throttle from 'lodash/throttle';
 import isEmpty from 'lodash/isEmpty';
 
 export default {
@@ -57,7 +57,7 @@ export default {
     },
     watch: {
         search: {
-            handler: debounce(function() {
+            handler: throttle(function() {
                 this.submit();
             }, 250),
         },

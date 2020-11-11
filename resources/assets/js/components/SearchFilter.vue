@@ -14,6 +14,7 @@
                     name="search"
                     :placeholder="$t('dashboard.action.search') + '…'"
                     v-model="search"
+                    :autofocus="search !== null"
                 />
                 <button
                     v-if="search"
