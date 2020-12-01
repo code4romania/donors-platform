@@ -13,9 +13,20 @@ use Money\Exchange\FixedExchange;
 
 class Exchange
 {
+    public static function currency(): string
+    {
+        $currency = Request::input('currency');
+
+        if (! in_array($currency, config('money.currencies.iso'))) {
+            return config('money.defaultCurrency');
+        }
+
+        return $currency;
+    }
+
     public static function sumForCurrency($amounts, ?string $currency_to = null, string $column = 'amount'): Money
     {
-        $currency_to ??= Request::input('currency', config('money.defaultCurrency'));
+        $currency_to ??= self::currency();
 
         return collect($amounts)
             ->map(fn ($item) => self::convert($item->$column, $currency_to, $item->rate))

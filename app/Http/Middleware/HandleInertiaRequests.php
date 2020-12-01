@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
+use App\Services\Exchange;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -48,7 +49,7 @@ class HandleInertiaRequests extends Middleware
             'route'   => $request->route()->getName(),
 
             'currencies' => config('money.currencies.iso', []),
-            'currency'   => $request->input('currency', config('money.defaultCurrency')),
+            'currency'   => Exchange::currency(),
 
             'sort'    => $request->all('order', 'direction'),
             'search'  => $request->input('search'),
