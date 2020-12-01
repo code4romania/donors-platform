@@ -35,13 +35,13 @@
                     required
                 />
 
-                <form-select-multiple
+                <form-select
                     id="secondary_domains"
                     :label="$t('model.domain.secondary')"
                     :options="domains"
                     option-value-key="id"
                     option-label-key="name"
-                    :show-selected="true"
+                    :multiple="true"
                     v-model="form.secondary_domains"
                 />
 

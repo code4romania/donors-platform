@@ -16,32 +16,23 @@
         >
             <template #filters>
                 <chart-filter @reset="reset">
-                    <form-select-multiple
+                    <form-select
                         id="years"
                         :placeholder="$t('dashboard.filter.year')"
                         :options="years"
-                        :show-count="true"
+                        :multiple="true"
                         v-model="filters.years"
                     />
 
-                    <form-select-multiple
+                    <form-select
                         id="domains"
                         :placeholder="$t('dashboard.filter.domain')"
                         :options="domains"
                         option-value-key="id"
                         option-label-key="name"
-                        :show-count="true"
+                        :multiple="true"
                         v-model="filters.domains"
                     />
-
-                    <!-- <form-select-multiple
-                        id="donors"
-                        :label="$t('dashboard.filter.donor')"
-                        :options="donors"
-                        option-value-key="id"
-                        option-label-key="name"
-                        v-model="filters.donors"
-                    /> -->
                 </chart-filter>
             </template>
         </data-block>

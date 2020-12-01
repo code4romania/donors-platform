@@ -1,6 +1,11 @@
-    <template>
+<template>
     <div>
-        <form-select id="currency" :options="currencies" v-model="currency" />
+        <form-select
+            id="currency"
+            :options="currencies"
+            v-model="currency"
+            :clearable="false"
+        />
     </div>
 </template>
 

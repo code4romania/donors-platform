@@ -65,6 +65,7 @@
                         v-model="form.grantees[index]"
                         option-value-key="id"
                         option-label-key="name"
+                        :clearable="false"
                         required
                     />
                 </grid>

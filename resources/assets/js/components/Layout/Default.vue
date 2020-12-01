@@ -53,7 +53,7 @@
                         </h1>
 
                         <currency-select
-                            class="w-full md:w-auto"
+                            class="w-full md:w-24"
                             v-if="currencySelect"
                         />
 

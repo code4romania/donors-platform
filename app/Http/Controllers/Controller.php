@@ -32,14 +32,9 @@ class Controller extends BaseController
             });
     }
 
-    public function getSortedDomainsTree(): Collection
-    {
-        return Domain::cachedWalkTree();
-    }
-
     public function getSortedDomains(): Collection
     {
-        return Domain::cachedFlatTree();
+        return Domain::cachedWalkTree();
     }
 
     public function getSortedDonors(array $columns = ['id', 'name']): Collection

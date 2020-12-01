@@ -7,56 +7,31 @@
             :required="$attrs.required"
         />
 
-        <select
-            :id="id"
-            class="block w-full border-gray-300 focus:outline-none focus:shadow-outline-blue focus:border-blue-300"
-            :class="{
-                'form-select': !this.multiple,
-                'form-multiselect': this.multiple,
-            }"
-            :multiple="multiple"
-            v-bind="$attrs"
+        <treeselect
             v-model="dataSelected"
-        >
-            <option
-                v-if="optionPlaceholder"
-                :value="null"
-                v-text="optionPlaceholder"
-            />
-
-            <template v-for="(option, index) in options">
-                <option
-                    :key="index"
-                    :checked="dataSelected === option"
-                    :value="optionValue(option)"
-                    v-html="optionLabel(option)"
-                />
-
-                <template v-for="(option, l1Index) in option.children">
-                    <option
-                        :key="index + '-' + l1Index"
-                        :value="optionValue(option)"
-                        v-html="optionLabel(option)"
-                    />
-
-                    <option
-                        v-for="(option, l2Index) in option.children"
-                        :key="index + '-' + l1Index + '-' + l2Index"
-                        :value="optionValue(option)"
-                        v-html="optionLabel(option)"
-                    />
-                </template>
-            </template>
-        </select>
+            :options="options"
+            :normalizer="normalizer"
+            class="block w-full"
+            v-bind="$attrs"
+            @deselect="deselect"
+            @input="input"
+            @close="$emit('input', dataSelected)"
+        />
 
         <form-input-error :id="id" />
     </div>
 </template>
 
 <script>
+    import Treeselect from '@riophae/vue-treeselect';
+    import '@riophae/vue-treeselect/dist/vue-treeselect.css';
+
     export default {
         name: 'FormSelect',
         inheritAttrs: false,
+        components: {
+            Treeselect,
+        },
         props: {
             label: {
                 type: [String, null],
@@ -82,10 +57,6 @@
                 type: [String, null],
                 default: null,
             },
-            multiple: {
-                type: Boolean,
-                default: false,
-            },
             errors: {
                 type: Array,
                 default: () => [],
@@ -98,18 +69,35 @@
             };
         },
         methods: {
-            padOption(depth) {
-                return '&nbsp;'.repeat(depth);
-            },
             optionValue(option) {
                 return option[this.optionValueKey] || option;
             },
             optionLabel(option) {
-                let prefix = option.depth
-                    ? '&nbsp;'.repeat(4 * option.depth) + ' '
-                    : '';
+                return option[this.optionLabelKey] || option;
+            },
+            normalizer(node) {
+                let item = {
+                    id: this.optionValue(node),
+                    label: this.optionLabel(node),
+                };
 
-                return prefix + (option[this.optionLabelKey] || option);
+                if (node.children) {
+                    item.children = node.children;
+                }
+
+                return item;
+            },
+            deselect(e) {
+                this.dataSelected = this.dataSelected.filter(
+                    (x) => x != this.optionValue(e)
+                );
+            },
+            input(e) {
+                if (this.$attrs.multiple) {
+                    return;
+                }
+
+                this.$emit('input', this.dataSelected);
             },
         },
         watch: {
@@ -121,9 +109,19 @@
                     }
                 },
             },
-            dataSelected(cv) {
-                this.$emit('input', cv);
-            },
         },
     };
 </script>
+
+
+<style>
+    .vue-treeselect__control {
+        height: 42px;
+    }
+
+    .vue-treeselect__placeholder,
+    .vue-treeselect__single-value {
+        color: inherit;
+        line-height: 40px;
+    }
+</style>

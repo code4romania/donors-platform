@@ -31,7 +31,7 @@
                     @fileChange="form.logo = $event"
                 />
 
-                <form-select-multiple
+                <form-select
                     id="domains"
                     :label="$t('field.domains')"
                     v-model="form.domains"
@@ -39,7 +39,7 @@
                     :options="domains"
                     option-value-key="id"
                     option-label-key="name"
-                    :show-selected="true"
+                    :multiple="true"
                 />
             </form-panel>
 

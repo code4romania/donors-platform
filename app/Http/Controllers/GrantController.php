@@ -37,7 +37,7 @@ class GrantController extends Controller
                     ->sort()
                     ->paginate(),
             ),
-            'domains'  => $this->getSortedDomainsTree(),
+            'domains'  => $this->getSortedDomains(),
             'donors'   => $this->getSortedDonors(),
             'grantees' => $this->getSortedGrantees(),
             'managers' => $this->getSortedManagers(),

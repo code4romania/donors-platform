@@ -158,7 +158,7 @@ class Domain extends Model implements TranslatableContract
 
                 $children = self::walkTree($domains, $domain->id, $stats);
 
-                if ($children) {
+                if ($children->isNotEmpty()) {
                     $item['children'] = $children;
                 }
 
@@ -174,7 +174,9 @@ class Domain extends Model implements TranslatableContract
         $flattened = collect();
 
         $domains->each(function ($domain) use ($flattened) {
-            if ($domain->children) {
+            $children = null;
+
+            if (property_exists($domain, 'children')) {
                 $children = $domain->children;
                 unset($domain->children);
             }

@@ -37,7 +37,7 @@ class DomainController extends Controller
     {
         return Inertia::render('Domains/Create', [
             'translatable' => app(Domain::class)->translatable,
-            'domains'      => $this->getSortedDomainsTree(),
+            'domains'      => $this->getSortedDomains(),
         ]);
     }
 
@@ -82,7 +82,7 @@ class DomainController extends Controller
         return Inertia::render('Domains/Edit', [
             'domain'       => DomainResource::make($domain),
             'translatable' => app(Domain::class)->translatable,
-            'domains'      => $this->getSortedDomainsTree(),
+            'domains'      => $this->getSortedDomains(),
         ]);
     }
 
