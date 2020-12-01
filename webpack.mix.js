@@ -15,8 +15,9 @@ mix.extend(
 );
 
 mix.options({
+    // extractVueStyles: true,
     hmrOptions: {
-        host: 'dashboard.donors.test',
+        host: 'platformadonatorilor.test',
         port: '8080',
     },
 });
@@ -24,7 +25,7 @@ mix.options({
 mix.config.fileLoaderDirs.fonts = 'assets/fonts';
 
 mix.webpackConfig({
-    devtool: mix.config.production ? 'none' : 'source-map',
+    devtool: mix.inProduction() ? 'none' : 'source-map',
     resolve: {
         alias: {
             vue$: 'vue/dist/vue.runtime.esm.js',
