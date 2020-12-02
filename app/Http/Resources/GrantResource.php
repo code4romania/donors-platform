@@ -116,6 +116,7 @@ class GrantResource extends Resource
 
             'donors'            => $this->donors->pluck('name', 'id'),
             'project_count'     => $this->project_count,
+            'project_slots'     => $this->project_count - $this->projects()->count(),
             'grantees'          => $this->grantees->unique()->count(),
 
             'published_status'  => $this->published_status,

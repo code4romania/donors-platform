@@ -3,8 +3,7 @@
         <template #actions>
             <form-button
                 v-if="
-                    $userCanOnModel('update', grant) &&
-                    grant.project_count > projects.meta.total
+                    $userCanOnModel('update', grant) && grant.project_slots > 0
                 "
                 color="blue"
                 shade="light"
