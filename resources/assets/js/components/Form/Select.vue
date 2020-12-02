@@ -11,6 +11,7 @@
             v-model="dataSelected"
             :options="options"
             :flat="true"
+            :disableFuzzyMatching="true"
             :normalizer="normalizer"
             class="block w-full"
             v-bind="$attrs"
