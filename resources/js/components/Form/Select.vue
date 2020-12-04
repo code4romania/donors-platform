@@ -10,7 +10,8 @@
         <treeselect
             v-model="dataSelected"
             :options="options"
-            :flat="true"
+            :flat="multiple"
+            :multiple="multiple"
             :disableFuzzyMatching="true"
             :normalizer="normalizer"
             class="block w-full"
@@ -62,6 +63,10 @@
             errors: {
                 type: Array,
                 default: () => [],
+            },
+            multiple: {
+                type: Boolean,
+                default: false,
             },
             value: {},
         },
