@@ -93,8 +93,10 @@
             };
 
             let ownArgs = {
-                filters: {
-                    [own.type]: own.id,
+                _query: {
+                    filters: {
+                        [own.type]: own.id,
+                    },
                 },
             };
 

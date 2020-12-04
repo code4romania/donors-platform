@@ -29,7 +29,7 @@ mix.webpackConfig({
     resolve: {
         alias: {
             vue$: 'vue/dist/vue.runtime.esm.js',
-            '@': path.resolve('resources/assets/js'),
+            '@': path.resolve('resources/js'),
             '~': path.resolve('resources'),
         },
     },
@@ -43,10 +43,10 @@ if (mix.inProduction()) {
 //     mix.bundleAnalyzer();
 // }
 
-mix.js('resources/assets/js/app.js', 'public/assets')
-    .postCss('resources/assets/css/app.pcss', 'public/assets', [
+mix.js('resources/js/app.js', 'public/assets')
+    .postCss('resources/css/app.pcss', 'public/assets', [
         require('postcss-import'),
-        require('tailwindcss')('./tailwind.config.js'),
+        require('tailwindcss'),
     ])
     .translations()
     .svgVue({
@@ -59,6 +59,6 @@ mix.js('resources/assets/js/app.js', 'public/assets')
             { removeDimensions: true },
         ],
     })
-    .copyDirectory('resources/assets/svg', 'public/assets/svg')
-    .copyDirectory('resources/assets/images', 'public/assets/images')
+    .copyDirectory('resources/svg', 'public/assets/svg')
+    .copyDirectory('resources/images', 'public/assets/images')
     .extract();
