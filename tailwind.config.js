@@ -118,8 +118,8 @@ module.exports = {
         content: [
             //
             'resources/views/**/*.blade.php',
-            'resources/assets/js/**/*.js',
-            'resources/assets/js/**/*.vue',
+            'resources/js/**/*.js',
+            'resources/js/**/*.vue',
         ],
         options: {
             whitelist: ['rich-text', 'ck-content'],
