@@ -32,7 +32,7 @@
         "staudenmeir/eloquent-has-many-deep": "^1.13",
         "staudenmeir/laravel-adjacency-list": "^1.6",
         "teamtnt/laravel-scout-tntsearch-driver": "^11.0",
-        "tightenco/ziggy": "^0.9.4"
+        "tightenco/ziggy": "^1.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.3",
