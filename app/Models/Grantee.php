@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Services\Exchange;
 use App\Traits\Filterable;
 use App\Traits\Sortable;
+use Illuminate\Support\Facades\DB;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Staudenmeir\EloquentHasManyDeep\HasManyDeep;
 use Staudenmeir\EloquentHasManyDeep\HasRelationships;
@@ -58,8 +59,24 @@ class Grantee extends Model
      * @var array
      */
     protected $withCount = [
-        'donors', 'projects',
+        'projects',
     ];
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted(): void
+    {
+        static::addGlobalScope('withDonorsCount', function ($query) {
+            return $query->withCount([
+                'donors' => fn ($q) => $q->select(
+                    DB::raw('count(distinct(`donors`.`id`))')
+                ),
+            ]);
+        });
+    }
 
     public function projects()
     {
