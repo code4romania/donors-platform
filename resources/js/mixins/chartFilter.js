@@ -10,14 +10,13 @@ export default {
     },
     computed: {
         routeData() {
-            return pickBy(
-                merge(
-                    //
-                    { currency: this.$page.props.currency },
-                    { filters: this.filters },
-                    this.routeArgs
-                )
-            );
+            return {
+                ...this.routeArgs,
+                _query: {
+                    currency: this.$page.props.currency,
+                    filters: this.filters,
+                },
+            };
         },
     },
     methods: {

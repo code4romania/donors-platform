@@ -20,11 +20,5 @@
 <script>
     export default {
         name: 'ChartFilter',
-        props: {
-            filterClass: {
-                type: [String, null],
-                default: null,
-            },
-        },
     };
 </script>
