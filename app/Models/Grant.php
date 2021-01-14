@@ -16,7 +16,6 @@ use Cknow\Money\Money;
 use Cknow\Money\MoneyCast;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Staudenmeir\EloquentHasManyDeep\HasManyDeep;
 use Staudenmeir\EloquentHasManyDeep\HasRelationships;
@@ -110,31 +109,17 @@ class Grant extends Model implements TranslatableContract
         });
     }
 
-    /**
-     * morphedByMany template.
-     *
-     * @param  string      $related
-     * @return MorphToMany
-     */
-    private function relatedTo(string $related): MorphToMany
-    {
-        return $this->morphedByMany(
-            $related,
-            'model',
-            'model_has_grants',
-            'grant_id',
-            'model_id'
-        );
-    }
-
     public function users()
     {
         return $this->morphMany(User::class, 'owner');
     }
 
-    public function donors(): MorphToMany
+    public function donors()
     {
-        return $this->relatedTo(Donor::class);
+        return $this->belongsToMany(Donor::class)
+            ->using(Contribution::class)
+            ->as('contribution')
+            ->withPivot('amount', 'grant_currency');
     }
 
     /**
@@ -192,6 +177,20 @@ class Grant extends Model implements TranslatableContract
         return $this->domains()->sync($domains);
     }
 
+    public function syncDonors(array $donors, string $currency): void
+    {
+        $this->donors()->sync(
+            collect($donors)
+                ->mapWithKeys(fn ($donor) => [
+                    $donor['id'] => [
+                        'amount'         => (float) $donor['amount'],
+                        'grant_currency' => $currency,
+                    ],
+                ])
+                ->all()
+        );
+    }
+
     public function getOperationalCostsAttribute(): Money
     {
         if (! $this->regranting_amount) {
@@ -219,6 +218,22 @@ class Grant extends Model implements TranslatableContract
     public function getRemainingAmountAttribute(): Money
     {
         return $this->grantable_amount->subtract($this->granted_amount);
+    }
+
+    public function getDonorsWithAmountsAttribute()
+    {
+        return $this->donors->map(fn (Donor $donor) => [
+            'id'     => $donor->id,
+            'amount' => $donor->contribution->amount->toInteger(),
+        ]);
+    }
+
+    public function getDonorsWithFormattedAmountsAttribute()
+    {
+        return $this->donors->map(fn (Donor $donor) => [
+            'name'   => $donor->name,
+            'amount' => $donor->contribution->amount->formatWithoutDecimals(),
+        ]);
     }
 
     public function scopeAggregateByMonth(Builder $query, string $column = 'amount')

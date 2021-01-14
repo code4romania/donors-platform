@@ -61,6 +61,7 @@ return [
             'domains' => 'Domenii acoperite',
             'regranting' => 'Valoarea de regranting',
             'operational' => 'Costuri operaționale',
+            'remaining' => 'Valoare neutilizată',
         ],
     ],
 

@@ -1,8 +1,10 @@
+import utils from '@/utils';
+
 export default {
     watch: {
         grantees_count: {
             handler(newValue, oldValue) {
-                newValue = this.clamp(newValue, 1, 10);
+                newValue = utils.clamp(newValue, 1, 10);
 
                 if (newValue < oldValue) {
                     this.form.grantees.splice(newValue);

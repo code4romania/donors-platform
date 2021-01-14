@@ -63,8 +63,7 @@
                     type="number"
                     id="amount"
                     :label="$t('field.grant_value')"
-                    v-model="form.amount"
-                    step="0.01"
+                    v-model.number="form.amount"
                     min="0"
                     required
                 />
@@ -75,17 +74,6 @@
                     :options="$page.props.currencies"
                     v-model="form.currency"
                     required
-                />
-
-                <form-input
-                    type="number"
-                    id="donor_count"
-                    :label="$t('field.donor_count')"
-                    v-model.number="donor_count"
-                    ref="donor_count"
-                    required
-                    min="1"
-                    max="10"
                 />
 
                 <form-input
@@ -108,19 +96,13 @@
                 :title="$t('model.grant.section.donors.title')"
                 :description="$t('model.grant.section.donors.description')"
             >
-                <grid class="gap-y-4 lg:col-span-2">
-                    <form-select
-                        v-for="(_, index) in form.donors"
-                        :key="index"
-                        id="donors"
-                        :label="$t('model.donor.singular') + ` #${index + 1}`"
-                        :options="donors"
-                        v-model="form.donors[index]"
-                        option-value-key="id"
-                        option-label-key="name"
-                        required
-                    />
-                </grid>
+                <donors-with-amounts
+                    :donors="donors"
+                    :currency="form.currency"
+                    :max-amount="form.amount"
+                    v-model="form.donors"
+                    class="lg:col-span-2"
+                />
             </form-panel>
 
             <form-panel
@@ -145,7 +127,6 @@
                     :label="$t('field.regranting_amount')"
                     v-model="form.regranting_amount"
                     min="0"
-                    step="0.01"
                     required
                     :max="this.form.amount"
                 />
@@ -163,12 +144,16 @@
                     color="blue"
                     shade="light"
                     @click="draft"
-                    :disabled="sending"
+                    :disabled="form.processing"
                 >
                     {{ draftLabel }}
                 </form-button>
 
-                <form-button type="submit" color="blue" :disabled="sending">
+                <form-button
+                    type="submit"
+                    color="blue"
+                    :disabled="form.processing"
+                >
                     {{ createLabel }}
                 </form-button>
             </div>
@@ -178,13 +163,11 @@
 
 <script>
     import FormMixin from '@/mixins/form';
-    import DonorCountMixin from '@/mixins/donorCount';
 
     export default {
         mixins: [
             //
             FormMixin,
-            DonorCountMixin,
         ],
         metaInfo() {
             return {
@@ -194,26 +177,22 @@
         data() {
             return {
                 managed: false,
-                donor_count: 1,
 
-                formAction: this.$route('grants.store'),
-                form: {
-                    donors: this.prefillDonor(),
+                form: this.$inertia.form({
+                    name: this.translateField('name'),
+                    description: this.translateField('description'),
+                    currency: null,
+                    start_date: null,
+                    end_date: null,
+                    project_count: null,
+                    manager: null,
+                    matching: null,
+                    amount: null,
+                    regranting_amount: null,
                     primary_domain: null,
-                    secondary_domains: [],
-                    ...this.prepareFields([
-                        'name',
-                        'description',
-                        'amount',
-                        'currency',
-                        'start_date',
-                        'end_date',
-                        'project_count',
-                        'manager',
-                        'regranting_amount',
-                        'matching',
-                    ]),
-                },
+                    secondary_domains: null,
+                    donors: this.prefillDonor(),
+                }),
             };
         },
         props: {
@@ -249,7 +228,17 @@
                     return [];
                 }
 
-                return [parseInt(donor)];
+                return [
+                    {
+                        id: parseInt(donor),
+                        amount: 0,
+                    },
+                ];
+            },
+            submit() {
+                this.form
+                    .transform(this.prepareTranslatedFields)
+                    .post(this.$route('grants.store'));
             },
         },
     };

@@ -29,7 +29,7 @@ class Exchange
         $currency_to ??= self::currency();
 
         return collect($amounts)
-            ->map(fn ($item) => self::convert($item->$column, $currency_to, $item->rate))
+            ->map(fn ($item) => self::convert(data_get($item, $column), $currency_to, $item->rate))
             ->whenNotEmpty(
                 fn ($amounts) => Money::sum(...$amounts),
                 fn () => Money::parse(0, $currency_to),

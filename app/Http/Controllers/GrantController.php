@@ -65,7 +65,7 @@ class GrantController extends Controller
             $request->input('secondary_domains', [])
         );
 
-        $grant->donors()->sync($request->input('donors'));
+        $grant->syncDonors($request->input('donors'), $request->input('currency'));
         $grant->manager()->associate($request->input('manager'));
 
         $grant->save();
@@ -96,7 +96,7 @@ class GrantController extends Controller
     public function edit(Grant $grant): Response
     {
         return Inertia::render('Grants/Edit', [
-            'grant' => GrantResource::make($grant),
+            'grant'    => GrantResource::make($grant),
             'donors'   => $this->getSortedDonors(),
             'domains'  => $this->getSortedDomains(),
             'managers' => $this->getSortedManagers(),
@@ -106,7 +106,7 @@ class GrantController extends Controller
 
     public function update(GrantRequest $request, Grant $grant): RedirectResponse
     {
-        $grant->update($request->validated());
+        $grant->fill($request->validated());
 
         if ($request->boolean('_publish') !== $grant->isPublished()) {
             $grant->publish($request->boolean('_publish'));
@@ -117,7 +117,8 @@ class GrantController extends Controller
             $request->input('secondary_domains', [])
         );
 
-        $grant->donors()->sync($request->input('donors'));
+        $grant->syncDonors($request->input('donors'), $request->input('currency'));
+
         $grant->manager()->associate($request->input('manager'));
 
         $grant->save();

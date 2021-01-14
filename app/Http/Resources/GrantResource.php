@@ -82,7 +82,7 @@ class GrantResource extends Resource
             'amount'            => $this->amount->toInteger(),
             'currency'          => $this->currency,
 
-            'donors'            => $this->donors->pluck('name', 'id'),
+            'donors'            => $this->donors_with_amounts,
             'project_count'     => $this->project_count,
             'grantees'          => $this->grantees->pluck('name', 'id'),
             'funding_value'     => $this->funding_value,
@@ -113,8 +113,9 @@ class GrantResource extends Resource
             'amount'            => $this->amount->formatWithoutDecimals(),
             'regranting_amount' => $this->regranting_amount->formatWithoutDecimals(),
             'operational_costs' => $this->operational_costs->formatWithoutDecimals(),
+            'remaining_amount'  => $this->remaining_amount->formatWithoutDecimals(),
 
-            'donors'            => $this->donors->pluck('name', 'id'),
+            'donors'            => $this->donors_with_formatted_amounts,
             'project_count'     => $this->project_count,
             'project_slots'     => $this->project_count - $this->projects()->count(),
             'grantees'          => $this->grantees->unique()->count(),

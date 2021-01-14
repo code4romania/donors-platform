@@ -1,10 +1,9 @@
-import UtilsMixin from '@/mixins/utils';
 import LocaleMixin from '@/mixins/locale';
+import utils from '@/utils';
 
 export default {
     mixins: [
         //
-        UtilsMixin,
         LocaleMixin,
     ],
     data() {
@@ -30,7 +29,6 @@ export default {
         saveLabel() {
             return this.$t('dashboard.action.save');
         },
-
         visibilityLabel() {
             return this.$t(
                 this.form._publish
@@ -47,7 +45,7 @@ export default {
                 if (this.isTranslatableField(field)) {
                     prepared[field] = {};
                     Object.keys(this.$page.props.locales).forEach(locale => {
-                        if (!this.isObject(model)) {
+                        if (!utils.isObject(model)) {
                             prepared[field][locale] = null;
                             return;
                         }
@@ -61,7 +59,7 @@ export default {
                             : null;
                     });
                 } else {
-                    prepared[field] = this.isObject(model)
+                    prepared[field] = utils.isObject(model)
                         ? model[field] || null
                         : null;
                 }
@@ -89,7 +87,7 @@ export default {
                 formData = new FormData();
 
             for (let field in data) {
-                switch (this.typeof(data[field])) {
+                switch (utils.typeof(data[field])) {
                     case 'array':
                         data[field].forEach(value => {
                             formData.append(field + '[]', value);

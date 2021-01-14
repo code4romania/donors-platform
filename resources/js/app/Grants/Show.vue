@@ -22,26 +22,77 @@
         </template>
 
         <panel>
-            <div class="max-w-3xl">
-                <published-badge :status="grant.published_status" />
+            <published-badge :status="grant.published_status" />
 
-                <h2
-                    class="mt-2 mb-5 text-2xl font-bold leading-tight md:text-3xl"
-                    v-text="grant.name"
-                />
+            <h2
+                class="mt-2 mb-5 text-2xl font-bold leading-tight md:text-3xl"
+                v-text="grant.name"
+            />
 
-                <p class="max-w-md" v-text="grant.description" />
-            </div>
+            <grid class="md:grid-cols-2 md:gap-12">
+                <dl class="space-y-3">
+                    <div v-if="grant.primary_domain">
+                        <dt
+                            class="font-bold text-gray-900"
+                            v-text="$t('model.domain.primary')"
+                        />
 
-            <grid class="mt-8 md:grid-cols-2 xl:grid-cols-4">
-                <stats-card
-                    v-for="(card, index) in cards"
-                    :key="index"
-                    :title="card.title"
-                    :number="card.number"
-                    :with-panel="false"
-                    :size="card.size"
-                />
+                        <dd v-text="grant.primary_domain" />
+                    </div>
+
+                    <div v-if="grant.secondary_domains.length">
+                        <dt
+                            class="font-bold text-gray-900"
+                            v-text="$t('model.domain.secondary')"
+                        />
+
+                        <dd v-text="grant.secondary_domains.join(', ')" />
+                    </div>
+
+                    <div>
+                        <dt
+                            class="font-bold text-gray-900"
+                            v-text="$t('field.description')"
+                        />
+
+                        <dd v-text="grant.description" />
+                    </div>
+                </dl>
+
+                <table class="prose max-w-none">
+                    <thead>
+                        <tr>
+                            <th
+                                class="text-left"
+                                v-text="$t('model.donor.plural')"
+                            />
+                            <th
+                                class="text-right"
+                                v-text="$t('field.contribution')"
+                            />
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(donor, index) in grant.donors" :key="index">
+                            <td v-text="donor.name" />
+                            <td v-text="donor.amount" class="text-right" />
+                        </tr>
+                    </tbody>
+                </table>
+            </grid>
+        </panel>
+        <panel>
+            <grid class="md:grid-cols-2 xl:grid-cols-4">
+                <template v-for="(card, index) in cards">
+                    <stats-card
+                        v-if="card.visible"
+                        :key="index"
+                        :title="card.title"
+                        :number="card.number"
+                        :with-panel="false"
+                        :size="card.size"
+                    />
+                </template>
             </grid>
         </panel>
 
@@ -113,31 +164,27 @@
                     {
                         title: this.$t('dashboard.stats.total.grant'),
                         number: this.grant.amount,
+                        visible: true,
                     },
                     {
                         title: this.$t('dashboard.stats.total.regranting'),
                         number: this.grant.regranting_amount,
+                        visible: true,
                     },
                     {
                         title: this.$t('dashboard.stats.total.operational'),
                         number: this.grant.operational_costs,
+                        visible: true,
                     },
                     {
                         title: this.$t('dashboard.stats.total.grantees'),
                         number: this.grant.project_count,
+                        visible: true,
                     },
                     {
-                        title: this.$t('model.donor.plural'),
-                        number: Object.values(this.grant.donors).join(', ') || null,
-                    },
-
-                    {
-                        title: this.$t('model.domain.primary'),
-                        number: this.grant.primary_domain || '–',
-                    },
-                    {
-                        title: this.$t('model.domain.secondary'),
-                        number: this.grant.secondary_domains.join(', '),
+                        title: this.$t('dashboard.stats.total.remaining'),
+                        number: this.grant.remaining_amount,
+                        visible: this.$userHasRole('admin'),
                     },
                 ],
             };

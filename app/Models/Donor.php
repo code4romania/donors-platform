@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\OrganizationType;
+use App\Services\Exchange;
 use App\Traits\Draftable;
 use App\Traits\Filterable;
 use App\Traits\HasDomains;
@@ -88,6 +89,15 @@ class Donor extends Model implements HasMedia
         //
     ];
 
+    public function grants()
+    {
+        return $this->belongsToMany(Grant::class)
+            ->using(Contribution::class)
+            ->as('contribution')
+            ->with('domains')
+            ->withPivot('amount', 'grant_currency');
+    }
+
     public function managers()
     {
         return $this->hasManyDeepFromRelations(
@@ -99,5 +109,10 @@ class Donor extends Model implements HasMedia
     public function users()
     {
         return $this->morphMany(User::class, 'organization');
+    }
+
+    public function getTotalFundingAttribute()
+    {
+        return Exchange::sumForCurrency($this->grants, null, 'contribution.amount');
     }
 }

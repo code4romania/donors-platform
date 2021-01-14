@@ -5,6 +5,7 @@ declare(strict_types=1);
 return [
 
     'amount'                => 'Sumă',
+    'contribution'          => 'Contribuție',
     'currency'              => 'Monedă',
     'description'           => 'Descriere',
     'domain'                => 'Domeniu',

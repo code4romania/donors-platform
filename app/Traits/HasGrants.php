@@ -13,16 +13,7 @@ trait HasGrants
 {
     use HasRelationships;
 
-    public function grants()
-    {
-        return $this->morphToMany(
-            Grant::class,
-            'model',
-            'model_has_grants',
-            'model_id',
-            'grant_id',
-        )->with('domains');
-    }
+    abstract public function grants();
 
     public function grantees()
     {

@@ -120,6 +120,8 @@ return [
     'url'         => 'Câmpul :attribute nu este un URL valid.',
     'uuid'        => 'Acesta :attribute trebuie să fie un cod UUID valid.',
 
+    'donor_contributions_mismatch' => 'Suma contribuțiilor donatorilor nu este egală cu valoarea grantului.',
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines
