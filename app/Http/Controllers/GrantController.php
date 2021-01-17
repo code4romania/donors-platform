@@ -62,7 +62,7 @@ class GrantController extends Controller
 
         $grant->syncDomains(
             $request->input('primary_domain'),
-            $request->input('secondary_domains', [])
+            $request->input('secondary_domains')
         );
 
         $grant->syncDonors($request->input('donors'), $request->input('currency'));
@@ -114,7 +114,7 @@ class GrantController extends Controller
 
         $grant->syncDomains(
             $request->input('primary_domain'),
-            $request->input('secondary_domains', [])
+            $request->input('secondary_domains')
         );
 
         $grant->syncDonors($request->input('donors'), $request->input('currency'));

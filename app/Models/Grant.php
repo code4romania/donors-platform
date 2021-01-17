@@ -161,12 +161,13 @@ class Grant extends Model implements TranslatableContract
 
     /**
      * @param  string|int $primary   Primary domain id
-     * @param  array      $secondary Array of secondary domain ids
+     * @param  null|array $secondary Array of secondary domain ids
      * @return array
      */
-    public function syncDomains($primary, array $secondary = []): array
+    public function syncDomains($primary, ?array $secondary = []): array
     {
         $domains = [];
+        $secondary ??= [];
 
         foreach ($secondary as $domain) {
             $domains[$domain] = ['primary' => false];
