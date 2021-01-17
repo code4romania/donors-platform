@@ -210,7 +210,7 @@ class Grant extends Model implements TranslatableContract
     public function getGrantedAmountAttribute(): Money
     {
         return Money::parseByDecimal(
-            $this->projects()->sum('amount'),
+            number_format((float) $this->projects()->sum('amount'), 2, '.', ''),
             $this->currency
         );
     }
