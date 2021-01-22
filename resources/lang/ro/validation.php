@@ -151,5 +151,9 @@ return [
     */
 
     'attributes' => [
+        'currency'   => 'monedă',
+        'donors'     => 'finanțatori',
+        'end_date'   => 'dată sfârșit',
+        'start_date' => 'dată început',
     ],
 ];

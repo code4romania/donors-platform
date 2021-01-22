@@ -45,7 +45,7 @@ class GrantRequest extends FormRequest
             'donors.*.amount'     => ['required', 'numeric'],
             'currency'            => ['required', Rule::in(config('money.currencies.iso'))],
             'manager'             => ['nullable', 'exists:grant_managers,id'],
-            'regranting_amount'   => ['nullable', 'lte:amount'],
+            'regranting_amount'   => ['nullable', 'numeric', 'lte:amount'],
             'matching'            => ['nullable', 'boolean'],
         ]);
     }

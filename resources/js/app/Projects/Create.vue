@@ -18,9 +18,8 @@
                     type="number"
                     id="amount"
                     :label="$t('field.amount')"
-                    v-model="form.amount"
+                    v-model.number="form.amount"
                     :suffix="grant.currency"
-                    step="0.01"
                     min="0"
                     required
                 />
