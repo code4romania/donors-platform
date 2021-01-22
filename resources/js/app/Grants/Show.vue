@@ -169,12 +169,12 @@
                     {
                         title: this.$t('dashboard.stats.total.regranting'),
                         number: this.grant.regranting_amount,
-                        visible: true,
+                        visible: this.grant.regranting_amount !== null,
                     },
                     {
                         title: this.$t('dashboard.stats.total.operational'),
                         number: this.grant.operational_costs,
-                        visible: true,
+                        visible: this.grant.operational_costs !== null,
                     },
                     {
                         title: this.$t('dashboard.stats.total.grantees'),

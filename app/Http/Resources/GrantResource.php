@@ -46,7 +46,7 @@ class GrantResource extends Resource
             'secondary_domains' => $this->secondaryDomains->pluck('name'),
             'grantees'          => $this->grantees->pluck('name')->join(', '),
             'amount'            => $this->amount->formatWithoutDecimals(),
-            'regranting_amount' => $this->regranting_amount->formatWithoutDecimals(),
+            'regranting_amount' => optional($this->regranting_amount)->formatWithoutDecimals(),
             'start_date'        => $this->formatted_start_date,
             'end_date'          => $this->formatted_end_date,
             'published_status'  => $this->published_status,
@@ -61,7 +61,7 @@ class GrantResource extends Resource
             'primary_domain'    => optional($this->primaryDomain->first())->name,
             'secondary_domains' => $this->secondaryDomains->pluck('name'),
             'amount'            => $this->amount->formatWithoutDecimals(),
-            'regranting_amount' => $this->regranting_amount->formatWithoutDecimals(),
+            'regranting_amount' => optional($this->regranting_amount)->formatWithoutDecimals(),
             'start_date'        => $this->formatted_start_date,
             'end_date'          => $this->formatted_end_date,
             'published_status'  => $this->published_status,
@@ -93,7 +93,7 @@ class GrantResource extends Resource
             'end_date'          => $this->formatted_end_date,
 
             'manager'           => optional($this->manager)->id,
-            'regranting_amount' => $this->regranting_amount->toInteger(),
+            'regranting_amount' => optional($this->regranting_amount)->toInteger(),
             'matching'          => $this->matching,
 
             'can'               => $this->getResourcePermissions(),
@@ -111,8 +111,8 @@ class GrantResource extends Resource
             'secondary_domains' => $this->secondaryDomains->pluck('name'),
 
             'amount'            => $this->amount->formatWithoutDecimals(),
-            'regranting_amount' => $this->regranting_amount->formatWithoutDecimals(),
-            'operational_costs' => $this->operational_costs->formatWithoutDecimals(),
+            'regranting_amount' => optional($this->regranting_amount)->formatWithoutDecimals(),
+            'operational_costs' => optional($this->operational_costs)->formatWithoutDecimals(),
             'remaining_amount'  => $this->remaining_amount->formatWithoutDecimals(),
 
             'donors'            => $this->donors_with_formatted_amounts,

@@ -192,8 +192,21 @@ class Grant extends Model implements TranslatableContract
         );
     }
 
-    public function getOperationalCostsAttribute(): Money
+    public function getRegrantingAmountAttribute(): ?Money
     {
+        if (! $this->grant_manager_id) {
+            return null;
+        }
+
+        return Money::parseByDecimal($this->attributes['regranting_amount'], $this->currency);
+    }
+
+    public function getOperationalCostsAttribute(): ?Money
+    {
+        if (! $this->grant_manager_id) {
+            return null;
+        }
+
         if (! $this->regranting_amount) {
             return Money::parse(0, $this->currency);
         }
@@ -205,7 +218,7 @@ class Grant extends Model implements TranslatableContract
 
     public function getGrantableAmountAttribute(): Money
     {
-        return $this->regranting_amount ?? $this->amount;
+        return $this->grant_manager_id ? $this->regranting_amount : $this->amount;
     }
 
     public function getGrantedAmountAttribute(): Money
