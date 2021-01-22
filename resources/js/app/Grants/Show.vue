@@ -59,26 +59,47 @@
                     </div>
                 </dl>
 
-                <table class="prose max-w-none">
-                    <thead>
-                        <tr>
-                            <th
-                                class="text-left"
-                                v-text="$t('model.donor.plural')"
-                            />
-                            <th
-                                class="text-right"
-                                v-text="$t('field.contribution')"
-                            />
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(donor, index) in grant.donors" :key="index">
-                            <td v-text="donor.name" />
-                            <td v-text="donor.amount" class="text-right" />
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="space-y-6">
+                    <table class="w-full prose max-w-none">
+                        <thead>
+                            <tr>
+                                <th
+                                    class="text-left"
+                                    v-text="$t('model.donor.plural')"
+                                />
+                                <th
+                                    class="text-right"
+                                    v-text="$t('field.contribution')"
+                                />
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                v-for="(donor, index) in grant.donors"
+                                :key="index"
+                            >
+                                <td v-text="donor.name" />
+                                <td v-text="donor.amount" class="text-right" />
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="w-full prose max-w-none" v-if="grant.manager">
+                        <thead>
+                            <tr>
+                                <th
+                                    class="text-left"
+                                    v-text="$t('model.manager.singular')"
+                                />
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td v-text="grant.manager" />
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </grid>
         </panel>
         <panel>

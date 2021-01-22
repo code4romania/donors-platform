@@ -118,6 +118,7 @@ class GrantResource extends Resource
             'donors'            => $this->donors_with_formatted_amounts,
             'project_count'     => $this->project_count,
             'project_slots'     => $this->project_count - $this->projects()->count(),
+            'manager'           => optional($this->manager)->name,
             'grantees'          => $this->grantees->unique()->count(),
 
             'published_status'  => $this->published_status,
