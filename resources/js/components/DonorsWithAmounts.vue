@@ -30,7 +30,6 @@
 
                 <div class="flex items-center w-6 mt-5 ml-4">
                     <button
-                        v-if="list.length > 1"
                         type="button"
                         class="flex-shrink-0 text-gray-300 hover:text-red-500 focus:outline-none focus:text-red-500"
                         @click="removeAt(index)"
@@ -125,11 +124,6 @@
             list(value) {
                 this.$emit('input', value);
             },
-        },
-        mounted() {
-            if (!this.list.length) {
-                this.add();
-            }
         },
     };
 </script>

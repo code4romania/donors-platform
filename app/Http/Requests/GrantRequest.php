@@ -40,7 +40,7 @@ class GrantRequest extends FormRequest
             'start_date'          => ['required', 'date_format:Y-m-d', 'before:end_date', 'after_or_equal:2007-01-01'],
             'end_date'            => ['required', 'date_format:Y-m-d', 'after:start_date'],
             'amount'              => ['required', 'numeric'],
-            'donors'              => [new DonorContributionsMatchGrantValue($this->input('amount'))],
+            'donors'              => ['required', new DonorContributionsMatchGrantValue($this->input('amount'))],
             'donors.*.id'         => ['required', 'exists:donors,id'],
             'donors.*.amount'     => ['required', 'numeric'],
             'currency'            => ['required', Rule::in(config('money.currencies.iso'))],
