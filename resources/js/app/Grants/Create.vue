@@ -179,6 +179,7 @@
                 managed: false,
 
                 form: this.$inertia.form({
+                    _publish: true,
                     name: this.translateField('name'),
                     description: this.translateField('description'),
                     currency: null,
