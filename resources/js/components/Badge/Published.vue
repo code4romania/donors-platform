@@ -16,7 +16,7 @@
         },
         computed: {
             publishedStatusBadgeType() {
-                return this.status === 'published' ? 'green' : 'gray';
+                return this.status === 'published' ? 'green' : 'red';
             },
         },
     };
