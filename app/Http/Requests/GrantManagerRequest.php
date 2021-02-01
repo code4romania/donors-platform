@@ -16,11 +16,11 @@ class GrantManagerRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'      => ['required', 'string'],
-            'hq'        => ['nullable', 'string'],
-            'contact'   => ['required', 'string'],
-            'email'     => ['required', 'email'],
-            'phone'     => ['required', 'string'],
+            'name'      => ['required', 'string', 'max:255'],
+            'hq'        => ['nullable', 'string', 'max:255'],
+            'contact'   => ['required', 'string', 'max:255'],
+            'email'     => ['required', 'email', 'max:255'],
+            'phone'     => ['required', 'string', 'max:255'],
             'domains.*' => ['required', 'exists:domains,id'],
             'logo'      => [
                 'nullable',

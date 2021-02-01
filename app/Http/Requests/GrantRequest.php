@@ -32,8 +32,8 @@ class GrantRequest extends FormRequest
     public function rules()
     {
         return RuleFactory::make([
-            '%name%'              => ['required', 'string'],
-            '%description%'       => ['nullable', 'string'],
+            '%name%'              => ['required', 'string', 'max:255'],
+            '%description%'       => ['nullable', 'string', 'max:255'],
             'primary_domain'      => ['required', 'exists:domains,id'],
             'secondary_domains.*' => ['required', 'exists:domains,id'],
             'project_count'       => ['required', 'numeric'],

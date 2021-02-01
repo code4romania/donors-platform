@@ -31,7 +31,7 @@ class DomainRequest extends FormRequest
     public function rules()
     {
         return RuleFactory::make([
-            '%name%'    => ['required', 'string'],
+            '%name%'    => ['required', 'string', 'max:255'],
             'parent_id' => ['nullable', 'exists:domains,id'],
         ]);
     }

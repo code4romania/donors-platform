@@ -28,7 +28,7 @@ class ProjectRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'      => ['required', 'string'],
+            'title'      => ['required', 'string', 'max:255'],
             'grantees.*' => ['required', 'exists:grantees,id'],
             'amount'     => ['required', 'numeric'],
             'start_date' => ['required', 'date_format:Y-m-d', 'before:end_date'],

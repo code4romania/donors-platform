@@ -18,8 +18,8 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'            => ['required', 'string'],
-            'email'           => ['required', 'email'],
+            'name'            => ['required', 'string', 'max:255'],
+            'email'           => ['required', 'email', 'max:255'],
             'role'            => ['required', new EnumRule(UserRole::class)],
             'organization_id' => ['nullable', 'integer'],
         ];
