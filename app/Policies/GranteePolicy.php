@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
+use App\Enums\UserRole;
 use App\Models\Grantee;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -43,6 +44,10 @@ class GranteePolicy
      */
     public function create(User $user)
     {
+        if ($user->role->equals(UserRole::analyst())) {
+            return false;
+        }
+
         return true;
     }
 
@@ -55,6 +60,10 @@ class GranteePolicy
      */
     public function update(User $user, Grantee $grantee)
     {
+        if ($user->role->equals(UserRole::analyst())) {
+            return false;
+        }
+
         return true;
     }
 

@@ -60,6 +60,10 @@ class GrantPolicy
      */
     public function update(User $user, Grant $grant)
     {
+        if (! $user->organization) {
+            return false;
+        }
+
         return $user->grants->pluck('id')->contains($grant->id);
     }
 
@@ -73,6 +77,10 @@ class GrantPolicy
     public function delete(User $user, Grant $grant)
     {
         if (! $user->role->equals(UserRole::donor())) {
+            return false;
+        }
+
+        if (! $user->organization) {
             return false;
         }
 

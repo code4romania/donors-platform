@@ -74,6 +74,7 @@ class ProjectPolicy
         if (
             $this->grant !== null &&
             $this->grant->projects->pluck('id')->contains($project->id) &&
+            $user->organization &&
             $user->grants->pluck('id')->contains($this->grant->id)
         ) {
             return true;

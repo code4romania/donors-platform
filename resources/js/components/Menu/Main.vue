@@ -166,7 +166,9 @@
                             {
                                 href: this.$route('grants.index', ownArgs),
                                 label: this.$t('model.grant.own'),
-                                guard: !this.$userHasRole('admin'),
+                                guard:
+                                    this.$userHasRole('donor') ||
+                                    this.$userHasRole('manager'),
                             },
                         ],
                     },
@@ -179,7 +181,9 @@
                             {
                                 href: this.$route('grantees.index', ownArgs),
                                 label: this.$t('model.grantee.own'),
-                                guard: !this.$userHasRole('admin'),
+                                guard:
+                                    this.$userHasRole('donor') ||
+                                    this.$userHasRole('manager'),
                             },
                         ],
                     },
