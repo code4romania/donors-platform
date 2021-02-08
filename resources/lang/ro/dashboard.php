@@ -92,7 +92,7 @@ return [
         'admin'   => 'Administrator',
         'donor'   => 'Finanțator',
         'manager' => 'Grant manager',
-        'user'    => 'Utilizator',
+        'analyst' => 'Analist',
     ],
 
     'table' => [

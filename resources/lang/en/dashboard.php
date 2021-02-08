@@ -91,7 +91,7 @@ return [
         'admin'   => 'Administrator',
         'donor'   => 'Donor',
         'manager' => 'Grant manager',
-        'user'    => 'User',
+        'analyst' => 'Analyst',
     ],
 
     'table' => [
