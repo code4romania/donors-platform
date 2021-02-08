@@ -108,6 +108,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->role->equals(UserRole::manager());
     }
 
+    public function hasOrganization(): bool
+    {
+        return $this->isDonor() || $this->isManager();
+    }
+
     public function organization()
     {
         return $this->morphTo();
@@ -120,16 +125,29 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function associateOrganization(?string $organization_id)
     {
-        if ($this->role->equals(UserRole::admin()) || ! $organization_id) {
+        if (! $organization_id) {
             $this->organization()->dissociate();
-        } elseif ($this->role->equals(UserRole::donor())) {
-            $this->organization()->associate(
-                Donor::find($organization_id)
-            );
-        } elseif ($this->role->equals(UserRole::manager())) {
-            $this->organization()->associate(
-                GrantManager::find($organization_id)
-            );
+            $this->save();
+
+            return;
+        }
+
+        switch ($this->role) {
+            case UserRole::donor():
+                $this->organization()->associate(
+                    Donor::find($organization_id)
+                );
+                break;
+
+            case UserRole::manager():
+                $this->organization()->associate(
+                    GrantManager::find($organization_id)
+                );
+                break;
+
+            default:
+                $this->organization()->dissociate();
+                break;
         }
 
         $this->save();

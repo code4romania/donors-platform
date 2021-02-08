@@ -8,6 +8,7 @@ namespace App\Enums;
  * @method static self admin()
  * @method static self donor()
  * @method static self manager()
+ * @method static self analyst()
  */
 final class UserRole extends Enum
 {
@@ -17,6 +18,7 @@ final class UserRole extends Enum
             'admin'   => __('dashboard.role.admin'),
             'donor'   => __('dashboard.role.donor'),
             'manager' => __('dashboard.role.manager'),
+            'analyst' => __('dashboard.role.analyst'),
         ];
     }
 }

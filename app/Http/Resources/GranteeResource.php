@@ -55,6 +55,8 @@ class GranteeResource extends Resource
             'projects_count' => $this->projects_count,
             'donors_count'   => $this->donors_count,
             'total_funding'  => $this->total_funding->formatWithoutDecimals(),
+
+            'can'            => $this->getResourcePermissions(),
         ];
     }
 }

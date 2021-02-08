@@ -74,9 +74,16 @@ class HandleInertiaRequests extends Middleware
             'avatar'       => $user->avatar,
             'role'         => $user->role,
             'permissions'  => $user->all_permissions,
-            'organization' => $user->isAdmin()
-                ? ['id' => null, 'name' => __('dashboard.role.admin')]
-                : $user->organization->only('id', 'name'),
+            'organization' => function () use ($user) {
+                if ($user->hasOrganization()) {
+                    return $user->organization->only('id', 'name');
+                }
+
+                return [
+                    'id' => null,
+                    'name' => __("dashboard.role.{$user->role}"),
+                ];
+            },
         ];
     }
 
