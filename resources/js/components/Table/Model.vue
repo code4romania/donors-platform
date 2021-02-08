@@ -8,6 +8,7 @@
             :route-name="routeName"
             :route-args="routeArgs"
             :route-fill="routeFill"
+            :show-row-urls="showRowUrls"
             :sort-args="sortArgs"
         >
             <template
