@@ -35,7 +35,7 @@
             route-name="grants.show"
             :route-args="routeArgs"
             :route-fill="{ grant: 'grant_id' }"
-            :show-row-urls="false"
+            :show-row-urls="true"
             :paginate="true"
         >
             <template #amount="{ amount }">
