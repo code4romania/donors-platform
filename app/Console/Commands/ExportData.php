@@ -6,6 +6,7 @@ namespace App\Console\Commands;
 
 use App\Models\Grant;
 use App\Models\Project;
+use App\Services\Exchange;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
 
@@ -16,7 +17,7 @@ class ExportData extends Command
      *
      * @var string
      */
-    protected $signature = 'export:data';
+    protected $signature = 'export:data {--currency=EUR}';
 
     /**
      * Execute the console command.
@@ -25,6 +26,8 @@ class ExportData extends Command
      */
     public function handle()
     {
+        config()->set('money.exportCurrency', $this->option('currency'));
+
         $this->exportProjects();
 
         $this->exportGrants();
@@ -39,18 +42,22 @@ class ExportData extends Command
         $projects = Project::query()
             ->with('grant.donors', 'grant.primaryDomain', 'grant.secondaryDomains', 'grantees')
             ->get()
-            ->map(fn (Project $project) => [
-                'title'             => $project->title,
-                'start_date'        => $project->start_date->toDateString(),
-                'end_date'          => $project->end_date->toDateString(),
-                'amount'            => $project->amount->toInteger(),
-                'currency'          => $project->currency,
-                'grant'             => $project->grant->name,
-                'donors'            => $project->grant->donors->pluck('name')->join('|'),
-                'grantees'          => $project->grantees->pluck('name')->join('|'),
-                'primary_domain'    => $project->grant->primaryDomain->pluck('name')->join('|'),
-                'secondary_domains' => $project->grant->secondaryDomains->pluck('name')->join('|'),
-            ]);
+            ->map(function (Project $project) {
+                $amount = Exchange::convert($project->amount, Exchange::currency(), $project->grant->rate);
+
+                return [
+                    'title'             => $project->title,
+                    'start_date'        => $project->start_date->toDateString(),
+                    'end_date'          => $project->end_date->toDateString(),
+                    'amount'            => $amount->toInteger(),
+                    'currency'          => $amount->getCurrency(),
+                    'grant'             => $project->grant->name,
+                    'donors'            => $project->grant->donors->pluck('name')->join('|'),
+                    'grantees'          => $project->grantees->pluck('name')->join('|'),
+                    'primary_domain'    => $project->grant->primaryDomain->pluck('name')->join('|'),
+                    'secondary_domains' => $project->grant->secondaryDomains->pluck('name')->join('|'),
+                ];
+            });
 
         $this->export('projects', $projects);
     }
@@ -61,24 +68,40 @@ class ExportData extends Command
         $grants = Grant::query()
             ->withTranslation()
             ->get()
-            ->map(fn (Grant $grant) => [
-                'title'             => $grant->name,
-                'start_date'        => $grant->start_date->toDateString(),
-                'end_date'          => $grant->end_date->toDateString(),
-                'amount'            => $grant->amount->toInteger(),
-                'currency'          => $grant->currency,
-                'project_count'     => $grant->project_count,
-                'matching'          => boolval($grant->matching),
-                'manager'           => optional($grant->manager)->name,
-                'regranting_amount' => optional($grant->regranting_amount)->toInteger(),
-            ]);
+            ->map(function (Grant $grant) {
+                $amount = Exchange::convert($grant->amount, Exchange::currency(), $grant->rate);
+
+                return [
+                    'title'             => $grant->name,
+                    'donors'            => $grant->donors->pluck('name')->join('|'),
+                    'primary_domain'    => $grant->primaryDomain->pluck('name')->join('|'),
+                    'secondary_domains' => $grant->secondaryDomains->pluck('name')->join('|'),
+                    'start_date'        => $grant->start_date->toDateString(),
+                    'end_date'          => $grant->end_date->toDateString(),
+                    'amount'            => $amount->toInteger(),
+                    'currency'          => $amount->getCurrency(),
+                    'project_count'     => $grant->project_count,
+                    'matching'          => boolval($grant->matching),
+                    'manager'           => optional($grant->manager)->name,
+                    'regranting_amount' => $grant->regranting_amount
+                        ? Exchange::convert($grant->regranting_amount, Exchange::currency(), $grant->rate)->toInteger()
+                        : null,
+                ];
+            });
 
         $this->export('grants', $grants);
     }
 
     protected function export(string $type, Collection $data)
     {
-        $path = storage_path(sprintf('app/%s_%s.csv', today()->toDateString(), $type));
+        $path = storage_path(
+            sprintf(
+                'app/%s_%s_%s.csv',
+                today()->toDateString(),
+                $type,
+                Exchange::currency()
+            )
+        );
 
         $file = fopen($path, 'w');
         fputcsv($file, array_keys($data->first()));
