@@ -40,13 +40,17 @@
         </template>
 
         <div v-else>
-            <form-label
-                v-if="label"
-                :label="label"
-                :id="id"
-                :required="$attrs.required"
-                class="flex-1"
-            />
+            <div class="flex">
+                <form-label
+                    v-if="label"
+                    :label="label"
+                    :id="id"
+                    :required="$attrs.required"
+                />
+
+                <form-help v-if="help" :text="help" class="ml-2" />
+            </div>
+
             <div class="relative">
                 <form-text
                     :type="type"
@@ -98,7 +102,11 @@
             },
             value: {},
             suffix: {
-                type: [String, null],
+                type: String,
+                default: null,
+            },
+            help: {
+                type: String,
                 default: null,
             },
         },

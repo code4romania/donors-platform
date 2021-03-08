@@ -19,6 +19,7 @@
                     type="text"
                     id="tax_id"
                     :label="$t('field.tax_id')"
+                    :help="$t('dashboard.help.numbers_only')"
                     v-model="form.tax_id"
                     class="lg:col-span-2"
                 />

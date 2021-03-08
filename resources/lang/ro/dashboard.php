@@ -104,4 +104,8 @@ return [
         'federation' => 'Federație',
         'company'    => 'Companie',
     ],
+
+    'help' => [
+        'numbers_only' => 'doar cifre',
+    ],
 ];
