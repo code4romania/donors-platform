@@ -14,6 +14,14 @@
                     required
                     autofocus
                 />
+
+                <form-input
+                    type="text"
+                    id="tax_id"
+                    :label="$t('field.tax_id')"
+                    v-model="form.tax_id"
+                    class="lg:col-span-2"
+                />
             </form-panel>
 
             <div class="flex justify-end space-x-3">
@@ -55,7 +63,7 @@
                 formAction: this.$route('grantees.update', routeParams),
                 form: {
                     _method: 'PUT', // html form method spoofing
-                    ...this.prepareFields(['name'], this.grantee),
+                    ...this.prepareFields(['name', 'tax_id'], this.grantee),
                 },
             };
         },

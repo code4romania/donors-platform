@@ -47,6 +47,7 @@ return [
     'role'                  => 'Role',
     'roleLabel'             => 'Role',
     'start_date'            => 'Start date',
+    'tax_id'                => 'Tax ID',
     'title'                 => 'Title',
     'total_funding'         => 'Total funding',
     'type'                  => 'Type',

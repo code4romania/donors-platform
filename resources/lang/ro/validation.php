@@ -119,6 +119,7 @@ return [
     'uploaded'    => 'Câmpul :attribute nu a reușit încărcarea.',
     'url'         => 'Câmpul :attribute nu este un URL valid.',
     'uuid'        => 'Acesta :attribute trebuie să fie un cod UUID valid.',
+    'tax_id'      => 'Câmpul :attribute nu este valid.',
 
     'donor_contributions_mismatch' => 'Suma contribuțiilor donatorilor nu este egală cu valoarea grantului.',
 
@@ -155,5 +156,6 @@ return [
         'donors'     => 'finanțatori',
         'end_date'   => 'dată sfârșit',
         'start_date' => 'dată început',
+        'tax_id'     => 'CIF',
     ],
 ];

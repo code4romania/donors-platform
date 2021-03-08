@@ -25,14 +25,14 @@ class Grantee extends Model
      * @var string[]
      */
     protected $fillable = [
-        'name',
+        'name', 'tax_id',
     ];
 
     /**
      * @var string[]
      */
     public $searchable = [
-        'id', 'name',
+        'id', 'name', 'tax_id',
     ];
 
     /**

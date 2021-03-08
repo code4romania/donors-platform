@@ -14,6 +14,14 @@
                     required
                     autofocus
                 />
+
+                <form-input
+                    type="text"
+                    id="tax_id"
+                    :label="$t('field.tax_id')"
+                    v-model="form.tax_id"
+                    class="lg:col-span-2"
+                />
             </form-panel>
 
             <div class="flex justify-end space-x-3">
@@ -38,7 +46,7 @@
         data() {
             return {
                 formAction: this.$route('grantees.store'),
-                form: this.prepareFields(['name']),
+                form: this.prepareFields(['name', 'tax_id']),
             };
         },
         computed: {

@@ -48,7 +48,7 @@ class GranteeController extends Controller
 
     public function store(GranteeRequest $request): RedirectResponse
     {
-        Grantee::create($request->all());
+        Grantee::create($request->validated());
 
         return Redirect::route('grantees.index')
             ->with('success', __('dashboard.event.created', [
@@ -84,7 +84,7 @@ class GranteeController extends Controller
 
     public function update(GranteeRequest $request, Grantee $grantee): RedirectResponse
     {
-        $grantee->update($request->all());
+        $grantee->update($request->validated());
 
         return Redirect::route('grantees.index')
             ->with('success', __('dashboard.event.updated', [

@@ -44,6 +44,7 @@ class GranteeResource extends Resource
         return [
             'id'            => $this->id,
             'name'          => $this->name,
+            'tax_id'        => $this->tax_id,
         ];
     }
 
@@ -52,6 +53,7 @@ class GranteeResource extends Resource
         return [
             'id'             => $this->id,
             'name'           => $this->name,
+            'tax_id'         => $this->tax_id ?? '–',
             'projects_count' => $this->projects_count,
             'donors_count'   => $this->donors_count,
             'total_funding'  => $this->total_funding->formatWithoutDecimals(),

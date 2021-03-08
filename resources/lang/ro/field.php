@@ -48,6 +48,7 @@ return [
     'role'                  => 'Rol',
     'roleLabel'             => 'Rol',
     'start_date'            => 'Dată început',
+    'tax_id'                => 'CIF',
     'title'                 => 'Titlu',
     'total_funding'         => 'Finanțare totală',
     'type'                  => 'Tip',

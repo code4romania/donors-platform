@@ -11,11 +11,16 @@
         </template>
 
         <panel>
-            <div class="max-w-3xl">
+            <div class="max-w-3xl mt-2 mb-5">
                 <h2
-                    class="mt-2 mb-5 text-2xl font-bold leading-tight md:text-3xl"
+                    class="text-2xl font-bold leading-tight md:text-3xl"
                     v-text="grantee.name"
                 />
+
+                <p class="text-gray-500">
+                    <span v-text="$t('field.tax_id')" />:
+                    <span v-text="grantee.tax_id" />
+                </p>
             </div>
 
             <grid class="mt-8 md:grid-cols-2 xl:grid-cols-4">
