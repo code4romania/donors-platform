@@ -3,7 +3,7 @@ name: CI
 on: [push]
 
 jobs:
-  test:
+  ci:
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
