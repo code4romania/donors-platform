@@ -5,12 +5,13 @@
             :label="label"
             :id="id"
             :required="$attrs.required"
+            class="mb-1"
         />
 
         <input
             type="file"
             :id="id"
-            class="block w-full text-xs transition duration-150 ease-in-out rounded-md shadow-sm form-input"
+            class="block w-full px-3 py-1.5 text-xs leading-5 border border-gray-300 rounded-md shadow-sm disabled:text-gray-400 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 focus:outline-none"
             :accept="accept"
             v-bind="$attrs"
             @change="onChange"

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <form-label :id="id" :label="label" />
+        <form-label :id="id" :label="label" class="mb-1" />
 
         <div class="flex flex-wrap leading-tight text-gray-900">
             <label
@@ -10,7 +10,7 @@
             >
                 <input
                     type="checkbox"
-                    class="w-4 h-4 mt-1 mr-2 text-blue-500 duration-150 ease-in-out transition-color form-checkbox"
+                    class="text-blue-600 border-gray-300 rounded shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                     :value="option[optionValueKey]"
                     v-model="checked"
                 />

@@ -1,6 +1,9 @@
 const mix = require('laravel-mix');
+const path = require('path');
+
 require('laravel-mix-svg-vue');
 require('laravel-mix-bundle-analyzer');
+require('laravel-mix-valet');
 
 mix.extend(
     'translations',
@@ -8,47 +11,44 @@ mix.extend(
         webpackRules() {
             return {
                 test: path.resolve('resources/lang/index.js'),
-                loader: `@kirschbaum-development/laravel-translations-loader/?parameters={$1}`,
+                use: [
+                    {
+                        loader: `@kirschbaum-development/laravel-translations-loader/?parameters={$1}`,
+                    },
+                ],
             };
         }
     })()
 );
 
-mix.options({
-    // extractVueStyles: true,
-    hmrOptions: {
-        host: 'platformadonatorilor.test',
-        port: '8080',
-    },
-});
-
-mix.config.fileLoaderDirs.fonts = 'assets/fonts';
-
-mix.webpackConfig({
-    devtool: mix.inProduction() ? 'none' : 'source-map',
-    resolve: {
-        alias: {
-            vue$: 'vue/dist/vue.runtime.esm.js',
-            '@': path.resolve('resources/js'),
-            '~': path.resolve('resources'),
-        },
-    },
-});
+//////
 
 if (mix.inProduction()) {
     mix.version();
 }
 
-// if (mix.isWatching()) {
-//     mix.bundleAnalyzer();
-// }
+if (mix.isWatching()) {
+    mix.bundleAnalyzer({ openAnalyzer: false });
+}
+
+mix.valet('platformadonatorilor.test')
+    .translations()
+    .alias({
+        '@': path.resolve('resources/js'),
+        '~': path.resolve('resources'),
+    })
+    .options({
+        fileLoaderDirs: {
+            fonts: 'assets/fonts',
+        },
+    });
 
 mix.js('resources/js/app.js', 'public/assets')
+    .vue({ version: 2 })
     .postCss('resources/css/app.pcss', 'public/assets', [
         require('postcss-import'),
         require('tailwindcss'),
     ])
-    .translations()
     .svgVue({
         svgPath: 'node_modules/remixicon/icons',
         extract: false,

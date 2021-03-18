@@ -5,6 +5,7 @@
             :label="label"
             :id="id"
             :required="$attrs.required"
+            class="mb-1"
         />
 
         <treeselect
@@ -130,5 +131,10 @@
     .vue-treeselect__single-value {
         color: inherit;
         line-height: 40px;
+    }
+
+    .vue-treeselect__input:focus {
+        /* outline: none; */
+        box-shadow: none;
     }
 </style>

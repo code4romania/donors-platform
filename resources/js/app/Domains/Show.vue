@@ -52,7 +52,7 @@
                         <ul
                             class="block"
                             :class="{
-                                'sm:col-count-2 lg:col-count-3  xl:col-count-3':
+                                'sm:col-count-2 lg:col-count-3 xl:col-count-3':
                                     domain.subdomains.length > 10,
                             }"
                         >

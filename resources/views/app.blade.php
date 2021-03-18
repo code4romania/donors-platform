@@ -6,11 +6,11 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link rel="stylesheet" href="{{ asset(mix('assets/app.css')) }}">
+    <link rel="stylesheet" href="{{ mix('assets/app.css') }}">
 
-    <script src="{{ asset(mix('assets/manifest.js')) }}" defer></script>
-    <script src="{{ asset(mix('assets/vendor.js')) }}" defer></script>
-    <script src="{{ asset(mix('assets/app.js')) }}" defer></script>
+    <script src="{{ mix('assets/manifest.js') }}" defer></script>
+    <script src="{{ mix('assets/vendor.js') }}" defer></script>
+    <script src="{{ mix('assets/app.js') }}" defer></script>
     @routes
 </head>
 <body class="antialiased bg-gray-50">

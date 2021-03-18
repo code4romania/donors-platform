@@ -1,7 +1,7 @@
 <template>
     <label
         :for="id"
-        class="block mb-1 text-sm font-semibold leading-tight text-gray-700"
+        class="block text-sm font-semibold leading-tight text-gray-700"
     >
         {{ label }}
         <span v-if="required" class="font-bold text-red-500">*</span>

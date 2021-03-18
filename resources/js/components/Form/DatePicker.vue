@@ -5,14 +5,14 @@
             :label="label"
             :id="id"
             :required="$attrs.required"
-            class="flex-1"
+            class="flex-1 mb-1"
         />
 
         <div class="relative">
             <input
                 type="date"
                 placeholder="YYYY-MM-DD"
-                class="block w-full transition duration-150 ease-in-out rounded-md shadow-sm form-input"
+                class="block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                 v-model="dataValue"
                 v-pattern="{
                     date: true,

@@ -1,14 +1,16 @@
 <template>
     <grid class="items-center grid-cols-1 md:grid-cols-3">
         <div>
-            <form-label id="search" :label="$t('dashboard.action.search')" />
+            <form-label
+                id="search"
+                :label="$t('dashboard.action.search')"
+                class="mb-1"
+            />
 
-            <div
-                class="relative overflow-hidden bg-white border border-gray-300 form-input"
-            >
+            <div class="relative overflow-hidden">
                 <input
                     id="search"
-                    class="w-full pr-10 rounded-r focus:outline-none"
+                    class="block w-full border-gray-300 rounded-md shadow-sm sm:text-sm disabled:text-gray-400 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                     autocomplete="off"
                     type="text"
                     name="search"
@@ -17,7 +19,7 @@
                 />
                 <button
                     v-if="search"
-                    class="absolute inset-y-0 rounded-full focus:outline-none focus:shadow-outline m-auto w-5 h-5 text-gray-300 right-2.5"
+                    class="absolute inset-y-0 rounded-full focus:outline-none focus:ring m-auto w-5 h-5 text-gray-300 right-2.5"
                     @click="search = null"
                 >
                     <svg-vue

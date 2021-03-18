@@ -1,16 +1,9 @@
 <template>
-    <textarea
-        v-if="type === 'textarea'"
+    <component
+        :is="componentTag"
+        :type="componentType"
         :id="id"
-        class="block w-full transition duration-150 ease-in-out rounded-md shadow-sm form-textarea"
-        v-bind="$attrs"
-        v-model="dataValue"
-    />
-    <input
-        v-else
-        :type="type"
-        :id="id"
-        class="block w-full transition duration-150 ease-in-out rounded-md shadow-sm form-input"
+        class="block w-full border-gray-300 rounded-md shadow-sm sm:text-sm disabled:text-gray-400 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
         v-bind="$attrs"
         v-model="dataValue"
     />
@@ -34,6 +27,14 @@
             return {
                 dataValue: this.value,
             };
+        },
+        computed: {
+            componentTag() {
+                return this.type === 'textarea' ? 'textarea' : 'input';
+            },
+            componentType() {
+                return this.type !== 'textarea' ? this.type : false;
+            },
         },
         watch: {
             value: {

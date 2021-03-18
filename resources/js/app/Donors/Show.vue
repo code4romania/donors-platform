@@ -26,14 +26,15 @@
             <div
                 class="grid gap-4 sm:grid-cols-3 md:gap-x-6 md:gap-y-8 md:grid-cols-5"
             >
-                <div class="md:row-span-2">
-                    <div class="relative border aspect-ratio-1/1">
-                        <div
-                            class="absolute inset-0 flex items-center justify-center"
-                        >
-                            <img class="w-full" :src="donor.logo" alt="" />
-                        </div>
-                    </div>
+                <div
+                    class="relative border md:row-span-2 aspect-w-1 aspect-h-1"
+                >
+                    <img
+                        v-if="donor.logo"
+                        :src="donor.logo"
+                        class="object-contain"
+                        alt=""
+                    />
                 </div>
 
                 <div class="sm:col-span-2 md:col-span-4">

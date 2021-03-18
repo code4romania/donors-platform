@@ -3,7 +3,7 @@
         <input
             type="checkbox"
             :id="id"
-            class="w-4 h-4 mb-1 text-blue-600 transition duration-150 ease-in-out form-checkbox"
+            class="text-blue-600 border-gray-300 rounded shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
             :value="value"
             v-model="checked"
         />

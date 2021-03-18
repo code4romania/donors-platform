@@ -30,7 +30,7 @@
         props: {
             headerClass: {
                 type: String,
-                default: 'shadow-xs',
+                default: 'ring-1 ring-black ring-opacity-5',
             },
             icon: {
                 type: [String, null],

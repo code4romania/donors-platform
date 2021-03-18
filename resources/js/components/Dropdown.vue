@@ -24,7 +24,7 @@
                 style="z-index: 99999"
             >
                 <div
-                    class="mt-2 overflow-auto bg-white rounded shadow-xs max-h-60 min-w-48"
+                    class="mt-2 overflow-auto bg-white rounded ring-1 ring-black ring-opacity-5 max-h-60 min-w-48"
                 >
                     <slot name="dropdown" />
                 </div>

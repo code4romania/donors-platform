@@ -22,7 +22,7 @@
     </a>
 </div>
 
-<footer class="relative bg-gray-800 shadow-xs">
+<footer class="relative bg-gray-800 ring-1 ring-black ring-opacity-5">
     <div class="container py-12 lg:py-16">
         <div class="grid gap-y-20 gap-x-12 lg:grid-cols-4">
             <div class="lg:col-span-3">
@@ -31,16 +31,16 @@
                 <p class="mt-8 text-gray-300">Doloribus nesciunt vero. Sit ea vel ut a architecto quia.</p>
 
                 <div class="flex mt-8 space-x-4">
-                    <a href="#" target="_blank" rel="noopener noreferrer" class="text-gray-500 transition-colors duration-150 rounded hover:text-gray-300 focus:outline-none focus:shadow-outline-gray focus:text-gray-300">
+                    <a href="#" target="_blank" rel="noopener noreferrer" class="text-gray-500 transition-colors duration-150 rounded hover:text-gray-300 focus:outline-none focus:ring-gray focus:text-gray-300">
                         <span class="sr-only">Facebook</span>
                         <x-ri-facebook-fill class="w-6 h-6" />
                     </a>
 
-                    <a href="#" target="_blank" rel="noopener noreferrer" class="text-gray-500 transition-colors duration-150 rounded hover:text-gray-300 focus:outline-none focus:shadow-outline-gray focus:text-gray-300">
+                    <a href="#" target="_blank" rel="noopener noreferrer" class="text-gray-500 transition-colors duration-150 rounded hover:text-gray-300 focus:outline-none focus:ring-gray focus:text-gray-300">
                         <span class="sr-only">Twitter</span>
                         <x-ri-twitter-fill class="w-6 h-6" />
                     </a>
-                    <a href="#" target="_blank" rel="noopener noreferrer" class="text-gray-500 transition-colors duration-150 rounded hover:text-gray-300 focus:outline-none focus:shadow-outline-gray focus:text-gray-300">
+                    <a href="#" target="_blank" rel="noopener noreferrer" class="text-gray-500 transition-colors duration-150 rounded hover:text-gray-300 focus:outline-none focus:ring-gray focus:text-gray-300">
                         <span class="sr-only">LinkedIn</span>
                         <x-ri-linkedin-fill class="w-6 h-6" />
                     </a>

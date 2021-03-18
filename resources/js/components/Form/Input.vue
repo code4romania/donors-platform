@@ -2,9 +2,9 @@
     <div class="space-y-4">
         <template v-if="translated && locales">
             <div v-for="(_, locale) in locales" :key="locale">
-                <div class="flex">
+                <div class="flex mb-1">
                     <span
-                        class="px-1.5 mb-1 mr-2 text-xs text-white uppercase bg-gray-400 rounded-sm"
+                        class="px-1.5 mr-2 text-xs text-white uppercase bg-gray-400 rounded-sm"
                         v-text="locale"
                     />
 
@@ -40,7 +40,7 @@
         </template>
 
         <div v-else>
-            <div class="flex">
+            <div class="flex mb-1">
                 <form-label
                     v-if="label"
                     :label="label"

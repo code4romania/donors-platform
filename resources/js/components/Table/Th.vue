@@ -124,7 +124,7 @@
                 return false;
             },
             thStyles() {
-                return this.isShrinkableColumn ? 'w-1 whitespace-no-wrap' : false;
+                return this.isShrinkableColumn ? 'w-1 whitespace-nowrap' : false;
             },
         },
     };

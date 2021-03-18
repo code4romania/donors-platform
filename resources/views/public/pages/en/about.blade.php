@@ -15,7 +15,7 @@
 
         <div class="grid grid-cols-3 lg:grid-cols-5">
             @for ($i = 1; $i <= 15; $i++)
-                <img src="{{ asset("assets/images/logos/$i.png") }}" class="shadow-xs" alt="">
+                <img src="{{ asset("assets/images/logos/$i.png") }}" class="ring-1 ring-black ring-opacity-5" alt="">
             @endfor
         </div>
     </x-section>
