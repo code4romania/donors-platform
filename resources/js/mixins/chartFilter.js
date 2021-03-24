@@ -1,5 +1,3 @@
-import merge from 'lodash/merge';
-import pickBy from 'lodash/pickBy';
 import debounce from 'lodash/debounce';
 
 export default {

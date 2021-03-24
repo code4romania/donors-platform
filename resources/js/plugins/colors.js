@@ -5,7 +5,7 @@ export default {
             interact: 'focus:bg-gray-200',
         },
         regular: {
-            base: 'text-white bg-gray-500',
+            base: 'text-white bg-gray-600',
             interact: 'focus:bg-gray-600',
         },
         dark: {
@@ -15,11 +15,11 @@ export default {
     },
     red: {
         light: {
-            base: 'text-red-900 bg-red-100',
+            base: 'text-red-600 bg-red-100',
             interact: 'focus:bg-red-200',
         },
         regular: {
-            base: 'text-white bg-red-500',
+            base: 'text-white bg-red-600',
             interact: 'focus:bg-red-600',
         },
         dark: {
@@ -33,7 +33,7 @@ export default {
             interact: 'focus:bg-orange-200',
         },
         regular: {
-            base: 'text-white bg-orange-500',
+            base: 'text-white bg-orange-600',
             interact: 'focus:bg-orange-600',
         },
         dark: {
@@ -51,7 +51,7 @@ export default {
             interact: 'focus:bg-yellow-400',
         },
         dark: {
-            base: 'text-white bg-yellow-500',
+            base: 'text-white bg-yellow-600',
             interact: 'focus:bg-yellow-600',
         },
     },
@@ -61,7 +61,7 @@ export default {
             interact: 'focus:bg-green-200',
         },
         regular: {
-            base: 'text-white bg-green-500',
+            base: 'text-white bg-green-600',
             interact: 'focus:bg-green-600',
         },
         dark: {
@@ -75,7 +75,7 @@ export default {
             interact: 'focus:bg-teal-200',
         },
         regular: {
-            base: 'text-white bg-teal-500',
+            base: 'text-white bg-teal-600',
             interact: 'focus:bg-teal-600',
         },
         dark: {
@@ -89,7 +89,7 @@ export default {
             interact: 'focus:bg-blue-200',
         },
         regular: {
-            base: 'text-white bg-blue-500',
+            base: 'text-white bg-blue-600',
             interact: 'focus:bg-blue-600',
         },
         dark: {
@@ -103,7 +103,7 @@ export default {
             interact: 'focus:bg-indigo-200',
         },
         regular: {
-            base: 'text-white bg-indigo-500',
+            base: 'text-white bg-indigo-600',
             interact: 'focus:bg-indigo-600',
         },
         dark: {
@@ -117,7 +117,7 @@ export default {
             interact: 'focus:bg-purple-200',
         },
         regular: {
-            base: 'text-white bg-purple-500',
+            base: 'text-white bg-purple-600',
             interact: 'focus:bg-purple-600',
         },
         dark: {
@@ -131,7 +131,7 @@ export default {
             interact: 'focus:bg-pink-200',
         },
         regular: {
-            base: 'text-white bg-pink-500',
+            base: 'text-white bg-pink-600',
             interact: 'focus:bg-pink-600',
         },
         dark: {

@@ -29,7 +29,7 @@ class DomainController extends Controller
             'columns' => $this->getIndexColumns(Domain::class, [
                 'name', 'total_funding', 'donors_count', 'grants_count', 'projects_count',
             ]),
-            'domains' => Domain::flatTree(),
+            'domains' => Domain::flatTree(null, ['stats']),
         ]);
     }
 

@@ -70,7 +70,11 @@
 
                     <menu-item
                         icon="System/logout-box-line"
-                        :href="$route('public.page')"
+                        :href="
+                            $route('front.index', {
+                                locale: this.$page.props.locale,
+                            })
+                        "
                         :label="$t('dashboard.menu.back_to_site')"
                         :external="true"
                     />

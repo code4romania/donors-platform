@@ -114,49 +114,64 @@ class Domain extends Model implements TranslatableContract
     public function getSubdomainsAttribute(): array
     {
         return self::flatTree(
-            self::walkTree($this->descendants, $this->id, false)
+            self::walkTree($this->descendants, $this->id)
         )->toArray();
     }
 
-    public static function walkTree(?Collection $domains = null, ?int $parent = null, bool $stats = true): Collection
+    public static function walkTree(?Collection $domains = null, ?int $parent = null, array $options = []): Collection
     {
         $domains ??= self::tree()
             ->without('translations')
             ->withTranslation()
-            ->with('descendantsAndSelf.donors', 'descendantsAndSelf.grants', 'descendantsAndSelf.projects')
+            ->when(in_array('stats', $options), fn ($q) => $q->with('descendantsAndSelf.donors', 'descendantsAndSelf.grants', 'descendantsAndSelf.projects'))
+            ->when(in_array('disabled', $options), fn ($q) => $q->with('descendantsAndSelf.grants'))
             ->get();
 
         return $domains
             ->reject(fn ($domain) => $domain->parent_id !== $parent)
-            ->map(function ($domain) use ($domains, $stats) {
+            ->map(function ($domain) use ($domains, $options) {
                 $item = [
-                    'id'            => $domain->id,
-                    'name'          => $domain->name,
-                    'depth'         => $domain->depth,
+                    'id'    => $domain->id,
+                    'name'  => $domain->name,
+                    'depth' => $domain->depth,
                 ];
 
-                if ($stats) {
+                if (in_array('stats', $options)) {
+                    $donors = $domain->descendantsAndSelf
+                        ->pluck('donors')
+                        ->flatten()
+                        ->unique('id');
+
+                    $grants = $domain->descendantsAndSelf
+                        ->pluck('grants')
+                        ->flatten()
+                        ->unique('id');
+
+                    $projects = $domain->descendantsAndSelf
+                        ->pluck('projects')
+                        ->flatten()
+                        ->unique('id');
+
                     $item = array_merge($item, [
-                        'total_funding' => $domain->total_funding->formatWithoutDecimals(),
-                        'donors_count'  => $domain->descendantsAndSelf
-                            ->pluck('donors')
-                            ->flatten()
-                            ->unique('id')
-                            ->count(),
-                        'grants_count'  => $domain->descendantsAndSelf
-                            ->pluck('grants')
-                            ->flatten()
-                            ->unique('id')
-                            ->count(),
-                        'projects_count'  => $domain->descendantsAndSelf
-                            ->pluck('projects')
-                            ->flatten()
-                            ->unique('id')
-                            ->count(),
+                        'total_funding'  => $domain->total_funding->formatWithoutDecimals(),
+                        'donors_count'   => $donors->count(),
+                        'grants_count'   => $grants->count(),
+                        'projects_count' => $projects->count(),
                     ]);
                 }
 
-                $children = self::walkTree($domains, $domain->id, $stats);
+                if (in_array('disabled', $options)) {
+                    $grants ??= $domain->descendantsAndSelf
+                        ->pluck('grants')
+                        ->flatten()
+                        ->unique('id');
+
+                    $item = array_merge($item, [
+                        'isDisabled' => $grants->isEmpty(),
+                    ]);
+                }
+
+                $children = self::walkTree($domains, $domain->id, $options);
 
                 if ($children->isNotEmpty()) {
                     $item['children'] = $children;
@@ -168,12 +183,12 @@ class Domain extends Model implements TranslatableContract
             ->values();
     }
 
-    public static function flatTree(?Collection $domains = null)
+    public static function flatTree(?Collection $domains = null, array $options = [])
     {
-        $domains ??= self::walkTree();
+        $domains ??= self::walkTree(null, null, $options);
         $flattened = collect();
 
-        $domains->each(function ($domain) use ($flattened) {
+        $domains->each(function ($domain) use ($flattened, $options) {
             $children = null;
 
             if (property_exists($domain, 'children')) {
@@ -184,7 +199,7 @@ class Domain extends Model implements TranslatableContract
             $flattened->push($domain);
 
             if ($children) {
-                $flattened->push(self::flatTree($children));
+                $flattened->push(self::flatTree($children, $options));
             }
         });
 

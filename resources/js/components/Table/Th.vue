@@ -26,7 +26,6 @@
 </template>
 
 <script>
-    import merge from 'lodash/merge';
     import pickBy from 'lodash/pickBy';
     import identity from 'lodash/identity';
 

@@ -7,7 +7,7 @@
                 shade="light"
                 class="text-sm truncate"
                 @click="$emit('reset')"
-                v-text="$t('dashboard.action.reset')"
+                v-text="labelReset"
             />
         </div>
 
@@ -20,5 +20,13 @@
 <script>
     export default {
         name: 'ChartFilter',
+        props: {
+            labelReset: {
+                type: String,
+                default() {
+                    return this.$t('dashboard.action.reset');
+                },
+            },
+        },
     };
 </script>

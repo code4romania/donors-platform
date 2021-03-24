@@ -1,5 +1,5 @@
-<section class="relative py-16 ring-1 ring-black ring-opacity-5">
-    <div class="container">
+<section {{ $attributes->merge(['class' => 'relative py-16 md:py-24']) }}>
+    <div class="max-w-xl px-4 mx-auto sm:px-6 lg:px-12 lg:max-w-7xl">
         {{ $slot }}
     </div>
 </section>

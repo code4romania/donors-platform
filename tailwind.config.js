@@ -1,10 +1,8 @@
+const colors = require('tailwindcss/colors');
+
 module.exports = {
     darkMode: false,
     theme: {
-        container: {
-            padding: '1.25rem',
-            center: true,
-        },
         extend: {
             fontFamily: {
                 sans: [
@@ -14,7 +12,9 @@ module.exports = {
                     'Arial',
                     'sans-serif',
                 ],
-                mono: ['Courier', 'monospace'],
+            },
+            colors: {
+                teal: colors.teal,
             },
             minWidth: theme => ({
                 ...theme('spacing'),

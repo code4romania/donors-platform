@@ -37,7 +37,6 @@
 
 <script>
     import isEmpty from 'lodash/isEmpty';
-    import merge from 'lodash/merge';
 
     export default {
         name: 'DataBlock',

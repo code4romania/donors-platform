@@ -6,18 +6,16 @@ namespace App\Services;
 
 use App\Models\Domain;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Request;
 
 class ChartBuilder
 {
-    public static function dashboard(): array
+    public static function data(array $activeYears, ?array $activeDomains = null): array
     {
         $domains = Domain::tree()
             ->with('descendantsAndSelf.grants')
             ->withTranslation()
             ->when(
-                self::getActiveDomains(),
+                $activeDomains,
                 fn (Builder $query, array $domains) => $query->whereIn('id', $domains),
                 fn (Builder $query) => $query->whereNull('parent_id')
             )
@@ -30,7 +28,7 @@ class ChartBuilder
                 ->flatten()
                 ->groupBy('year')
                 ->sortKeys()
-                ->filter(fn ($_, $year) => in_array($year, self::getActiveYears()))
+                ->filter(fn ($_, $year) => in_array($year, $activeYears))
                 ->map(fn ($grants) => Exchange::sumForCurrency($grants)),
         ]);
 
@@ -45,6 +43,7 @@ class ChartBuilder
 
         return [
             'options' => [
+                'currency' => Exchange::currency(),
                 'xaxis' => [
                     'categories' => $years->toArray(),
                 ],
@@ -60,23 +59,5 @@ class ChartBuilder
                 ->values()
                 ->toArray(),
         ];
-    }
-
-    private static function getActiveYears(): array
-    {
-        return Request::input('filters.years', [
-            Carbon::now()->year,
-            Carbon::now()->subYear()->year,
-        ]);
-    }
-
-    private static function getActiveDomains(): array
-    {
-        return Request::input('filters.domains', []);
-    }
-
-    private static function getActiveDonors(): array
-    {
-        return Request::input('filters.donors', []);
     }
 }

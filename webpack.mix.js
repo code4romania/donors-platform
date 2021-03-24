@@ -44,6 +44,7 @@ mix.valet('platformadonatorilor.test')
     });
 
 mix.js('resources/js/app.js', 'public/assets')
+    .js('resources/js/public.js', 'public/assets')
     .vue({ version: 2 })
     .postCss('resources/css/app.pcss', 'public/assets', [
         require('postcss-import'),
@@ -60,5 +61,4 @@ mix.js('resources/js/app.js', 'public/assets')
         ],
     })
     .copyDirectory('resources/svg', 'public/assets/svg')
-    .copyDirectory('resources/images', 'public/assets/images')
-    .extract();
+    .copyDirectory('resources/images', 'public/assets/images');

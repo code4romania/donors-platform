@@ -8,8 +8,6 @@
 
     <link rel="stylesheet" href="{{ mix('assets/app.css') }}">
 
-    <script src="{{ mix('assets/manifest.js') }}" defer></script>
-    <script src="{{ mix('assets/vendor.js') }}" defer></script>
     <script src="{{ mix('assets/app.js') }}" defer></script>
     @routes
 </head>

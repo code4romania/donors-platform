@@ -100,19 +100,17 @@
                     (x) => x != this.optionValue(e)
                 );
             },
-            input(e) {
-                if (this.$attrs.multiple) {
-                    return;
+            input(values) {
+                if (!values.length) {
+                    this.$emit('input', this.dataSelected);
                 }
-
-                this.$emit('input', this.dataSelected);
             },
         },
         watch: {
             value: {
                 immediate: true,
-                handler: function (newValue) {
-                    if (typeof newValue !== 'undefined') {
+                handler(newValue) {
+                    if (this.dataSelected !== newValue) {
                         this.dataSelected = newValue;
                     }
                 },

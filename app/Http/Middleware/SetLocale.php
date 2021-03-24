@@ -27,7 +27,7 @@ class SetLocale
 
         $section = explode('.', $routeName)[0];
 
-        if ($section === 'public') {
+        if ($section === 'front') {
             $locale = $request->segment(1);
 
             if (! in_array($locale, config('translatable.locales'))) {
@@ -38,11 +38,11 @@ class SetLocale
                 );
             }
 
-            App::setLocale($locale);
-        } elseif (Auth::check()) {
-            App::setLocale(
-                in_array(Auth::user()->locale, config('translatable.locales'))
-                    ? Auth::user()->locale
+            app()->setLocale($locale);
+        } elseif (auth()->check()) {
+            app()->setLocale(
+                in_array(auth()->user()->locale, config('translatable.locales'))
+                    ? auth()->user()->locale
                     : config('app.locale')
             );
         }

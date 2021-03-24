@@ -25,6 +25,10 @@
                 return this.locale ? `${this.locale}.${this.id}` : this.id;
             },
             hasErrors() {
+                if (!this.hasOwnProperty('$page')) {
+                    return false;
+                }
+
                 return this.$page.props.errors.hasOwnProperty(this.errorKey);
             },
             message() {

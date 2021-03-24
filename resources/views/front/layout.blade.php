@@ -6,12 +6,16 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    {!! SEO::generate() !!}
+
     <link rel="stylesheet" href="{{ mix('assets/app.css') }}">
+
+    <script src="{{ mix('assets/public.js') }}" defer></script>
 </head>
 <body class="flex flex-col min-h-screen antialiased">
     <x-header />
 
-    <main class="flex-1">
+    <main id="app" class="flex-1">
         @yield('content')
     </main>
 

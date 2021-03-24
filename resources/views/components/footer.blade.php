@@ -1,64 +1,116 @@
 @php
-    $menu = [
+
+    $social = [
+        [
+            'name' => 'Facebook',
+            'icon' => 'ri-facebook-fill',
+            'href' => '#',
+        ],
+        [
+            'name' => 'Twitter',
+            'icon' => 'ri-twitter-fill',
+            'href' => '#',
+        ],
+        [
+            'name' => 'LinkedIn',
+            'icon' => 'ri-linkedin-fill',
+            'href' => '#',
+        ],
+        [
+            'name' => 'GitHub',
+            'icon' => 'ri-github-fill',
+            'href' => 'https://github.com/code4romania/donors-platform',
+        ],
+    ];
+
+
+    $menu2 = [
         [
             'name' => __('public.menu.terms'),
-            'href' => localizedRoute('public.page', 'terms'),
+            'href' => localizedRoute('front.page', 'terms'),
         ],
         [
             'name' => __('public.menu.privacy'),
-            'href' => localizedRoute('public.page', 'privacy'),
+            'href' => localizedRoute('front.page', 'privacy'),
         ],
         [
             'name' => __('public.menu.about'),
-            'href' => localizedRoute('public.page', 'about'),
+            'href' => localizedRoute('front.page', 'about'),
         ],
     ];
+
+    $menus = [
+        [
+            'label' => __('public.menu_name.links'),
+            'items' => [
+                [
+                    'name' => __('public.menu.terms'),
+                    'href' => localizedRoute('front.page', 'terms'),
+                ],
+                [
+                    'name' => __('public.menu.privacy'),
+                    'href' => localizedRoute('front.page', 'privacy'),
+                ],
+                [
+                    'name' => __('public.menu.about'),
+                    'href' => localizedRoute('front.page', 'about'),
+                ],
+            ],
+        ]
+    ]
 @endphp
 
-<div class="container flex items-center justify-end py-8">
-    <p>{{ __('public.poweredby') }}</p>
-    <a href="https://code4.ro" target="_blank" class="inline-block ml-2">
-        <img src="{{ asset('assets/svg/code4.svg') }}" class="w-24" alt="">
-    </a>
-</div>
-
-<footer class="relative bg-gray-800 ring-1 ring-black ring-opacity-5">
-    <div class="container py-12 lg:py-16">
-        <div class="grid gap-y-20 gap-x-12 lg:grid-cols-4">
-            <div class="lg:col-span-3">
+<footer class="bg-gray-100">
+    <div class="px-4 py-12 mx-auto max-w-7xl sm:px-6 lg:py-16 lg:px-8">
+        <div class="xl:grid xl:grid-cols-3 xl:gap-8">
+            <div class="space-y-8 xl:col-span-1">
                 <x-logo />
 
-                <p class="mt-8 text-gray-300">Doloribus nesciunt vero. Sit ea vel ut a architecto quia.</p>
+                <p class="text-base text-gray-500">
+                    {{ __('public.tag') }}
+                </p>
 
-                <div class="flex mt-8 space-x-4">
-                    <a href="#" target="_blank" rel="noopener noreferrer" class="text-gray-500 transition-colors duration-150 rounded hover:text-gray-300 focus:outline-none focus:ring-gray focus:text-gray-300">
-                        <span class="sr-only">Facebook</span>
-                        <x-ri-facebook-fill class="w-6 h-6" />
-                    </a>
-
-                    <a href="#" target="_blank" rel="noopener noreferrer" class="text-gray-500 transition-colors duration-150 rounded hover:text-gray-300 focus:outline-none focus:ring-gray focus:text-gray-300">
-                        <span class="sr-only">Twitter</span>
-                        <x-ri-twitter-fill class="w-6 h-6" />
-                    </a>
-                    <a href="#" target="_blank" rel="noopener noreferrer" class="text-gray-500 transition-colors duration-150 rounded hover:text-gray-300 focus:outline-none focus:ring-gray focus:text-gray-300">
-                        <span class="sr-only">LinkedIn</span>
-                        <x-ri-linkedin-fill class="w-6 h-6" />
-                    </a>
+                <div class="flex mt-8 space-x-6">
+                    @foreach ($social as $link)
+                        <a href="{{ $link['href'] }}" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gray-500 focus:text-gray-500">
+                            <span class="sr-only">{{ $link['name'] }}</span>
+                            {{ svg($link['icon'], 'w-6 h-6') }}
+                        </a>
+                    @endforeach
                 </div>
             </div>
 
-            <nav class="leading-tight">
-                <h2 class="font-semibold text-yellow-300">Linkuri utile</h2>
-                <ul class="mt-4 space-y-4 text-gray-400">
-                    @foreach ($menu as $item)
-                        <li>
-                            <a href="{{ $item['href'] }}" class="hover:text-gray-100 focus:outline-none focus:underline focus:text-gray-100">
-                                {{ $item['name'] }}
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
-            </nav>
+            <div class="grid grid-cols-2 gap-8 mt-12 md:grid-cols-3 xl:mt-0 xl:col-span-2">
+
+                <div></div>
+                <div></div>
+                @foreach ($menus as $menu)
+                    <div>
+                        <h3 class="text-sm font-semibold tracking-wider text-gray-400 uppercase">
+                            {{ $menu['label'] }}
+                        </h3>
+
+                        <ul class="mt-4 space-y-4 text-gray-500">
+                            @foreach ($menu['items'] as $item)
+                                <li>
+                                    <a href="{{ $item['href'] }}" class="hover:text-gray-900 focus:text-gray-900">
+                                        {{ $item['name'] }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+        <div class="flex flex-wrap items-center justify-center pt-8 mt-12 text-center text-gray-400 border-t border-gray-200">
+            <p class="w-full sm:w-auto">
+                {{ __('public.poweredby') }}
+            </p>
+
+            <a href="https://code4.ro" target="_blank" class="mt-3 sm:mt-0 sm:ml-2 sm:w-auto">
+                <img src="{{ asset('assets/svg/code4.svg') }}" class="w-24" alt="">
+            </a>
         </div>
     </div>
 </footer>

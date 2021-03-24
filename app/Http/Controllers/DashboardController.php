@@ -34,7 +34,13 @@ class DashboardController extends Controller
             'years'   => $this->getSortedYears(),
             'domains' => $this->getSortedDomains(),
             'donors'  => $this->getSortedDonors(),
-            'chart'   => ChartBuilder::dashboard(),
+            'chart'   => ChartBuilder::data(
+                $request->input('filters.years', [
+                    now()->year,
+                    now()->subYear()->year,
+                ]),
+                $request->input('filters.domains')
+            ),
         ]);
     }
 

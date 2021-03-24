@@ -34,7 +34,7 @@ class Controller extends BaseController
 
     public function getSortedDomains(): Collection
     {
-        return Domain::cachedWalkTree();
+        return Domain::walkTree(null, null, ['disabled']);
     }
 
     public function getSortedDonors(array $columns = ['id', 'name']): Collection
