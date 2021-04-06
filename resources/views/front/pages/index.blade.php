@@ -35,34 +35,34 @@
     <x-section class="bg-gray-50">
         <h1 class="text-center">
             <span class="block text-base font-semibold tracking-wider text-teal-600 uppercase">
-                Subtitlu opțional
+                {{ __('public.what.subtitle') }}
             </span>
             <span class="block mt-2 text-3xl font-bold leading-8 tracking-tight text-gray-900 sm:text-4xl">
-                Descriere features principale platformă
+                {{ __('public.what.title') }}
             </span>
         </h1>
 
-        <p class="mx-auto mt-5 text-xl text-gray-500 max-w-prose">
-            Phasellus lorem quam molestie id quisque diam aenean nulla in. Accumsan in quis quis nunc, ullamcorper malesuada. Eleifend condimentum id viverra nulla.
-        </p>
+        <div class="mx-auto mt-5 prose prose-xl text-gray-500 prose-teal">
+            {!! Str::markdown(__('public.what.text')) !!}
+        </div>
 
         <div class="grid gap-12 mt-12 lg:grid-cols-3">
             <x-feature-card
                 icon="ri-filter-line"
-                title="Date agregate"
-                text="Datele pe care le poți vedea mai jos sunt agregate din raportările detaliate ale finanțatorilor. Poți vedea cu ajutorul filtrelor disponibile câți bani sunt alocați pe principalele domenii de intervenție din România."
+                :title="__('public.what.aggregate_title')"
+                :text="__('public.what.aggregate_text')"
             />
 
             <x-feature-card
                 icon="ri-computer-line"
-                title="Dashboard intuitiv"
-                text="Orice donator care se alătură platformei va putea să își deschidă datele cu ajutorului unui panoul de administrare simplu și intuitiv și va avea parte de sprijin permanent din partea administratorului."
+                :title="__('public.what.dashboard_title')"
+                :text="__('public.what.dashboard_text')"
             />
 
             <x-feature-card
                 icon="ri-pie-chart-line"
-                title="Vizualizare interactivă"
-                text="Datele pot fi analizate direct din platformă, sau pot fi descărcate și procesate pentru analize în profunzime. Toate informațiile prezente în platformă aparțin donatorilor, pentru informații mai detaliate contactați fiecare donator individual."
+                :title="__('public.what.interactive_title')"
+                :text="__('public.what.interactive_text')"
             />
         </div>
     </x-section>
@@ -71,13 +71,13 @@
     <x-section id="chart" class="bg-gray-100">
         <h1 class="text-center">
             <span class="block mt-2 text-3xl font-bold leading-8 tracking-tight text-gray-900 sm:text-4xl">
-                Rezultate
+                {{ __('public.chart.title') }}
             </span>
         </h1>
 
-        <p class="mx-auto mt-5 text-xl text-gray-500 max-w-prose">
-            Descoperă mai jos toate datele disponibile public la acest moment în platformă. Până azi, în cadrul platformei donatorilor există:
-        </p>
+        <div class="mx-auto mt-5 prose prose-xl text-gray-500 prose-teal">
+            {{ __('public.chart.text') }}
+        </div>
 
         <chart-front
             class="mt-12"
@@ -96,7 +96,7 @@
                     <x-ri-alert-fill class="flex-shrink-0 w-5 h-5 text-yellow-400" />
 
                     <p class="text-sm text-yellow-700">
-                        {{ __('public.chart_notice') }}
+                        {{ __('public.chart.disclaimer') }}
                     </p>
                 </div>
             </template>
@@ -104,27 +104,30 @@
     </x-section>
 
     <x-section class="bg-gray-50">
-        <h1 class="text-center">
-            <span class="block mt-2 text-3xl font-bold leading-8 tracking-tight text-gray-900 sm:text-4xl">
-                Rezultate
-            </span>
+        <h1 class="block mt-2 text-3xl font-bold leading-8 tracking-tight text-center text-gray-900 sm:text-4xl">
+                {{ __('public.results.title') }}
         </h1>
 
-        <p class="mx-auto mt-5 text-xl text-gray-500 max-w-prose">
-            Descoperă mai jos toate datele disponibile public la acest moment în platformă. Până azi, în cadrul platformei donatorilor există:
-        </p>
+
+        <div class="mx-auto mt-5 prose prose-xl text-gray-500 prose-teal">
+            {{ __('public.results.text') }}
+        </div>
 
         <dl class="grid grid-cols-1 gap-5 mt-12 lg:grid-cols-3">
             <x-stats-card
+                :value="__('public.results.first_box')"
+            />
+
+            <x-stats-card
                 icon="ri-pie-chart-line"
                 :value="$donors_count"
-                :label="__('public.stats.donors_count')"
+                :label="__('public.results.donors_count')"
             />
 
             <x-stats-card
                 icon="ri-pie-chart-line"
                 :value="$grants_total"
-                :label="__('public.stats.grants_total', [
+                :label="__('public.results.grants_total', [
                     'domains_count' => $domains_count
                 ])"
             />
@@ -132,10 +135,24 @@
             <x-stats-card
                 icon="ri-pie-chart-line"
                 :value="$projects_count"
-                :label="__('public.stats.projects_count')"
+                :label="__('public.results.projects_count')"
+            />
+
+            <x-stats-card
+                icon="ri-pie-chart-line"
+                :value="$foundations_count"
+                :label="__('public.results.foundations_count')"
+            />
+
+            <x-stats-card
+                icon="ri-pie-chart-line"
+                :value="$grantees_count"
+                :label="__('public.results.grantees_count')"
             />
         </dl>
     </x-section>
+
+    <x-newsletter />
 
     <x-section>
         <div class="grid items-center gap-8 lg:grid-cols-5">
@@ -144,15 +161,15 @@
                     <x-icon-box icon="ri-flashlight-line" />
                     <div class="my-6">
                         <h2 class="text-3xl font-bold tracking-tight text-gray-900">
-                            Vino alături de noi
+                            {{ __('public.join.title') }}
                         </h2>
                         <p class="mt-4 text-lg text-gray-600">
-                            Dacă vrei să te alături comunității de donatori care își deschid datele și vrei să beneficiezi de un cont în platformă atunci te rugăm să ne contactezi via e-mail pentru a porni o discuție. Apasă pe butonul de mai jos și trimite-ne un mesaj.
+                            {{ __('public.join.text') }}
                         </p>
                     </div>
 
                     <x-button-link :link="$mailto" icon="ri-mail-send-line">
-                        Solicită cont
+                        {{ __('public.request_account') }}
                     </x-button-link>
                 </div>
             </div>
@@ -161,7 +178,7 @@
                 <img
                     class="shadow-xl rounded-xl ring-1 ring-black ring-opacity-5"
                     src="{{ asset('assets/images/screenshot-1.png') }}"
-                    alt="Inbox user interface"
+                    alt="Screenshot"
                 />
             </div>
         </div>

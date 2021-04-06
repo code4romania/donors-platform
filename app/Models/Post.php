@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -66,5 +67,10 @@ class Post
         return self::all()
             ->filter(fn (self $post) => property_exists($post, $property) && $post->$property === $value)
             ->first();
+    }
+
+    protected static function compile($content, array $args = [])
+    {
+        $content = Blade::compileString($content);
     }
 }

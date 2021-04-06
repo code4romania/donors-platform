@@ -1,41 +1,19 @@
 @php
-
     $social = [
         [
             'name' => 'Facebook',
             'icon' => 'ri-facebook-fill',
-            'href' => '#',
-        ],
-        [
-            'name' => 'Twitter',
-            'icon' => 'ri-twitter-fill',
-            'href' => '#',
+            'href' => 'https://www.facebook.com/platformadonatorilor',
         ],
         [
             'name' => 'LinkedIn',
             'icon' => 'ri-linkedin-fill',
-            'href' => '#',
+            'href' => 'https://www.linkedin.com/company/platforma-donatorilor',
         ],
         [
             'name' => 'GitHub',
             'icon' => 'ri-github-fill',
             'href' => 'https://github.com/code4romania/donors-platform',
-        ],
-    ];
-
-
-    $menu2 = [
-        [
-            'name' => __('public.menu.terms'),
-            'href' => localizedRoute('front.page', 'terms'),
-        ],
-        [
-            'name' => __('public.menu.privacy'),
-            'href' => localizedRoute('front.page', 'privacy'),
-        ],
-        [
-            'name' => __('public.menu.about'),
-            'href' => localizedRoute('front.page', 'about'),
         ],
     ];
 
@@ -55,13 +33,17 @@
                     'name' => __('public.menu.about'),
                     'href' => localizedRoute('front.page', 'about'),
                 ],
+                [
+                    'name' => 'Code for Romania',
+                    'href' => 'https://code4.ro',
+                ],
             ],
         ]
-    ]
+];
 @endphp
 
 <footer class="bg-gray-100">
-    <div class="px-4 py-12 mx-auto max-w-7xl sm:px-6 lg:py-16 lg:px-8">
+    <div class="px-4 py-12 mx-auto max-w-7xl sm:px-6 lg:py-16 lg:px-12">
         <div class="xl:grid xl:grid-cols-3 xl:gap-8">
             <div class="space-y-8 xl:col-span-1">
                 <x-logo />

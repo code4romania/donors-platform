@@ -8,7 +8,9 @@
         />
 
         <div class="mx-auto prose prose-lg text-gray-500 prose-teal">
-            {!! Str::markdown(__('public.pages.about.summary')) !!}
+            @foreach (Arr::wrap(__('public.pages.about.summary')) as $line)
+                {!! Str::markdown($line) !!}
+            @endforeach
         </div>
 
         <x-section>

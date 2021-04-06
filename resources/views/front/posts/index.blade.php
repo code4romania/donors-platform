@@ -28,4 +28,6 @@
             @endforeach
         </div>
     </div>
+
+    <x-newsletter />
 @endsection

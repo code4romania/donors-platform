@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Domain;
 use App\Models\Donor;
 use App\Models\Grant;
+use App\Models\Grantee;
 use App\Models\Project;
 use App\Services\Exchange;
 use App\Traits\HandlesSEO;
@@ -33,13 +34,15 @@ class PageController extends Controller
             ->get();
 
         return view('front.pages.index', [
-            'donors_count'   => Donor::published()->count(),
-            'projects_count' => Project::count(),
-            'domains_count'  => $grants->pluck('primaryDomain')
+            'donors_count'      => 15,                              //Donor::published()->count(),
+            'foundations_count' => 19,
+            'projects_count'    => Project::count(),
+            'grantees_count'    => Grantee::count(),
+            'domains_count'     => $grants->pluck('primaryDomain')
                 ->flatten()
                 ->unique('id')
                 ->count(),
-            'grants_total'   => Exchange::sumForCurrency($grants)
+            'grants_total'      => Exchange::sumForCurrency($grants)
                 ->formatWithoutDecimals(),
 
             'years'   => $this->getSortedYears(),

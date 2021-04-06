@@ -1,7 +1,7 @@
 @extends('front.layout')
 
 @section('content')
-    <div class="relative px-4 py-16 sm:px-6 md:py-24 lg:px-8">
+    <article class="relative px-4 py-16 sm:px-6 md:py-24 lg:px-8">
         <x-page-header
             :title="$post->title"
         />
@@ -27,5 +27,7 @@
 
             {!! $post->content !!}
         </div>
-    </div>
+    </article>
+
+    <x-newsletter />
 @endsection
