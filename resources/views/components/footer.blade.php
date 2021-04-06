@@ -42,6 +42,8 @@
 ];
 @endphp
 
+<x-newsletter />
+
 <footer class="bg-gray-100">
     <div class="px-4 py-12 mx-auto max-w-7xl sm:px-6 lg:py-16 lg:px-12">
         <div class="xl:grid xl:grid-cols-3 xl:gap-8">

@@ -3,6 +3,7 @@
 @section('content')
     <article class="relative px-4 py-16 sm:px-6 md:py-24 lg:px-8">
         <x-page-header
+            subtitle="Blog"
             :title="$post->title"
         />
 
@@ -28,6 +29,4 @@
             {!! $post->content !!}
         </div>
     </article>
-
-    <x-newsletter />
 @endsection

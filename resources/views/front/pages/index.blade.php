@@ -42,7 +42,7 @@
             </span>
         </h1>
 
-        <div class="mx-auto mt-5 prose prose-xl text-gray-500 prose-teal">
+        <div class="mx-auto mt-5 prose text-gray-500 prose-teal">
             {!! Str::markdown(__('public.what.text')) !!}
         </div>
 
@@ -75,7 +75,7 @@
             </span>
         </h1>
 
-        <div class="mx-auto mt-5 prose prose-xl text-gray-500 prose-teal">
+        <div class="mx-auto mt-5 prose text-gray-500 prose-teal">
             {{ __('public.chart.text') }}
         </div>
 
@@ -109,7 +109,7 @@
         </h1>
 
 
-        <div class="mx-auto mt-5 prose prose-xl text-gray-500 prose-teal">
+        <div class="mx-auto mt-5 prose text-gray-500 prose-teal">
             {{ __('public.results.text') }}
         </div>
 
@@ -151,8 +151,6 @@
             />
         </dl>
     </x-section>
-
-    <x-newsletter />
 
     <x-section>
         <div class="grid items-center gap-8 lg:grid-cols-5">

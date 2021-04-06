@@ -18,4 +18,4 @@ Până în luna martie 2021, în Platforma Donatorilor s-au deschis date din par
 
 Odată cu lansarea Platformei Donatorilor, sectorul neguvernamental și publicul larg vor avea acces la un punct central de informare cu date actualizate și standardizate, urmând o taxonomie comună și o mecanică simplă de colectare, permanentă și consistentă. **Cei 15 fondatori fac un apel deschis către toate companiile active din România să li se alăture în acest demers și să opteze pentru deschiderea datelor în platformă pentru a crește gradul de transparență în sector** și pentru a putea avea acces la informații detaliate și șansa construirii unor strategii de finanțare cu impact mult mai mare pentru România.
 
-[Descarcă Raportul 2020: Platforma Donatorilor](test)
+[Descarcă Raportul 2020: Platforma Donatorilor](https://donors-platform.s3.eu-central-1.amazonaws.com/raport.pdf)

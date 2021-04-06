@@ -21,13 +21,11 @@
                         {{ $post->summary }}
                     </p>
 
-                    <a href="{{ localizedRoute('front.post', $post->slug) }}" class="text-base font-semibold text-teal-600 hover:text-teal-500">
+                    <a href="{{ localizedRoute('front.post', $post->slug) }}" class="inline-block text-base font-semibold text-teal-600 hover:text-teal-500">
                         {{ __('public.read_more') }}
                     </a>
                 </article>
             @endforeach
         </div>
     </div>
-
-    <x-newsletter />
 @endsection

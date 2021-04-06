@@ -49,6 +49,12 @@ module.exports = {
             //
         },
     },
+    corePlugins: {
+        backgroundOpacity: false,
+        borderOpacity: false,
+        divideOpacity: false,
+        textOpacity: false,
+    },
     plugins: [
         require('@tailwindcss/aspect-ratio'),
         require('@tailwindcss/forms'),

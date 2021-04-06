@@ -32,8 +32,8 @@ return [
     ],
 
     'results' => [
-        'title' => 'Rezultate',
-        'text' => 'Datele disponibile sunt rezultatul deschiderii acestor informații de către finanțatori.',
+        'title'             => 'Rezultate',
+        'text'              => 'Datele disponibile sunt rezultatul deschiderii acestor informații de către finanțatori.',
         'first_box'         => 'Până acum, în Platforma Donatorilor există:',
         'donors_count'      => 'finanțatori',
         'grants_total'      => 'investiți în :domains_count de domenii',
@@ -51,7 +51,7 @@ return [
     'read_more' => 'Citește articolul',
 
     'menu' => [
-        'about'   => 'About',
+        'about'   => 'About the project',
         'blog'    => 'Blog',
         'contact' => 'Contact',
         'terms'   => 'Terms & conditions',

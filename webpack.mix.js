@@ -61,4 +61,5 @@ mix.js('resources/js/app.js', 'public/assets')
         ],
     })
     .copyDirectory('resources/svg', 'public/assets/svg')
-    .copyDirectory('resources/images', 'public/assets/images');
+    .copyDirectory('resources/images', 'public/assets/images')
+    .copyDirectory('resources/favicons', 'public/assets/favicons');
