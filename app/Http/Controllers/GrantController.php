@@ -20,7 +20,7 @@ class GrantController extends Controller
     {
         $this->authorizeResource(Grant::class);
 
-        $this->middleware('remember')->only('index', 'show');
+        $this->middleware('remember')->only('index');
     }
 
     public function index(): Response
@@ -76,7 +76,7 @@ class GrantController extends Controller
             ]));
     }
 
-    public function show(Grant $grant): Response
+    public function show(Grant $grant)
     {
         return Inertia::render('Grants/Show', [
             'grant'    => GrantResource::make($grant),
