@@ -21,7 +21,7 @@
 
                 <div class="my-6 prose text-gray-500 prose-teal sm:prose-xl lg:prose-lg xl:prose-xl">
                     @foreach (__('public.description') as $line)
-                        <p>{{ $line }}</p>
+                        {!! Str::markdown($line) !!}
                     @endforeach
                 </div>
 

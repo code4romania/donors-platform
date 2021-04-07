@@ -7,7 +7,7 @@ return [
     'title' => 'Platforma Donatorilor',
     'description' => [
         'Platforma Donatorilor își propune să aducă o mai mare claritate asupra investițiilor strategice în sectorul non-profit devenind astfel un punct esențial de informare cu privire la alocarea sprijinului financiar în domenii specifice de intervenție.',
-        'Dacă reprezinți o fundație, o federație sau o companie și vrei să te alături acestui demers, te invităm să ne transmiți un mesaj.',
+        'Dacă reprezinți o fundație, o federație sau o companie **care finanțează sau administrează fonduri destinate societății civile** și vrei să te alături acestui demers, te invităm să ne transmiți un mesaj.',
     ],
 
     'what' => [
@@ -28,7 +28,7 @@ return [
     'chart' => [
         'title' => 'Descoperă datele',
         'text' => 'Descoperă mai jos toate datele disponibile până în acest moment în Platforma Donatorilor. Folosește filtrele de mai jos pentru a face comparații între sumele totale ale finanțărilor acordate pe domenii, anual sau compara între ani.',
-        'disclaimer' => 'Datele istorice din platformă sunt în curs de actualizare. Anul 2020 prezintă rezultate complete.',
+        'disclaimer' => 'Datele istorice din platformă sunt în curs de actualizare. Anul 2020 prezintă rezultate complete din partea finanțatorilor înregistrați în platformă.',
     ],
 
     'results' => [
