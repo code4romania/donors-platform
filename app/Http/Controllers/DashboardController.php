@@ -19,14 +19,14 @@ class DashboardController extends Controller
     public function __invoke(Request $request): Response
     {
         $grants = Grant::query()
-            ->with('primaryDomain')
+            ->with('primaryDomain', 'domains')
             ->published()
             ->get();
 
         return Inertia::render('Dashboard', [
             'stats' => [
                 'donors'   => Donor::published()->count(),
-                'domains'  => $this->getPrimaryDomainsCount($grants),
+                'domains'  => $this->getDomainsCount($grants),
                 'grantees' => Grantee::whereHas('projects')->count(),
                 'funding'  => Exchange::sumForCurrency($grants)
                     ->formatWithoutDecimals(),
@@ -44,9 +44,9 @@ class DashboardController extends Controller
         ]);
     }
 
-    private function getPrimaryDomainsCount(Collection $grants): int
+    private function getDomainsCount(Collection $grants): int
     {
-        return $grants->pluck('primaryDomain')
+        return $grants->pluck('domains')
             ->flatten()
             ->unique('id')
             ->count();

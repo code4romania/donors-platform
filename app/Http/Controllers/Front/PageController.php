@@ -29,7 +29,7 @@ class PageController extends Controller
         ]);
 
         $grants = Grant::query()
-            ->with('primaryDomain')
+            ->with('primaryDomain', 'domains')
             ->published()
             ->get();
 
@@ -38,7 +38,7 @@ class PageController extends Controller
             'foundations_count' => 19,
             'projects_count'    => Project::count(),
             'grantees_count'    => Grantee::count(),
-            'domains_count'     => $grants->pluck('primaryDomain')
+            'domains_count'     => $grants->pluck('domains')
                 ->flatten()
                 ->unique('id')
                 ->count(),
