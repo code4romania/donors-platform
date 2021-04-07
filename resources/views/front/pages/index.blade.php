@@ -1,5 +1,5 @@
 @php
-    $mailto = 'mailto:contact@code4.ro?subject=';
+    $mailto = 'mailto:platformadonatorilor@code4.ro';
 @endphp
 
 @extends('front.layout')
