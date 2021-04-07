@@ -133,7 +133,6 @@
         },
         watch: {
             value: {
-                immediate: true,
                 handler: function (newValue) {
                     this.dataValue = newValue;
                 },

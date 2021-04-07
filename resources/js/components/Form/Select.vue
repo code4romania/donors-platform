@@ -19,7 +19,7 @@
             v-bind="$attrs"
             @deselect="deselect"
             @input="input"
-            @close="$emit('input', dataSelected)"
+            @close="close"
         />
 
         <form-input-error :id="id" />
@@ -29,6 +29,8 @@
 <script>
     import Treeselect from '@riophae/vue-treeselect';
     import '@riophae/vue-treeselect/dist/vue-treeselect.css';
+
+    import utils from '@/utils';
 
     export default {
         name: 'FormSelect',
@@ -101,9 +103,10 @@
                 );
             },
             input(values) {
-                if (!values.length) {
-                    this.$emit('input', this.dataSelected);
-                }
+                this.dataSelected = values;
+            },
+            close() {
+                this.$emit('input', this.dataSelected);
             },
         },
         watch: {
@@ -114,6 +117,14 @@
                         this.dataSelected = newValue;
                     }
                 },
+            },
+            dataSelected(values) {
+                if (
+                    (!this.multiple && !utils.isArray(this.dataSelected)) ||
+                    (this.multiple && !this.dataSelected.length)
+                ) {
+                    this.$emit('input', values);
+                }
             },
         },
     };

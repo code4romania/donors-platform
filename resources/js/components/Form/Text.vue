@@ -1,9 +1,17 @@
 <template>
-    <component
-        :is="componentTag"
-        :type="componentType"
+    <textarea
+        v-if="type === 'textarea'"
+        ref="textarea"
         :id="id"
-        class="block w-full border-gray-300 rounded-md shadow-sm sm:text-sm disabled:text-gray-400 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+        :class="style"
+        v-bind="$attrs"
+        v-model="dataValue"
+    />
+    <input
+        v-else
+        :type="type"
+        :id="id"
+        :class="style"
         v-bind="$attrs"
         v-model="dataValue"
     />
@@ -29,6 +37,9 @@
             };
         },
         computed: {
+            style() {
+                return 'block w-full border-gray-300 rounded-md shadow-sm sm:text-sm disabled:text-gray-400 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50';
+            },
             componentTag() {
                 return this.type === 'textarea' ? 'textarea' : 'input';
             },
@@ -38,7 +49,6 @@
         },
         watch: {
             value: {
-                immediate: true,
                 handler(newValue) {
                     this.dataValue = newValue;
                 },
