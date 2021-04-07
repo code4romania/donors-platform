@@ -34,14 +34,11 @@ class PageController extends Controller
             ->get();
 
         return view('front.pages.index', [
-            'donors_count'      => 15,                              //Donor::published()->count(),
+            'donors_count'      => 15, //Donor::published()->count(),
             'foundations_count' => 19,
             'projects_count'    => Project::count(),
             'grantees_count'    => Grantee::count(),
-            'domains_count'     => $grants->pluck('primaryDomain')
-                ->flatten()
-                ->unique('id')
-                ->count(),
+            'domains_count'     => 16,
             'grants_total'      => Exchange::sumForCurrency($grants)
                 ->formatWithoutDecimals(),
 
