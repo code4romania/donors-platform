@@ -38,7 +38,10 @@ class PageController extends Controller
             'foundations_count' => 19,
             'projects_count'    => Project::count(),
             'grantees_count'    => Grantee::count(),
-            'domains_count'     => 16,
+            'domains_count'     => $grants->pluck('primaryDomain')
+                ->flatten()
+                ->unique('id')
+                ->count(),
             'grants_total'      => Exchange::sumForCurrency($grants)
                 ->formatWithoutDecimals(),
 
