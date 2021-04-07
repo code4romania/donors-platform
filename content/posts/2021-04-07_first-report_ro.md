@@ -1,6 +1,5 @@
 ---
 title: Primul raport al Platformei Donatorilor
-author: Olivia Vereha
 
 summary: Creată prin contribuția a 15 dintre principalii finanțatori ai proiectelor societății civile din România, cărora li se adaugă 19 Fundații Comunitare, platforma pune la dispoziție facilități de explorare și vizualizare grafică de date despre fondurile destinate organizațiilor neguvernamentale din toate domeniile de interes.
 ---
