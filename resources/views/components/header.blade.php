@@ -10,7 +10,7 @@
         ],
         [
             'name' => __('public.menu.contact'),
-            'href' => 'mailto:',
+            'href' => 'mailto:'. config('dashboard.mailto'),
         ],
     ];
 @endphp

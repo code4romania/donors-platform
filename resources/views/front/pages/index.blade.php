@@ -1,7 +1,3 @@
-@php
-    $mailto = 'mailto:platformadonatorilor@code4.ro';
-@endphp
-
 @extends('front.layout')
 
 @section('content')
@@ -25,7 +21,7 @@
                     @endforeach
                 </div>
 
-                <x-button-link :link="$mailto" icon="ri-mail-send-line">
+                <x-button-link link="{{ 'mailto:'. config('dashboard.mailto') }}" icon="ri-mail-send-line">
                     {{ __('public.request_account') }}
                 </x-button-link>
             </div>
@@ -166,7 +162,7 @@
                         </p>
                     </div>
 
-                    <x-button-link :link="$mailto" icon="ri-mail-send-line">
+                    <x-button-link link="{{ 'mailto:'. config('dashboard.mailto') }}" icon="ri-mail-send-line">
                         {{ __('public.request_account') }}
                     </x-button-link>
                 </div>
