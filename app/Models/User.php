@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Enums\UserRole;
 use App\Notifications\InitialPasswordSetup;
 use App\Traits\Filterable;
+use App\Traits\Searchable;
 use App\Traits\Sortable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
@@ -24,6 +25,7 @@ class User extends Authenticatable implements MustVerifyEmail
         LogsActivity,
         Notifiable,
         ReceivesWelcomeNotification,
+        Searchable,
         Sortable;
 
     /**
@@ -55,13 +57,6 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
-     * @var string[]
-     */
-    public $searchable = [
-        'id', 'name', 'email',
-    ];
-
-    /**
      * The attributes that are filterable.
      *
      * @var string[]
@@ -87,6 +82,20 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $with = [
         //
     ];
+
+    public function getSearchableTitleColumns(): array
+    {
+        return [
+            'name',
+        ];
+    }
+
+    public function getSearchableContentColumns(): array
+    {
+        return [
+            'email', 'organization.name',
+        ];
+    }
 
     public function scopeWithRole(Builder $query, string $role): Builder
     {

@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Scopes\WithExchangeRatesScope;
 use App\Traits\Filterable;
 use App\Traits\HasDates;
+use App\Traits\Searchable;
 use App\Traits\Sortable;
 use Cknow\Money\MoneyCast;
 use Illuminate\Database\Eloquent\Builder;
@@ -17,6 +18,7 @@ class Project extends Model
     use Filterable,
         HasDates,
         LogsActivity,
+        Searchable,
         Sortable;
 
     /**
@@ -74,6 +76,20 @@ class Project extends Model
     protected $with = [
         // 'grantees',
     ];
+
+    public function getSearchableTitleColumns(): array
+    {
+        return [
+            'title',
+        ];
+    }
+
+    public function getSearchableContentColumns(): array
+    {
+        return [
+            'grantees.name',
+        ];
+    }
 
     public function donors()
     {

@@ -9,6 +9,7 @@ use App\Traits\Draftable;
 use App\Traits\Filterable;
 use App\Traits\HasDates;
 use App\Traits\HasDomains;
+use App\Traits\Searchable;
 use App\Traits\Sortable;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
@@ -28,6 +29,7 @@ class Grant extends Model implements TranslatableContract
         HasDomains,
         HasRelationships,
         LogsActivity,
+        Searchable,
         Sortable,
         Translatable;
 
@@ -52,13 +54,6 @@ class Grant extends Model implements TranslatableContract
         'matching'          => 'boolean',
         'amount'            => MoneyCast::class . ':currency',
         'regranting_amount' => MoneyCast::class . ':currency',
-    ];
-
-    /**
-     * @var string[]
-     */
-    public $searchable = [
-        'id', 'name', 'donors.name',
     ];
 
     /**
@@ -107,6 +102,20 @@ class Grant extends Model implements TranslatableContract
         static::addGlobalScope('withYear', function ($query) {
             return $query->withYear();
         });
+    }
+
+    public function getSearchableTitleColumns(): array
+    {
+        return [
+            'name',
+        ];
+    }
+
+    public function getSearchableContentColumns(): array
+    {
+        return [
+            'donors.name',
+        ];
     }
 
     public function users()

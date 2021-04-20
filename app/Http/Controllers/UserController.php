@@ -31,6 +31,7 @@ class UserController extends Controller
             'roles' => UserRole::asOptions(),
             'users' => UserResource::collection(
                 User::query()
+                    ->search()
                     ->filter()
                     ->sort()
                     ->paginate()

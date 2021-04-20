@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Services\Exchange;
 use App\Traits\Filterable;
+use App\Traits\Searchable;
 use App\Traits\Sortable;
 use Illuminate\Support\Facades\DB;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -17,6 +18,7 @@ class Grantee extends Model
     use Filterable,
         HasRelationships,
         LogsActivity,
+        Searchable,
         Sortable;
 
     /**
@@ -26,13 +28,6 @@ class Grantee extends Model
      */
     protected $fillable = [
         'name', 'tax_id',
-    ];
-
-    /**
-     * @var string[]
-     */
-    public $searchable = [
-        'id', 'name', 'tax_id',
     ];
 
     /**
@@ -59,7 +54,7 @@ class Grantee extends Model
      * @var array
      */
     protected $withCount = [
-        'projects',
+        //
     ];
 
     /**
@@ -76,6 +71,20 @@ class Grantee extends Model
                 ),
             ]);
         });
+    }
+
+    public function getSearchableTitleColumns(): array
+    {
+        return [
+            'name',
+        ];
+    }
+
+    public function getSearchableContentColumns(): array
+    {
+        return [
+            'tax_id',
+        ];
     }
 
     public function projects()

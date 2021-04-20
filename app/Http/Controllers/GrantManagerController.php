@@ -33,6 +33,7 @@ class GrantManagerController extends Controller
             'donors'  => $this->getSortedDonors(),
             'managers' => GrantManagerResource::collection(
                 GrantManager::query()
+                    ->search()
                     ->filter()
                     ->sort()
                     ->paginate(),
@@ -71,10 +72,11 @@ class GrantManagerController extends Controller
             'domains' => $this->getSortedDomains(),
             'grants'  => GrantResource::collection(
                 $manager->grants()
-                    ->with('domains')
-                    ->withTranslation()
+                    ->search()
                     ->filter()
                     ->sort()
+                    ->with('domains')
+                    ->withTranslation()
                     ->paginate()
             ),
         ]);

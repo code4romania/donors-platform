@@ -67,11 +67,12 @@ class DomainController extends Controller
             'donors' => $domain->donors()->count(),
             'grants' => GrantResource::collection(
                 Grant::query()
+                    ->search()
+                    ->filter()
+                    ->sort()
                     ->withTranslation()
                     ->with('primaryDomain', 'secondaryDomains', 'donors', 'manager', 'projects', 'grantees')
                     ->filterByPrimaryDomains($domain->descendantsAndSelf()->pluck('id'))
-                    ->filter()
-                    ->sort()
                     ->paginate()
             ),
         ]);

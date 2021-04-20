@@ -35,10 +35,11 @@ class DonorController extends Controller
             'managers' => $this->getSortedManagers(),
             'donors'  => DonorResource::collection(
                 Donor::query()
-                    ->withCount('grantees', 'grants')
-                    ->with('domains', 'grants')
+                    ->search()
                     ->filter()
                     ->sort()
+                    ->withCount('grantees', 'grants')
+                    ->with('domains', 'grants')
                     ->paginate(),
             ),
         ]);
@@ -77,6 +78,7 @@ class DonorController extends Controller
             'grants'  => GrantResource::collection(
                 $donor->grants()
                     ->withTranslation()
+                    ->search()
                     ->filter()
                     ->sort()
                     ->paginate()

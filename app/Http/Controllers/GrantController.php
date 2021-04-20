@@ -31,10 +31,11 @@ class GrantController extends Controller
             ]),
             'grants' => GrantResource::collection(
                 Grant::query()
-                    ->withTranslation()
-                    ->with('primaryDomain', 'secondaryDomains', 'donors', 'manager', 'projects', 'grantees')
+                    ->search()
                     ->filter()
                     ->sort()
+                    ->withTranslation()
+                    ->with('primaryDomain', 'secondaryDomains', 'donors', 'manager', 'projects', 'grantees')
                     ->paginate(),
             ),
             'domains'  => $this->getSortedDomains(),
@@ -85,9 +86,10 @@ class GrantController extends Controller
             ]),
             'projects' => ProjectResource::collection(
                 $grant->projects()
-                    ->with('grantees')
+                    ->search()
                     ->filter()
                     ->sort()
+                    ->with('grantees')
                     ->paginate()
             ),
         ]);

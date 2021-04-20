@@ -9,6 +9,7 @@ use App\Traits\Filterable;
 use App\Traits\HasDomains;
 use App\Traits\HasGrants;
 use App\Traits\HasLogo;
+use App\Traits\Searchable;
 use App\Traits\Sortable;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\MediaLibrary\HasMedia;
@@ -21,6 +22,7 @@ class GrantManager extends Model implements HasMedia
         HasDomains,
         HasLogo,
         LogsActivity,
+        Searchable,
         Sortable;
 
     /**
@@ -39,13 +41,6 @@ class GrantManager extends Model implements HasMedia
      */
     protected $casts = [
         'published_at' => 'datetime',
-    ];
-
-    /**
-     * @var string[]
-     */
-    public $searchable = [
-        'id', 'name', 'hq', 'contact', 'email',
     ];
 
     /**
@@ -83,6 +78,20 @@ class GrantManager extends Model implements HasMedia
     protected $withCount = [
         'grants', 'grantees',
     ];
+
+    public function getSearchableTitleColumns(): array
+    {
+        return [
+            'name',
+        ];
+    }
+
+    public function getSearchableContentColumns(): array
+    {
+        return [
+            'hq', 'contact', 'email',
+        ];
+    }
 
     public function users()
     {

@@ -11,6 +11,7 @@ use App\Traits\Filterable;
 use App\Traits\HasDomains;
 use App\Traits\HasGrants;
 use App\Traits\HasLogo;
+use App\Traits\Searchable;
 use App\Traits\Sortable;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\MediaLibrary\HasMedia;
@@ -25,6 +26,7 @@ class Donor extends Model implements HasMedia
         HasLogo,
         HasRelationships,
         LogsActivity,
+        Searchable,
         Sortable;
 
     /**
@@ -44,13 +46,6 @@ class Donor extends Model implements HasMedia
     protected $casts = [
         'published_at' => 'datetime',
         'type'         => OrganizationType::class,
-    ];
-
-    /**
-     * @var string[]
-     */
-    public $searchable = [
-        'id', 'name', 'hq', 'contact', 'email',
     ];
 
     /**
@@ -88,6 +83,20 @@ class Donor extends Model implements HasMedia
     protected $withCount = [
         //
     ];
+
+    public function getSearchableTitleColumns(): array
+    {
+        return [
+            'name',
+        ];
+    }
+
+    public function getSearchableContentColumns(): array
+    {
+        return [
+            'hq', 'contact', 'email',
+        ];
+    }
 
     public function grants()
     {

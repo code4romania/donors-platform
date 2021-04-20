@@ -35,13 +35,6 @@ class Domain extends Model implements TranslatableContract
     /**
      * @var string[]
      */
-    public $searchable = [
-        'id', 'translations.name',
-    ];
-
-    /**
-     * @var string[]
-     */
     public $translatedAttributes = [
         'name',
     ];
