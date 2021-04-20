@@ -18,7 +18,7 @@ trait Searchable
 
     public function scopeSearch(Builder $query): Builder
     {
-        $terms = collect(explode(' ', Request::input('search', '')))
+        $terms = collect(explode(' ', (string) Request::input('search')))
             ->reject(fn (string $term) => Str::length($term) < 3)
             ->map(fn (string $term) => "+{$term}*")
             ->join(' ');
