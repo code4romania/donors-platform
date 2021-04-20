@@ -22,7 +22,6 @@
         "laravel/scout": "^8.2",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
-        "lorisleiva/laravel-deployer": "^0.3.3",
         "reinink/remember-query-strings": "^0.1.0",
         "sentry/sentry-laravel": "^2.0",
         "skydiver/blade-icons-remix": "^1.2",
@@ -38,6 +37,7 @@
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.3",
+        "deployer/deployer": "^7.0-beta",
         "facade/ignition": "^2.3.6",
         "fakerphp/faker": "^1.10.1",
         "mockery/mockery": "^1.3.1",
