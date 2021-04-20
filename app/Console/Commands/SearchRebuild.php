@@ -6,14 +6,14 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class ScoutRebuild extends Command
+class SearchRebuild extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'scout:rebuild';
+    protected $signature = 'search:rebuild';
 
     /**
      * The console command description.
@@ -42,8 +42,9 @@ class ScoutRebuild extends Command
     {
         collect($this->models)
             ->each(function (string $model): void {
-                $this->call('scout:flush', ['model' => $model]);
-                $this->call('scout:import', ['model' => $model]);
-            });
+            $this->info("Indexing $model");
+
+            $this->call('searchable:index', ['model_class' => $model]);
+        });
     }
 }
