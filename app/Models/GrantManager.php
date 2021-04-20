@@ -76,7 +76,7 @@ class GrantManager extends Model implements HasMedia
      * @var array
      */
     protected $withCount = [
-        'grants', 'grantees',
+        //
     ];
 
     public function getSearchableTitleColumns(): array

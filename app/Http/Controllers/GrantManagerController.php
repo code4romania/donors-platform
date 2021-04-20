@@ -36,6 +36,7 @@ class GrantManagerController extends Controller
                     ->search()
                     ->filter()
                     ->sort()
+                    ->withCount('grants', 'grantees')
                     ->paginate(),
             ),
         ]);
