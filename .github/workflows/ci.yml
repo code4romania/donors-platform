@@ -71,7 +71,14 @@ jobs:
         run: npm ci --prefer-offline
 
       - name: Build frontend
-        run: npm run prod
+        run: npm run production
 
       - name: Run tests
         run: composer test
+
+      - name: Deploy
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: deployphp/action@master
+        with:
+          private-key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
+          dep: deploy stage=production -v
