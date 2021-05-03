@@ -13,7 +13,7 @@ config:
 
 hosts:
   production:
-    hostname: 'platformadonatorilor.ro'
+    hostname: 'origin.platformadonatorilor.ro'
     deploy_path: '/var/www/production'
     labels:
       stage: production
