@@ -15,9 +15,13 @@ hosts:
   production:
     hostname: 'platformadonatorilor.ro'
     deploy_path: '/var/www/production'
+    labels:
+      stage: production
   staging:
     hostname: 'platformadonatorilor.ro'
     deploy_path: '/var/www/staging'
+    labels:
+      stage: staging
 
 tasks:
   deploy:
