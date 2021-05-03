@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use App\Models\ExchangeRate;
-use AshAllenDesign\LaravelExchangeRates\Facades\ExchangeRate as ExchangeRateApi;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Http;
 
 class UpdateExchangeRates extends Command
 {
@@ -32,16 +32,6 @@ class UpdateExchangeRates extends Command
      * @var \Illuminate\Support\Collection
      */
     private $latestExchangeRates;
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     /**
      * Execute the console command.
@@ -104,13 +94,10 @@ class UpdateExchangeRates extends Command
             return null;
         }
 
-        $response = ExchangeRateApi::shouldCache(false)
-            ->exchangeRateBetweenDateRange($currency_from, $currency_to, $start_at, $end_at);
-
         return [
             'from'  => $currency_from,
             'to'    => $currency_to,
-            'rates' => collect($response)
+            'rates' => $this->exchangeRateBetweenDateRange($currency_from, $currency_to, $start_at, $end_at)
                 ->mapToGroups(fn ($rate, $date) => [Carbon::parse($date)->endOfMonth()->toDateString() => $rate])
                 ->map(fn ($rates) => $rates->avg()),
         ];
@@ -155,5 +142,25 @@ class UpdateExchangeRates extends Command
         return $currencies->crossJoin($currencies)
             ->mapSpread(fn (string $from, string $to) => ['from' => $from, 'to' => $to])
             ->reject(fn (array $currency) => $currency['from'] === $currency['to']);
+    }
+
+    public function exchangeRateBetweenDateRange(string $currency_from, string $currency_to, Carbon $start_date, Carbon $end_date): Collection
+    {
+        $response = Http::get('https://api.exchangerate.host/timeseries', [
+            'start_date' => $start_date->toDateString(),
+            'end_date'   => $end_date->toDateString(),
+            'base'       => $currency_from,
+            'symbols'    => $currency_to,
+            'source'     => 'ecb',
+        ]);
+
+        $data = json_decode($response->body(), true);
+
+        if (! $data['success']) {
+            return new Collection();
+        }
+
+        return collect($data['rates'])
+            ->mapWithKeys(fn ($rate, $date) => [$date => $rate[$currency_to]]);
     }
 }

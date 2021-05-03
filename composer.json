@@ -10,7 +10,6 @@
     "require": {
         "php": "^7.4",
         "artesaos/seotools": "^0.20.0",
-        "ashallendesign/laravel-exchange-rates": "^3.2",
         "astrotomic/laravel-translatable": "^11.9",
         "blade-ui-kit/blade-icons": "^0.4.5",
         "cknow/laravel-money": "^6.0",
