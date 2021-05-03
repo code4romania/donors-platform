@@ -24,7 +24,7 @@
             </button>
         </portal>
 
-        <div class="flex flex-col flex-1">
+        <div class="flex flex-col flex-1 bg-gray-800">
             <div v-if="open" class="absolute top-0 p-2 left-full">
                 <button
                     class="flex items-center justify-center w-12 h-12 rounded-full focus:outline-none focus:bg-gray-600"
@@ -45,9 +45,7 @@
                 <Logo class="w-full h-10" />
             </inertia-link>
 
-            <div
-                class="flex flex-col flex-1 px-2 py-4 overflow-y-auto bg-gray-800"
-            >
+            <div class="flex flex-col flex-1 px-2 py-4 overflow-y-auto">
                 <nav class="grid gap-y-1">
                     <template v-for="(item, index) in items">
                         <menu-item
@@ -68,17 +66,42 @@
                         :label="$t('dashboard.menu.help')"
                     />
 
-                    <menu-item
-                        icon="System/logout-box-line"
-                        :href="
-                            $route('front.index', {
-                                locale: this.$page.props.locale,
-                            })
-                        "
-                        :label="$t('dashboard.menu.back_to_site')"
-                        :external="true"
-                    />
+                    <form
+                        @submit.prevent="logout"
+                        class="text-sm leading-tight"
+                    >
+                        <button
+                            class="flex items-center w-full px-2 py-2 text-gray-300 transition duration-150 ease-in-out rounded-sm hover:text-white hover:bg-gray-700 focus:text-white focus:bg-gray-700 group focus:outline-none"
+                        >
+                            <svg-vue
+                                icon="System/logout-box-line"
+                                class="w-5 h-5 p-0.5 mr-2 text-gray-300 transition duration-150 ease-in-out fill-current group-hover:text-gray-300 group-focus:text-gray-300"
+                            />
+
+                            {{ $t('auth.logout') }}
+                        </button>
+                    </form>
                 </nav>
+            </div>
+
+            <div
+                class="flex flex-shrink-0 p-4 space-x-3 border-t border-gray-700"
+            >
+                <svg-vue
+                    icon="User/user-line"
+                    class="p-2 bg-gray-300 rounded-full fill-current w-9 h-9"
+                />
+
+                <div>
+                    <div
+                        class="text-sm font-semibold text-white"
+                        v-text="$page.props.auth.name"
+                    />
+                    <div
+                        class="text-xs text-gray-400"
+                        v-text="$page.props.auth.organization.name"
+                    />
+                </div>
             </div>
         </div>
     </div>
@@ -153,13 +176,6 @@
                         href: this.$route('domains.index'),
                         label: this.$t('model.domain.plural'),
                         guard: this.$userCan('view', 'domains'),
-                        // children: [
-                        //     {
-                        //         href: this.$route('domains.index', ownArgs),
-                        //         label: this.$t('model.domain.own'),
-                        //         guard: !this.$userHasRole('admin'),
-                        //     },
-                        // ],
                     },
                     {
                         icon: 'Finance/funds-line',
@@ -219,6 +235,9 @@
                 }
 
                 return this.$route(name, id);
+            },
+            logout() {
+                this.$inertia.post(this.$route('logout'));
             },
         },
     };

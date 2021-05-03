@@ -10,7 +10,6 @@
             >
                 <portal-target name="menu-mobile-button" slim />
                 <div class="flex items-center justify-end flex-1 px-4">
-                    <profile />
                 </div>
             </div>
             <main
