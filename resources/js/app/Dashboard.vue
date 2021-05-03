@@ -1,5 +1,5 @@
 <template>
-    <layout :breadcrumbs="breadcrumbs" currency-select>
+    <layout :breadcrumbs="breadcrumbs">
         <grid class="md:grid-cols-3">
             <stats-card
                 v-for="(card, index) in cards"

@@ -9,7 +9,10 @@
                 class="relative z-10 flex flex-shrink-0 h-16 bg-white ring-1 ring-black ring-opacity-5"
             >
                 <portal-target name="menu-mobile-button" slim />
-                <div class="flex items-center justify-end flex-1 px-4">
+                <div
+                    class="flex items-center justify-end flex-1 px-4 space-x-6"
+                >
+                    <currency-select class="w-20" />
                 </div>
             </div>
             <main
@@ -51,11 +54,6 @@
                             </slot>
                         </h1>
 
-                        <currency-select
-                            class="w-full md:w-24"
-                            v-if="currencySelect"
-                        />
-
                         <div
                             v-if="$slots.actions"
                             class="flex justify-end w-full space-x-4 md:w-auto"
@@ -83,10 +81,6 @@
             breadcrumbs: {
                 type: Array,
                 default: () => [],
-            },
-            currencySelect: {
-                type: Boolean,
-                default: false,
             },
         },
         methods: {

@@ -26,7 +26,7 @@ class ExportData extends Command
      */
     public function handle()
     {
-        config()->set('money.exportCurrency', $this->option('currency'));
+        session()->put('currency', $this->option('currency'));
 
         $this->exportProjects();
 

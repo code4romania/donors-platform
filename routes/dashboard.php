@@ -17,6 +17,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/', \App\Http\Controllers\DashboardController::class)->name('dashboard');
     Route::get('/help', \App\Http\Controllers\HelpController::class)->name('help');
 
+    Route::post('/currency-select', \App\Http\Controllers\CurrencyController::class)->name('currency.select');
+
     Route::resource('donors', \App\Http\Controllers\DonorController::class);
     Route::resource('domains', \App\Http\Controllers\DomainController::class);
     Route::resource('grants', \App\Http\Controllers\GrantController::class);

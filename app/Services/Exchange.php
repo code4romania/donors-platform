@@ -15,7 +15,7 @@ class Exchange
 {
     public static function currency(): string
     {
-        $currency = Request::input('currency') ?? config('money.exportCurrency');
+        $currency = session()->get('currency') ?? Request::input('currency');
 
         if (! in_array($currency, config('money.currencies.iso'))) {
             return config('money.defaultCurrency');

@@ -18,23 +18,13 @@
             },
         },
         data() {
-            return {
+            return this.$inertia.form({
                 currency: this.$page.props.currency,
-            };
+            });
         },
-        methods: {
-            submit() {
-                let url = new URL(window.location);
-
-                url.searchParams.set('currency', this.currency);
-
-                this.$inertia.get(decodeURI(url.toString()));
-            },
-        },
-
         watch: {
             currency() {
-                this.submit();
+                this.post(this.$route('currency.select'));
             },
         },
     };
