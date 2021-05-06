@@ -31,7 +31,7 @@ class DonorController extends Controller
                 'name', 'type', 'grantees_count', 'grants_count', 'total_funding', 'published_status',
             ]),
             'types'   => OrganizationType::asOptions(),
-            'domains' => $this->getSortedDomains(),
+            'domains' => $this->getSortedActiveDomains(),
             'managers' => $this->getSortedManagers(),
             'donors'  => DonorResource::collection(
                 Donor::query()

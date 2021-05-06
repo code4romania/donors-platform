@@ -29,7 +29,7 @@ class GrantManagerController extends Controller
             'columns' => $this->getIndexColumns(GrantManager::class, [
                 'name', 'grantees_count', 'grants_count', 'total_funding', 'published_status',
             ]),
-            'domains'  => $this->getSortedDomains(),
+            'domains'  => $this->getSortedActiveDomains(),
             'donors'  => $this->getSortedDonors(),
             'managers' => GrantManagerResource::collection(
                 GrantManager::query()

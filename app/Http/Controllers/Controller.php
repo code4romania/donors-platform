@@ -34,6 +34,11 @@ class Controller extends BaseController
 
     public function getSortedDomains(): Collection
     {
+        return Domain::walkTree(null, null);
+    }
+
+    public function getSortedActiveDomains(): Collection
+    {
         return Domain::walkTree(null, null, ['disabled']);
     }
 

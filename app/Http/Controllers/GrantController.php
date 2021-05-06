@@ -38,7 +38,7 @@ class GrantController extends Controller
                     ->with('primaryDomain', 'secondaryDomains', 'donors', 'manager', 'projects', 'grantees')
                     ->paginate(),
             ),
-            'domains'  => $this->getSortedDomains(),
+            'domains'  => $this->getSortedActiveDomains(),
             'donors'   => $this->getSortedDonors(),
             'grantees' => $this->getSortedGrantees(),
             'managers' => $this->getSortedManagers(),

@@ -32,7 +32,7 @@ class DashboardController extends Controller
                     ->formatWithoutDecimals(),
             ],
             'years'   => $this->getSortedYears(),
-            'domains' => $this->getSortedDomains(),
+            'domains' => $this->getSortedActiveDomains(),
             'donors'  => $this->getSortedDonors(),
             'chart'   => ChartBuilder::data(
                 $request->input('filters.years', [

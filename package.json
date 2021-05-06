@@ -30,7 +30,7 @@
         "laravel-mix-valet": "^1.0.1",
         "lodash": "^4.17.21",
         "portal-vue": "^2.1.7",
-        "postcss": "^8.2.13",
+        "postcss": "^8.2.14",
         "postcss-import": "^14.0.1",
         "postcss-nested": "^5.0.5",
         "remixicon": "^2.5.0",
