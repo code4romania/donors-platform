@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "41d16bc8d7c2e2fbef23050c1eca354c",
+    "content-hash": "2f59117c94b5fe5af29b8e59dc093942",
     "packages": [
         {
             "name": "andreiio/blade-remix-icon",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/andreiio/blade-remix-icon.git",
-                "reference": "ab1f9a5638803141a087284ec08f784f8fc0fced"
+                "reference": "1bc60a1b8807f88c08879cafd81d04c441ccaccf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/andreiio/blade-remix-icon/zipball/ab1f9a5638803141a087284ec08f784f8fc0fced",
-                "reference": "ab1f9a5638803141a087284ec08f784f8fc0fced",
+                "url": "https://api.github.com/repos/andreiio/blade-remix-icon/zipball/1bc60a1b8807f88c08879cafd81d04c441ccaccf",
+                "reference": "1bc60a1b8807f88c08879cafd81d04c441ccaccf",
                 "shasum": ""
             },
             "require": {
@@ -67,7 +67,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-05-10T09:49:18+00:00"
+            "time": "2021-05-10T11:25:29+00:00"
         },
         {
             "name": "artesaos/seotools",
@@ -1340,16 +1340,16 @@
         },
         {
             "name": "inertiajs/inertia-laravel",
-            "version": "v0.4.1",
+            "version": "v0.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inertiajs/inertia-laravel.git",
-                "reference": "96c60a7f01ac1032e3dd974b465b8ded41b299dc"
+                "reference": "7ea4e730d82b90b658ca3e863968d2ffd6cc4d06"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/96c60a7f01ac1032e3dd974b465b8ded41b299dc",
-                "reference": "96c60a7f01ac1032e3dd974b465b8ded41b299dc",
+                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/7ea4e730d82b90b658ca3e863968d2ffd6cc4d06",
+                "reference": "7ea4e730d82b90b658ca3e863968d2ffd6cc4d06",
                 "shasum": ""
             },
             "require": {
@@ -1396,7 +1396,7 @@
             ],
             "support": {
                 "issues": "https://github.com/inertiajs/inertia-laravel/issues",
-                "source": "https://github.com/inertiajs/inertia-laravel/tree/v0.4.1"
+                "source": "https://github.com/inertiajs/inertia-laravel/tree/v0.4.2"
             },
             "funding": [
                 {
@@ -1404,7 +1404,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-04-02T17:50:29+00:00"
+            "time": "2021-05-10T09:56:05+00:00"
         },
         {
             "name": "intervention/image",

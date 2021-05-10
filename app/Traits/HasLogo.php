@@ -5,19 +5,19 @@ declare(strict_types=1);
 namespace App\Traits;
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 trait HasLogo
 {
     use InteractsWithMedia;
 
-    public function getLogoAttribute(): string
+    public function getLogoAttribute(): ?string
     {
-        return $this->getFirstMediaUrl(
-            'logo',
-            '300x300'
-        );
+        return Storage::disk('public')->exists($this->logoPath())
+            ? Storage::disk('public')->url($this->logoPath())
+            : null;
     }
 
     public function setLogoAttribute(?UploadedFile $file = null): void
@@ -26,21 +26,19 @@ trait HasLogo
             return;
         }
 
-        $this->addMedia($file)
-            ->toMediaCollection('logo');
+        Storage::disk('public')->put(
+            $this->logoPath(),
+            Image::make($file->path())
+                ->resize(null, 300, function ($constraint) {
+                    $constraint->aspectRatio();
+                })
+                ->interlace()
+                ->encode('png')
+        );
     }
 
-    public function registerMediaCollections(): void
+    public function logoPath(): string
     {
-        $this->addMediaCollection('logo')
-            ->singleFile();
-    }
-
-    public function registerMediaConversions(?Media $media = null): void
-    {
-        $this->addMediaConversion('300x300')
-            ->performOnCollections('logo')
-            ->width(300)
-            ->height(300);
+        return sprintf('logos/%s-%d.png', $this->getMorphClass(), $this->id);
     }
 }
