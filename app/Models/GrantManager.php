@@ -12,9 +12,8 @@ use App\Traits\HasLogo;
 use App\Traits\Searchable;
 use App\Traits\Sortable;
 use Spatie\Activitylog\Traits\LogsActivity;
-use Spatie\MediaLibrary\HasMedia;
 
-class GrantManager extends Model implements HasMedia
+class GrantManager extends Model
 {
     use Draftable,
         Filterable,

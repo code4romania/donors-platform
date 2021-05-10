@@ -27,7 +27,6 @@
         "sentry/sentry-laravel": "^2.0",
         "spatie/laravel-activitylog": "^3.14",
         "spatie/laravel-enum": "^2.0",
-        "spatie/laravel-medialibrary": "^8.3",
         "spatie/laravel-welcome-notification": "^2.0",
         "spatie/yaml-front-matter": "^2.0",
         "staudenmeir/eloquent-has-many-deep": "^1.13",

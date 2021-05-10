@@ -7,12 +7,9 @@ namespace App\Traits;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
-use Spatie\MediaLibrary\InteractsWithMedia;
 
 trait HasLogo
 {
-    use InteractsWithMedia;
-
     public function getLogoAttribute(): ?string
     {
         return Storage::disk('public')->exists($this->logoPath())

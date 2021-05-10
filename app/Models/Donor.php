@@ -14,10 +14,9 @@ use App\Traits\HasLogo;
 use App\Traits\Searchable;
 use App\Traits\Sortable;
 use Spatie\Activitylog\Traits\LogsActivity;
-use Spatie\MediaLibrary\HasMedia;
 use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
-class Donor extends Model implements HasMedia
+class Donor extends Model
 {
     use Draftable,
         Filterable,
