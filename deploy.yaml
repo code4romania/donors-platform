@@ -7,7 +7,7 @@ import:
 config:
   application: 'donors-platform'
   repository: 'https://github.com/code4romania/donors-platform.git'
-  php_fpm_version: '7.4'
+  php_fpm_version: '8.0'
   remote_user: ubuntu
   writable_use_sudo: true
 
