@@ -32,6 +32,7 @@ tasks:
     - artisan:config:cache
     - artisan:route:cache
     - artisan:event:cache
+    - artisan:icons:cache
     - artisan:migrate
     - assets:build
     - deploy:publish

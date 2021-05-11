@@ -24,3 +24,9 @@ task('artisan:horizon:publish', artisan('horizon:publish'));
 
 desc('Execute artisan telescope:publish');
 task('artisan:telescope:publish', artisan('telescope:publish'));
+
+desc('Discover icon sets and generate a manifest file');
+task('artisan:icons:cache', artisan('icons:cache'));
+
+desc('Remove the blade icons manifest file');
+task('artisan:icons:clear', artisan('icons:clear'));
