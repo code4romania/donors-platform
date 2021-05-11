@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d4981c8e85541110237282eaf89245dd",
+    "content-hash": "c048ba98e82aaf0ccc60e177e1bf2a05",
     "packages": [
         {
             "name": "andreiio/blade-remix-icon",
@@ -4184,6 +4184,71 @@
                 }
             ],
             "time": "2021-03-02T16:49:06+00:00"
+        },
+        {
+            "name": "spatie/laravel-disable-floc",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-disable-floc.git",
+                "reference": "5ae310ad85ca55a4754f3daa8ae59e25d1203304"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-disable-floc/zipball/5ae310ad85ca55a4754f3daa8ae59e25d1203304",
+                "reference": "5ae310ad85ca55a4754f3daa8ae59e25d1203304",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^7.30|^8.37",
+                "php": "^7.3|^7.4|^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.15",
+                "phpunit/phpunit": "^9.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\DisableFloc\\DisableFlocServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\DisableFloc\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Automatically disable Google's floc in Laravel apps",
+            "homepage": "https://github.com/spatie/laravel-disable-floc",
+            "keywords": [
+                "laravel",
+                "laravel-disable-floc",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/laravel-disable-floc/issues",
+                "source": "https://github.com/spatie/laravel-disable-floc/tree/1.0.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-05-06T16:48:38+00:00"
         },
         {
             "name": "spatie/laravel-enum",

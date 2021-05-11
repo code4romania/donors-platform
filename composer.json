@@ -27,6 +27,7 @@
         "reinink/remember-query-strings": "^0.1.0",
         "sentry/sentry-laravel": "^2.0",
         "spatie/laravel-activitylog": "^3.14",
+        "spatie/laravel-disable-floc": "^1.0",
         "spatie/laravel-enum": "^2.0",
         "spatie/laravel-welcome-notification": "^2.0",
         "spatie/yaml-front-matter": "^2.0",
