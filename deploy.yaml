@@ -8,20 +8,14 @@ config:
   application: 'donors-platform'
   repository: 'https://github.com/code4romania/donors-platform.git'
   php_fpm_version: '8.0'
-  remote_user: ubuntu
-  writable_use_sudo: true
+  remote_user: root
 
 hosts:
   production:
-    hostname: 'origin.platformadonatorilor.ro'
+    hostname: 'platformadonatorilor.ro'
     deploy_path: '/var/www/production'
     labels:
       stage: production
-  staging:
-    hostname: 'platformadonatorilor.ro'
-    deploy_path: '/var/www/staging'
-    labels:
-      stage: staging
 
 tasks:
   deploy:
