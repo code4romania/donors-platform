@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Scopes\WithExchangeRatesScope;
+use App\Services\Exchange;
 use App\Traits\Draftable;
 use App\Traits\Filterable;
 use App\Traits\HasDates;
@@ -223,6 +224,11 @@ class Grant extends Model implements TranslatableContract
         return $this->amount->subtract(
             $this->regranting_amount
         );
+    }
+
+    public function getConvertedAmountAttribute(): Money
+    {
+        return Exchange::convert($this->amount, Exchange::currency(), $this->rate);
     }
 
     public function getGrantableAmountAttribute(): Money

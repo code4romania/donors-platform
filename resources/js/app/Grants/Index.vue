@@ -90,8 +90,14 @@
                 </div>
             </template>
 
-            <template #amount="{ amount }">
+            <template #amount="{ amount, row }">
                 <div class="text-right" v-text="amount" />
+
+                <div
+                    v-if="amount !== row.converted_amount"
+                    v-text="row.converted_amount"
+                    class="text-sm text-right text-gray-500"
+                />
             </template>
 
             <template #published_status="{ published_status }">

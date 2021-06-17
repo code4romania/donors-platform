@@ -46,6 +46,7 @@ class GrantResource extends Resource
             'secondary_domains' => $this->secondaryDomains->pluck('name'),
             'grantees'          => $this->grantees->pluck('name')->join(', '),
             'amount'            => $this->amount->formatWithoutDecimals(),
+            'converted_amount'  => $this->converted_amount->formatWithoutDecimals(),
             'regranting_amount' => optional($this->regranting_amount)->formatWithoutDecimals(),
             'start_date'        => $this->formatted_start_date,
             'end_date'          => $this->formatted_end_date,
