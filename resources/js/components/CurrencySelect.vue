@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="!isHidden">
         <form-select
             id="currency"
             :options="currencies"
@@ -15,6 +15,16 @@
         computed: {
             currencies() {
                 return this.$page.props.currencies;
+            },
+            isHidden() {
+                return [
+                    'grants.show',
+                    'grants.create',
+                    'grants.edit',
+                    'projects.show',
+                    'projects.create',
+                    'projects.edit',
+                ].includes(this.$route().current());
             },
         },
         data() {
