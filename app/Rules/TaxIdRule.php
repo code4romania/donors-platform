@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-use Illuminate\Support\Str;
 
 class TaxIdRule implements Rule
 {
@@ -19,13 +18,7 @@ class TaxIdRule implements Rule
     public function passes($attribute, $value): bool
     {
         if (! is_int($value)) {
-            $value = Str::upper($value);
-
-            if (Str::startsWith($value, 'RO')) {
-                $value = Str::replaceFirst('RO', '', $value);
-            }
-
-            $value = (int) $value;
+            $value = (int) preg_replace('/\D/', '', (string) $value);
         }
 
         if ($value < 10 || $value > 999999999) {

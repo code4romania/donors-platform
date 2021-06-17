@@ -31,6 +31,15 @@ class Grantee extends Model
     ];
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var string[]
+     */
+    protected $casts = [
+        'tax_id' => 'int',
+    ];
+
+    /**
      * The attributes that are filterable.
      *
      * @var string[]
@@ -127,5 +136,10 @@ class Grantee extends Model
                 ->withExchangeRates()
                 ->get()
         );
+    }
+
+    public function setTaxIdAttribute($value): void
+    {
+        $this->attributes['tax_id'] = (int) preg_replace('/\D/', '', $value);
     }
 }

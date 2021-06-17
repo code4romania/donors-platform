@@ -22,6 +22,16 @@
                     :help="$t('dashboard.help.numbers_only')"
                     v-model="form.tax_id"
                     class="lg:col-span-2"
+                    :required="!form.without_tax_id"
+                />
+
+                <form-checkbox
+                    v-if="!form.tax_id"
+                    id="without_tax_id"
+                    :label="$t('field.without_tax_id')"
+                    v-model="form.without_tax_id"
+                    class="lg:col-span-2"
+                    :required="!form.tax_id"
                 />
             </form-panel>
 
@@ -65,6 +75,7 @@
                 form: {
                     _method: 'PUT', // html form method spoofing
                     ...this.prepareFields(['name', 'tax_id'], this.grantee),
+                    without_tax_id: !this.grantee.tax_id,
                 },
             };
         },
@@ -88,6 +99,18 @@
                         href: null,
                     },
                 ];
+            },
+        },
+        watch: {
+            'form.without_tax_id': function (value) {
+                if (value) {
+                    this.form.tax_id = null;
+                }
+            },
+            'form.tax_id': function (value) {
+                if (value) {
+                    this.form.without_tax_id = false;
+                }
             },
         },
     };

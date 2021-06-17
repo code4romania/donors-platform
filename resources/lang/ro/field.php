@@ -52,6 +52,7 @@ return [
     'title'                 => 'Titlu',
     'total_funding'         => 'Finanțare totală',
     'type'                  => 'Tip',
+    'without_tax_id'        => 'Titularul de grant nu are cod fiscal',
     'year'                  => 'An',
 
 ];

@@ -11,20 +11,6 @@ use Illuminate\Validation\Rule;
 class GranteeRequest extends FormRequest
 {
     /**
-     * Prepare the data for validation.
-     *
-     * @return void
-     */
-    protected function prepareForValidation()
-    {
-        $this->merge([
-            'tax_id' => $this->tax_id !== null
-                ? preg_replace('/\D/', '', $this->tax_id)
-                : null,
-        ]);
-    }
-
-    /**
      * Get the validation rules that apply to the request.
      *
      * @return array
@@ -33,9 +19,9 @@ class GranteeRequest extends FormRequest
     {
         return [
             'name'   => ['required', 'string', 'max:255'],
+            'without_tax_id' => ['boolean', 'required_without:tax_id'],
             'tax_id' => [
-                'nullable',
-                'string',
+                'required_without:without_tax_id',
                 new TaxIdRule,
                 Rule::unique('grantees', 'tax_id')->ignore($this->grantee),
             ],

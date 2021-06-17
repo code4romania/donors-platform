@@ -25,18 +25,10 @@
                 return this.locale ? `${this.locale}.${this.id}` : this.id;
             },
             hasErrors() {
-                if (!this.hasOwnProperty('$page')) {
-                    return false;
-                }
-
-                return this.$page.props.errors.hasOwnProperty(this.errorKey);
+                return this.message !== null;
             },
             message() {
-                if (!this.hasErrors) {
-                    return null;
-                }
-
-                return this.$page.props.errors[this.errorKey];
+                return this.$page.props.errors[this.errorKey] || null;
             },
         },
         methods: {},

@@ -1,14 +1,16 @@
 <template>
-    <div class="flex items-center">
-        <input
-            type="checkbox"
-            :id="id"
-            class="text-blue-600 border-gray-300 rounded shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-            :value="value"
-            v-model="checked"
-        />
+    <div>
+        <div class="flex items-center">
+            <input
+                type="checkbox"
+                :id="id"
+                class="text-blue-600 border-gray-300 rounded shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                :value="value"
+                v-model="checked"
+            />
 
-        <form-label :id="id" :label="label || value" class="ml-2" />
+            <form-label :id="id" :label="label || value" class="ml-2" />
+        </div>
 
         <form-input-error :id="id" />
     </div>

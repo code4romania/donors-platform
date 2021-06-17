@@ -51,6 +51,7 @@ return [
     'title'                 => 'Title',
     'total_funding'         => 'Total funding',
     'type'                  => 'Type',
+    'without_tax_id'        => 'Grantee does not have a tax id',
     'year'                  => 'Year',
 
 ];
