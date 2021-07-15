@@ -28,6 +28,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command(UpdateExchangeRates::class)->daily();
+
+        $schedule->command('backup:clean')->environments(['production'])->weekly();
+        $schedule->command('backup:run')->environments(['production'])->daily();
     }
 
     /**
