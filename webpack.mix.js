@@ -60,6 +60,7 @@ mix.js('resources/js/app.js', 'public/assets')
             { removeDimensions: true },
         ],
     })
+    .sourceMaps(false)
     .copyDirectory('resources/svg', 'public/assets/svg')
     .copyDirectory('resources/images', 'public/assets/images')
     .copyDirectory('resources/favicons', 'public/assets/favicons');
