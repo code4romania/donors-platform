@@ -1,4 +1,4 @@
-import { app, plugin } from '@inertiajs/inertia-vue';
+import { app, plugin, Link } from '@inertiajs/inertia-vue';
 import { InertiaProgress } from '@inertiajs/progress';
 
 import languageBundle from '~/lang/index.js';
@@ -30,6 +30,7 @@ Vue.use(RoutePlugin);
 Vue.use(PatternPlugin);
 
 Vue.directive('click-away', VueClickOutside);
+Vue.component('InertiaLink', Link);
 
 InertiaProgress.init({
     // The delay after which the progress bar will
