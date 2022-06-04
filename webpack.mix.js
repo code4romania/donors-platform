@@ -31,7 +31,7 @@ if (mix.isWatching()) {
     mix.bundleAnalyzer({ openAnalyzer: false });
 }
 
-mix.valet('platformadonatorilor.test')
+mix.valet()
     .translations()
     .alias({
         '@': path.resolve('resources/js'),

@@ -31,7 +31,7 @@
                 <div class="flex items-center w-6 mt-5 ml-4">
                     <button
                         type="button"
-                        class="flex-shrink-0 text-gray-300 hover:text-red-500 focus:outline-none focus:text-red-500"
+                        class="shrink-0 text-gray-300 hover:text-red-500 focus:outline-none focus:text-red-500"
                         @click="removeAt(index)"
                     >
                         <svg-vue

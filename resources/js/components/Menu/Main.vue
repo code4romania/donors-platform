@@ -1,6 +1,6 @@
 <template>
     <div
-        class="fixed inset-0 z-40 flex flex-shrink-0 w-64 lg:relative"
+        class="fixed inset-0 z-40 flex shrink-0 w-64 lg:relative"
         :class="{ '-ml-64 lg:ml-0': !open }"
     >
         <portal to="menu-mobile-backdrop">
@@ -40,7 +40,7 @@
 
             <inertia-link
                 :href="$route('dashboard')"
-                class="flex items-center flex-shrink-0 h-16 px-4 transition-colors duration-150 bg-white"
+                class="flex items-center shrink-0 h-16 px-4 transition-colors duration-150 bg-white"
             >
                 <Logo class="w-full h-10" />
             </inertia-link>
@@ -85,7 +85,7 @@
             </div>
 
             <div
-                class="flex flex-shrink-0 p-4 space-x-3 border-t border-gray-700"
+                class="flex shrink-0 p-4 space-x-3 border-t border-gray-700"
             >
                 <svg-vue
                     icon="User/user-line"

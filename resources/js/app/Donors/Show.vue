@@ -93,7 +93,7 @@
                     <div class="flex mt-1">
                         <svg-vue
                             icon="Design/focus-3-line"
-                            class="flex-shrink-0 w-4 h-6 mr-1 text-gray-500 fill-current"
+                            class="shrink-0 w-4 h-6 mr-1 text-gray-500 fill-current"
                         />
                         <div
                             v-html="

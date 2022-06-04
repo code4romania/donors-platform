@@ -9,13 +9,13 @@
 
         <div class="flex max-w-2xl mx-auto mb-6 space-x-6">
             <div class="inline-flex items-center space-x-2">
-                <x-ri-calendar-event-fill class="text-teal-600" class="flex-shrink-0 w-5 h-5 stroke-0" />
+                <x-ri-calendar-event-fill class="text-teal-600" class="shrink-0 w-5 h-5 stroke-0" />
                 <span>{{ $post->date->isoFormat('LL') }}</span>
             </div>
 
             @if ($post->author)
                 <div class="inline-flex items-center space-x-2">
-                    <x-ri-user-fill class="text-teal-600" class="flex-shrink-0 w-5 h-5 stroke-0" />
+                    <x-ri-user-fill class="text-teal-600" class="shrink-0 w-5 h-5 stroke-0" />
                     <span>{{ $post->author }}</span>
                 </div>
             @endif

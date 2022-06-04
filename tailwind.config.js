@@ -1,7 +1,4 @@
-const colors = require('tailwindcss/colors');
-
 module.exports = {
-    darkMode: false,
     theme: {
         extend: {
             fontFamily: {
@@ -12,9 +9,6 @@ module.exports = {
                     'Arial',
                     'sans-serif',
                 ],
-            },
-            colors: {
-                teal: colors.teal,
             },
             minWidth: theme => ({
                 ...theme('spacing'),
@@ -44,34 +38,15 @@ module.exports = {
         columnFill: ['auto', 'balance', 'balance-all'],
         columnSpan: ['none', 'all'],
     },
-    variants: {
-        extend: {
-            //
-        },
-    },
-    corePlugins: {
-        backgroundOpacity: false,
-        borderOpacity: false,
-        divideOpacity: false,
-        textOpacity: false,
-    },
     plugins: [
         require('@tailwindcss/aspect-ratio'),
         require('@tailwindcss/forms'),
         require('@tailwindcss/typography'),
         require('tailwindcss-multi-column')(),
     ],
-    purge: {
-        content: [
-            //
-            'resources/views/**/*.blade.php',
-            'resources/js/**/*.js',
-            'resources/js/**/*.vue',
-        ],
-        options: {
-            safelist: [
-                //
-            ],
-        },
-    },
+    content: [
+        'resources/views/**/*.blade.php',
+        'resources/js/**/*.js',
+        'resources/js/**/*.vue',
+    ],
 };

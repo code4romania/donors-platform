@@ -89,7 +89,7 @@
         >
             <template #notice>
                 <div class="flex p-4 mx-auto mb-4 space-x-3 border-l-4 border-yellow-400">
-                    <x-ri-alert-fill class="flex-shrink-0 w-5 h-5 text-yellow-400" />
+                    <x-ri-alert-fill class="shrink-0 w-5 h-5 text-yellow-400" />
 
                     <p class="text-sm text-yellow-700">
                         {{ __('public.chart.disclaimer') }}

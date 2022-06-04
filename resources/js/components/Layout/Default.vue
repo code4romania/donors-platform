@@ -6,7 +6,7 @@
 
         <div class="relative z-0 flex flex-col flex-1 focus:outline-none">
             <div
-                class="relative z-10 flex flex-shrink-0 h-16 bg-white ring-1 ring-black ring-opacity-5"
+                class="relative z-10 flex shrink-0 h-16 bg-white ring-1 ring-black ring-opacity-5"
             >
                 <portal-target name="menu-mobile-button" slim />
                 <div
