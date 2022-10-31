@@ -33,6 +33,8 @@ COPY docker/php/php.ini /usr/local/etc/php/php.ini
 COPY docker/php/www.conf /usr/local/etc/php-fpm.d/zz-docker.conf
 COPY docker/s6-rc.d /etc/s6-overlay/s6-rc.d
 
+ENV IPE_GD_WITHOUTAVIF 1
+
 RUN apk update && \
     # production dependencies
     apk add --no-cache \
