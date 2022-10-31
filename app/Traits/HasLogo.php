@@ -12,8 +12,8 @@ trait HasLogo
 {
     public function getLogoAttribute(): ?string
     {
-        return Storage::disk('public')->exists($this->logoPath())
-            ? Storage::disk('public')->url($this->logoPath())
+        return Storage::cloud()->exists($this->logoPath())
+            ? Storage::cloud()->url($this->logoPath())
             : null;
     }
 
@@ -23,7 +23,7 @@ trait HasLogo
             return;
         }
 
-        Storage::disk('public')->put(
+        Storage::cloud()->put(
             $this->logoPath(),
             Image::make($file->path())
                 ->resize(null, 300, function ($constraint) {
