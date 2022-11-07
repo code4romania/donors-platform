@@ -38,6 +38,7 @@ ENV IPE_GD_WITHOUTAVIF 1
 RUN apk update && \
     # production dependencies
     apk add --no-cache \
+    mysql-client \
     nginx && \
     #
     # install extensions
